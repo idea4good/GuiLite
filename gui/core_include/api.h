@@ -6,13 +6,6 @@
 #define NULL 	0
 #define TRUE 	1
 #define FALSE 	0
-#define MAX(a,b) (((a)>(b))?(a):(b))
-#define MIN(a,b) (((a)<(b))?(a):(b))
-
-#define CORRECT(x, high_limit, low_limit)	{\
-	x = (x > high_limit) ? high_limit : x;\
-	x = (x < low_limit) ? low_limit : x;\
-}while(0)
 
 void do_assert(const char* file, int line);
 #define ASSERT(condition)	\
@@ -43,13 +36,9 @@ T_TIME second_to_day(long second);
 T_TIME get_time(void);
 T_TIME set_time(T_TIME ret);
 
-void start_real_timer(void (*func)(void* arg));
+void start_real_timer(void(*func)(void* arg));
 long int get_tick(void);
 unsigned int get_current_task_id(void);
-int uart_open(char* dev_file, unsigned int baudrate, unsigned int parity);
-int uart_close(int fd);
-int uart_read(int fd, char* buffer, unsigned int size);
-int uart_write(int fd, char* buffer, unsigned int size);
 
 void register_timer(int milli_second, void func(void* ptmr, void* parg));
 unsigned char check_sum(unsigned char* data, int len);

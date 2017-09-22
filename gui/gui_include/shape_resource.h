@@ -9,7 +9,7 @@ extern const CUSTOM_SHAPE g_shape_btn_disable[];
 extern const CUSTOM_SHAPE g_shape_listbox_select[];
 extern const CUSTOM_SHAPE g_shape_listbox_push[];
 extern const CUSTOM_SHAPE g_shape_listbox_push_top[];
-extern const CUSTOM_SHAPE g_shape_listbox_fill[];
+extern const CUSTOM_SHAPE g_shape_listbox_extend[];
 
 extern const CUSTOM_SHAPE g_shape_keyboard_btn_normal[];
 extern const CUSTOM_SHAPE g_shape_keyboard_btn_push[];

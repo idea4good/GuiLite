@@ -3,12 +3,6 @@
 
 #define  MAX_COL_NUM  30
 #define  MAX_ROW_NUM  30
-#define  CELL_HEIGHT 33
-
-typedef enum
-{
-
-}E_STATUS_FLAG;
 
 class c_table: public c_wnd
 {
@@ -19,8 +13,8 @@ public:
 	void set_col_num(unsigned int col_num){ m_col_num = col_num;}
 	void set_row_height(unsigned int height);
 	void set_col_width(unsigned int width);
-	unsigned int set_row_height(unsigned int index, unsigned int height);
-	unsigned int set_col_width(unsigned int index, unsigned int width);
+	int set_row_height(unsigned int index, unsigned int height);
+	int set_col_width(unsigned int index, unsigned int width);
 
 	int set_item(int row, int col, char* str, unsigned int with_bg_color = -1);
 	int set_item(int row, int col, unsigned int str_id, unsigned int with_bg_color = -1);
