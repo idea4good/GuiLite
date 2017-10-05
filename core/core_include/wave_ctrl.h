@@ -22,11 +22,11 @@ class c_wave_ctrl : public c_wnd
 public:
 	c_wave_ctrl();
 	virtual c_wnd* clone(){return new c_wave_ctrl();}
-	virtual void on_init_children(void);
-	virtual void on_paint(void);
+	virtual void on_init_children();
+	virtual void on_paint();
 
 	void set_wave_name(unsigned short wave_name_id){ m_wave_name = wave_name_id;}
-	unsigned short get_wave_name(void){return m_wave_name;}
+	unsigned short get_wave_name(){return m_wave_name;}
 	void set_wave_unit(unsigned short wave_unit_id){ m_wave_unit = wave_unit_id;}
 
 	void set_wave_name_font_type(const GUI_FONT* wave_name_font_type){ m_wave_name_font_type = wave_name_font_type;}
@@ -45,7 +45,7 @@ public:
 	void clear_data();
 	bool is_data_enough();
 	void refresh_wave(unsigned char frame);
-	void clear_wave(void);
+	void clear_wave();
 	
 protected:
 	virtual void pre_create_wnd();

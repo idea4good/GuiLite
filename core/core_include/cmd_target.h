@@ -8,7 +8,7 @@ class c_cmd_target;
 #define MSG_TYPE_USR		0x0002
 #define USR_MSG_MAX			1024
 
-typedef void (c_cmd_target::*MsgFuncVV)(void);
+typedef void (c_cmd_target::*MsgFuncVV)();
 
 enum MSG_CALLBACK_TYPE
 {
@@ -43,7 +43,7 @@ typedef struct GLT_MSG_MAP
 #define GLT_DECLARE_MESSAGE_MAP()                           \
 protected:													\
 static const GLT_MSG_MAP mMsgMap;                           \
-virtual const GLT_MSG_MAP* GetMessageMap(void) const; 		\
+virtual const GLT_MSG_MAP* GetMessageMap() const; 		\
 private:                                                    \
 static const GLT_MSG_ENTRY mMsgMapEntries[];
 
@@ -65,11 +65,11 @@ const GLT_MSG_ENTRY theClass::mMsgMapEntries[] =     		\
 class c_cmd_target
 {
 public:
-	c_cmd_target(void);
-	virtual ~c_cmd_target(void);
+	c_cmd_target();
+	virtual ~c_cmd_target();
 	static int handle_usr_msg(unsigned int msgId, unsigned int wParam, unsigned int lParam);
 protected:
-	void load_cmd_msg(void);
+	void load_cmd_msg();
 	const GLT_MSG_ENTRY* FindMessageMapEntry(const GLT_MSG_ENTRY *pEntry, 
 		unsigned int msgType, unsigned short msgId, unsigned short ctrlId);
 private:

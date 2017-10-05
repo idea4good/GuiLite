@@ -31,14 +31,14 @@ typedef struct _T_TIME
 	unsigned short second;
 }T_TIME;
 
-long get_time_in_second(void);
+long get_time_in_second();
 T_TIME second_to_day(long second);
-T_TIME get_time(void);
+T_TIME get_time();
 T_TIME set_time(T_TIME ret);
 
 void start_real_timer(void (*func)(void* arg));
-long int get_tick(void);
-unsigned int get_current_task_id(void);
+long int get_tick();
+unsigned int get_current_task_id();
 
 void register_timer(int milli_second, void func(void* ptmr, void* parg));
 unsigned char check_sum(unsigned char* data, int len);
