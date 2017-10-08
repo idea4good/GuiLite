@@ -1,10 +1,10 @@
-# Welcome to GuiLite Repo!
+# GuiLite - 我是你的辅助：不收人头，只助攻!
+GuiLite是由4千行左右的C/C++代码编写的超轻量UI框架。它像MFC，QT一样为软件开发人员提供界面支持。
 
-This is pretty small GUI code, has no more than 6000 lines code.
+由于其代码量极少，它便于开发人员扩展自己的UI风格；由于其C/C++语言编写，它能够很方便的嵌入到其他UI系统中，比如嵌入到Android系统中，与Android界面风格并存，并运行在手机上面；或嵌入到Windows UWP系统中，与UWP界面风格并存，并运行在Windows桌面及虚拟/混合现实设备上；或嵌入到MFC，QT系统中，与MFC/QT界面风格并存，并运行在相关系统中；具体实现方法请见GuiliteSample库。
 
-This is pretty flexible GUI code, can work on different platform, such like: Android, Linux, Windows(include MR/VR device)
+GuiLite渴望与所有平台共同发展，希望开发者能将自己界面中的固定部分用GuiLite开发，同时也积极利用MFC，QT，Android，Linux，Windows的界面特性，让自己的界面集百家之长，又不失个性。
 
-## Code brief introduction:
-core: For platform encapsulation.
+相比其他强大的UI框架，GuiLite只聚焦界面开发（特别是手机风格的滑动界面），只使用最基础的C++特性，直达绘制底层。希望通过减少代码，调用层次，让UI框架的体积最小，效率更高，成为应用程序开发的得力配角。
 
-gui: For all GUI widget/controller, also can extend your widget/controller yourself.
+## GuiLite的组织原则
