@@ -31,6 +31,7 @@ GuiLite只作两个工作：界面元素管理和图形绘制。
 
 ### 图层管理
 GuiLite的所有图层，如下图所示：
+![Graphic layer](GraphicLayer.png)
 
 display层：
 该层对应了物理显存，display层决定了一个显示终端的最终显示效果；通常系统中至少有一个display层。
