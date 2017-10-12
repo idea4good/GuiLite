@@ -18,7 +18,7 @@ void c_label::pre_create_wnd()
 	m_bg_color = get_parent()->get_bg_color();
 }
 
-void c_label::on_paint(void)
+void c_label::on_paint()
 {
 	c_rect rect;
 	get_screen_rect(rect);

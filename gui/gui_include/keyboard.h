@@ -54,7 +54,7 @@ class c_keyboard_button : public c_button
 {
 protected:
 	virtual c_wnd* clone(){return new c_keyboard_button();}
-	virtual void on_paint(void);
+	virtual void on_paint();
 };
 
 #endif /* KEYBOARD_H_ */

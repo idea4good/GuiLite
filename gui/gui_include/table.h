@@ -19,8 +19,8 @@ public:
 	int set_item(int row, int col, char* str, unsigned int with_bg_color = -1);
 	int set_item(int row, int col, unsigned int str_id, unsigned int with_bg_color = -1);
 
-	unsigned int get_row_num(void){ return m_row_num;}
-	unsigned int get_col_num(void){ return m_col_num;}
+	unsigned int get_row_num(){ return m_row_num;}
+	unsigned int get_col_num(){ return m_col_num;}
 	c_rect get_item_rect(int row, int col);
 protected:
 	virtual void pre_create_wnd();

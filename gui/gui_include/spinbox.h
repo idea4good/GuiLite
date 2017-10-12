@@ -17,27 +17,27 @@
 class c_spin_box : public c_wnd
 {
 public:
-	short get_value(void){return m_value;}
+	short get_value(){return m_value;}
 	void set_value(unsigned short value){m_value = m_cur_value = value;}
 
 	void set_max_min(short max, short min){m_max = max; m_min = min;}
 	void set_step(short step){m_step = step;}
 
-	short get_min(void){return m_min;}
-	short get_max(void){return m_max;}
-	short get_step(void){return m_step;}
+	short get_min(){return m_min;}
+	short get_max(){return m_max;}
+	short get_step(){return m_step;}
 
 	void set_value_digit(short digit){m_digit = digit;}
-	short get_value_digit(void){return m_digit;}
+	short get_value_digit(){return m_digit;}
 	
 protected:
 	virtual c_wnd* clone(){return new c_spin_box();}
-	virtual void on_paint(void);
-	virtual void on_focus(unsigned int w_param);
-	virtual void on_kill_focus(void);
+	virtual void on_paint();
+	virtual void on_focus();
+	virtual void on_kill_focus();
 	
-	virtual void handle_mouse_down_msg(int x, int y);
-	virtual void handle_mouse_up_msg(int x, int y);
+	virtual void on_touch_down(int x, int y);
+	virtual void on_touch_up(int x, int y);
 	virtual void pre_create_wnd();
 
 protected:
@@ -47,8 +47,8 @@ protected:
 	GLT_DECLARE_MESSAGE_MAP()
 
 private:
-	void show_arrow_button(void);
-	void hide_arrow_button(void);
+	void show_arrow_button();
+	void hide_arrow_button();
 
 protected:
 	short			m_cur_value;

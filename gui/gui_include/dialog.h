@@ -20,14 +20,12 @@ public:
 	c_dialog(){m_divider_lines = 0;}
 	int close_dialog();
 	void set_divider_lines(unsigned char lines){m_divider_lines = lines;}
-	virtual void handle_mouse_down_msg(int x, int y);
-	virtual void handle_mouse_up_msg(int x, int y);
+	virtual void on_touch_down(int x, int y);
+	virtual void on_touch_up(int x, int y);
 protected:
 	virtual const char* get_class_name(void) const {return "c_dialog";}
 	virtual void pre_create_wnd();
-	virtual void on_paint(void);
-	virtual void bn_exit(unsigned int ctr_id);
-	void write_user_msg(short msg_id,short value);
+	virtual void on_paint();
 	static DIALOG_ARRAY ms_the_dialogs[MAX_DIALOG];
 private:
 	int set_me_the_dialog();

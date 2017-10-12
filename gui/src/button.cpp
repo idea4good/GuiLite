@@ -19,26 +19,26 @@ void c_button::pre_create_wnd()
 	m_bg_color = GLT_RGB(36,36,36);
 }
 
-void c_button::on_focus(unsigned int w_param)
+void c_button::on_focus()
 {
 	modify_status(STATUS_FOCUSED);
 	on_paint();
 }
 
-void c_button::on_kill_focus(void)
+void c_button::on_kill_focus()
 {
 	modify_status(STATUS_NORMAL);
 	on_paint();
 }
 
-void c_button::handle_mouse_down_msg(int x, int y)
+void c_button::on_touch_down(int x, int y)
 {
-	get_parent()->set_focus(this, 0);
+	get_parent()->set_focus(this);
 	modify_status(STATUS_PUSHED);
 	on_paint();
 }
 
-void c_button::handle_mouse_up_msg(int x, int y)
+void c_button::on_touch_up(int x, int y)
 {
 	if (STATUS_PUSHED == m_status)
 	{
@@ -49,7 +49,7 @@ void c_button::handle_mouse_up_msg(int x, int y)
 	}
 }
 
-void c_button::on_paint(void)
+void c_button::on_paint()
 {
 	c_rect rect;
 	get_screen_rect(rect);
@@ -66,7 +66,6 @@ void c_button::on_paint(void)
 			draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_push);
 		}
 		m_font_color = GLT_RGB(255,255,255);
-
 		break;
 	case STATUS_FOCUSED:
 		if (m_bitmap_focus)
@@ -78,7 +77,6 @@ void c_button::on_paint(void)
 			draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_focus);
 		}
 		m_font_color = GLT_RGB(255,255,255);
-
 		break;
 	case STATUS_NORMAL:
 		if (m_bitmap)
@@ -90,7 +88,6 @@ void c_button::on_paint(void)
 			draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_normal);
 		}
 		m_font_color = GLT_RGB(255,255,255);
-
 		break;
 	case STATUS_DISABLED:
 		if (m_bitmap_disable)
@@ -103,7 +100,6 @@ void c_button::on_paint(void)
 		}
 		m_font_color = GLT_RGB(70,73,76);
 		break;
-
 	default:
 		ASSERT(FALSE);
 		break;

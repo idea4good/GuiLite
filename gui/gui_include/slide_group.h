@@ -20,7 +20,7 @@ public:
 				Z_ORDER_LEVEL max_zorder =  Z_ORDER_LEVEL_0);
 	void disabel_all_slide();
 protected:
-	virtual void display_window(void);
+	virtual void display_window();
 	virtual c_wnd* clone(){return new c_slide_group();}
 	c_wnd* m_slides[MAX_PAGES];
 	int m_active_slide_index;

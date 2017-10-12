@@ -49,23 +49,23 @@ class c_wnd : public c_cmd_target
 {
 	friend class c_dialog;
 public:
-	c_wnd(void);
-	virtual ~c_wnd(void);
-	virtual const char* get_class_name(void) const { return "c_wnd"; }
-	virtual int create(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
+	c_wnd();
+	virtual ~c_wnd();
+	virtual const char* get_class_name() const { return "c_wnd"; }
+	virtual int connect(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
 		short x, short y, short width, short height, WND_TREE* p_child_tree = NULL);
-	virtual c_wnd* create_clone(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
+	virtual c_wnd* connect_clone(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
 		short x, short y, short width, short height, WND_TREE* p_child_tree = NULL);
+	void disconnect();
 	virtual c_wnd* clone() = 0;
-	virtual void on_init_children(void) {}
-	virtual void on_paint(void) {}
+	virtual void on_init_children() {}
+	virtual void on_paint() {}
 	void show_window(int show_type = GLT_WIN_SHOW);
-	void exit_wnd(void);
 
-	unsigned short get_id(void) const { return m_resource_id; }
-	int get_z_order(void) { return m_z_order; }
+	unsigned short get_id() const { return m_resource_id; }
+	int get_z_order() { return m_z_order; }
 	c_wnd* get_wnd_ptr(unsigned short id) const;
-	unsigned int get_style(void) const { return m_style; }
+	unsigned int get_style() const { return m_style; }
 	virtual void modify_style(unsigned int add_style = 0, unsigned int remove_style = 0);
 
 	void set_str_id(unsigned short str_id) { m_str_id = str_id; }
@@ -76,14 +76,14 @@ public:
 	void set_pushed_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap_pushed = pBitmap; }
 	void set_disable_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap_disable = pBitmap; }
 
-	bool is_visible(void) const { return m_is_visible_now; }
-	bool is_foreground(void);
+	bool is_visible() const { return m_is_visible_now; }
+	bool is_foreground();
 	void set_visible(bool visible);
 	virtual void enable_wnd(int enable = TRUE);
-	int is_wnd_enable(void) const;
+	int is_wnd_enable() const;
 	void enable_focus(int enable = TRUE);
-	int is_focus_wnd(void) const;
-	const int is_active_wnd(void) const;
+	int is_focus_wnd() const;
+	const int is_active_wnd() const;
 
 	void set_font_color(unsigned int color) { m_font_color = color; }
 	unsigned int get_font_color() { return m_font_color; }
@@ -96,23 +96,21 @@ public:
 	void get_wnd_rect(c_rect &rect) const;
 	void get_screen_rect(c_rect &rect) const;
 
-	c_wnd* set_focus(c_wnd *new_active_child, unsigned int w_param = 0);
+	c_wnd* set_focus(c_wnd *new_active_child);
 
-	void set_parent(c_wnd *parent);
-	c_wnd* get_parent(void) const { return m_parent; }
-	c_wnd* get_last_child(void) const;
-	c_wnd* get_prev_sibling(void) const { return m_prev_sibling; }
-	c_wnd* get_next_sibling(void) const { return m_next_sibling; }
+	c_wnd* get_parent() const { return m_parent; }
+	c_wnd* get_last_child() const;
+	int	unlink_child(c_wnd *child);
+	c_wnd* get_prev_sibling() const { return m_prev_sibling; }
+	c_wnd* get_next_sibling() const { return m_next_sibling; }
 
 	void notify_parent(unsigned short msg_id, unsigned int w_param, long l_param);
 	virtual int	on_notify(unsigned short notify_code, unsigned short ctrl_id, long l_param);
-	virtual c_wnd* get_next_focus_child(c_wnd *start_child, unsigned int w_param);
 
-	virtual void handle_mouse_up_msg(int x, int y);
-	virtual void handle_mouse_down_msg(int x, int y);
-	virtual c_wnd*	on_move_focus(unsigned int w_param);
+	virtual void on_touch_up(int x, int y);
+	virtual void on_touch_down(int x, int y);
 
-	c_wnd* get_active_child(void) const { return m_active_child; }
+	c_wnd* get_active_child() const { return m_active_child; }
 
 	void modify_status(WND_STATUS status) { m_status = status; }
 	WND_STATUS get_status() { return m_status; }
@@ -121,11 +119,10 @@ public:
 	void set_surface(c_surface* gal) { m_surface = gal; }
 protected:
 	virtual void pre_create_wnd();
-	virtual void display_window(void);
-	void hide_widow(void);
+	virtual void display_window();
+	void hide_widow();
 	void add_child_2_head(c_wnd *child);
 	void add_child_2_tail(c_wnd *child);
-	int	 remove_child(c_wnd *child);
 
 	void wnd2screen(int &x, int &y) const;
 	void wnd2screen(c_rect &rect) const;
@@ -136,8 +133,8 @@ protected:
 	int load_clone_child_wnd(WND_TREE *p_child_tree);
 	void set_active_child(c_wnd* child) { m_active_child = child; }
 
-	virtual void on_focus(unsigned int w_param);
-	virtual void on_kill_focus(void);
+	virtual void on_focus();
+	virtual void on_kill_focus();
 
 	void set_pixel(int x, int y, unsigned int rgb);
 	void draw_hline(int x0, int x1, int y, unsigned int rgb);

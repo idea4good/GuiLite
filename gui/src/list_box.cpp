@@ -21,7 +21,7 @@ void c_list_box::pre_create_wnd()
 	m_item_total = 0;
 }
 
-void c_list_box::on_init_children(void)
+void c_list_box::on_init_children()
 {
 	m_item_total = 0;
 	m_selected_item = 0;	
@@ -30,19 +30,19 @@ void c_list_box::on_init_children(void)
 	m_bg_color = GLT_RGB(33,41,57);
 }
 
-void c_list_box::on_focus(unsigned int w_param)
+void c_list_box::on_focus()
 {
 	modify_status(STATUS_FOCUSED);
 	on_paint();
 }
 
-void c_list_box::on_kill_focus(void)
+void c_list_box::on_kill_focus()
 {
 	modify_status(STATUS_NORMAL);
 	on_paint();
 }
 
-void c_list_box::on_paint(void)
+void c_list_box::on_paint()
 {
 	c_rect rect, empty_rect;
 	get_screen_rect(rect);
@@ -112,18 +112,18 @@ void c_list_box::on_paint(void)
 	}
 }
 
-void c_list_box::handle_mouse_down_msg(int x, int y)
+void c_list_box::on_touch_down(int x, int y)
 {
 	if (m_wnd_rect.PtInRect(x, y) )
 	{//click base
 		if (STATUS_NORMAL == m_status)
 		{
-			get_parent()->set_focus(this, 0);
+			get_parent()->set_focus(this);
 		}
 	}
 	else if (m_list_wnd_rect.PtInRect(x, y))
 	{//click extend list
-		c_wnd::handle_mouse_down_msg(x, y);
+		c_wnd::on_touch_down(x, y);
 	}
 	else
 	{
@@ -136,7 +136,7 @@ void c_list_box::handle_mouse_down_msg(int x, int y)
 	}
 }
 
-void c_list_box::handle_mouse_up_msg(int x, int y)
+void c_list_box::on_touch_up(int x, int y)
 {
 	if (STATUS_FOCUSED == m_status)
 	{
@@ -160,7 +160,7 @@ void c_list_box::handle_mouse_up_msg(int x, int y)
 		}
 		else
 		{
-			c_wnd::handle_mouse_up_msg(x, y);
+			c_wnd::on_touch_up(x, y);
 		}
 	}
 }
@@ -220,7 +220,7 @@ int c_list_box::add_item(unsigned short str_id)
 	return 0;
 }
 
-void c_list_box::clear_item(void)
+void c_list_box::clear_item()
 {
 	m_selected_item = m_item_total = 0;
 	memset(m_item_array, 0, sizeof(m_item_array));

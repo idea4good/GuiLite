@@ -20,23 +20,23 @@ class c_list_box : public c_wnd
 {
 public:
 	int add_item(unsigned short str_id);
-	void clear_item(void);
-	short get_item_count(void) { return m_item_total; }
+	void clear_item();
+	short get_item_count() { return m_item_total; }
 	void  select_item(short index);
 	
 protected:
 	virtual c_wnd* clone(){return new c_list_box();}
 	virtual void pre_create_wnd();
-	virtual void on_init_children(void);
-	virtual void on_paint(void);
-	virtual void on_focus(unsigned int w_param);
-	virtual void on_kill_focus(void);
-	virtual void handle_mouse_down_msg(int x, int y);
-	virtual void handle_mouse_up_msg(int x, int y);
+	virtual void on_init_children();
+	virtual void on_paint();
+	virtual void on_focus();
+	virtual void on_kill_focus();
+	virtual void on_touch_down(int x, int y);
+	virtual void on_touch_up(int x, int y);
 	
 private:
 	void update_list_size();
-	void show_list(void);
+	void show_list();
 
 	short			m_selected_item;
 	short			m_item_total;
