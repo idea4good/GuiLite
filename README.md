@@ -7,7 +7,7 @@ GuiLite渴望与所有平台共同发展，希望开发者能将自己界面中�
 
 相比其他强大的UI框架，GuiLite只聚焦界面开发（特别是手机风格的滑动界面），只使用最基础的C++特性，直达绘制底层。希望通过减少代码，调用层次，让UI框架的体积最小，效率更高，成为应用程序开发的得力配角。
 
-注意：GuiLite作为框架，本身并不产生界面，界面的集成效果，请参考GuiLiteSamples库。
+注意：GuiLite作为框架，本身并不产生界面，界面的集成效果，请参考[GuiLiteSamples代码库](https://github.com/idea4good/GuiLiteSamples)
 ## GuiLite的基本原理
 GuiLite只作两个工作：界面元素管理和图形绘制。
 
