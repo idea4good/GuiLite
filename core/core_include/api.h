@@ -48,6 +48,5 @@ int get_dev_y_pixels();
 
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg);
 void thread_sleep(unsigned int milli_seconds);
-int get_std_input(char *buffer, int size);
 int build_bmp(char *filename, unsigned int width, unsigned int height, unsigned char *data);
 #endif
