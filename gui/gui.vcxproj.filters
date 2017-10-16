@@ -17,9 +17,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core_include\alarm_queue.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
     <ClInclude Include="core_include\api.h">
       <Filter>Header Files\core_include</Filter>
     </ClInclude>

@@ -148,7 +148,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="core_include\alarm_queue.h" />
     <ClInclude Include="core_include\api.h" />
     <ClInclude Include="core_include\audio.h" />
     <ClInclude Include="core_include\bitmap.h" />
