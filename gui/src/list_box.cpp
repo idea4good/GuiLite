@@ -53,9 +53,7 @@ void c_list_box::on_paint()
 	case STATUS_PUSHED:
 		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_listbox_push);
 		m_font_color = GLT_RGB(2,124,165);
-		c_word::get_instance(m_z_order, m_surface)->set_font(m_font_type);
-		c_word::get_instance(m_z_order, m_surface)->set_color(m_font_color, COLOR_TRANPARENT);
-		c_word::get_instance(m_z_order, m_surface)->draw_string_in_rect(m_item_array[m_selected_item], rect, ALIGN_HCENTER | ALIGN_VCENTER);
+		c_word::get_instance()->draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
 		//draw list
 		if (m_item_total > 0)
 		{
@@ -101,14 +99,12 @@ void c_list_box::on_paint()
 		ASSERT(FALSE);
 		break;
 	}
-	c_word *p = c_word::get_instance(m_z_order, m_surface);
-	p->set_font(m_font_type);
-	p->set_color(m_font_color, COLOR_TRANPARENT);
-	p->draw_string_in_rect(m_item_array[m_selected_item], rect, ALIGN_HCENTER | ALIGN_VCENTER);
+	c_word *p = c_word::get_instance();
+	p->draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
 
 	if (m_item_total)
 	{
-		p->draw_string_in_rect(m_item_array[m_selected_item], rect, m_style);
+		p->draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 }
 
@@ -180,11 +176,9 @@ void c_list_box::show_list()
 {
 	draw_custom_shape(m_list_screen_rect.m_left, m_list_screen_rect.m_top, m_list_screen_rect.m_right, m_list_screen_rect.m_bottom, m_bg_color, g_shape_listbox_extend);
 
-	c_word *p = c_word::get_instance(m_z_order, m_surface);
-	p->set_font(m_font_type);
+	c_word *p = c_word::get_instance();
 	m_font_color = GLT_RGB(255, 255, 255);
 	//draw all items
-	p->set_color(m_font_color, COLOR_TRANPARENT);
 	c_rect tmp_rect;
 	for (int i = 0; i < m_item_total; i++)
 	{
@@ -192,7 +186,7 @@ void c_list_box::show_list()
 		tmp_rect.m_right = m_list_screen_rect.m_right;
 		tmp_rect.m_top = m_list_screen_rect.m_top + i * ITEM_HEIGHT;
 		tmp_rect.m_bottom = tmp_rect.m_top + ITEM_HEIGHT;
-		p->draw_string_in_rect(m_item_array[i], tmp_rect, ALIGN_HCENTER | ALIGN_VCENTER);
+		p->draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
 		draw_hline(tmp_rect.m_left, tmp_rect.m_right, tmp_rect.m_bottom, GLT_RGB(99, 108, 124));
 	}
 	//draw selected item	
@@ -204,8 +198,7 @@ void c_list_box::show_list()
 	draw_custom_shape(tmp_rect.m_left, tmp_rect.m_top, tmp_rect.m_right, tmp_rect.m_bottom, GLT_RGB(0, 255, 0), g_shape_listbox_select);
 
 	m_font_color = GLT_RGB(255, 255, 255);
-	p->set_color(m_font_color, COLOR_TRANPARENT);
-	p->draw_string_in_rect(m_item_array[m_selected_item], tmp_rect, ALIGN_HCENTER | ALIGN_VCENTER);
+	p->draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], tmp_rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
 }
 
 int c_list_box::add_item(unsigned short str_id)

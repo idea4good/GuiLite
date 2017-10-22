@@ -107,9 +107,7 @@ void c_button::on_paint()
 
 	if (m_str_id)
 	{
-		c_word *p = c_word::get_instance(m_z_order, m_surface);
-		p->set_font(m_font_type);
-		p->set_color(m_font_color, COLOR_TRANPARENT);
-		p->draw_string_in_rect(m_str_id, rect, m_style);
+		c_word *p = c_word::get_instance();
+		p->draw_string_in_rect(m_surface, m_z_order, m_str_id, rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 }

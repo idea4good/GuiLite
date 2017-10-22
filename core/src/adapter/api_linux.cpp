@@ -267,16 +267,6 @@ void value_2_string(int value, char* text, int digit)
 	}
 }
 
-int get_dev_x_pixels()
-{
-	return 1024;
-}
-
-int get_dev_y_pixels()
-{
-	return 768;
-}
-
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg)
 {
     pthread_create(thread_id, attr, start_routine, arg);
@@ -285,23 +275,6 @@ void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) 
 void thread_sleep(unsigned int milli_seconds)
 {
 	usleep(milli_seconds * 1000);
-}
-
-int get_std_input(char *buffer, int size)
-{
-	if (!fgets(buffer, (int)size - 1, stdin))
-	{//	Maybe failed in Android.
-		sleep(10);
-		log_out("Warning: fgets() failed!\n");
-		return -1;
-	}
-
-	int len = (int)strlen(buffer) - 1;
-	if (buffer[len] == '\n')
-	{
-		buffer[len] = '\0';
-	}
-	return len;
 }
 
 typedef struct {

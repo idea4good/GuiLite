@@ -29,7 +29,7 @@ int c_table::set_item(int row, int col, unsigned int str_id, unsigned int with_b
 void c_table::draw_item(int row, int col, const char* str, unsigned int with_bg_color)
 {
 	c_rect rect = get_item_rect(row, col);
-	c_word* p = c_word::get_instance(m_z_order, m_surface);
+	c_word* p = c_word::get_instance();
 
 	unsigned int back_color = 0;
 	if (with_bg_color == 0xFFFFFFFF)
@@ -40,16 +40,13 @@ void c_table::draw_item(int row, int col, const char* str, unsigned int with_bg_
 	{
 		back_color = with_bg_color;
 	}
-	p->set_color(m_font_color,back_color);
-	p->set_font(m_font_type);
-
 	fill_rect(rect.m_left+1, rect.m_top+1, rect.m_right-1, rect.m_bottom-1, back_color);
-	p->draw_string_in_rect(str, rect, m_align_type);
+	p->draw_string_in_rect(m_surface, m_z_order, str, rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_align_type);
 }
 
 void c_table::draw_item(int row, int col, unsigned int str_id, unsigned int with_bg_color)
 {
-	draw_item(row, col, c_word::get_instance(m_z_order, m_surface)->get_string(str_id), with_bg_color);
+	draw_item(row, col, c_word::get_instance()->get_string(str_id), with_bg_color);
 }
 
 void c_table::set_row_height(unsigned int height)

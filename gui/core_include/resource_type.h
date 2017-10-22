@@ -46,7 +46,7 @@ typedef enum
 	ENGLISH = LANGUAGE_BEGIN,
 	CHINESE,
 	LANGUAGE_MAX
-}E_LANGUAGE;
+}LANGUAGE_TYPE;
 
 typedef struct  struct_multi_lan_strings
 {

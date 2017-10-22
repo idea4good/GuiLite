@@ -41,10 +41,8 @@ void c_dialog::on_paint()
 
 	if (m_str_id)
 	{
-		c_word *p = c_word::get_instance(m_z_order, m_surface);
-		p->set_font(FONT_ENG_MB_AA());
-		p->set_color(GLT_RGB(255,255,255), COLOR_TRANPARENT);
-		p->draw_string(m_str_id, rect.m_left+35, rect.m_top, ALIGN_LEFT);
+		c_word *p = c_word::get_instance();
+		p->draw_string(m_surface, m_z_order, m_str_id, rect.m_left+35, rect.m_top, FONT_ENG_MB_AA(), GLT_RGB(255, 255, 255), COLOR_TRANPARENT, ALIGN_LEFT);
 	}
 }
 

@@ -43,8 +43,6 @@ unsigned int get_current_task_id();
 void register_timer(int milli_second, void func(void* ptmr, void* parg));
 unsigned char check_sum(unsigned char* data, int len);
 void value_2_string(int value, char* text, int dot_position);
-int get_dev_x_pixels();
-int get_dev_y_pixels();
 
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg);
 void thread_sleep(unsigned int milli_seconds);

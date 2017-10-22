@@ -244,37 +244,35 @@ void c_keyboard_button::on_paint()
 		break;
 	}
 
-	c_word *p = c_word::get_instance(m_z_order, m_surface);
-	p->set_font(m_font_type);
-	p->set_color(m_font_color, COLOR_TRANPARENT);
+	c_word *p = c_word::get_instance();
 
 	if (m_resource_id == 0x14)
 	{
-		return p->draw_string_in_rect("Caps", rect, m_style);
+		return p->draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 	else if (m_resource_id == 0x1B)
 	{
-		return p->draw_string_in_rect("Esc", rect, m_style);
+		return p->draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 	else if (m_resource_id == ' ')
 	{
-		return p->draw_string_in_rect("Space", rect, m_style);
+		return p->draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 	else if (m_resource_id == '\n')
 	{
-		return p->draw_string_in_rect("Enter", rect, m_style);
+		return p->draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 	else if (m_resource_id == '.')
 	{
-		return p->draw_string_in_rect(".", rect, m_style);
+		return p->draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 	else if (m_resource_id == 0x7F)
 	{
-		return p->draw_string_in_rect("Back", rect, m_style);
+		return p->draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 	else if (m_resource_id == 0x90)
 	{
-		return p->draw_string_in_rect("?123", rect, m_style);
+		return p->draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 	
 	char letter[] = { 0, 0 };
@@ -286,5 +284,5 @@ void c_keyboard_button::on_paint()
 	{
 		letter[0] = m_resource_id;
 	}
-	p->draw_string_in_rect(letter, rect, m_style);
+	p->draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 }
