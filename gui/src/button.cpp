@@ -59,7 +59,7 @@ void c_button::on_paint()
 	case STATUS_PUSHED:
 		if (m_bitmap_pushed)
 		{
-			draw_bitmap_in_rect(m_bitmap_pushed, rect, m_style);
+			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_pushed, rect, m_style);
 		}
 		else
 		{
@@ -70,7 +70,7 @@ void c_button::on_paint()
 	case STATUS_FOCUSED:
 		if (m_bitmap_focus)
 		{
-			draw_bitmap_in_rect(m_bitmap_focus, rect, m_style);
+			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_focus, rect, m_style);
 		}
 		else
 		{
@@ -81,7 +81,7 @@ void c_button::on_paint()
 	case STATUS_NORMAL:
 		if (m_bitmap)
 		{
-			draw_bitmap_in_rect(m_bitmap, rect, m_style);
+			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap, rect, m_style);
 		}
 		else
 		{
@@ -92,7 +92,7 @@ void c_button::on_paint()
 	case STATUS_DISABLED:
 		if (m_bitmap_disable)
 		{
-			draw_bitmap_in_rect(m_bitmap_disable, rect, m_style);
+			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_disable, rect, m_style);
 		}
 		else
 		{
@@ -107,7 +107,6 @@ void c_button::on_paint()
 
 	if (m_str_id)
 	{
-		c_word *p = c_word::get_instance();
-		p->draw_string_in_rect(m_surface, m_z_order, m_str_id, rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+		c_word::draw_string_in_rect(m_surface, m_z_order, m_str_id, rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 }

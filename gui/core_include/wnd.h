@@ -9,14 +9,6 @@
 #define GLT_ATTR_DISABLED		0x40000000L
 #define GLT_ATTR_FOCUS			0x20000000L
 
-//User operations
-#define GLT_CLOCKWISE			0x00000001
-#define GLT_ANTICLOCKWISE		0x00000002
-
-#define GLT_KNOB_PRESS			0xE6//VK_RETURN
-#define GLT_KNOB_CLOCKWISE      0xE7//VK_DOWN
-#define GLT_KNOB_ANTICLOCKWISE  0xE8//VK_UP
-
 typedef struct struct_gui_bitmap GUI_BITMAP;
 typedef struct struct_gui_font	GUI_FONT;
 typedef struct struct_custom_shape	CUSTOM_SHAPE;
@@ -145,7 +137,6 @@ protected:
 	void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb);
 	void fill_rect(c_rect rect, unsigned int rgb);
 	void draw_custom_shape(int l, int t, int r, int b, unsigned int color, const CUSTOM_SHAPE pRgn[]);
-	void draw_bitmap_in_rect(const GUI_BITMAP *pBitmap, c_rect rect, unsigned int align_type);
 protected:
 	WND_STATUS		m_status;
 	unsigned int	m_style;

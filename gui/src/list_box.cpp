@@ -1,14 +1,16 @@
 #include "../core_include/api.h"
 #include "../core_include/rect.h"
 #include "../core_include/cmd_target.h"
+#include "../core_include/resource_type.h"
 #include "../core_include/wnd.h"
+#include "../core_include/surface.h"
+#include "../core_include/bitmap.h"
+#include "../core_include/word.h"
+
 #include "../gui_include/button.h"
 #include "../gui_include/font.h"
 #include "../gui_include/dialog.h"
 #include "../gui_include/list_box.h"
-#include "../core_include/resource_type.h"
-#include "../core_include/word.h"
-#include "../core_include/surface.h"
 #include "../gui_include/shape_resource.h"
 #include <string.h>
 
@@ -53,7 +55,7 @@ void c_list_box::on_paint()
 	case STATUS_PUSHED:
 		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_listbox_push);
 		m_font_color = GLT_RGB(2,124,165);
-		c_word::get_instance()->draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
+		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
 		//draw list
 		if (m_item_total > 0)
 		{
@@ -87,7 +89,7 @@ void c_list_box::on_paint()
 	case STATUS_DISABLED:
 		if (m_bitmap_disable)
 		{
-			draw_bitmap_in_rect(m_bitmap_disable, rect, m_style);
+			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_disable, rect, m_style);
 		}
 		else
 		{
@@ -99,12 +101,11 @@ void c_list_box::on_paint()
 		ASSERT(FALSE);
 		break;
 	}
-	c_word *p = c_word::get_instance();
-	p->draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
+	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
 
 	if (m_item_total)
 	{
-		p->draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 }
 
@@ -176,7 +177,6 @@ void c_list_box::show_list()
 {
 	draw_custom_shape(m_list_screen_rect.m_left, m_list_screen_rect.m_top, m_list_screen_rect.m_right, m_list_screen_rect.m_bottom, m_bg_color, g_shape_listbox_extend);
 
-	c_word *p = c_word::get_instance();
 	m_font_color = GLT_RGB(255, 255, 255);
 	//draw all items
 	c_rect tmp_rect;
@@ -186,7 +186,7 @@ void c_list_box::show_list()
 		tmp_rect.m_right = m_list_screen_rect.m_right;
 		tmp_rect.m_top = m_list_screen_rect.m_top + i * ITEM_HEIGHT;
 		tmp_rect.m_bottom = tmp_rect.m_top + ITEM_HEIGHT;
-		p->draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
+		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
 		draw_hline(tmp_rect.m_left, tmp_rect.m_right, tmp_rect.m_bottom, GLT_RGB(99, 108, 124));
 	}
 	//draw selected item	
@@ -198,7 +198,7 @@ void c_list_box::show_list()
 	draw_custom_shape(tmp_rect.m_left, tmp_rect.m_top, tmp_rect.m_right, tmp_rect.m_bottom, GLT_RGB(0, 255, 0), g_shape_listbox_select);
 
 	m_font_color = GLT_RGB(255, 255, 255);
-	p->draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], tmp_rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
+	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], tmp_rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
 }
 
 int c_list_box::add_item(unsigned short str_id)

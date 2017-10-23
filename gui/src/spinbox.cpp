@@ -197,8 +197,7 @@ void c_spin_box::on_paint()
 		break;
 	}
 
-	c_word *p = c_word::get_instance();
-	p->draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+	c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 }
 
 void c_spin_box::on_arrow_up_bt_click(unsigned int ctr_id)
