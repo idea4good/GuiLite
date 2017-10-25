@@ -9,7 +9,10 @@ GuiLite渴望与所有平台共同发展，希望开发者能将自己界面中�
 
 相比其他强大的UI框架，GuiLite只聚焦界面开发（特别是手机风格的滑动界面），只使用最基础的C++特性，直达绘制底层。希望通过减少代码，调用层次，让UI框架的体积最小，效率更高，成为应用程序开发的得力配角。
 
-注意：GuiLite作为框架，本身并不产生界面，界面的集成效果，请参考[GuiLiteSamples代码库](https://github.com/idea4good/GuiLiteSamples)
+注意：GuiLite作为框架，本身并不产生界面，界面的集成效果，请参考:
+[GuiLiteSamples代码库](https://github.com/idea4good/GuiLiteSamples)
+[GuiLiteSamples视频](http://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
+
 
 ## 代码简介
 gui: 1）实现了各种常规控件（例如：按钮，标签，键盘）及容器（例如：视窗，对话框，滑动页面），开发者可以根据自己的需要，直接在相应的代码上进行修改或重绘，开发出有自己风格，特色的界面；2）实现了用户输入（例如：手指按下/释放）的消息传递，将用户的输入信息传递到整个UI体系树中，并调用相应的响应回调函数；开发者可以根据自己的需要添加/修改响应回调函数。
