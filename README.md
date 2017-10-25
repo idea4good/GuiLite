@@ -7,7 +7,11 @@ GuiLite is a embeded UI framework, it can work with QT/MFC/UWP APP, this mean yo
 
 We hope you can develop some stable feature with GuiLite, then you can run your APP on Linux/Android/Windows/VR/MR at same time.
 
-Get some examples, you can visit [GuiLiteSamples](https://github.com/idea4good/GuiLiteSamples)
+Get some examples, you can visit:
+
+[GuiLiteSamples repository](https://github.com/idea4good/GuiLiteSamples)
+
+[GuiLiteSamples video](http://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
 
 ## Code intro
 gui folder:
