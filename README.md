@@ -11,7 +11,7 @@ Get some examples, you can visit:
 
 [GuiLiteSamples repository](https://github.com/idea4good/GuiLiteSamples)
 
-[GuiLiteSamples video](http://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
+[GuiLiteSamples video](https://www.youtube.com/watch?v=grqXEz3bdC0)
 
 ## Code intro
 gui folder:
