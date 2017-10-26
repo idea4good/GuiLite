@@ -22,7 +22,7 @@ core folder:
 1. Here are code for render: surface.cpp, bitmap.cpp, word.cpp
 2. Here are code for OS encapsulation: api_linux.cpp api_win.cpp
 
-Note: For some review reason, some files havn't been published, they will be released in Dec 2107.
+Note: For some review reason, some files havn't been published, they will be released in Nov 2107.
 
 ## How GuiLite work?
 GuiLite do 2 things: one is widgets management, the other is render.
