@@ -1,4 +1,4 @@
-# GuiLite - 你的辅助：不抢人头，只助攻!
+# GuiLite - 揭示UI原理，发展适合你自己的UI（框架）
 ## Join us to make it better! 开发者qq群：527251257)
 
 超轻量UI框架 - GuiLite是由6千行左右的C/C++代码编写的超轻量UI框架。它像MFC，QT一样为软件开发人员提供界面支持。
