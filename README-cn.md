@@ -8,7 +8,7 @@ GuiLite可以嵌入到其他UI系统中，与Android、UWP、MFC、QT一起玩�
 注意：GuiLite作为框架，本身并不产生界面，界面的集成效果，请参考:[GuiLiteSamples代码库](https://github.com/idea4good/GuiLiteSamples)、[GuiLiteSamples视频](http://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
 
 ## 为什么开发GuiLite？如何使用？
-任何UI框架都不是为你我而生的，只有掌握核心原理，对其深度定制，才能真正掌握自己的命运！因此，我们开发了GuiLite，希望用这6千行代码揭示UI的核心原理和定制方法。
+<font color="yellow"> 任何UI框架都不是为你我而生的 </font>，只有掌握核心原理，对其深度定制，才能真正掌握自己的命运！因此，我们开发了GuiLite，希望用这6千行代码揭示UI的核心原理和定制方法。
 
 我们不推荐开发者全盘使用GuiLite；鼓励开发者在吃透代码后，根据自身业务特点，修改出更加丰富、个性的界面；或者发展出适合自己的UI框架。
 
