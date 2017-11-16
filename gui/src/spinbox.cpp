@@ -14,7 +14,7 @@
 #define ID_BT_ARROW_UP      1
 #define ID_BT_ARROW_DOWN    2
 
-GLT_BEGIN_MESSAGE_MAP(c_spin_box,c_wnd)
+GLT_BEGIN_MESSAGE_MAP(c_spin_box)
 ON_GLT_BN_CLICKED(ID_BT_ARROW_UP, c_spin_box::on_arrow_up_bt_click)
 ON_GLT_BN_CLICKED(ID_BT_ARROW_DOWN, c_spin_box::on_arrow_down_bt_click)
 GLT_END_MESSAGE_MAP()

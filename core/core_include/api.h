@@ -34,13 +34,11 @@ typedef struct _T_TIME
 long get_time_in_second();
 T_TIME second_to_day(long second);
 T_TIME get_time();
-T_TIME set_time(T_TIME ret);
 
 void start_real_timer(void (*func)(void* arg));
-long int get_tick();
-unsigned int get_current_task_id();
-
 void register_timer(int milli_second, void func(void* ptmr, void* parg));
+
+unsigned int get_cur_thread_id();
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg);
 void thread_sleep(unsigned int milli_seconds);
 int build_bmp(char *filename, unsigned int width, unsigned int height, unsigned char *data);

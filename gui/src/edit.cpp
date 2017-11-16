@@ -17,7 +17,7 @@
 #define IDD_ALL_KEY_BOARD		0x5012
 #define IDD_NUM_KEY_BOARD		0x5013
 
-GLT_BEGIN_MESSAGE_MAP(c_edit,c_wnd)
+GLT_BEGIN_MESSAGE_MAP(c_edit)
 ON_KEYBORAD_UPDATE(IDD_ALL_KEY_BOARD, c_edit::on_key_board_click)
 ON_KEYBORAD_UPDATE(IDD_NUM_KEY_BOARD, c_edit::on_key_board_click)
 GLT_END_MESSAGE_MAP()

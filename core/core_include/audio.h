@@ -11,14 +11,9 @@ enum AUDIO_TYPE
 class c_audio
 {
 public:
-	int play(AUDIO_TYPE type);
-	static c_audio* get_instance()
-	{
-		static c_audio s_the_audio;
-		return &s_the_audio;
-	}
+	static int play(AUDIO_TYPE type);
 private:
-	void init();
+	static void init();
 };
 
 #endif

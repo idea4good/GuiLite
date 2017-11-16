@@ -99,7 +99,7 @@ WND_TREE g_number_board_children[] =
 	{NULL,0,0,0,0,0,0}
 };
 
-GLT_BEGIN_MESSAGE_MAP(c_keyboard,c_wnd)
+GLT_BEGIN_MESSAGE_MAP(c_keyboard)
 ON_GLT_BN_CLICKED('A', c_keyboard::on_char_clicked)
 ON_GLT_BN_CLICKED('B', c_keyboard::on_char_clicked)
 ON_GLT_BN_CLICKED('C', c_keyboard::on_char_clicked)

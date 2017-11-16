@@ -12,8 +12,7 @@ typedef enum
 	GAIN_025,
 	GAIN_050,
 	GAIN_100,
-	GAIN_200,
-	GAIN_400
+	GAIN_200
 }E_WAVE_GAIN;
 
 class c_wave_buffer;
@@ -48,7 +47,6 @@ public:
 	void clear_wave();
 	
 protected:
-	virtual void pre_create_wnd();
 	void draw_smooth_vline(int y_min, int y_max, int mid, unsigned int rgb);
 	void erase_oldest_vline();
 	void save_foreground();
