@@ -1,19 +1,10 @@
 #include "../../core_include/api.h"
 #include "../../core_include/msg.h"
-#include <unistd.h>
-#include <pthread.h>
-#include <string.h>
-#include <time.h>
-#include <sys/time.h>
-#include <signal.h>
-#include <sys/times.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <sys/stat.h>
-#include <semaphore.h>
-#include <errno.h>
 #include <string.h>
 #include <stdio.h>
+#include <time.h>
+#include <conio.h>
+#include <windows.h>
 
 #define MAX_TIMER_CNT 10
 #define TIMER_UNIT 50//ms
@@ -33,7 +24,7 @@ typedef struct _timer_manage
 }_timer_manage_t;
 static struct _timer_manage timer_manage;
 
-static void* timer_routine(void*)
+DWORD WINAPI timer_routine(LPVOID lpParam)
 {
     int i;
     while(true)
@@ -51,7 +42,7 @@ static void* timer_routine(void*)
 				timer_manage.timer_info[i].timer_proc(0, 0);
 			}
 		}
-    	usleep(1000 * TIMER_UNIT);
+		Sleep(TIMER_UNIT);
     }
     return NULL;
 }
@@ -64,8 +55,8 @@ static int init_mul_timer()
 		return 0;
 	}
     memset(&timer_manage, 0, sizeof(struct _timer_manage));
-    pthread_t pid;
-    pthread_create(&pid, NULL, timer_routine, NULL);
+    DWORD pid;
+	CreateThread(NULL, 0, timer_routine, NULL, 0, &pid);
     s_is_init = true;
     return 1;
 }
@@ -96,7 +87,7 @@ static int set_a_timer(int interval, void (* timer_proc) (void* ptmr, void* parg
 
     if(i >= MAX_TIMER_CNT)
     {
-    	ASSERT(FALSE);
+		ASSERT(FALSE);
         return (-1);
     }
     return (i);
@@ -106,7 +97,7 @@ typedef void (*EXPIRE_ROUTINE)(void* arg);
 EXPIRE_ROUTINE s_expire_function;
 static c_fifo s_real_timer_fifo("real timer fifo");
 
-static void* real_timer_routine(void*)
+static DWORD WINAPI fire_real_timer(LPVOID lpParam)
 {
 	char dummy;
 	while(1)
@@ -123,13 +114,23 @@ static void* real_timer_routine(void*)
 	return 0;
 }
 
-static void expire_real_timer(int sigo)
+/*Win32 desktop only
+static void CALLBACK trigger_real_timer(UINT, UINT, DWORD_PTR, DWORD_PTR, DWORD_PTR)
 {
 	char dummy = 0x33;
-	if(s_real_timer_fifo.write(&dummy, 1) <= 0)
+	s_real_timer_fifo.write(&dummy, 1);
+}
+*/
+
+static DWORD WINAPI trigger_real_timer(LPVOID lpParam)
+{
+	char dummy = 0x33;
+	while (1)
 	{
-		ASSERT(FALSE);
+		s_real_timer_fifo.write(&dummy, 1);
+		Sleep(REAL_TIME_TASK_CYCLE_MS);
 	}
+	return 0;
 }
 
 void start_real_timer(void (*func)(void* arg))
@@ -140,24 +141,19 @@ void start_real_timer(void (*func)(void* arg))
 	}
 
 	s_expire_function = func;
-	signal(SIGALRM, expire_real_timer);
-	struct itimerval value, ovalue;
-	value.it_value.tv_sec = 0;
-	value.it_value.tv_usec = REAL_TIME_TASK_CYCLE_MS * 1000;
-	value.it_interval.tv_sec = 0;
-	value.it_interval.tv_usec = REAL_TIME_TASK_CYCLE_MS * 1000;
-	setitimer(ITIMER_REAL, &value, &ovalue);
+	//timeSetEvent(REAL_TIME_TASK_CYCLE_MS, 0, trigger_real_timer, 0, TIME_PERIODIC);//Win32 desktop only
 
-	static pthread_t s_pid;
+	static DWORD s_pid;
 	if(s_pid == 0)
 	{
-		pthread_create(&s_pid, NULL, real_timer_routine, NULL);
+		CreateThread(NULL, 0, trigger_real_timer, NULL, 0, &s_pid);
+		CreateThread(NULL, 0, fire_real_timer, NULL, 0, &s_pid);
 	}
 }
 
 unsigned int get_cur_thread_id()
 {
-	return pthread_self();
+	return GetCurrentThreadId();
 }
 
 void register_timer(int milli_second,void func(void* ptmr, void* parg))
@@ -167,59 +163,61 @@ void register_timer(int milli_second,void func(void* ptmr, void* parg))
 
 long get_time_in_second()
 {
-	return time(NULL);         /* + 8*60*60*/
+	return time(NULL);
 }
 
 T_TIME get_time()
 {
 	T_TIME ret = {0};
-	struct tm *fmt;
-	time_t timer;
-
-	timer = get_time_in_second();
-	fmt = localtime(&timer);
-	ret.year   = fmt->tm_year + 1900;
-	ret.month  = fmt->tm_mon + 1;
-	ret.day    = fmt->tm_mday;
-	ret.hour   = fmt->tm_hour;
-	ret.minute = fmt->tm_min;
-	ret.second = fmt->tm_sec;
+	
+	SYSTEMTIME time;
+	GetLocalTime(&time);
+	ret.year = time.wYear;
+	ret.month = time.wMonth;
+	ret.day = time.wDay;
+	ret.hour = time.wHour;
+	ret.minute = time.wMinute;
+	ret.second = time.wSecond;
 	return ret;
 }
 
 T_TIME second_to_day(long second)
 {
-	T_TIME ret = {0};
-	struct tm *fmt;
-	fmt = localtime(&second);
-	ret.year   = fmt->tm_year + 1900;
-	ret.month  = fmt->tm_mon + 1;
-	ret.day    = fmt->tm_mday;
-	ret.hour   = fmt->tm_hour;
-	ret.minute = fmt->tm_min;
-	ret.second = fmt->tm_sec;
+	T_TIME ret;
+	ret.year = 1999;
+	ret.month = 10;
+	ret.date = 1;
+
+	ret.second = second % 60;
+	second /= 60;
+	ret.minute = second % 60;
+	second /= 60;
+	ret.hour = (second + 8) % 24;//China time zone.
 	return ret;
 }
 
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg)
 {
-    pthread_create(thread_id, attr, start_routine, arg);
+	DWORD pid = 0;
+	CreateThread(NULL, 0, LPTHREAD_START_ROUTINE(start_routine), arg, 0, &pid);
+	*thread_id = pid;
 }
 
 void thread_sleep(unsigned int milli_seconds)
 {
-	usleep(milli_seconds * 1000);
+	Sleep(milli_seconds);
 }
 
+#pragma pack(push,1)
 typedef struct {
 	unsigned short	bfType;
 	unsigned int   	bfSize;
 	unsigned short  bfReserved1;
 	unsigned short  bfReserved2;
 	unsigned int   	bfOffBits;
-}__attribute__((packed))FileHead;
+}FileHead;
 
-typedef struct{
+typedef struct {
 	unsigned int  	biSize;
 	int 			biWidth;
 	int       		biHeight;
@@ -234,7 +232,8 @@ typedef struct{
 	unsigned int 	biRedMask;
 	unsigned int 	biGreenMask;
 	unsigned int 	biBlueMask;
-}__attribute__((packed))Infohead;
+}Infohead;
+#pragma pack(pop)
 
 int build_bmp(char *filename, unsigned int width, unsigned int height, unsigned char *data)
 {
@@ -268,20 +267,20 @@ int build_bmp(char *filename, unsigned int width, unsigned int height, unsigned 
 
 	//copy the data
 	FILE *fp;
-	if(!(fp=fopen(filename,"wb")))
+	if (!(fp = fopen(filename, "wb")))
 	{
 		return -1;
 	}
 
-	fwrite(&bmp_head, 1, sizeof(FileHead),fp);
-	fwrite(&bmp_info, 1, sizeof(Infohead),fp);
+	fwrite(&bmp_head, 1, sizeof(FileHead), fp);
+	fwrite(&bmp_info, 1, sizeof(Infohead), fp);
 
 	//fwrite(data, 1, size, fp);//top <-> bottom
 	for (int i = (height - 1); i >= 0; --i)
 	{
 		fwrite(&data[i * width * 2], 1, width * 2, fp);
 	}
-	
+
 	fclose(fp);
 	return 0;
 }

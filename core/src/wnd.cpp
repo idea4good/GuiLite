@@ -26,7 +26,51 @@ void c_wnd::pre_create_wnd()
 int c_wnd::connect(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
 		   short x, short y, short width, short height, WND_TREE* p_child_tree )
 {
-	//tbd
+	if(0 == resource_id)
+	{
+		ASSERT(FALSE);
+		return -1;
+	}
+
+	m_resource_id = resource_id;
+	m_parent  = parent;
+	m_status = STATUS_NORMAL;
+
+	if (parent)
+	{
+		m_z_order = parent->m_z_order;
+		m_surface = parent->m_surface;
+	}
+	if(NULL == m_surface)
+	{
+		ASSERT(FALSE);
+		return -2;
+	}
+
+	/* (cs.x = x * 1024 / 768) for 1027*768=>800*600 quickly*/
+	m_wnd_rect.m_left	= x;
+	m_wnd_rect.m_top    = y;
+	m_wnd_rect.m_right	= (x + width - 1);
+	m_wnd_rect.m_bottom = (y + height - 1);
+
+	c_rect rect;
+	get_screen_rect(rect);
+	ASSERT(m_surface->is_valid(rect));
+
+	pre_create_wnd();
+	set_str_id(str_id);
+
+	if ( 0 != parent )
+	{
+		parent->add_child_2_tail(this);
+	}
+
+	if (load_child_wnd(p_child_tree) >= 0)
+	{
+		load_cmd_msg();
+		on_init_children();
+	}
+	return 0;
 }
 
 int c_wnd::load_child_wnd(WND_TREE *p_child_tree)
@@ -59,7 +103,56 @@ int c_wnd::load_child_wnd(WND_TREE *p_child_tree)
 c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
 		   short x, short y, short width, short height, WND_TREE* p_child_tree )
 {
-//tbd
+	if(0 == resource_id)
+	{
+		ASSERT(FALSE);
+		return NULL;
+	}
+
+	c_wnd* wnd = clone();
+	wnd->m_resource_id = resource_id;
+	wnd->m_parent  = parent;
+	wnd->m_status = STATUS_NORMAL;
+
+	if (parent)
+	{
+		wnd->m_z_order =  parent->m_z_order;
+		wnd->m_surface = parent->m_surface;
+	}
+	else
+	{
+		wnd->m_surface = m_surface;
+	}
+	if(NULL == wnd->m_surface)
+	{
+		ASSERT(FALSE);
+		return NULL;
+	}
+
+	/* (cs.x = x * 1024 / 768) for 1027*768=>800*600 quickly*/
+	wnd->m_wnd_rect.m_left   = x;
+	wnd->m_wnd_rect.m_top    = y;
+	wnd->m_wnd_rect.m_right  = (x + width - 1);
+	wnd->m_wnd_rect.m_bottom = (y + height - 1);
+
+	c_rect rect;
+	wnd->get_screen_rect(rect);
+	ASSERT(wnd->m_surface->is_valid(rect));
+
+	wnd->pre_create_wnd();
+	wnd->set_str_id(str_id);
+
+	if ( 0 != parent )
+	{
+		parent->add_child_2_tail(wnd);
+	}
+
+	if (wnd->load_clone_child_wnd(p_child_tree) >= 0)
+	{
+		wnd->load_cmd_msg();
+		wnd->on_init_children();
+	}
+	return wnd;
 }
 
 int c_wnd::load_clone_child_wnd(WND_TREE *p_child_tree)
@@ -91,7 +184,31 @@ int c_wnd::load_clone_child_wnd(WND_TREE *p_child_tree)
 
 void c_wnd::disconnect()
 {
-	//tbd
+	if (0 == m_resource_id)
+	{
+		return;
+	}
+
+	if (NULL != m_top_child)
+	{
+		c_wnd *child = m_top_child;
+		c_wnd *next_child = NULL;
+
+		while (child)
+		{
+			next_child = child->m_next_sibling;
+			child->disconnect();
+			child = next_child;
+		}
+	}
+
+	if (0 != m_parent)
+	{
+		m_parent->unlink_child(this);
+	}
+	m_active_child = 0;
+	m_is_visible_now = false;
+	m_resource_id = 0;
 }
 
 c_wnd* c_wnd::get_wnd_ptr(unsigned short id) const
@@ -462,7 +579,65 @@ c_wnd* c_wnd::get_last_child() const
 
 int	c_wnd::unlink_child(c_wnd *child)
 {
-	//tbd
+	if ((NULL == child)
+		|| (this != child->get_parent()))
+	{
+		return -1;
+	}
+
+	if (NULL == m_top_child)
+	{
+		return -2;
+	}
+
+	int find = FALSE;
+
+	c_wnd *tmp_child = m_top_child;
+	if (tmp_child == child)
+	{
+		m_top_child = child->m_next_sibling;
+		if (NULL != child->m_next_sibling)
+		{
+			child->m_next_sibling->m_prev_sibling = NULL;
+		}
+
+		find = TRUE;
+	}
+	else
+	{
+		while (tmp_child->m_next_sibling)
+		{
+			if (child == tmp_child->m_next_sibling)
+			{
+				tmp_child->m_next_sibling = child->m_next_sibling;
+				if (NULL != child->m_next_sibling)
+				{
+					child->m_next_sibling->m_prev_sibling = tmp_child;
+				}
+
+				find = TRUE;
+				break;
+			}
+
+			tmp_child = tmp_child->m_next_sibling;
+		}
+	}
+
+	if (TRUE == find)
+	{
+		if (m_active_child == child)
+		{
+			m_active_child = NULL;
+		}
+
+		child->m_next_sibling = NULL;
+		child->m_prev_sibling = NULL;
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 void c_wnd::display_window()
@@ -486,7 +661,24 @@ void c_wnd::display_window()
 
 void c_wnd::hide_widow()
 {
-	//tbd
+	c_wnd *child = m_top_child;
+
+	if ( true == m_is_visible_now )
+	{
+		if ( NULL != child )
+		{
+			while ( child )
+			{
+				child->show_window(GLT_WIN_HIDE);
+				child = child->m_next_sibling;
+			}
+		}
+		m_is_visible_now = false;
+		if (m_parent && (m_parent->get_active_child() == this))
+		{
+			m_parent->on_kill_focus();
+		}
+	}
 }
 
 void c_wnd::show_window(int show_type)
@@ -530,7 +722,29 @@ void c_wnd::on_touch_down(int x, int y)
 
 void c_wnd::on_touch_up(int x, int y)
 {
-	//tbd
+	c_rect rect;
+	x -= m_wnd_rect.m_left;
+	y -= m_wnd_rect.m_top;
+	c_wnd *pChild = m_top_child;
+
+	if ( pChild != NULL )
+	{
+		while ( pChild )
+		{
+			if (pChild->is_visible())
+			{
+				pChild->get_wnd_rect(rect);
+				if ( TRUE == rect.PtInRect(x, y) )
+				{
+					if ( TRUE == pChild->is_focus_wnd() )
+					{
+						pChild->on_touch_up(x, y);
+					}
+				}
+			}
+			pChild = pChild->get_next_sibling();
+		}
+	}
 }
 
 void c_wnd::notify_parent(unsigned short msg_id, unsigned int w_param, long l_param)

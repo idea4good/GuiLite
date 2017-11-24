@@ -171,7 +171,102 @@ void c_surface::draw_vline(int x, int y0, int y1, unsigned int rgb, unsigned int
 
 void c_surface::draw_line(int x1, int y1, int x2, int y2, unsigned int rgb, unsigned int z_order)
 {
-	return;
+	int dx, dy, e;
+	dx = x2 - x1;
+	dy = y2 - y1;
+
+	if ((dx >= 0) && (dy >= 0))
+	{
+		if (dx >= dy)
+		{
+			e = dy - dx / 2;
+			for(; x1 <= x2; x1++, e += dy)
+			{
+				set_pixel(x1, y1, rgb, z_order);
+				if (e>0) { y1++; e -= dx; }
+			}
+		}
+		else
+		{
+			e = dx - dy / 2;
+			for(; y1 <= y2; y1++, e += dx)
+			{
+				set_pixel(x1, y1, rgb, z_order);
+				if (e>0) { x1++; e -= dy; }
+			}
+		}
+	}
+
+	else if ((dx >= 0) && (dy < 0))
+	{
+		dy = -dy;
+		if (dx >= dy)
+		{
+			e = dy - dx / 2;
+			for(; x1 <= x2; x1++, e += dy)
+			{
+				set_pixel(x1, y1, rgb, z_order);
+				if (e>0) { y1--; e -= dx; }
+			}
+		}
+		else
+		{
+			e = dx - dy / 2;
+			for(; y1 >= y2; y1--, e += dx)
+			{
+				set_pixel(x1, y1, rgb, z_order);
+				if (e>0) { x1++; e -= dy; }
+			}
+		}
+	}
+
+	else if ((dx < 0) && (dy >= 0))
+	{
+		dx = -dx;
+		if (dx >= dy)
+		{
+			e = dy - dx / 2;
+			for(; x1 >= x2; x1--, e += dy)
+			{
+				set_pixel(x1, y1, rgb, z_order);
+				if (e>0) { y1++; e -= dx; }
+			}
+		}
+		else
+		{
+			e = dx - dy / 2;
+			for(; y1 <= y2; y1++, e += dx)
+			{
+				set_pixel(x1, y1, rgb, z_order);
+				if (e>0) { x1--; e -= dy; }
+			}
+		}
+	}
+
+	else if ((dx < 0) && (dy < 0))
+	{
+		dx = -dx;
+		dy = -dy;
+		if (dx >= dy)
+		{
+			e = dy - dx / 2;
+			for(; x1 >= x2; x1--, e += dy)
+			{
+				set_pixel(x1, y1, rgb, z_order);
+				if (e>0) { y1--; e -= dx; }
+			}
+		}
+		else
+		{
+			e = dx - dy / 2;
+			while (y1-- >= y2)
+			for(; y1 >= y2; y1--, e += dx)
+			{
+				set_pixel(x1, y1, rgb, z_order);
+				if (e>0) { x1--; e -= dy; }
+			}
+		}
+	}
 }
 
 void c_surface::draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order)
