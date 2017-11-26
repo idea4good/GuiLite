@@ -24,3 +24,5 @@
 *.exe
 *.out
 *.app
+/core/Debug
+/core/.vs/core/v15
