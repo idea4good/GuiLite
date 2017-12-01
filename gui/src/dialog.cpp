@@ -174,7 +174,7 @@ int c_dialog::set_me_the_dialog()
 		if(ms_the_dialogs[i].surface == NULL)
 		{
 			ms_the_dialogs[i].dialog = this;
-			if(this)
+			//if(this) // always true
 			{
 				ms_the_dialogs[i].surface = surface;
 			}

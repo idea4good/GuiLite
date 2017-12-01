@@ -15,6 +15,11 @@
 
 #define CHECK_ERROR(ret) if(ret != 0){ASSERT(FALSE);}
 
+// not found in vs2008
+#ifndef AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM
+#   define AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM 0x80000000
+#endif
+
 typedef struct
 {
 	AUDIO_TYPE type;

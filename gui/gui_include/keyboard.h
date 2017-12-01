@@ -47,7 +47,7 @@ private:
 	char m_str[32];
 	int	 m_str_len;
 	KEYBOARD_STATUS m_cap_status;
-	KEYBOARD_STYLE	m_stlyle;
+//	KEYBOARD_STYLE	m_stlyle; // not used
 };
 
 class c_keyboard_button : public c_button

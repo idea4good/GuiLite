@@ -38,8 +38,8 @@ c_fifo::c_fifo(const char* name)
 	m_read_sem = malloc(sizeof(sem_t));
 	m_write_mutex = malloc(sizeof(pthread_mutex_t));
 	
-	sem_init(m_read_sem, 0, 0);
-	pthread_mutex_init(m_write_mutex, NULL);
+	sem_init((sem_t*)m_read_sem, 0, 0);
+	pthread_mutex_init((pthread_mutex_t*)m_write_mutex, NULL);
 }
 
 int c_fifo::read(void* buf, int len)
@@ -50,7 +50,7 @@ int c_fifo::read(void* buf, int len)
 	{
 		if (m_tail == m_head)
 		{//empty
-			sem_wait(m_read_sem);
+			sem_wait((sem_t*)m_read_sem);
 			continue;
 		}
 		*pbuf++ = m_buf[m_head];
@@ -70,7 +70,7 @@ int c_fifo::write(void* buf, int len)
 	int i = 0;
 	int tail = m_tail;
 
-	pthread_mutex_lock(m_write_mutex);
+	pthread_mutex_lock((pthread_mutex_t*)m_write_mutex);
 	while(i < len)
 	{
 		if ((m_tail + 1) % FIFO_BUFFER_LEN == m_head)
@@ -79,14 +79,14 @@ int c_fifo::write(void* buf, int len)
 			log_out("Warning: ");
 			log_out(m_name);
 			log_out(" full\n");
-			pthread_mutex_unlock(m_write_mutex);
+			pthread_mutex_unlock((pthread_mutex_t*)m_write_mutex);
 			return 0;
 		}
 		m_buf[m_tail] = *pbuf++;
 		m_tail = (m_tail + 1) % FIFO_BUFFER_LEN;
 		i++;
 	}
-	pthread_mutex_unlock(m_write_mutex);
+	pthread_mutex_unlock((pthread_mutex_t*)m_write_mutex);
 
 	if(i != len)
 	{
@@ -94,7 +94,7 @@ int c_fifo::write(void* buf, int len)
 	}
 	else
 	{
-		sem_post(m_read_sem);
+		sem_post((sem_t*)m_read_sem);
 	}
 	return i;
 }
