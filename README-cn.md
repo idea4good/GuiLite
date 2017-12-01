@@ -55,3 +55,53 @@ surface层：
 
 frame层:
 该层属于surface层的一个部分；它现实叠加界面元素而存在，
+
+## 如何编译
+
+使用xmake，实现跨平台一致性构建，请先安装xmake，[安装文档](http://xmake.io/#/zh/?id=%E5%AE%89%E8%A3%85)。
+
+在`linux/macosx/windows`等平台默认构建
+
+```console
+$ xmake
+```
+
+构建iphoneos平台目标
+
+```console
+$ xmake f -p iphoneos
+$ xmake
+```
+
+构建android平台目标
+
+```console
+$ xmake f -p android --ndk=/home/xxx/android-ndk-r10e
+$ xmake
+```
+
+在msys上构建mingw平台目标
+
+```console
+$ xmake f -p mingw
+$ xmake
+```
+
+其他平台或者交叉编译：
+
+```console
+$ xmake f -p cross --sdk=/usr/local/arm-xxx-gcc/ [--toolchains=/sdk/bin] [--cross=arm-linux-]
+$ xmake
+```
+
+更详细的交叉编译说明见：[交叉编译文档](http://xmake.io/#/zh/?id=%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91)
+
+产生vs IDE工程文件 （详细用法见文档：[生成IDE工程文件](http://xmake.io/#/zh/plugins?id=%E7%94%9F%E6%88%90ide%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6)）
+
+```console
+$ xmake project -k vs2008
+$ xmake project -k vs2017 -m "debug,release"
+$ xmake project -k makefile
+```
+
+更多关于xmake的配置和使用说明见：[xmake中文文档](http://xmake.io/#/zh/)

@@ -42,3 +42,51 @@ One display layer have many surface layers, one surface layer represent one flip
 
 frame layer:
 One surface layer has many frame layers, one frame layer represent one layer in Z direction.
+
+## How to build project?
+
+Please download and install xmake to build project, you can see [Installation Manual](http://xmake.io/#/home?id=installation)。
+
+#### linux/macosx/windows
+
+```console
+$ xmake
+```
+
+#### iPhoneos
+
+```console
+$ xmake f -p iphoneos
+$ xmake
+```
+
+#### Android
+
+```console
+$ xmake f -p android --ndk=/home/xxx/android-ndk-r10e
+$ xmake
+```
+
+#### Mingw
+
+```console
+$ xmake f -p mingw
+$ xmake
+```
+
+#### Cross compilation
+
+```console
+$ xmake f -p cross --sdk=/usr/local/arm-xxx-gcc/ [--toolchains=/sdk/bin] [--cross=arm-linux-]
+$ xmake
+```
+
+#### Generate IDE Project Files
+
+```console
+$ xmake project -k vs2008
+$ xmake project -k vs2017 -m "debug,release"
+$ xmake project -k makefile
+```
+
+If you want to known more info about xmake, please see [xmake documents](http://xmake.io/#/home).
