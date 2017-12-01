@@ -6,6 +6,9 @@
 #include "../../core_include/msg.h"
 #include "../../core_include/audio.h"
 
+#ifndef AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM
+	#define AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM 0x80000000
+#endif
 #define AUDIO_CHANNELS_MONO     1
 #define AUDIO_SAMPLE_RATE       44000
 #define AUDIO_BITS              16
