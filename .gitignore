@@ -28,3 +28,8 @@
 # Visual studio
 /core/Debug
 /core/.vs/core/v15
+
+# xmake
+.xmake
+build
+.DS_Store

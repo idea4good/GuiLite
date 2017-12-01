@@ -160,6 +160,7 @@ int c_keyboard::create(c_wnd *parent, unsigned short resource_id, unsigned short
 	{
 		ASSERT(FALSE);
 	}
+    return 0;
 }
 
 void c_keyboard::pre_create_wnd()
