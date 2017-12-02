@@ -1,13 +1,13 @@
-#include "../core_include/api.h"
-#include "../core_include/rect.h"
-#include "../core_include/resource_type.h"
-#include "../core_include/word.h"
-#include "../core_include/cmd_target.h"
-#include "../core_include/wnd.h"
-#include "../core_include/surface.h"
-#include "../gui_include/button.h"
-#include "../gui_include/shape_resource.h"
-#include "../gui_include/keyboard.h"
+#include "core_include/api.h"
+#include "core_include/rect.h"
+#include "core_include/resource_type.h"
+#include "core_include/word.h"
+#include "core_include/cmd_target.h"
+#include "core_include/wnd.h"
+#include "core_include/surface.h"
+#include "gui_include/button.h"
+#include "gui_include/shape_resource.h"
+#include "gui_include/keyboard.h"
 #include <string.h>
 
 #define KEYBOARD_WIDTH		(1024 * 2 / 3 - 10)//change this will change every key proportional

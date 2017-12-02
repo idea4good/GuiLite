@@ -2,9 +2,9 @@
 #include <Audioclient.h>
 #include <mmdeviceapi.h>
 
-#include "../../core_include/api.h"
-#include "../../core_include/msg.h"
-#include "../../core_include/audio.h"
+#include "core_include/api.h"
+#include "core_include/msg.h"
+#include "core_include/audio.h"
 
 #define AUDIO_CHANNELS_MONO     1
 #define AUDIO_SAMPLE_RATE       44000

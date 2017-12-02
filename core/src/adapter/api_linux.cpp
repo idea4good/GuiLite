@@ -1,5 +1,5 @@
-#include "../../core_include/api.h"
-#include "../../core_include/msg.h"
+#include "core_include/api.h"
+#include "core_include/msg.h"
 #include <unistd.h>
 #include <pthread.h>
 #include <string.h>

@@ -1,8 +1,8 @@
-#include "../core_include/api.h"
-#include "../core_include/resource_type.h"
-#include "../core_include/rect.h"
-#include "../core_include/bitmap.h"
-#include "../core_include/surface.h"
+#include "core_include/api.h"
+#include "core_include/resource_type.h"
+#include "core_include/rect.h"
+#include "core_include/bitmap.h"
+#include "core_include/surface.h"
 
 void c_bitmap::draw_bitmap(c_surface* surface, int z_order, const GUI_BITMAP *pBitmap, int x, int y)
 {

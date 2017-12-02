@@ -1,12 +1,12 @@
-#include "../core_include/api.h"
-#include "../core_include/resource_type.h"
-#include "../core_include/rect.h"
-#include "../core_include/word.h"
-#include "../core_include/surface.h"
-#include "../core_include/cmd_target.h"
-#include "../core_include/wnd.h"
-#include "../gui_include/font.h"
-#include "../gui_include/table.h"
+#include "core_include/api.h"
+#include "core_include/resource_type.h"
+#include "core_include/rect.h"
+#include "core_include/word.h"
+#include "core_include/surface.h"
+#include "core_include/cmd_target.h"
+#include "core_include/wnd.h"
+#include "gui_include/font.h"
+#include "gui_include/table.h"
 
 
 void c_table::pre_create_wnd()
