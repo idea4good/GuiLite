@@ -4,7 +4,7 @@ PROJECT(Core)
 
 ADD_DEFINITIONS(-fpermissive)
 
-INCLUDE_DIRECTORIES(core_include)
+INCLUDE_DIRECTORIES(.)
 
 FILE(GLOB MAIN 		src/*.cpp)
 FILE(GLOB ADAPTER 	src/adapter/api_linux.cpp

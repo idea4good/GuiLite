@@ -1,7 +1,7 @@
-#include "../core_include/api.h"
-#include "../core_include/rect.h"
-#include "../core_include/surface.h"
-#include "../gui_include/shape_resource.h"
+#include "core_include/api.h"
+#include "core_include/rect.h"
+#include "core_include/surface.h"
+#include "gui_include/shape_resource.h"
 
 #define LIST_BOX_SELECT	\
 {	\

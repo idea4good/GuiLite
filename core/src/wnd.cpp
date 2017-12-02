@@ -1,10 +1,10 @@
-#include "../core_include/rect.h"
-#include "../core_include/cmd_target.h"
-#include "../core_include/api.h"
-#include "../core_include/resource_type.h"
-#include "../core_include/bitmap.h"
-#include "../core_include/surface.h"
-#include "../core_include/wnd.h"
+#include "core_include/rect.h"
+#include "core_include/cmd_target.h"
+#include "core_include/api.h"
+#include "core_include/resource_type.h"
+#include "core_include/bitmap.h"
+#include "core_include/surface.h"
+#include "core_include/wnd.h"
 
 c_wnd::c_wnd(): m_status(STATUS_NORMAL), m_style(GLT_ATTR_VISIBLE), m_parent(NULL), m_top_child(NULL), m_prev_sibling(NULL), m_next_sibling(NULL),
 	m_str_id(0),m_bitmap(NULL), m_bitmap_focus(NULL), m_bitmap_pushed(NULL), m_bitmap_disable(NULL),

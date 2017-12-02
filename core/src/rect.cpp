@@ -1,5 +1,5 @@
-#include "../core_include/rect.h"
-#include "../core_include/api.h"
+#include "core_include/rect.h"
+#include "core_include/api.h"
 
 #define MAX(a,b) (((a)>(b))?(a):(b))
 #define MIN(a,b) (((a)<(b))?(a):(b))

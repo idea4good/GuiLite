@@ -1,13 +1,13 @@
-#include "../core_include/api.h"
-#include "../core_include/msg.h"
-#include "../core_include/rect.h"
-#include "../core_include/surface.h"
-#include "../core_include/display.h"
-#include "../core_include/cmd_target.h"
-#include "../core_include/wnd.h"
-#include "../gui_include/dialog.h"
-#include "../gui_include/gesture.h"
-#include "../gui_include/slide_group.h"
+#include "core_include/api.h"
+#include "core_include/msg.h"
+#include "core_include/rect.h"
+#include "core_include/surface.h"
+#include "core_include/display.h"
+#include "core_include/cmd_target.h"
+#include "core_include/wnd.h"
+#include "gui_include/dialog.h"
+#include "gui_include/gesture.h"
+#include "gui_include/slide_group.h"
 #include <stdlib.h>
 
 //#define FLIP_STEP			300//for arm

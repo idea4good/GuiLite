@@ -1,5 +1,5 @@
-#include "../../core_include/api.h"
-#include "../../core_include/msg.h"
+#include "core_include/api.h"
+#include "core_include/msg.h"
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
