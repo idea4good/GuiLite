@@ -1,7 +1,7 @@
 # GuiLite - 揭示UI原理，打造你自己的UI（框架） - 开发者qq群：527251257
-超轻量UI框架 - GuiLite是由6千行左右的C/C++代码编写而成。它像MFC，QT一样为开发者提供界面支持。
+超轻量UI框架 - GuiLite是由6千行左右的C/C++代码编写而成，它像MFC，QT一样为开发者提供界面支持。
 
-GuiLite可以嵌入到其他UI系统中，与Android、UWP、MFC、QT一起玩耍，相互支持。开发者可以用GuiLite开发界面的跨平台部分，同时也充分使用MFC，QT，Android，Linux，Windows的界面特性，让自己的界面集百家之长，又不失个性。具体实现方法请见GuiliteSamples库。
+GuiLite可以嵌入到其他平台中，与Android、Linux、Windows、MFC、QT、 **VR** 、 **单片机** 一起玩耍，相互支持。开发者可以用GuiLite开发界面的跨平台部分，同时也充分使用MFC，QT，Android，Linux，Windows的界面特性，让自己的界面集百家之长，又不失个性。具体实现方法请见GuiliteSamples库。
 
 相比其他强大的UI框架，GuiLite只聚焦界面开发（特别是手机风格的滑动界面），只使用最基础的C++特性，直达绘制底层。希望通过减少代码，调用层次，让UI框架的体积最小，效率更高，使之流畅运行在：手机，电脑，单片机等硬件环境上。
 
