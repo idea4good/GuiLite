@@ -53,7 +53,7 @@ display层：
 该层对应了物理显存，display层决定了一个显示终端的最终显示效果；通常系统中至少有一个display层。
 
 surface层：
-该层属于display层的一个部分；它为左右滑动而存在，每一张滑动页面均对应了一个surface层；surface层决定了一个滑动页面的最终显示效果；通常1个display层会对应多个display层。
+该层属于display层的一个部分；它为左右滑动而存在，每一张滑动页面均对应了一个surface层；surface层决定了一个滑动页面的最终显示效果；通常1个display层会对应多个surface层。
 
 frame层:
 该层属于surface层的一个部分；它现实叠加界面元素而存在，
