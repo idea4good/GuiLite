@@ -1,6 +1,7 @@
 # GuiLite - made by 6000 lines code
-[中文](README-cn.md)
 ![Demo](demo.gif)
+[中文](README-cn.md)
+
 GuiLite is written by 6000 lines C/C++ code, just like MFC/QT, it provide UI framework for developer.
 
 GuiLite is a embeded UI framework, it can work with QT/MFC/UWP APP, this mean you can not only develop your UI with Guilite, and also get QT/MFC/UWP/Android UI feature as well.
