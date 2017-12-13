@@ -17,39 +17,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core_include\api.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
-    <ClInclude Include="core_include\audio.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
-    <ClInclude Include="core_include\bitmap.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
-    <ClInclude Include="core_include\cmd_target.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
-    <ClInclude Include="core_include\msg.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
-    <ClInclude Include="core_include\rect.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
-    <ClInclude Include="core_include\resource_type.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
-    <ClInclude Include="core_include\wave_buffer.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
-    <ClInclude Include="core_include\wave_ctrl.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
-    <ClInclude Include="core_include\wnd.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
-    <ClInclude Include="core_include\word.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
     <ClInclude Include="gui_include\button.h">
       <Filter>Header Files\gui_include</Filter>
     </ClInclude>
@@ -83,11 +50,47 @@
     <ClInclude Include="gui_include\table.h">
       <Filter>Header Files\gui_include</Filter>
     </ClInclude>
-    <ClInclude Include="core_include\surface.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
     <ClInclude Include="gui_include\slide_group.h">
       <Filter>Header Files\gui_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\surface.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\wave_buffer.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\wave_ctrl.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\wnd.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\word.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\api.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\audio.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\bitmap.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\cmd_target.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\display.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\msg.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\rect.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\core\core_include\resource_type.h">
+      <Filter>Header Files\core_include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,8 +3,6 @@
 
 #define MAX_PAGES	5
 
-#include "../core_include/surface.h"
-
 class c_slide_group : public c_wnd {
 public:
 	c_slide_group();

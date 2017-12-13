@@ -1,16 +1,17 @@
-#include "../core_include/api.h"
-#include "../core_include/rect.h"
-#include "../core_include/cmd_target.h"
-#include "../core_include/wnd.h"
-#include "../core_include/msg.h"
+#include "core_include/api.h"
+#include "core_include/rect.h"
+#include "core_include/cmd_target.h"
+#include "core_include/wnd.h"
+#include "core_include/msg.h"
+#include "core_include/surface.h"
+#include "core_include/resource_type.h"
+#include "core_include/bitmap.h"
+#include "core_include/word.h"
 #include "../gui_include/button.h"
 #include "../gui_include/font.h"
 #include "../gui_include/dialog.h"
-#include "../core_include/surface.h"
 #include "../gui_include/shape_resource.h"
-#include "../core_include/resource_type.h"
-#include "../core_include/bitmap.h"
-#include "../core_include/word.h"
+
 #include <string.h>
 
 DIALOG_ARRAY c_dialog::ms_the_dialogs[MAX_DIALOG];

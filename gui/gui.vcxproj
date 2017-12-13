@@ -72,10 +72,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
+    <IncludePath>..\core;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\core;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -148,18 +152,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="core_include\api.h" />
-    <ClInclude Include="core_include\audio.h" />
-    <ClInclude Include="core_include\bitmap.h" />
-    <ClInclude Include="core_include\cmd_target.h" />
-    <ClInclude Include="core_include\surface.h" />
-    <ClInclude Include="core_include\msg.h" />
-    <ClInclude Include="core_include\rect.h" />
-    <ClInclude Include="core_include\resource_type.h" />
-    <ClInclude Include="core_include\wave_buffer.h" />
-    <ClInclude Include="core_include\wave_ctrl.h" />
-    <ClInclude Include="core_include\wnd.h" />
-    <ClInclude Include="core_include\word.h" />
+    <ClInclude Include="..\core\core_include\api.h" />
+    <ClInclude Include="..\core\core_include\audio.h" />
+    <ClInclude Include="..\core\core_include\bitmap.h" />
+    <ClInclude Include="..\core\core_include\cmd_target.h" />
+    <ClInclude Include="..\core\core_include\display.h" />
+    <ClInclude Include="..\core\core_include\msg.h" />
+    <ClInclude Include="..\core\core_include\rect.h" />
+    <ClInclude Include="..\core\core_include\resource_type.h" />
+    <ClInclude Include="..\core\core_include\surface.h" />
+    <ClInclude Include="..\core\core_include\wave_buffer.h" />
+    <ClInclude Include="..\core\core_include\wave_ctrl.h" />
+    <ClInclude Include="..\core\core_include\wnd.h" />
+    <ClInclude Include="..\core\core_include\word.h" />
     <ClInclude Include="gui_include\button.h" />
     <ClInclude Include="gui_include\dialog.h" />
     <ClInclude Include="gui_include\edit.h" />
