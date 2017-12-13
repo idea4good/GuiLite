@@ -27,6 +27,7 @@
 
 # Visual studio
 Debug
+Release
 .vs
 
 # cmake
