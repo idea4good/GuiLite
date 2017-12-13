@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 PROJECT(Gui)
 
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/..)
+
 INCLUDE_DIRECTORIES(core_include
 					gui_include)
 

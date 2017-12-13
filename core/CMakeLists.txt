@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 PROJECT(Core)
 
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/..)
+
 ADD_DEFINITIONS(-fpermissive)
 
 INCLUDE_DIRECTORIES(core_include)
