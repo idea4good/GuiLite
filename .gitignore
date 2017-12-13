@@ -28,3 +28,12 @@
 # Visual studio
 Debug
 .vs
+
+# cmake
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+Makefile
+
+libcore.a
+libgui.a
