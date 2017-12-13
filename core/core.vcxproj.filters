@@ -23,9 +23,6 @@
     <ClCompile Include="src\rect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rgb.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\wave_buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

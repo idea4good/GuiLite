@@ -26,5 +26,5 @@
 *.app
 
 # Visual studio
-/core/Debug
-/core/.vs/core/v15
+Debug
+.vs

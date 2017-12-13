@@ -48,7 +48,7 @@ void c_wave_ctrl::on_init_children()
 	m_wave_bottom	= rect.m_bottom - 4;
 	m_wave_cursor	= m_wave_left;
 
-	m_bg_fb = calloc(rect.Width() * rect.Height() * 2, 1);
+	m_bg_fb = calloc(rect.Width() * rect.Height(), 2);
 }
 
 void c_wave_ctrl::set_max_min_base(short max_data, short min_data, short data_base)

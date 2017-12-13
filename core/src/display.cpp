@@ -10,10 +10,19 @@
 
 c_display* c_display::ms_displays[MAX_DISPLAY];
 
-c_display::c_display(void* phy_fb, unsigned int width, unsigned int height, unsigned int slides_cnt)
+c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int display_height,
+						unsigned int surface_width, unsigned int surface_height,
+						unsigned int color_bytes, unsigned int slides_cnt)
 {
-	m_width = width;
-	m_height = height;
+	if (color_bytes != 2 && color_bytes != 4)
+	{
+		log_out("Support 16 bits, 32 bits color only!");
+		ASSERT(FALSE);
+	}
+
+	m_width = display_width;
+	m_height = display_height;
+	m_color_bytes = color_bytes;
 	m_phy_fb = phy_fb;
 	m_hid_pipe = new c_hid_pipe(NULL);
 	for (int i = 0; i < MAX_DISPLAY; i++)
@@ -33,7 +42,8 @@ c_display::c_display(void* phy_fb, unsigned int width, unsigned int height, unsi
 	memset(m_surface_group, 0, sizeof(m_surface_group));
 	for (int i = 0; i < m_surface_cnt; i++)
 	{
-		m_surface_group[i] = new c_surface(this, m_phy_fb, width, height);
+		m_surface_group[i] = (color_bytes == 4) ? new c_surface(this, m_phy_fb, surface_width, surface_height, color_bytes) :
+												  new c_surface_16bits(this, m_phy_fb, surface_width, surface_height, color_bytes);
 	}
 }
 
@@ -70,51 +80,39 @@ c_surface* c_display::create_surface(void* usr, Z_ORDER_LEVEL max_zorder)
 	return NULL;
 }
 
-int c_display::merge_surface(c_surface* s1, c_surface* s2, int x1, int x2, int y1, int y2, int offset)
+int c_display::merge_surface(c_surface* s1, c_surface* s2, int x0, int x1, int y0, int y1, int offset)
 {
-	if (offset < 0 || offset >= m_width)
-	{
-		ASSERT(FALSE);
-		return -1;
-	}
-	if (y1 < 0 || y1 >= m_height)
-	{
-		ASSERT(FALSE);
-		return -1;
-	}
-	if (y2 < 0 || y2 >= m_height)
-	{
-		ASSERT(FALSE);
-		return -1;
-	}
-	if (x1 < 0 || x1 >= m_width)
-	{
-		ASSERT(FALSE);
-		return -1;
-	}
-	if (x2 < 0 || x2 >= m_width)
+	int surface_width = s1->get_width();
+	int surface_height = s1->get_height();
+
+	if (offset < 0 || offset >= surface_width || y0 < 0 || y0 >= surface_height ||
+		y1 < 0 || y1 >= surface_height || x0 < 0 || x0 >= surface_width || x1 < 0 || x1 >= surface_width)
 	{
 		ASSERT(FALSE);
 		return -1;
 	}
 
-	int width = (x2 - x1 + 1);
-	if (width < 0 || width >= m_width || width < offset)
+	int width = (x1 - x0 + 1);
+	if (width < 0 || width >= surface_width || width < offset)
 	{
 		ASSERT(FALSE);
 		return -1;
 	}
 
-	for (int y = y1; y <= y2; y++)
+	x0 = (x0 >= m_width) ? (m_width - 1) : x0;
+	x1 = (x1 >= m_width) ? (m_width - 1) : x1;
+	y0 = (y0 >= m_height) ? (m_height - 1) : y0;
+	y1 = (y1 >= m_height) ? (m_height - 1) : y1;
+	for (int y = y0; y <= y1; y++)
 	{
 		//Left surface
-		char* addr_s = ((char*)(s1->m_fb) + (y * m_width + x1 + offset) * 2);
-		char* addr_d = ((char*)(m_phy_fb) + (y * m_width + x1) * 2);
-		memcpy(addr_d, addr_s, (width - offset) * 2);
+		char* addr_s = ((char*)(s1->m_fb) + (y * (s1->get_width()) + x0 + offset) * m_color_bytes);
+		char* addr_d = ((char*)(m_phy_fb) + (y * m_width + x0) * m_color_bytes);
+		memcpy(addr_d, addr_s, (width - offset) * m_color_bytes);
 		//Right surface
-		addr_s = ((char*)(s2->m_fb) + (y * m_width + x1) * 2);
-		addr_d = ((char*)(m_phy_fb) + (y * m_width + x1 + (width - offset)) * 2);
-		memcpy(addr_d, addr_s, offset * 2);
+		addr_s = ((char*)(s2->m_fb) + (y * (s2->get_width()) + x0) * m_color_bytes);
+		addr_d = ((char*)(m_phy_fb) + (y * m_width + x0 + (width - offset)) * m_color_bytes);
+		memcpy(addr_d, addr_s, offset * m_color_bytes);
 	}
 	return 0;
 }
@@ -157,5 +155,24 @@ int c_display::snap_shot(unsigned int display_id)
 
 	unsigned int width = ms_displays[display_id]->get_width();
 	unsigned int height = ms_displays[display_id]->get_height();
-	return build_bmp(path, width, height, (unsigned char*)ms_displays[display_id]->m_phy_fb);
+
+	//16 bits framebuffer
+	if (ms_displays[display_id]->m_color_bytes == 2)
+	{
+		return build_bmp(path, width, height, (unsigned char*)ms_displays[display_id]->m_phy_fb);
+	}
+
+	//32 bits framebuffer
+	unsigned short* p_bmp565_data = new unsigned short[width * height];
+	unsigned int* p_raw_data = (unsigned int*)ms_displays[display_id]->m_phy_fb;
+
+	for (int i = 0; i < width * height; i++)
+	{
+		unsigned int rgb = *p_raw_data++;
+		p_bmp565_data[i] = GLT_RGB_32_to_16(rgb);
+	}
+
+	int ret = build_bmp(path, width, height, (unsigned char*)p_bmp565_data);
+	delete []p_bmp565_data;
+	return ret;
 }

@@ -108,7 +108,7 @@ public:
 	WND_STATUS get_status() { return m_status; }
 
 	c_surface* get_surface() { return m_surface; }
-	void set_surface(c_surface* gal) { m_surface = gal; }
+	void set_surface(c_surface* surface) { m_surface = surface; }
 protected:
 	virtual void pre_create_wnd();
 	virtual void display_window();

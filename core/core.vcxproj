@@ -150,7 +150,6 @@
     <ClCompile Include="src\display.cpp" />
     <ClCompile Include="src\surface.cpp" />
     <ClCompile Include="src\rect.cpp" />
-    <ClCompile Include="src\rgb.cpp" />
     <ClCompile Include="src\wave_buffer.cpp" />
     <ClCompile Include="src\wave_ctrl.cpp" />
     <ClCompile Include="src\wnd.cpp" />

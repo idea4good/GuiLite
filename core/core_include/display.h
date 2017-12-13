@@ -9,9 +9,11 @@ class c_surface;
 
 class c_display {
 public:
-	c_display(void* phy_fb, unsigned int width, unsigned int height, unsigned int slides_cnt);
+	c_display(void* phy_fb, unsigned int display_width, unsigned int display_height,
+					unsigned int surface_width, unsigned int surface_height,
+					unsigned int color_bytes, unsigned int slides_cnt);
 	c_surface* create_surface(void* usr, Z_ORDER_LEVEL max_zorder);
-	int merge_surface(c_surface* s1, c_surface* s2, int x1, int x2, int y1, int y2, int offset);
+	int merge_surface(c_surface* s1, c_surface* s2, int x0, int x1, int y0, int y2, int offset);
 	c_hid_pipe* get_hid_pipe() { return m_hid_pipe; }
 	unsigned int get_width() { return m_width; }
 	unsigned int get_height() { return m_height; }
@@ -19,8 +21,9 @@ public:
 	static void* get_frame_buffer(unsigned int display_id, int* width, int* height);
 	static int snap_shot(unsigned int display_id);
 private:
-	unsigned int	m_width;	//in pixels
-	unsigned int	m_height;	//in pixels
+	unsigned int	m_width;		//in pixels
+	unsigned int	m_height;		//in pixels
+	unsigned int	m_color_bytes;	//16 bits, 32 bits only
 	void*			m_phy_fb;
 	c_hid_pipe*		m_hid_pipe;
 	c_surface* 		m_surface_group[SURFACE_CNT_MAX];
