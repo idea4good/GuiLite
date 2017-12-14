@@ -1,13 +1,20 @@
-## How to build core libary for Windows?
+## How to build core/gui libary for Windows?
 depdency: Windows 10, visul stdio 2015/2017
-- Open "core.sln" by Visual studio 2017
+- Open "core.sln / gui.sln" or "GuiLite.sln" by Visual studio 2017
 - Click `build` 
 
-## How to build core libary for Linux（x64 & arm）?
+## How to build core/gui libary for Linux（x64 & raspberry pi）?
+- `cd GuiLite`
 - `cmake .`
 - `make`
 
-## How to build core libary for Android?
-- `sudo apt-get install gcc-arm-linux-androideabi`
+## How to build core/gui libary for ARM Linux?
+- `cd GuiLite`
+- `cmake -D CMAKE_C_COMPILER="/usr/bin/arm-linux-gnueabi-gcc" -D CMAKE_CXX_COMPILER="/usr/bin/arm-linux-gnueabi-g++" .`
+- `make`
+
+## How to build core/gui libary for Android?
+- `cd GuiLite`
+- `sudo apt-get install gcc-arm-linux-androideabi` skip this if you have got the tool
 - `cmake cmake -D CMAKE_C_COMPILER="/usr/bin/arm-linux-androideabi-gcc" -D CMAKE_CXX_COMPILER="/usr/bin/arm-linux-androideabi-g++" .`
 - `make`
