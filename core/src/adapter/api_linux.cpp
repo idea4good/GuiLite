@@ -157,7 +157,7 @@ void start_real_timer(void (*func)(void* arg))
 
 unsigned int get_cur_thread_id()
 {
-	return pthread_self();
+	return (unsigned long)pthread_self();
 }
 
 void register_timer(int milli_second,void func(void* ptmr, void* parg))
@@ -203,7 +203,7 @@ T_TIME second_to_day(long second)
 
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg)
 {
-    pthread_create(thread_id, attr, start_routine, arg);
+    pthread_create((pthread_t*)thread_id, (pthread_attr_t const*)attr, start_routine, arg);
 }
 
 void thread_sleep(unsigned int milli_seconds)

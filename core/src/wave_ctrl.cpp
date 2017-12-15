@@ -134,7 +134,7 @@ void c_wave_ctrl::refresh_wave(unsigned char frame)
 		//get wave value
 		mid = m_wave->read_wave_data_by_frame(max, min,
 							m_frame_len_map[m_frame_len_map_index++],
-							(frame | (speed << 8) | (((unsigned int)this & 0xffff) << 16)));
+							(frame | (speed << 8) | (((unsigned long)this & 0xffff) << 16)));
 		m_frame_len_map_index %= sizeof(m_frame_len_map);
 		//gain
 		switch(m_gain)
