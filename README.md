@@ -1,9 +1,9 @@
 # GuiLite - made by 6000 lines code
-![Demo](demo.gif)
+![Demo](doc/demo.gif)
 
-[中文](README-cn.md)
+[中文](doc/README-cn.md)
 
-[How to build](HowToBuild.md)
+[How to build](doc/HowToBuild.md)
 
 GuiLite is written by 6000 lines C/C++ code, just like MFC/QT, it provide UI framework for developer.
 
@@ -36,7 +36,7 @@ All widgets derived from class c_wnd. The widget will be created when the class 
 See function draw_xxx() in surface.cpp word.cpp bitmap.cpp.
 
 ### Graphic layer
-![Graphic layer](GraphicLayer.png)
+![Graphic layer](doc/GraphicLayer.png)
 
 display layer：
 This layer for physical display device, one UI has only one display layer.
