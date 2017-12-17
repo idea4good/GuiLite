@@ -1,6 +1,6 @@
 # How to layout widgets for GuiLiteSamples::HostMonitor?
 
-All widgets was description with struce WND_TREE and ?.xml.cpp files
+All widgets were described by struct WND_TREE and ?.xml.cpp files
 
 ## How to layout slid group?
 ![Layout slides group](layout_slide_group.png)
