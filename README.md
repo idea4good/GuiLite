@@ -3,7 +3,7 @@
 
 [中文](doc/README-cn.md)
 
-[How to build](doc/HowToBuild.md)
+[How to build](doc/HowToBuild.md)  [How layout work](doc/HowLayoutWork.md)  [How message work](doc/HowMessageWork.md)
 
 GuiLite is written by 6000 lines C/C++ code, just like MFC/QT, it provide UI framework for developer.
 
