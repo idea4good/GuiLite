@@ -22,7 +22,7 @@
 - [编译/运行在任意平台上](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md)
 
 ## 开发文档
-[Code walkthrough](CodeWalkthough-cn.md)
+[代码走读](CodeWalkthough-cn.md)
 
 [如何编译?](HowToBuild.md)
 
