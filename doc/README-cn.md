@@ -22,7 +22,7 @@
 - [编译/运行在任意平台上](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md)
 
 ## 开发文档
-[Code walkthrough](CodeWalkthough.md)
+[Code walkthrough](CodeWalkthough-cn.md)
 
 [如何编译?](HowToBuild.md)
 
@@ -33,4 +33,4 @@
 ## 实例代码及运行效果:
 [GuiLiteSamples repository](https://github.com/idea4good/GuiLiteSamples)
 
-[GuiLiteSamples video](https://www.youtube.com/watch?v=grqXEz3bdC0)
+[GuiLiteSamples video](http://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
