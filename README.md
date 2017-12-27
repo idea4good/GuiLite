@@ -1,5 +1,5 @@
 # GuiLite - made by 6000 lines code
-![Mixed Reality](doc/WinMR.gif) ![Android](doc/Android.gif)
+![Mixed Reality](doc/WinMR.gif) ![Android](doc/Android.gif) ![Mac](doc/Mac.gif)
 
 [中文](doc/README-cn.md)
 
