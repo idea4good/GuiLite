@@ -1,14 +1,12 @@
-# GuiLite - made by 6000 lines code
-![Mac](doc/Mac.gif)  ![Mixed Reality](doc/WinMR.gif)
-![Android](doc/Android.gif)  ![Linux](doc/Linux.gif)
+# GuiLite - More lite, more free.
+![Mac](doc/Mac.gif) ![Mixed Reality](doc/WinMR.gif)
+![Android](doc/Android.gif) ![Linux](doc/Linux.gif)
 
 [中文](doc/README-cn.md)
 
-GuiLite is written by 6000 lines C/C++ code, just like MFC/QT, it provide UI framework for developer.
-
-GuiLite is a embeded UI framework, it can work with QT/MFC/UWP/Xcode APP, this mean you can not only develop your UI with Guilite, and also get QT/MFC/UWP/Android/Mac UI feature as well.
-
-We hope you can develop some stable feature with GuiLite, then you can run your APP on Linux/Android/Windows/VR/MR/MCU at same time.
+- GuiLite has 6000 lines C++ code, provide UI framework for developers. Just like the pictures above, GuiLite can run on **Mac, Windows VR, Android, and Linux platforms**.
+- GuiLite is a embeded UI framework, it can work with QT/MFC/UWP/Xcode, this mean you could not only get Guilite feature, but also QT/MFC/UWP/Android/Mac UI features as well.
+- GuiLite can work with other languages(eg. Swift, Java, C#).
 
 ## Quick start
 - Download GuiLite samples: `git clone https://github.com/idea4good/GuiLiteSamples.git`
