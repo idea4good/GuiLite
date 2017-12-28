@@ -1,5 +1,6 @@
-# GuiLite - 揭示UI原理，打造你自己的UI（框架） - 开发者qq群：`527251257`
-![Mixed Reality](WinMR.gif) ![Android](Android.gif) ![Mac](Mac.gif)
+f# GuiLite - 揭示UI原理，打造你自己的UI（框架） - 开发者qq群：`527251257`
+![Mac](Mac.gif)    ![Mixed Reality](WinMR.gif)
+![Android](Android.gif)    ![Linux](Linux.gif)
 
 超轻量UI框架 - GuiLite是由6千行左右的C/C++代码编写而成，它像MFC，QT一样为开发者提供界面支持。
 
