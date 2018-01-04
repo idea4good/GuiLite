@@ -13,8 +13,8 @@ Runs on Windows Mixed Reality:
 
 [中文](doc/README-cn.md)
 
-- GuiLite has 6000 lines C++ code, provide UI framework for developers. Just like the pictures above, GuiLite can run on **Mac, Windows VR, Android, and Linux platforms**.
-- GuiLite is a embeded UI framework, it can work with QT/MFC/UWP/Xcode, this mean you could not only get Guilite feature, but also QT/MFC/UWP/Android/Mac UI features as well.
+- GuiLite has 6000 lines C++ code, provide UI framework for developers. Just like the pictures above, GuiLite can run on **IOS, Android, Linux, Windows and Mac platforms**.
+- GuiLite is a embeded UI framework, it can work with QT/MFC/UWP/Xcode, this mean you could not only get Guilite feature, but also IOS/Android/Mac/QT/MFC/UWP UI features as well.
 - GuiLite can work with other languages(eg. Swift, Java, C#).
 
 ## Quick start
@@ -35,3 +35,6 @@ Runs on Windows Mixed Reality:
 [GuiLiteSamples repository](https://github.com/idea4good/GuiLiteSamples)
 
 [GuiLiteSamples video](https://www.youtube.com/watch?v=grqXEz3bdC0)
+
+## Repository Mirror
+[Link to Gitee in China](https://gitee.com/idea4good/GuiLite)

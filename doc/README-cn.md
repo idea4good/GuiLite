@@ -11,9 +11,7 @@
 
 ![Win MR](WinMR.gif)
 
-超轻量UI框架 - GuiLite是由6千行的C++代码编写而成，通过简洁的设计，让界面开发更加自由、高效、通用（上图是GuiLite在**Mac, Windows VR, Android, Linux上的运行效果**）。
-
-- GuiLite可以完美运行在Mac，Windows（包含VR），Android，**单片机**和**市面所有的 ARM Linux物联网终端**设备上。
+- GuiLite（超轻量UI框架）只有6千行代码，它可以完美运行在**IOS，Android，Windows（包含VR），Mac，单片机*和市面所有的 ARM Linux物联网终端***设备上。
 - GuiLite可以嵌入在MFC、QT、 Android等其他UI系统中，让你的界面集百家之长，又不失个性。
 - GuiLite鼓励混合编程，开发者可以用GuiLite接管UI部分，用Swift，Java，Go，C#，Python发开业务部分。
 
@@ -44,3 +42,6 @@
 [GuiLiteSamples repository](https://github.com/idea4good/GuiLiteSamples)
 
 [GuiLiteSamples video](http://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
+
+## 代码镜像
+[国内码云链接](https://gitee.com/idea4good/GuiLite)
