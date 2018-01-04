@@ -1,6 +1,15 @@
 # GuiLite - 简洁出奇迹 - 开发者qq群：`527251257`
-![Mac](Mac.gif) ![Mixed Reality](WinMR.gif)
+在IOS，Mac下的运行效果:
+
+![Mac](Mac.gif) ![IOS](Ios.landscape.gif)
+
+在Android，嵌入式ARM Linux下的运行效果:
+
 ![Android](Android.gif) ![Linux](Linux.gif)
+
+在Windows混合现实下的运行效果:
+
+![Win MR](WinMR.gif)
 
 超轻量UI框架 - GuiLite是由6千行的C++代码编写而成，通过简洁的设计，让界面开发更加自由、高效、通用（上图是GuiLite在**Mac, Windows VR, Android, Linux上的运行效果**）。
 

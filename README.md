@@ -1,6 +1,15 @@
 # GuiLite - More lite, more free.
-![Mac](doc/Mac.gif) ![Mixed Reality](doc/WinMR.gif)
+Runs on Mac & IOS:
+
+![Mac](doc/Mac.gif) ![IOS](doc/Ios.landscape.gif)
+
+Runs on Android & ARM Linux embeded:
+
 ![Android](doc/Android.gif) ![Linux](doc/Linux.gif)
+
+Runs on Windows Mixed Reality:
+
+![Win MR](doc/WinMR.gif)
 
 [中文](doc/README-cn.md)
 
