@@ -13,7 +13,7 @@ Runs on Windows Mixed Reality:
 
 [中文](doc/README-cn.md)
 
-- GuiLite has 6000 lines C++ code, provide all platform UI framework for developers. Just like the pictures above, GuiLite can run on **IOS, Android, Linux, Windows and Mac platforms**.
+- GuiLite has 6000 lines C++ code, provide **all platform UI framework** for developers. Just like the pictures above, GuiLite can run on IOS, Android, Linux, Windows and Mac platforms.
 - GuiLite is a embeded UI framework, it can work with QT/MFC/UWP/Xcode, this mean you could not only get Guilite feature, but also IOS/Android/Mac/QT/MFC/UWP UI features as well.
 - GuiLite can work with other languages(eg. Swift, Java, C#).
 
