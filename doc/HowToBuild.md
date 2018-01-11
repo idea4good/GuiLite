@@ -22,8 +22,10 @@ For example: arm-linux-gnueabi-gcc
 - Output here: /GuiLite/libcore.a libgui.a
 
 ## How to build core&gui libary for Android?
+### Install cross compiler:
+`sudo apt-get install gcc-arm-linux-androideabi` 
+
 - `cd GuiLite`
-- `sudo apt-get install gcc-arm-linux-androideabi` skip this if you have got the tool
 - `cmake -D CMAKE_C_COMPILER="/usr/bin/arm-linux-androideabi-gcc" -D CMAKE_CXX_COMPILER="/usr/bin/arm-linux-androideabi-g++" .`
 - `make`
 - Output here: /GuiLite/libcore.a libgui.a
