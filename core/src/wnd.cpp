@@ -166,16 +166,8 @@ int c_wnd::load_clone_child_wnd(WND_TREE *p_child_tree)
 	WND_TREE* p_cur = p_child_tree;
 	while(p_cur->p_wnd)
 	{
-		if (0 != p_cur->p_wnd->m_resource_id)
-		{//This wnd has been used! Do not share!
-			ASSERT(FALSE);
-			return -1;
-		}
-		else
-		{
-			p_cur->p_wnd->connect_clone(this, p_cur->resource_id, p_cur->caption_id,
-				p_cur->x, p_cur->y, p_cur->width, p_cur->height,p_cur->p_child_tree);
-		}
+		p_cur->p_wnd->connect_clone(this, p_cur->resource_id, p_cur->caption_id,
+									p_cur->x, p_cur->y, p_cur->width, p_cur->height,p_cur->p_child_tree);
 		p_cur++;
 		sum++;
 	}
