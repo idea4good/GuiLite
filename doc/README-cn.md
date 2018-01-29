@@ -1,4 +1,4 @@
-# GuiLite - 简洁出奇迹 - 开发者qq群：`527251257`
+# GuiLite - 简洁出奇迹
 在IOS，Mac下的运行效果:
 
 ![Mac](Mac.gif) ![IOS](Ios.landscape.gif)
@@ -7,9 +7,9 @@
 
 ![Android](Android.gif) ![Linux](Linux.gif)
 
-在Windows混合现实下的运行效果:
+在Windows混合现实下的运行效果及开发者QQ群:
 
-![Win MR](WinMR.gif)
+![Win MR](WinMR.gif) ![QQ group: 527251257](doc/qq.group.jpg)
 
 - GuiLite（超轻量UI框架）是6千行代码的**全平台UI框架**，可以完美运行在IOS，Android，Windows（包含VR），Mac，单片机*和市面所有的 ARM Linux物联网终端设备上。
 - GuiLite可以嵌入在IOS、Android、MFC、QT等其他UI系统中，让你的界面集百家之长，又不失个性。

@@ -7,9 +7,9 @@ Runs on Android & ARM Linux embeded:
 
 ![Android](doc/Android.gif) ![Linux](doc/Linux.gif)
 
-Runs on Windows Mixed Reality:
+Runs on Windows Mixed Reality & QQ developers group:
 
-![Win MR](doc/WinMR.gif)
+![Win MR](doc/WinMR.gif) ![QQ group: 527251257](doc/qq.group.jpg)
 
 [中文](doc/README-cn.md)
 
