@@ -1,4 +1,4 @@
-# GuiLite - Lighter, freer.
+# GuiLite - Lighter & freer
 Ran on macOS & iOS:
 
 ![macOS](doc/Mac.gif) ![iOS](doc/Ios.landscape.gif)
@@ -17,7 +17,7 @@ Ran on Windows Mixed Reality & QQ developers' group:
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
-## Quick tSart
+## Quick Start
 - Download GuiLite samples: `git clone https://github.com/idea4good/GuiLiteSamples.git`
 - `cd GuiLiteSamples\HostMonitor`
 - [Build and run on any platforms you like](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md)
@@ -27,7 +27,7 @@ Ran on Windows Mixed Reality & QQ developers' group:
 
 [How to build?](doc/HowToBuild.md)
 
-[How to use layout?](doc/HowLayoutWork.md)
+[How to layout widgets?](doc/HowLayoutWork.md)
 
 [How to dispatch messages?](doc/HowMessageWork.md)
 
