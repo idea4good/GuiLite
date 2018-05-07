@@ -39,3 +39,37 @@ surface层：
 
 frame层:
 该层属于surface层的一个部分；它现实叠加界面元素而存在。
+
+### 文件走读
+| core 文件名称 | 代码简介 |
+| --- | --- |
+| bitmap.cpp | 绘制位图，支持16 bits和32 bits |
+| cmd_target.cpp | 映射UI消息及用户自定义的消息 |
+| display.cpp | 生成显示设备，设定surface的数目，一个surface对应一个滑动页面 |
+| rect.cpp | UI元素的位置信息 |
+| surface.cpp | 实现像素点的绘制，并对各个图层（layer）进行管理 |
+| wave_buffer.cpp | 波形数据的缓冲管理 |
+| wave_ctrl.cpp | 实现波形控件 |
+| wnd.cpp | UI元素的基本类，定义所有的UI元素信息、绘制及管理办法 |
+| word.cpp | 显示文字 |
+| api_linux.cpp | Linux适配层 |
+| api_win.cpp | Window适配层 |
+| audio_linux.cpp | Linux audio适配层 |
+| audio_win.cpp | Windows audio适配层 |
+| msg_linux.cpp | Dispatch消息的Linux实现 |
+| msg_win.cpp | Dispatch消息的Windows实现 |
+
+
+| gui 文件名称 | 代码简介 |
+| --- | --- |
+| button.cpp | 按钮控件的绘制及用户点击响应函数 |
+| dialog.cpp | 对话框的绘制及管理方法 |
+| edit.cpp | Edit控件的绘制及用户点击响应函数 |
+| gesture.cpp | 手势识别方法，包括：鼠标按下，弹起及滑动 |
+| keyboard.cpp | 键盘控件的绘制及用户点击响应函数 |
+| label.cpp | 标签控件的绘制 |
+| list_box.cpp | List控件的绘制及用户点击响应函数 |
+| shape_resource.cpp | 自定义的形状资源，主要用于：支持圆角控件的缩放 |
+| slide_group.cpp | 滑动页面的显示及管理 |
+| spinbox.cpp | Spinbox控件的绘制及用户点击响应函数 |
+| table.cpp | Table控件的绘制 |
