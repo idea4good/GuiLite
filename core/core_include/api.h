@@ -15,7 +15,7 @@ void do_assert(const char* file, int line);
 
 void log_out(const char* log);
 
-#define GLT_RGB(r, g, b) ((r << 16) | (g << 8) | b)
+#define GLT_RGB(r, g, b) ((0xFF << 24) | (r << 16) | (g << 8) | b)
 #define GLT_RGB_R(rgb) ((rgb >> 16) & 0xFF)
 #define GLT_RGB_G(rgb) ((rgb >> 8) & 0xFF)
 #define GLT_RGB_B(rgb) (rgb & 0xFF)
