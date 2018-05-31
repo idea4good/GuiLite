@@ -77,4 +77,8 @@ frame层:
 ### 函数接口注释
 | display.cpp | 函数接口注释 |
 | --- | --- |
-| c_display() | c_display构造函数，输入：物理framebuffer指针，物理显示器宽度，物理显示器高度，surface宽度，surface高度，颜色深度，surface个数/滑动页面的个数 |
+| c_display | c_display构造函数，初始化显示参数。输入：物理framebuffer指针，物理显示器宽度，物理显示器高度，surface宽度，surface高度，颜色深度，surface个数/滑动页面的个数 |
+| create_surface | 创建surface/滑动页面。输入： 用户ID，图层的个数|
+| merge_surface | 横向组合surface，多用于滑动surface。输入：待组合的surface源1，待组合的surface源2，surface源1的起始点x坐标，surface源2的起始点x坐标，surface源1的起始点y坐标，surface源2的起始点y坐标，横向组合的偏移距离；输出：可能改变当前显示内容 |
+| get_frame_buffer | 获取该display的物理framebuffer指针 |
+| snap_shot | 生成当前显示的快照，并输出到bmp文件 |

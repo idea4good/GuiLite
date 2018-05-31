@@ -80,10 +80,10 @@ c_surface* c_display::create_surface(void* usr, Z_ORDER_LEVEL max_zorder)
 	return NULL;
 }
 
-int c_display::merge_surface(c_surface* s1, c_surface* s2, int x0, int x1, int y0, int y1, int offset)
+int c_display::merge_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset)
 {
-	int surface_width = s1->get_width();
-	int surface_height = s1->get_height();
+	int surface_width = s0->get_width();
+	int surface_height = s0->get_height();
 
 	if (offset < 0 || offset >= surface_width || y0 < 0 || y0 >= surface_height ||
 		y1 < 0 || y1 >= surface_height || x0 < 0 || x0 >= surface_width || x1 < 0 || x1 >= surface_width)
@@ -106,11 +106,11 @@ int c_display::merge_surface(c_surface* s1, c_surface* s2, int x0, int x1, int y
 	for (int y = y0; y <= y1; y++)
 	{
 		//Left surface
-		char* addr_s = ((char*)(s1->m_fb) + (y * (s1->get_width()) + x0 + offset) * m_color_bytes);
+		char* addr_s = ((char*)(s0->m_fb) + (y * (s0->get_width()) + x0 + offset) * m_color_bytes);
 		char* addr_d = ((char*)(m_phy_fb) + (y * m_width + x0) * m_color_bytes);
 		memcpy(addr_d, addr_s, (width - offset) * m_color_bytes);
 		//Right surface
-		addr_s = ((char*)(s2->m_fb) + (y * (s2->get_width()) + x0) * m_color_bytes);
+		addr_s = ((char*)(s1->m_fb) + (y * (s1->get_width()) + x0) * m_color_bytes);
 		addr_d = ((char*)(m_phy_fb) + (y * m_width + x0 + (width - offset)) * m_color_bytes);
 		memcpy(addr_d, addr_s, offset * m_color_bytes);
 	}
