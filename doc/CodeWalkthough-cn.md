@@ -75,7 +75,7 @@ frame层:
 | table.cpp | Table控件的绘制 |
 
 ### 函数接口注释
-| display.cpp | 函数接口注释 |
+| 函数名称 | display.cpp 函数接口注释 |
 | --- | --- |
 | c_display | c_display构造函数，初始化显示参数。输入：物理framebuffer指针，物理显示器宽度，物理显示器高度，surface宽度，surface高度，颜色深度，surface个数/滑动页面的个数 |
 | create_surface | 创建surface/滑动页面。输入： 用户ID，图层的个数|
