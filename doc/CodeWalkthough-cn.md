@@ -26,7 +26,7 @@ GuiLite只作两个工作：界面元素管理和图形绘制。
 
 ### 绘制方法
 请参看文件bitmap.cpp和surface.cpp中的draw_xxx()函数。
-
+为了发挥GPU的加速功能，也可以通过改写draw_xxx/fill_xxx函数，使用GPU特性，来提升绘制效率。
 ### 图层管理
 GuiLite的所有图层，如下图所示：
 ![Graphic layer](GraphicLayer.png)

@@ -4,7 +4,7 @@ depdency: Windows 10, visul stdio 2015/2017
 - Click `Build Solution`
 - Output here: \GuiLite\Debug(Release)\core.lib gui.lib
 
-## How to build core&gui libary for Mac and Linux（x64 & raspberry pi）?
+## How to build core&gui libary for iOS/Mac and Linux（x64 & raspberry pi）?
 - `cd GuiLite`
 - `cmake .`
 - `make`
