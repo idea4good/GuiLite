@@ -38,10 +38,13 @@
 
 [如何传递消息?](HowMessageWork.md)
 
-## 实例代码及运行效果:
-[GuiLiteSamples repository](https://github.com/idea4good/GuiLiteSamples)
+## 视频链接:
+[GuiLite简介](https://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
 
-[GuiLiteSamples video](http://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
+[GuiLite办公室](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
 
-## 代码镜像
+## 实例代码链接
+[GuiLiteSamples](https://github.com/idea4good/GuiLiteSamples)
+
+## Gitee链接
 [国内码云链接](https://gitee.com/idea4good/GuiLite)
