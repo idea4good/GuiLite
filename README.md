@@ -31,10 +31,13 @@ Ran on Windows Mixed Reality & QQ developers' group:
 
 [How to dispatch messages?](doc/HowMessageWork.md)
 
-## Examples with Videos
-[GuiLite Samples' repository](https://github.com/idea4good/GuiLiteSamples)
+## Video links
+[GuiLite introduction](https://www.youtube.com/watch?v=grqXEz3bdC0)
 
-[GuiLite Samples' video](https://www.youtube.com/watch?v=grqXEz3bdC0)
+[GuiLite office](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
 
-## Alternative Repository
+## Sample code link
+[GuiLite Samples](https://github.com/idea4good/GuiLiteSamples)
+
+## Gitee link
 [Link to Gitee in China](https://gitee.com/idea4good/GuiLite)
