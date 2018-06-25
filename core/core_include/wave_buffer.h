@@ -1,7 +1,7 @@
-#ifndef _XT_GUI_WAVE_H_
-#define _XT_GUI_WAVE_H_
+#ifndef _WAVE_BUFFER_H_
+#define _WAVE_BUFFER_H_
 
-#define WAVE_BUFFER_LEN	64
+#define WAVE_BUFFER_LEN	1024
 #define WAVE_FRAME_LEN	8
 #define BUFFER_EMPTY	-1111
 #define BUFFER_FULL		-2222;
