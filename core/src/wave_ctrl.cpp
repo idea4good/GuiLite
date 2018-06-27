@@ -30,7 +30,7 @@ c_wave_ctrl::c_wave_ctrl()
 	m_pivot_data  = 250;
 	m_wave_speed = 4;
 	m_wave_sample_rate = 0;
-	m_gain = GAIN_100;
+	m_gain = ZOOM_100;
 	m_frame_len_map_index = 0;
 
 	m_wave_name_color  = m_wave_unit_color = m_wave_color = GLT_RGB(255,0,0);
@@ -139,22 +139,22 @@ void c_wave_ctrl::refresh_wave(unsigned char frame)
 		//gain
 		switch(m_gain)
 		{
-		case GAIN_025:
+		case ZOOM_025:
 			mid = ((mid - m_pivot_data) >> 2) + m_pivot_data;
 			max = ((max - m_pivot_data) >> 2) + m_pivot_data;
 			min = ((min - m_pivot_data) >> 2) + m_pivot_data;
 			break;
-		case GAIN_050:
+		case ZOOM_050:
 			mid = ((mid - m_pivot_data) >> 1) + m_pivot_data;
 			max = ((max - m_pivot_data) >> 1) + m_pivot_data;
 			min = ((min - m_pivot_data) >> 1) + m_pivot_data;
 			break;
-		case GAIN_200:
+		case ZOOM_200:
 			mid = ((mid - m_pivot_data) << 1) + m_pivot_data;
 			max = ((max - m_pivot_data) << 1) + m_pivot_data;
 			min = ((min - m_pivot_data) << 1) + m_pivot_data;
 			break;
-		case GAIN_100:
+		case ZOOM_100:
 		default:
 			break;
 		}

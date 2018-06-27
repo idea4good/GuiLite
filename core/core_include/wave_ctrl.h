@@ -9,10 +9,10 @@ typedef enum
 
 typedef enum
 {
-	GAIN_025,
-	GAIN_050,
-	GAIN_100,
-	GAIN_200
+	ZOOM_025,
+	ZOOM_050,
+	ZOOM_100,
+	ZOOM_200
 }E_WAVE_GAIN;
 
 class c_wave_buffer;
