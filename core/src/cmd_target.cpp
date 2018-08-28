@@ -95,7 +95,7 @@ const GLT_MSG_ENTRY* c_cmd_target::FindMsgEntry(const GLT_MSG_ENTRY *pEntry,
 
 	while (MSG_CALLBACK_NULL != pEntry->callbackType)
 	{
-		if ( (msgType == pEntry->msgType) && (msgId == pEntry->msgId) && (void*)ctrlId == pEntry->pObject)
+		if ( (msgType == pEntry->msgType) && (msgId == pEntry->msgId) && (void*)(unsigned long)ctrlId == pEntry->pObject)
 		{
 			return pEntry;
 		}
