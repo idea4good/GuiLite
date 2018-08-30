@@ -20,3 +20,7 @@ TARGET_LINK_LIBRARIES(core
 			pthread
 			dl
 			sample)
+
+execute_process(
+    COMMAND ${CMAKE_SOURCE_DIR}/connect.sh Core
+)
