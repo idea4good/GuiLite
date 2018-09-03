@@ -4,11 +4,11 @@
 - GuiLite鼓励混合编程，开发者可以用GuiLite接管UI部分，用Swift，Java，Go，C#，Python发开业务部分。
 
 ## 新功能：“云”管理
-智能统计各个工程(GuiLite, GuiLiteSamples)的编译情况
+**统计代码的编译情况：**
 
 ![BuildInfo](BuildInfo.png)
 
-设备端的数据，实时同步至“云端”
+**同步“本地数据”至“云端”：**
 
 ![DataOnCloud](data_on_cloud.png)
 
