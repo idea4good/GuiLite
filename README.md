@@ -1,4 +1,18 @@
 # GuiLite - Lighter & freer
+- GuiLite has 6000 lines of C++ code, providing **UI framework for all platforms** for developers. Just like the pictures above, GuiLite can run on iOS, Android, GNU/Linux, Windows and macOS platforms.
+- GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
+- GuiLite can work with other languages(e.g. Swift, Java, C#).
+
+## New feature: Intelligent Cloud
+Report build activities
+
+![BuildInfo](doc/BuildInfo.png)
+
+Sync local data to cloud
+
+![DataOnCloud](doc/data_on_cloud.png)
+
+## Cross platform
 Ran on macOS & iOS:
 
 ![macOS](doc/Mac.gif) ![iOS](doc/Ios.landscape.gif)
@@ -13,9 +27,7 @@ Ran on Windows Mixed Reality & QQ developers' group:
 
 [中文](doc/README-cn.md)
 
-- GuiLite has 6000 lines of C++ code, providing **UI framework for all platforms** for developers. Just like the pictures above, GuiLite can run on iOS, Android, GNU/Linux, Windows and macOS platforms.
-- GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
-- GuiLite can work with other languages(e.g. Swift, Java, C#).
+
 
 ## Quick Start
 - Download GuiLite samples: `git clone https://github.com/idea4good/GuiLiteSamples.git`
