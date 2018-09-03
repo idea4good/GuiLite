@@ -4,11 +4,11 @@
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
 ## New feature: Intelligent Cloud
-Report build activities
+**Report build activities:**
 
 ![BuildInfo](doc/BuildInfo.png)
 
-Sync local data to cloud
+**Sync local data to cloud:**
 
 ![DataOnCloud](doc/data_on_cloud.png)
 
