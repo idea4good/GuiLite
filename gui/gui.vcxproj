@@ -104,7 +104,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>call "$(SolutionDir)build.bat" "Gui"</Command>
+      <Command>call "$(SolutionDir)sync.bat" "Gui"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,7 +120,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>call "$(SolutionDir)build.bat" "Gui"</Command>
+      <Command>call "$(SolutionDir)sync.bat" "Gui"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,7 +140,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>call "$(SolutionDir)build.bat" "Gui"</Command>
+      <Command>call "$(SolutionDir)sync.bat" "Gui"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -160,7 +160,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>call "$(SolutionDir)build.bat" "Gui"</Command>
+      <Command>call "$(SolutionDir)sync.bat" "Gui"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

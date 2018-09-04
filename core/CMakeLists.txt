@@ -22,5 +22,5 @@ TARGET_LINK_LIBRARIES(core
 			sample)
 
 execute_process(
-    COMMAND ${CMAKE_SOURCE_DIR}/build.sh Core
+    COMMAND ${CMAKE_SOURCE_DIR}/sync.sh Core
 )
