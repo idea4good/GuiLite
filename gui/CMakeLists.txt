@@ -14,5 +14,5 @@ ADD_LIBRARY(gui ${SRC})
 TARGET_LINK_LIBRARIES(gui core sample)
 
 execute_process(
-    COMMAND ${CMAKE_SOURCE_DIR}/sync.sh Gui
+    COMMAND ${CMAKE_SOURCE_DIR}/.sync.sh Gui
 )
