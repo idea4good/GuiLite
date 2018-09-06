@@ -3,8 +3,8 @@
 - GuiLite可以嵌入在iOS、Android、MFC、QT等其他UI系统中，让你的界面集百家之长，又不失个性。
 - GuiLite鼓励混合编程，开发者可以用GuiLite接管UI部分，用Swift，Java，Go，C#，Python发开业务部分。
 
-## 新功能：“云”管理
-**统计代码的编译情况：**
+## 新功能：自我管理
+**上报“编译/运行”情况至“云端”：**
 
 ![BuildInfo](BuildInfo.png)
 
