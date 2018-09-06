@@ -4,7 +4,7 @@
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
-## New feature: Self management
+## New feature: Self monitor
 **Report build activities to cloud:**
 
 ![BuildInfo](doc/BuildInfo.png)
