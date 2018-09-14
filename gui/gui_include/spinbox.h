@@ -58,10 +58,16 @@ protected:
 	short			m_min;
 	short			m_digit;
 
-	c_button  		m_bt_arrow_up;
-	c_button  		m_bt_arrow_down;
-	c_rect			m_bt_arrow_up_rect;
-	c_rect			m_bt_arrow_down_rect;
+	c_button  		m_bt_up;
+	c_button  		m_bt_down;
+	c_rect			m_bt_up_rect;
+	c_rect			m_bt_down_rect;
+
+public:
+	static GUI_BITMAP* ms_bt_up_normal_icon;
+	static GUI_BITMAP* ms_bt_up_focus_icon;
+	static GUI_BITMAP* ms_bt_down_normal_icon;
+	static GUI_BITMAP* ms_bt_down_focus_icon;
 };
 
 #endif

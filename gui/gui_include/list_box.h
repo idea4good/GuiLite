@@ -19,7 +19,7 @@
 class c_list_box : public c_wnd
 {
 public:
-	int add_item(unsigned short str_id);
+	int add_item(char* str);
 	void clear_item();
 	short get_item_count() { return m_item_total; }
 	void  select_item(short index);
@@ -40,7 +40,7 @@ private:
 
 	short			m_selected_item;
 	short			m_item_total;
-	unsigned short	m_item_array[MAX_ITEM_NUM];
+	char*			m_item_array[MAX_ITEM_NUM];
 	c_rect			m_list_wnd_rect;	//rect relative to parent wnd.
 	c_rect			m_list_screen_rect;	//rect relative to physical screen(frame buffer)
 };

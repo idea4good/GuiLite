@@ -15,6 +15,7 @@ void do_assert(const char* file, int line);
 
 void log_out(const char* log);
 
+#define COLOR_TRANPARENT 0xFF000000
 #define GLT_RGB(r, g, b) ((0xFF << 24) | (((unsigned int)(r)) << 16) | (((unsigned int)(g)) << 8) | ((unsigned int)(b)))
 #define GLT_RGB_R(rgb) ((((unsigned int)(rgb)) >> 16) & 0xFF)
 #define GLT_RGB_G(rgb) ((((unsigned int)(rgb)) >> 8) & 0xFF)

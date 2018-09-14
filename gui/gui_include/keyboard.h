@@ -27,7 +27,7 @@ typedef enum
 class c_keyboard: public c_wnd
 {
 public:
-	virtual int create(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
+	virtual int create(c_wnd *parent, unsigned short resource_id, char* str,
 		short x, short y, short width, short height, WND_TREE* p_child_tree = NULL);
 	KEYBOARD_STATUS get_cap_status(){return m_cap_status;}
 	void set_style(KEYBOARD_STYLE style) { m_style = style; }

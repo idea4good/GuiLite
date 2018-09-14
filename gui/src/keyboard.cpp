@@ -145,16 +145,16 @@ ON_GLT_BN_CLICKED('\n', c_keyboard::on_enter_clicked)
 ON_GLT_BN_CLICKED(0x1B, c_keyboard::on_esc_clicked)
 GLT_END_MESSAGE_MAP()
 
-int c_keyboard::create(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
+int c_keyboard::create(c_wnd *parent, unsigned short resource_id, char* str,
 	short x, short y, short width, short height, WND_TREE* p_child_tree)
 {
 	if (m_style == STYLE_ALL_BOARD)
 	{
-		return c_wnd::connect(parent, resource_id, str_id, (0 - x), (height - y - KEYBOARD_HEIGHT), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
+		return c_wnd::connect(parent, resource_id, str, (0 - x), (height - y - KEYBOARD_HEIGHT), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
 	}
 	else if(m_style == STYLE_NUM_BOARD)
 	{
-		return c_wnd::connect(parent, resource_id, str_id, x, y, NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
+		return c_wnd::connect(parent, resource_id, str, x, y, NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
 	}
 	else
 	{

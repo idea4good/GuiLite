@@ -7,16 +7,8 @@
 #include <stdio.h>
 
 #define BUFFER_LEN	16
-
-const MULTI_LAN_STRINGS * c_word::m_lang_map;
-LANGUAGE_TYPE c_word::m_lang_type;
-
-extern const MULTI_LAN_STRINGS *get_multi_lan_pointer();
-extern const MULTI_LAN_UNICODES *get_unicode_lan_pointer();
 void c_word::initiallize(LANGUAGE_TYPE language)
 {
-	m_lang_type = language;
-    m_lang_map = get_multi_lan_pointer();
 }
 
 void c_word::draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
@@ -33,42 +25,30 @@ void c_word::draw_value(c_surface* surface, int z_order, int value, int dot_posi
 	draw_string(surface, z_order, buf, x, y, font, font_color, bg_color, align_type);
 }
 
-void c_word::draw_string_in_rect(c_surface* surface, int z_order, unsigned long str_id, c_rect rect, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
-{
-	const char* s = get_string(str_id);
-	if (NULL == s)
-	{
-		return;
-	}
-	draw_string_in_rect(surface, z_order, s, rect, font, font_color, bg_color, align_type);
-}
-
 void c_word::draw_string_in_rect(c_surface* surface, int z_order, const char *s, c_rect rect, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
 	if(NULL == s)
 	{
 		return;
 	}
+	if (NULL == font)
+	{
+		ASSERT(FALSE);
+	}
 	int x, y;
 	get_string_pos(s, font, rect, align_type, x, y);
 	draw_string(surface, z_order, s, rect.m_left + x, rect.m_top + y, font, font_color, bg_color, ALIGN_LEFT);
 }
 
-void c_word::draw_string(c_surface* surface, int z_order, unsigned long str_id, int x, int y, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
+void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, int y, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
-	const char* s = get_string(str_id);
 	if (NULL == s)
 	{
 		return;
 	}
-	draw_string(surface, z_order, s, x, y, font, font_color, bg_color, align_type);
-}
-
-void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, int y, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
-{
-	if(0 == s)
+	if (NULL == font)
 	{
-		return;
+		ASSERT(FALSE);
 	}
 	for (; *s; s++)
 	{
@@ -91,21 +71,6 @@ void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, 
 		if (*s==0)
 			break;
 	}
-}
-
-const char* c_word::get_string(unsigned long str_id)
-{
-	if(NULL == m_lang_map)
-	{
-		return NULL;
-	}
-
-	if(str_id != m_lang_map[str_id].index)
-	{
-		ASSERT(FALSE);
-		return NULL;
-	}
-	return m_lang_map[str_id].text[m_lang_type];
 }
 
 const int c_word::get_font_ysize(const GUI_FONT* font_type)
@@ -292,9 +257,13 @@ void  c_word::draw_bit_line_AA(c_surface* surface, int z_order, int x, int y, un
 int c_word::get_str_pixel_length(const char *s, const GUI_FONT* font)
 {
 	int ret = 0;
-	if(0 == s)
+	if(NULL == s)
 	{
 		return ret;
+	}
+	if (NULL == font)
+	{
+		ASSERT(FALSE);
 	}
 
 	for (; *s; s++)

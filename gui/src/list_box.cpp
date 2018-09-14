@@ -27,7 +27,7 @@ void c_list_box::on_init_children()
 {
 	m_item_total = 0;
 	m_selected_item = 0;	
-	m_font_type = FONT_ENG_SMB_AA();
+	m_font_type = c_font::get_font(FONT_ENG_SMB_AA);
 	m_font_color = GLT_RGB(255,255,255);
 	m_bg_color = GLT_RGB(33,41,57);
 }
@@ -201,14 +201,14 @@ void c_list_box::show_list()
 	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], tmp_rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
 }
 
-int c_list_box::add_item(unsigned short str_id)
+int c_list_box::add_item(char* str)
 {
 	if (m_item_total >= MAX_ITEM_NUM)
 	{
 		ASSERT(FALSE);
 		return -1;
 	}
-	m_item_array[m_item_total++] = str_id;
+	m_item_array[m_item_total++] = str;
 	update_list_size();
 	return 0;
 }

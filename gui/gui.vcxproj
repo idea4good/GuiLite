@@ -194,6 +194,7 @@
     <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\dialog.cpp" />
     <ClCompile Include="src\edit.cpp" />
+    <ClCompile Include="src\font.cpp" />
     <ClCompile Include="src\gesture.cpp" />
     <ClCompile Include="src\keyboard.cpp" />
     <ClCompile Include="src\label.cpp" />

@@ -7,7 +7,7 @@
 #include "../core_include/wnd.h"
 
 c_wnd::c_wnd(): m_status(STATUS_NORMAL), m_style(GLT_ATTR_VISIBLE), m_parent(NULL), m_top_child(NULL), m_prev_sibling(NULL), m_next_sibling(NULL),
-	m_str_id(0),m_bitmap(NULL), m_bitmap_focus(NULL), m_bitmap_pushed(NULL), m_bitmap_disable(NULL),
+	m_str(0),m_bitmap(NULL), m_bitmap_focus(NULL), m_bitmap_pushed(NULL), m_bitmap_disable(NULL),
 	m_font_type(NULL), m_font_color(0), m_bg_color(0), m_is_visible_now(false),m_resource_id(0),
 	m_z_order(Z_ORDER_LEVEL_0),	m_active_child(NULL), m_surface(NULL)
 {
@@ -23,7 +23,7 @@ void c_wnd::pre_create_wnd()
 	m_style = GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS;
 }
 
-int c_wnd::connect(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
+int c_wnd::connect(c_wnd *parent, unsigned short resource_id, char* str,
 		   short x, short y, short width, short height, WND_TREE* p_child_tree )
 {
 	if(0 == resource_id)
@@ -58,7 +58,7 @@ int c_wnd::connect(c_wnd *parent, unsigned short resource_id, unsigned short str
 	ASSERT(m_surface->is_valid(rect));
 
 	pre_create_wnd();
-	set_str_id(str_id);
+	set_str(str);
 
 	if ( 0 != parent )
 	{
@@ -91,7 +91,7 @@ int c_wnd::load_child_wnd(WND_TREE *p_child_tree)
 		}
 		else
 		{
-			p_cur->p_wnd->connect(this, p_cur->resource_id, p_cur->caption_id,
+			p_cur->p_wnd->connect(this, p_cur->resource_id, p_cur->str,
 				p_cur->x, p_cur->y, p_cur->width, p_cur->height,p_cur->p_child_tree);
 		}
 		p_cur++;
@@ -100,7 +100,7 @@ int c_wnd::load_child_wnd(WND_TREE *p_child_tree)
 	return sum;
 }
 
-c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
+c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, char* str,
 		   short x, short y, short width, short height, WND_TREE* p_child_tree )
 {
 	if(0 == resource_id)
@@ -140,7 +140,7 @@ c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, unsigned 
 	ASSERT(wnd->m_surface->is_valid(rect));
 
 	wnd->pre_create_wnd();
-	wnd->set_str_id(str_id);
+	wnd->set_str(str);
 
 	if ( 0 != parent )
 	{
@@ -166,7 +166,7 @@ int c_wnd::load_clone_child_wnd(WND_TREE *p_child_tree)
 	WND_TREE* p_cur = p_child_tree;
 	while(p_cur->p_wnd)
 	{
-		p_cur->p_wnd->connect_clone(this, p_cur->resource_id, p_cur->caption_id,
+		p_cur->p_wnd->connect_clone(this, p_cur->resource_id, p_cur->str,
 									p_cur->x, p_cur->y, p_cur->width, p_cur->height,p_cur->p_child_tree);
 		p_cur++;
 		sum++;

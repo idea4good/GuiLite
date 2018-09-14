@@ -29,7 +29,7 @@ typedef struct struct_wnd_tree
 {
 	c_wnd*					p_wnd;
 	unsigned int			resource_id;
-	unsigned int			caption_id;
+	char*					str;
 	short   				x;
 	short   				y;
 	short   				width;
@@ -44,9 +44,9 @@ public:
 	c_wnd();
 	virtual ~c_wnd();
 	virtual const char* get_class_name() const { return "c_wnd"; }
-	virtual int connect(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
+	virtual int connect(c_wnd *parent, unsigned short resource_id, char* str,
 		short x, short y, short width, short height, WND_TREE* p_child_tree = NULL);
-	virtual c_wnd* connect_clone(c_wnd *parent, unsigned short resource_id, unsigned short str_id,
+	virtual c_wnd* connect_clone(c_wnd *parent, unsigned short resource_id, char* str,
 		short x, short y, short width, short height, WND_TREE* p_child_tree = NULL);
 	void disconnect();
 	virtual c_wnd* clone() = 0;
@@ -60,8 +60,8 @@ public:
 	unsigned int get_style() const { return m_style; }
 	virtual void modify_style(unsigned int add_style = 0, unsigned int remove_style = 0);
 
-	void set_str_id(unsigned short str_id) { m_str_id = str_id; }
-	unsigned short get_str_id() const { return m_str_id; }
+	void set_str(char* str) { m_str = str; }
+	char* get_str_id() const { return m_str; }
 
 	void set_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap = pBitmap; }
 	void set_focus_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap_focus = pBitmap; }
@@ -145,7 +145,7 @@ protected:
 	c_wnd*			m_top_child;
 	c_wnd*			m_prev_sibling;
 	c_wnd*			m_next_sibling;
-	unsigned short	m_str_id;
+	char*			m_str;
 
 	const GUI_BITMAP*	m_bitmap;
 	const GUI_BITMAP*	m_bitmap_focus;

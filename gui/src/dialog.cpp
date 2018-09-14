@@ -40,9 +40,9 @@ void c_dialog::on_paint()
 		}
 	}
 
-	if (m_str_id)
+	if (m_str)
 	{
-		c_word::draw_string(m_surface, m_z_order, m_str_id, rect.m_left+35, rect.m_top, FONT_ENG_MB_AA(), GLT_RGB(255, 255, 255), COLOR_TRANPARENT, ALIGN_LEFT);
+		c_word::draw_string(m_surface, m_z_order, m_str, rect.m_left+35, rect.m_top, c_font::get_font(FONT_ENG_MB_AA), GLT_RGB(255, 255, 255), COLOR_TRANPARENT, ALIGN_LEFT);
 	}
 }
 

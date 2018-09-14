@@ -16,10 +16,6 @@ FILE(GLOB ADAPTER 	src/adapter/api_linux.cpp
 ADD_LIBRARY(core
 			${MAIN}
 			${ADAPTER})
-TARGET_LINK_LIBRARIES(core 
-			pthread
-			dl
-			sample)
 
 execute_process(
     COMMAND ${CMAKE_SOURCE_DIR}/.sync.sh Core

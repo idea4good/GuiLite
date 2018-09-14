@@ -17,7 +17,6 @@ typedef enum
 
 #define INVALID_RGN 0xFFFFFF
 #define COLOR_USERDEF GLT_RGB(41,49,49)
-#define DUMMY_COLOR	GLT_RGB(0,0,0)
 
 typedef struct struct_custom_shape
 {

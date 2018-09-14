@@ -14,7 +14,7 @@
 void c_button::pre_create_wnd()
 {
 	m_style |= GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
-	m_font_type = FONT_ENG_SMB_AA();
+	m_font_type = c_font::get_font(FONT_ENG_SMB_AA);
 	m_font_color = GLT_RGB(255,255,255);
 	m_bg_color = GLT_RGB(36,36,36);
 }
@@ -105,8 +105,8 @@ void c_button::on_paint()
 		break;
 	}
 
-	if (m_str_id)
+	if (m_str)
 	{
-		c_word::draw_string_in_rect(m_surface, m_z_order, m_str_id, rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+		c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
 	}
 }
