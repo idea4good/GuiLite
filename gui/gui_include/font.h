@@ -3,7 +3,7 @@
 
 enum FONT_TYPE
 {
-	FONT_ENG_S,    
+	FONT_ENG_S,
 	FONT_ENG_SB,
 	FONT_ENG_SBM,
 	FONT_ENG_SMB,
@@ -13,7 +13,7 @@ enum FONT_TYPE
 	FONT_ENG_MB,
 	FONT_ENG_LLB,
 	FONT_ENG_LLLB,
-	FONT_ENG_LLLLB      
+	FONT_ENG_LLLLB
 };
 
 class c_font

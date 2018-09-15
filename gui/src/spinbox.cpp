@@ -10,10 +10,10 @@
 #include "../gui_include/spinbox.h"
 #include "../gui_include/shape_resource.h"
 
-GUI_BITMAP* c_spin_box::ms_bt_up_normal_icon = 0;
-GUI_BITMAP* c_spin_box::ms_bt_up_focus_icon = 0;
-GUI_BITMAP* c_spin_box::ms_bt_down_normal_icon = 0;
-GUI_BITMAP* c_spin_box::ms_bt_down_focus_icon = 0;
+const GUI_BITMAP* c_spin_box::ms_bt_up_normal_icon = 0;
+const GUI_BITMAP* c_spin_box::ms_bt_up_focus_icon = 0;
+const GUI_BITMAP* c_spin_box::ms_bt_down_normal_icon = 0;
+const GUI_BITMAP* c_spin_box::ms_bt_down_focus_icon = 0;
 
 #define ARROW_BT_HEIGHT		55
 #define ID_BT_ARROW_UP      1

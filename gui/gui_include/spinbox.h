@@ -64,10 +64,10 @@ protected:
 	c_rect			m_bt_down_rect;
 
 public:
-	static GUI_BITMAP* ms_bt_up_normal_icon;
-	static GUI_BITMAP* ms_bt_up_focus_icon;
-	static GUI_BITMAP* ms_bt_down_normal_icon;
-	static GUI_BITMAP* ms_bt_down_focus_icon;
+	static const GUI_BITMAP* ms_bt_up_normal_icon;
+	static const GUI_BITMAP* ms_bt_up_focus_icon;
+	static const GUI_BITMAP* ms_bt_down_normal_icon;
+	static const GUI_BITMAP* ms_bt_down_focus_icon;
 };
 
 #endif
