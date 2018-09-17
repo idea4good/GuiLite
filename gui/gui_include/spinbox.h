@@ -62,12 +62,6 @@ protected:
 	c_button  		m_bt_down;
 	c_rect			m_bt_up_rect;
 	c_rect			m_bt_down_rect;
-
-public:
-	static const GUI_BITMAP* ms_bt_up_normal_icon;
-	static const GUI_BITMAP* ms_bt_up_focus_icon;
-	static const GUI_BITMAP* ms_bt_down_normal_icon;
-	static const GUI_BITMAP* ms_bt_down_focus_icon;
 };
 
 #endif

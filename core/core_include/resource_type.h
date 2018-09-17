@@ -40,33 +40,13 @@ typedef struct struct_gui_font
 	unsigned char Baseline;
 } GUI_FONT;
 
-typedef enum
+typedef struct struct_custom_shape
 {
-	LANGUAGE_BEGIN = 0,
-	ENGLISH = LANGUAGE_BEGIN,
-	CHINESE,
-	LANGUAGE_MAX
-}LANGUAGE_TYPE;
-
-typedef struct  struct_multi_lan_strings
-{
-	unsigned int    index;
-	const char*     text[LANGUAGE_MAX];
-}MULTI_LAN_STRINGS;
-
-typedef struct  struct_unicode_lan_strings
-{
-	unsigned int    index;
-	const char*    unicodes;
-}MULTI_LAN_UNICODES;
-
-#define ADD_STRING( index, english) \
-{				\
-	index,      \
-	{           \
-	english,    \
-	0			\
-	}			\
-}
+	int l;
+	int t;
+	int r;
+	int b;
+	unsigned int color;
+}CUSTOM_SHAPE;
 
 #endif

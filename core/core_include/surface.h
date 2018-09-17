@@ -18,15 +18,6 @@ typedef enum
 #define INVALID_RGN 0xFFFFFF
 #define COLOR_USERDEF GLT_RGB(41,49,49)
 
-typedef struct struct_custom_shape
-{
-	int l;			 
-	int t;			 
-	int r;			 
-	int b;
-	unsigned int color;
-}CUSTOM_SHAPE;
-
 class c_display;
 class c_surface {
 	friend class c_display;
@@ -41,7 +32,7 @@ public:
 	void draw_vline(int x, int y0, int y1, unsigned int rgb, unsigned int z_order);
 	void draw_line(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
 	void draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
-	void draw_custom_shape(int l, int t, int r, int b, unsigned int color, const CUSTOM_SHAPE pRgn[], int z_order);
+	void draw_custom_shape(int l, int t, int r, int b, unsigned int color, void* shape_array, int z_order);
 	int flush_scrren(int left, int top, int right, int bottom);
 
 	bool is_valid(c_rect rect);

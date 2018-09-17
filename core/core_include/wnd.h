@@ -1,5 +1,5 @@
-#ifndef XT_GUI_WND_H
-#define XT_GUI_WND_H
+#ifndef _GUI_WND_H_
+#define _GUI_WND_H_
 
 //Window attribution
 #define GLT_WIN_SHOW			0x00000001
@@ -12,7 +12,6 @@
 typedef struct struct_gui_bitmap GUI_BITMAP;
 typedef struct struct_gui_font	GUI_FONT;
 typedef struct struct_custom_shape	CUSTOM_SHAPE;
-typedef const GUI_FONT* (*PTR_FUNC_GET_FONT)();
 
 class c_wnd;
 class c_surface;
@@ -62,11 +61,6 @@ public:
 
 	void set_str(char* str) { m_str = str; }
 	char* get_str_id() const { return m_str; }
-
-	void set_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap = pBitmap; }
-	void set_focus_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap_focus = pBitmap; }
-	void set_pushed_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap_pushed = pBitmap; }
-	void set_disable_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap_disable = pBitmap; }
 
 	bool is_visible() const { return m_is_visible_now; }
 	bool is_foreground();
@@ -136,7 +130,8 @@ protected:
 	void draw_rect(c_rect rect, unsigned int rgb);
 	void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb);
 	void fill_rect(c_rect rect, unsigned int rgb);
-	void draw_custom_shape(int l, int t, int r, int b, unsigned int color, const CUSTOM_SHAPE pRgn[]);
+	void draw_custom_shape(int l, int t, int r, int b, unsigned int color, const CUSTOM_SHAPE* shape_array);
+	void draw_custom_shape(c_rect rect, unsigned int color, const CUSTOM_SHAPE* shape_array);
 protected:
 	WND_STATUS		m_status;
 	unsigned int	m_style;
@@ -147,10 +142,6 @@ protected:
 	c_wnd*			m_next_sibling;
 	char*			m_str;
 
-	const GUI_BITMAP*	m_bitmap;
-	const GUI_BITMAP*	m_bitmap_focus;
-	const GUI_BITMAP*	m_bitmap_pushed;
-	const GUI_BITMAP*	m_bitmap_disable;
 	const GUI_FONT*		m_font_type;
 	unsigned int		m_font_color;
 	unsigned int		m_bg_color;

@@ -11,7 +11,6 @@
 #include "../gui_include/font.h"
 #include "../gui_include/dialog.h"
 #include "../gui_include/list_box.h"
-#include "../gui_include/shape_resource.h"
 #include <string.h>
 
 #define ITEM_HEIGHT				45
@@ -53,7 +52,7 @@ void c_list_box::on_paint()
 	switch(m_status)
 	{
 	case STATUS_PUSHED:
-		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_listbox_push);
+		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(LIST_BOX_PUSH));
 		m_font_color = GLT_RGB(2,124,165);
 		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
 		//draw list
@@ -74,7 +73,7 @@ void c_list_box::on_paint()
 			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
 		}
-		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_focus);
+		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_FOCUS));
 		m_font_color = GLT_RGB(255,255,255);
 		break;
 	case STATUS_NORMAL:
@@ -83,17 +82,12 @@ void c_list_box::on_paint()
 			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
 		}
-		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_normal);
+		draw_custom_shape(rect,m_parent->get_bg_color(), c_font::get_shape(BUTTON_NORMAL));
 		m_font_color = GLT_RGB(255,255,255);
 		break;
 	case STATUS_DISABLED:
-		if (m_bitmap_disable)
 		{
-			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_disable, rect, m_style);
-		}
-		else
-		{
-			draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_disable);
+			draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_DISABLE));
 		}
 		m_font_color = GLT_RGB(70,73,76);
 		break;
@@ -175,7 +169,7 @@ void c_list_box::update_list_size()
 
 void c_list_box::show_list()
 {
-	draw_custom_shape(m_list_screen_rect.m_left, m_list_screen_rect.m_top, m_list_screen_rect.m_right, m_list_screen_rect.m_bottom, m_bg_color, g_shape_listbox_extend);
+	draw_custom_shape(m_list_screen_rect, m_bg_color, c_font::get_shape(LIST_BOX_EXTEND));
 
 	m_font_color = GLT_RGB(255, 255, 255);
 	//draw all items
@@ -195,7 +189,7 @@ void c_list_box::show_list()
 	tmp_rect.m_top = m_list_screen_rect.m_top + m_selected_item * ITEM_HEIGHT;
 	tmp_rect.m_bottom = tmp_rect.m_top + ITEM_HEIGHT;
 
-	draw_custom_shape(tmp_rect.m_left, tmp_rect.m_top, tmp_rect.m_right, tmp_rect.m_bottom, GLT_RGB(0, 255, 0), g_shape_listbox_select);
+	draw_custom_shape(tmp_rect, GLT_RGB(0, 255, 0), c_font::get_shape(LIST_BOX_SELECT));
 
 	m_font_color = GLT_RGB(255, 255, 255);
 	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], tmp_rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);

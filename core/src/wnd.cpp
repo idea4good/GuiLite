@@ -7,8 +7,7 @@
 #include "../core_include/wnd.h"
 
 c_wnd::c_wnd(): m_status(STATUS_NORMAL), m_style(GLT_ATTR_VISIBLE), m_parent(NULL), m_top_child(NULL), m_prev_sibling(NULL), m_next_sibling(NULL),
-	m_str(0),m_bitmap(NULL), m_bitmap_focus(NULL), m_bitmap_pushed(NULL), m_bitmap_disable(NULL),
-	m_font_type(NULL), m_font_color(0), m_bg_color(0), m_is_visible_now(false),m_resource_id(0),
+	m_str(0), m_font_type(NULL), m_font_color(0), m_bg_color(0), m_is_visible_now(false),m_resource_id(0),
 	m_z_order(Z_ORDER_LEVEL_0),	m_active_child(NULL), m_surface(NULL)
 {
 	m_wnd_rect.Empty();
@@ -787,7 +786,12 @@ void c_wnd::fill_rect(c_rect rect, unsigned int rgb)
 	m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, rgb, m_z_order);
 }
 
-void c_wnd::draw_custom_shape(int l, int t, int r, int b, unsigned int color, const CUSTOM_SHAPE pRgn[])
+void c_wnd::draw_custom_shape(int l, int t, int r, int b, unsigned int color, const CUSTOM_SHAPE* shape_array)
 {
-	m_surface->draw_custom_shape(l, t, r, b, color, pRgn, m_z_order);
+	m_surface->draw_custom_shape(l, t, r, b, color, (void*)shape_array, m_z_order);
+}
+
+void c_wnd::draw_custom_shape(c_rect rect, unsigned int color, const CUSTOM_SHAPE* shape_array)
+{
+	m_surface->draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, color, (void*)shape_array, m_z_order);
 }

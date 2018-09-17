@@ -41,9 +41,6 @@
     <ClInclude Include="gui_include\list_box.h">
       <Filter>Header Files\gui_include</Filter>
     </ClInclude>
-    <ClInclude Include="gui_include\shape_resource.h">
-      <Filter>Header Files\gui_include</Filter>
-    </ClInclude>
     <ClInclude Include="gui_include\spinbox.h">
       <Filter>Header Files\gui_include</Filter>
     </ClInclude>
@@ -104,9 +101,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\label.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\shape_resource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\spinbox.cpp">

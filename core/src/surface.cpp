@@ -4,6 +4,7 @@
 #include "../core_include/wnd.h"
 #include "../core_include/surface.h"
 #include "../core_include/display.h"
+#include "../core_include/resource_type.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -374,24 +375,29 @@ int c_surface::copy_layer_pixel_2_fb(int x, int y, unsigned int z_order)
 	return 0;
 }
 
-void c_surface::draw_custom_shape(int l, int t, int r, int b, unsigned int color, const CUSTOM_SHAPE pRgn[], int z_order)
+void c_surface::draw_custom_shape(int l, int t, int r, int b, unsigned int color, void* shape_array, int z_order)
 {
+	if (NULL == shape_array)
+	{
+		return;
+	}
+	CUSTOM_SHAPE* p_shape = (CUSTOM_SHAPE*)shape_array;
 	int i = 0;
 	int templ, tempt, tempr, tempb;
 	unsigned int tempcolor;
-	while (INVALID_RGN != pRgn[i].l)
+	while (INVALID_RGN != p_shape[i].l)
 	{
-		templ = (pRgn[i].l < 0) ? (r + 1 + pRgn[i].l) : pRgn[i].l + l;
-		tempt = (pRgn[i].t < 0) ? (b + 1 + pRgn[i].t) : pRgn[i].t + t;
-		tempr = (pRgn[i].r < 0) ? (r + 1 + pRgn[i].r) : pRgn[i].r + l;
-		tempb = (pRgn[i].b < 0) ? (b + 1 + pRgn[i].b) : pRgn[i].b + t;
+		templ = (p_shape[i].l < 0) ? (r + 1 + p_shape[i].l) : p_shape[i].l + l;
+		tempt = (p_shape[i].t < 0) ? (b + 1 + p_shape[i].t) : p_shape[i].t + t;
+		tempr = (p_shape[i].r < 0) ? (r + 1 + p_shape[i].r) : p_shape[i].r + l;
+		tempb = (p_shape[i].b < 0) ? (b + 1 + p_shape[i].b) : p_shape[i].b + t;
 
 		if (templ >= tempr)
 			tempr = templ;
 		if (tempt >= tempb)
 			tempb = tempt;
 
-		tempcolor = (COLOR_USERDEF == pRgn[i].color) ? (color) : pRgn[i].color;
+		tempcolor = (COLOR_USERDEF == p_shape[i].color) ? (color) : p_shape[i].color;
 	
 		for (int y = tempt ; y <= tempb; y++)
 		{ 

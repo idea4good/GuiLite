@@ -186,7 +186,6 @@
     <ClInclude Include="gui_include\label.h" />
     <ClInclude Include="gui_include\list_box.h" />
     <ClInclude Include="gui_include\slide_group.h" />
-    <ClInclude Include="gui_include\shape_resource.h" />
     <ClInclude Include="gui_include\spinbox.h" />
     <ClInclude Include="gui_include\table.h" />
   </ItemGroup>
@@ -200,7 +199,6 @@
     <ClCompile Include="src\label.cpp" />
     <ClCompile Include="src\list_box.cpp" />
     <ClCompile Include="src\slide_group.cpp" />
-    <ClCompile Include="src\shape_resource.cpp" />
     <ClCompile Include="src\spinbox.cpp" />
     <ClCompile Include="src\table.cpp" />
   </ItemGroup>

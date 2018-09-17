@@ -23,12 +23,6 @@ void c_label::on_paint()
 	c_rect rect;
 	get_screen_rect(rect);
 
-	if (m_bitmap)
-	{
-		fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom,m_bg_color);
-		c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap, rect, m_style);
-	}
-
 	if (m_str)
 	{
 		fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom,m_bg_color);

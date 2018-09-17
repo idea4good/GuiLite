@@ -9,7 +9,6 @@
 #include "../gui_include/font.h"
 #include "../gui_include/button.h"
 #include "../gui_include/dialog.h"
-#include "../gui_include/shape_resource.h"
 
 void c_button::pre_create_wnd()
 {
@@ -63,7 +62,7 @@ void c_button::on_paint()
 		}
 		else
 		{
-			draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_push);
+			draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_PUSH));
 		}
 		m_font_color = GLT_RGB(255,255,255);
 		break;
@@ -74,18 +73,18 @@ void c_button::on_paint()
 		}
 		else
 		{
-			draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_focus);
+			draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_FOCUS));
 		}
 		m_font_color = GLT_RGB(255,255,255);
 		break;
 	case STATUS_NORMAL:
-		if (m_bitmap)
+		if (m_bitmap_normal)
 		{
-			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap, rect, m_style);
+			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_normal, rect, m_style);
 		}
 		else
 		{
-			draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_normal);
+			draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_NORMAL));
 		}
 		m_font_color = GLT_RGB(255,255,255);
 		break;
@@ -96,7 +95,7 @@ void c_button::on_paint()
 		}
 		else
 		{
-			draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_disable);
+			draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_DISABLE));
 		}
 		m_font_color = GLT_RGB(70,73,76);
 		break;

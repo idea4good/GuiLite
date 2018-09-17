@@ -8,12 +8,6 @@
 #include "../gui_include/button.h"
 #include "../gui_include/font.h"
 #include "../gui_include/spinbox.h"
-#include "../gui_include/shape_resource.h"
-
-const GUI_BITMAP* c_spin_box::ms_bt_up_normal_icon = 0;
-const GUI_BITMAP* c_spin_box::ms_bt_up_focus_icon = 0;
-const GUI_BITMAP* c_spin_box::ms_bt_down_normal_icon = 0;
-const GUI_BITMAP* c_spin_box::ms_bt_down_focus_icon = 0;
 
 #define ARROW_BT_HEIGHT		55
 #define ID_BT_ARROW_UP      1
@@ -128,15 +122,15 @@ void c_spin_box::show_arrow_button()
 	fill_rect(m_bt_up_rect.m_left, m_bt_up_rect.m_top, m_bt_down_rect.m_right, m_bt_down_rect.m_bottom, GLT_RGB(99,108,124));
 
 	m_bt_up.connect(this, ID_BT_ARROW_UP, 0, 0, m_wnd_rect.Height(), m_bt_up_rect.Width(),m_bt_up_rect.Height());
-	m_bt_up.set_bitmap(ms_bt_up_normal_icon);
-	m_bt_up.set_focus_bitmap(ms_bt_up_focus_icon);
-	m_bt_up.set_pushed_bitmap(ms_bt_up_focus_icon);
+	m_bt_up.set_bitmap(c_font::get_bmp(BITMAP_UP_BT_NORMAL));
+	m_bt_up.set_focus_bitmap(c_font::get_bmp(BITMAP_UP_BT_FOCUS));
+	m_bt_up.set_pushed_bitmap(c_font::get_bmp(BITMAP_UP_BT_FOCUS));
 	m_bt_up.show_window();
 
 	m_bt_down.connect(this, ID_BT_ARROW_DOWN, 0, m_bt_up_rect.Width(), m_wnd_rect.Height(), m_bt_down_rect.Width(),m_bt_down_rect.Height());
-	m_bt_down.set_bitmap(ms_bt_down_normal_icon);
-	m_bt_down.set_focus_bitmap(ms_bt_down_focus_icon);
-	m_bt_down.set_pushed_bitmap(ms_bt_down_focus_icon);
+	m_bt_down.set_bitmap(c_font::get_bmp(BITMAP_DOWN_BT_NORMAL));
+	m_bt_down.set_focus_bitmap(c_font::get_bmp(BITMAP_DOWN_BT_FOCUS));
+	m_bt_down.set_pushed_bitmap(c_font::get_bmp(BITMAP_DOWN_BT_FOCUS));
 	m_bt_down.show_window();
 }
 
@@ -165,7 +159,7 @@ void c_spin_box::on_paint()
 		m_surface->set_frame_layer(tmp_rect, m_z_order);
 		show_arrow_button();
 
-		m_surface->draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_listbox_push,m_parent->get_z_order());
+		m_surface->draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), (void*)c_font::get_shape(LIST_BOX_PUSH),m_parent->get_z_order());
 		m_font_color = GLT_RGB(2,124,165);
 		break;
 	case STATUS_FOCUSED:
@@ -177,7 +171,7 @@ void c_spin_box::on_paint()
 			m_z_order = m_parent->get_z_order();
 		}
 
-		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_focus);
+		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_FOCUS));
 		m_font_color = GLT_RGB(255,255,255);
 		break;
 	case STATUS_NORMAL:
@@ -189,7 +183,7 @@ void c_spin_box::on_paint()
 			m_z_order = m_parent->get_z_order();
 		}
 
-		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_normal);
+		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_NORMAL));
 		m_font_color = GLT_RGB(255,255,255);
 		break;
 	default:

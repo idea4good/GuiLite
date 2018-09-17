@@ -11,6 +11,11 @@ class c_button : public c_wnd
 public:
 	virtual const char* get_class_name() const {return "c_button";}
 	virtual c_wnd* clone(){return new c_button();}
+
+	void set_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap_normal = pBitmap; }
+	void set_focus_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap_focus = pBitmap; }
+	void set_pushed_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap_pushed = pBitmap; }
+	void set_disable_bitmap(const GUI_BITMAP *pBitmap) { m_bitmap_disable = pBitmap; }
 protected:
 	virtual void on_paint();
 	virtual void on_focus();
@@ -18,7 +23,11 @@ protected:
 	virtual void on_touch_down(int x, int y);
 	virtual void on_touch_up(int x, int y);
 	virtual void pre_create_wnd();
-private:
+
+	const GUI_BITMAP*	m_bitmap_normal;
+	const GUI_BITMAP*	m_bitmap_focus;
+	const GUI_BITMAP*	m_bitmap_pushed;
+	const GUI_BITMAP*	m_bitmap_disable;
 };
 
 #endif

@@ -6,7 +6,7 @@
 #include "core_include/wnd.h"
 #include "core_include/surface.h"
 #include "../gui_include/button.h"
-#include "../gui_include/shape_resource.h"
+#include "../gui_include/font.h"
 #include "../gui_include/keyboard.h"
 #include <string.h>
 
@@ -231,13 +231,13 @@ void c_keyboard_button::on_paint()
 	switch(m_status)
 	{
 	case STATUS_PUSHED:
-		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_keyboard_btn_push);
+		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(KEY_BUTTON_PUSH));
 		break;
 	case STATUS_FOCUSED:
-		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_focus);
+		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_FOCUS));
 		break;
 	case STATUS_NORMAL:
-		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_keyboard_btn_normal);
+		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(KEY_BUTTON_NORMAL));
 		break;
 	default:
 		ASSERT(FALSE);

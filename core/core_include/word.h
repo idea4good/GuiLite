@@ -5,7 +5,6 @@ class c_surface;
 class c_word
 {
 public:
-	static void initiallize(LANGUAGE_TYPE language);
 	static void draw_string(c_surface* surface, int z_order, const char *s, int x, int y, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT);
 	static void draw_string_in_rect(c_surface* surface, int z_order, const char *s, c_rect rect, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT);
 	static void draw_value(c_surface* surface, int z_order, int value, int dot_position, int x, int y, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT);

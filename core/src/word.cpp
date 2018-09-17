@@ -7,10 +7,6 @@
 #include <stdio.h>
 
 #define BUFFER_LEN	16
-void c_word::initiallize(LANGUAGE_TYPE language)
-{
-}
-
 void c_word::draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
 	char buf[BUFFER_LEN];

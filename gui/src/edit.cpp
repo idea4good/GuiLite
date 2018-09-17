@@ -8,7 +8,6 @@
 #include "../gui_include/button.h"
 #include "../gui_include/label.h"
 #include "../gui_include/edit.h"
-#include "../gui_include/shape_resource.h"
 #include "../gui_include/font.h"
 #include "../gui_include/dialog.h"
 #include "../gui_include/keyboard.h"
@@ -120,7 +119,7 @@ void c_edit::on_paint()
 			m_z_order++;
 			show_keyboard();
 		}
-		m_surface->draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_listbox_select, m_parent->get_z_order());
+		m_surface->draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), (void*)c_font::get_shape(LIST_BOX_SELECT), m_parent->get_z_order());
 		m_font_color = GLT_RGB(255,255,255);
 		break;
 	case STATUS_FOCUSED:
@@ -130,7 +129,7 @@ void c_edit::on_paint()
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
 		}
-		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_focus);
+		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_FOCUS));
 		m_font_color = GLT_RGB(255,255,255);
 		break;
 	case STATUS_NORMAL:
@@ -140,7 +139,7 @@ void c_edit::on_paint()
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
 		}
-		draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), g_shape_btn_normal);
+		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_NORMAL));
 		m_font_color = GLT_RGB(255,255,255);
 		break;
 	default:

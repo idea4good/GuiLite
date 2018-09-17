@@ -10,7 +10,6 @@
 #include "../gui_include/button.h"
 #include "../gui_include/font.h"
 #include "../gui_include/dialog.h"
-#include "../gui_include/shape_resource.h"
 
 #include <string.h>
 
