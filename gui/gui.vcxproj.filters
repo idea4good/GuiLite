@@ -26,9 +26,6 @@
     <ClInclude Include="gui_include\edit.h">
       <Filter>Header Files\gui_include</Filter>
     </ClInclude>
-    <ClInclude Include="gui_include\font.h">
-      <Filter>Header Files\gui_include</Filter>
-    </ClInclude>
     <ClInclude Include="gui_include\gesture.h">
       <Filter>Header Files\gui_include</Filter>
     </ClInclude>
@@ -89,6 +86,9 @@
     <ClInclude Include="..\core\core_include\resource_type.h">
       <Filter>Header Files\core_include</Filter>
     </ClInclude>
+    <ClInclude Include="gui_include\my_resource.h">
+      <Filter>Header Files\gui_include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\button.cpp">
@@ -121,7 +121,7 @@
     <ClCompile Include="src\slide_group.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\font.cpp">
+    <ClCompile Include="src\my_resource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -180,7 +180,7 @@
     <ClInclude Include="gui_include\button.h" />
     <ClInclude Include="gui_include\dialog.h" />
     <ClInclude Include="gui_include\edit.h" />
-    <ClInclude Include="gui_include\font.h" />
+    <ClInclude Include="gui_include\my_resource.h" />
     <ClInclude Include="gui_include\gesture.h" />
     <ClInclude Include="gui_include\keyboard.h" />
     <ClInclude Include="gui_include\label.h" />
@@ -193,7 +193,7 @@
     <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\dialog.cpp" />
     <ClCompile Include="src\edit.cpp" />
-    <ClCompile Include="src\font.cpp" />
+    <ClCompile Include="src\my_resource.cpp" />
     <ClCompile Include="src\gesture.cpp" />
     <ClCompile Include="src\keyboard.cpp" />
     <ClCompile Include="src\label.cpp" />

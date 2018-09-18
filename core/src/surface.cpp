@@ -4,7 +4,7 @@
 #include "../core_include/wnd.h"
 #include "../core_include/surface.h"
 #include "../core_include/display.h"
-#include "../core_include/resource_type.h"
+#include "../core_include/resource.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -375,13 +375,13 @@ int c_surface::copy_layer_pixel_2_fb(int x, int y, unsigned int z_order)
 	return 0;
 }
 
-void c_surface::draw_custom_shape(int l, int t, int r, int b, unsigned int color, void* shape_array, int z_order)
+void c_surface::draw_custom_shape(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* shape, int z_order)
 {
-	if (NULL == shape_array)
+	if (NULL == shape)
 	{
 		return;
 	}
-	CUSTOM_SHAPE* p_shape = (CUSTOM_SHAPE*)shape_array;
+	COLOR_RECT* p_shape = (COLOR_RECT*)shape;
 	int i = 0;
 	int templ, tempt, tempr, tempb;
 	unsigned int tempcolor;

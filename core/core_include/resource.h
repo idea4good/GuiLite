@@ -1,6 +1,7 @@
-#ifndef  _RESOURCE_TYPE_H_
-#define  _RESOURCE_TYPE_H_
+#ifndef  _RESOURCE_H_
+#define  _RESOURCE_H_
 
+//BITMAP
 typedef struct struct_gui_bitmap
 {
 	unsigned short XSize;
@@ -10,6 +11,7 @@ typedef struct struct_gui_bitmap
 	const unsigned char* pData; /* Pointer to picture data (indices) */
 } GUI_BITMAP;
 
+//FONT
 typedef struct 
 {
 	unsigned char XSize;
@@ -40,13 +42,16 @@ typedef struct struct_gui_font
 	unsigned char Baseline;
 } GUI_FONT;
 
-typedef struct struct_custom_shape
+//SHAPE
+#define INVALID_RGN 0xFFFFFF
+#define COLOR_USERDEF GLT_RGB(41,49,49)
+typedef struct struct_color_rect
 {
 	int l;
 	int t;
 	int r;
 	int b;
 	unsigned int color;
-}CUSTOM_SHAPE;
+}COLOR_RECT;
 
 #endif

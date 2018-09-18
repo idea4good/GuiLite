@@ -2,10 +2,10 @@
 #define _BUTTON_H_
 
 #define GLT_BN_CLICKED							0x1111
-
 #define ON_GLT_BN_CLICKED(ctrlId, func)                                       \
 {MSG_TYPE_WND, GLT_BN_CLICKED, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWV, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
 
+typedef struct struct_gui_bitmap GUI_BITMAP;
 class c_button : public c_wnd
 {
 public:

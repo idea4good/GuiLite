@@ -172,7 +172,7 @@
     <ClInclude Include="core_include\surface.h" />
     <ClInclude Include="core_include\msg.h" />
     <ClInclude Include="core_include\rect.h" />
-    <ClInclude Include="core_include\resource_type.h" />
+    <ClInclude Include="core_include\resource.h" />
     <ClInclude Include="core_include\wave_buffer.h" />
     <ClInclude Include="core_include\wave_ctrl.h" />
     <ClInclude Include="core_include\wnd.h" />

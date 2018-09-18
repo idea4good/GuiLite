@@ -70,9 +70,6 @@
     <ClInclude Include="core_include\rect.h">
       <Filter>Header Files\core_include</Filter>
     </ClInclude>
-    <ClInclude Include="core_include\resource_type.h">
-      <Filter>Header Files\core_include</Filter>
-    </ClInclude>
     <ClInclude Include="core_include\wave_buffer.h">
       <Filter>Header Files\core_include</Filter>
     </ClInclude>
@@ -89,6 +86,9 @@
       <Filter>Header Files\core_include</Filter>
     </ClInclude>
     <ClInclude Include="core_include\display.h">
+      <Filter>Header Files\core_include</Filter>
+    </ClInclude>
+    <ClInclude Include="core_include\resource.h">
       <Filter>Header Files\core_include</Filter>
     </ClInclude>
   </ItemGroup>

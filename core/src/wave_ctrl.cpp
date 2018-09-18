@@ -4,7 +4,7 @@
 #include "../core_include/wnd.h"
 #include "../core_include/wave_buffer.h"
 #include "../core_include/surface.h"
-#include "../core_include/resource_type.h"
+#include "../core_include/resource.h"
 #include "../core_include/word.h"
 #include "../core_include/wave_ctrl.h"
 #include <stdlib.h>

@@ -1,6 +1,11 @@
-#ifndef _FONT_H_
-#define _FONT_H_
+#ifndef _MY_RESOURCE_H_
+#define _MY_RESOURCE_H_
 
+typedef struct struct_gui_font		GUI_FONT;
+typedef struct struct_color_rect	COLOR_RECT;
+typedef struct struct_gui_bitmap GUI_BITMAP;
+
+//Redefine them to meet your need.
 enum FONT_TYPE
 {
 	FONT_ENG_S,
@@ -48,8 +53,8 @@ public:
 	static int add_bitmap(BITMAP_TYPE index, const GUI_BITMAP* bmp_resource);
 	static const GUI_BITMAP* get_bmp(BITMAP_TYPE index);
 
-	static int add_shape(SHAPE_TYPE index, const CUSTOM_SHAPE* shape_resource);
-	static const CUSTOM_SHAPE* get_shape(SHAPE_TYPE index);
+	static int add_shape(SHAPE_TYPE index, const COLOR_RECT* shape_resource);
+	static const COLOR_RECT* get_shape(SHAPE_TYPE index);
 };
 
 #endif

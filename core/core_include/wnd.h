@@ -9,9 +9,8 @@
 #define GLT_ATTR_DISABLED		0x40000000L
 #define GLT_ATTR_FOCUS			0x20000000L
 
-typedef struct struct_gui_bitmap GUI_BITMAP;
-typedef struct struct_gui_font	GUI_FONT;
-typedef struct struct_custom_shape	CUSTOM_SHAPE;
+typedef struct struct_gui_font		GUI_FONT;
+typedef struct struct_color_rect	COLOR_RECT;
 
 class c_wnd;
 class c_surface;
@@ -130,8 +129,8 @@ protected:
 	void draw_rect(c_rect rect, unsigned int rgb);
 	void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb);
 	void fill_rect(c_rect rect, unsigned int rgb);
-	void draw_custom_shape(int l, int t, int r, int b, unsigned int color, const CUSTOM_SHAPE* shape_array);
-	void draw_custom_shape(c_rect rect, unsigned int color, const CUSTOM_SHAPE* shape_array);
+	void draw_custom_shape(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* shape);
+	void draw_custom_shape(c_rect rect, unsigned int color, const COLOR_RECT* shape);
 protected:
 	WND_STATUS		m_status;
 	unsigned int	m_style;

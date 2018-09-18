@@ -2,13 +2,13 @@
 #include "core_include/rect.h"
 #include "core_include/cmd_target.h"
 #include "core_include/wnd.h"
-#include "core_include/resource_type.h"
+#include "core_include/resource.h"
 #include "core_include/word.h"
 #include "core_include/surface.h"
 #include "../gui_include/button.h"
 #include "../gui_include/label.h"
 #include "../gui_include/edit.h"
-#include "../gui_include/font.h"
+#include "../gui_include/my_resource.h"
 #include "../gui_include/dialog.h"
 #include "../gui_include/keyboard.h"
 #include <string.h>
@@ -119,7 +119,7 @@ void c_edit::on_paint()
 			m_z_order++;
 			show_keyboard();
 		}
-		m_surface->draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), (void*)c_font::get_shape(LIST_BOX_SELECT), m_parent->get_z_order());
+		m_surface->draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), c_font::get_shape(LIST_BOX_SELECT), m_parent->get_z_order());
 		m_font_color = GLT_RGB(255,255,255);
 		break;
 	case STATUS_FOCUSED:

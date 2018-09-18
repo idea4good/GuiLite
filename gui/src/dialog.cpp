@@ -4,11 +4,11 @@
 #include "core_include/wnd.h"
 #include "core_include/msg.h"
 #include "core_include/surface.h"
-#include "core_include/resource_type.h"
+#include "core_include/resource.h"
 #include "core_include/bitmap.h"
 #include "core_include/word.h"
 #include "../gui_include/button.h"
-#include "../gui_include/font.h"
+#include "../gui_include/my_resource.h"
 #include "../gui_include/dialog.h"
 
 #include <string.h>
