@@ -3,9 +3,14 @@
 
 typedef struct struct_gui_font		GUI_FONT;
 typedef struct struct_color_rect	COLOR_RECT;
-typedef struct struct_gui_bitmap GUI_BITMAP;
+typedef struct struct_gui_bitmap	GUI_BITMAP;
 
 //Redefine them to meet your need.
+#define DEFAULT_NORMAL_COLOR	GLT_RGB(211, 211, 211)
+#define DEFAULT_FOCUS_COLOR		GLT_RGB(188, 185, 182)
+#define DEFAULT_PUSH_COLOR		GLT_RGB(165, 162, 159)
+#define DEFAULT_FONT_COLOR		GLT_RGB(0, 0, 0)
+
 enum FONT_TYPE
 {
 	FONT_ENG_S,
@@ -34,7 +39,6 @@ enum SHAPE_TYPE
 	BUTTON_NORMAL,
 	BUTTON_FOCUS,
 	BUTTON_PUSH,
-	BUTTON_DISABLE,
 
 	LIST_BOX_SELECT,
 	LIST_BOX_PUSH,
@@ -44,7 +48,7 @@ enum SHAPE_TYPE
 	KEY_BUTTON_PUSH
 };
 
-class c_font
+class c_my_resource
 {
 public:
 	static int add_font(FONT_TYPE index, const GUI_FONT* font_resource);

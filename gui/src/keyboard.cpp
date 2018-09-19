@@ -230,14 +230,14 @@ void c_keyboard_button::on_paint()
 	get_screen_rect(rect);
 	switch(m_status)
 	{
-	case STATUS_PUSHED:
-		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(KEY_BUTTON_PUSH));
+	case STATUS_NORMAL:
+		fill_rects(rect, m_bg_color, c_my_resource::get_shape(KEY_BUTTON_NORMAL));
 		break;
 	case STATUS_FOCUSED:
-		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_FOCUS));
+		fill_rects(rect, m_bg_color, c_my_resource::get_shape(BUTTON_FOCUS));
 		break;
-	case STATUS_NORMAL:
-		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(KEY_BUTTON_NORMAL));
+	case STATUS_PUSHED:
+		fill_rects(rect, m_bg_color, c_my_resource::get_shape(KEY_BUTTON_PUSH));
 		break;
 	default:
 		ASSERT(FALSE);

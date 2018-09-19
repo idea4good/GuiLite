@@ -13,7 +13,7 @@
 void c_button::pre_create_wnd()
 {
 	m_style |= GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
-	m_font_type = c_font::get_font(FONT_ENG_SMB_AA);
+	m_font_type = c_my_resource::get_font(FONT_ENG_SMB_AA);
 	m_font_color = GLT_RGB(255,255,255);
 	m_bg_color = GLT_RGB(36,36,36);
 }
@@ -55,16 +55,16 @@ void c_button::on_paint()
 
 	switch(m_status)
 	{
-	case STATUS_PUSHED:
-		if (m_bitmap_pushed)
+	case STATUS_NORMAL:
+		if (m_bitmap_normal)
 		{
-			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_pushed, rect, m_style);
+			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_normal, rect, m_style);
 		}
 		else
 		{
-			draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_PUSH));
+			fill_rects(rect, m_bg_color, c_my_resource::get_shape(BUTTON_NORMAL));
 		}
-		m_font_color = GLT_RGB(255,255,255);
+		m_font_color = GLT_RGB(255, 255, 255);
 		break;
 	case STATUS_FOCUSED:
 		if (m_bitmap_focus)
@@ -73,31 +73,20 @@ void c_button::on_paint()
 		}
 		else
 		{
-			draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_FOCUS));
+			fill_rects(rect, m_bg_color, c_my_resource::get_shape(BUTTON_FOCUS));
 		}
 		m_font_color = GLT_RGB(255,255,255);
 		break;
-	case STATUS_NORMAL:
-		if (m_bitmap_normal)
+	case STATUS_PUSHED:
+		if (m_bitmap_pushed)
 		{
-			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_normal, rect, m_style);
+			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_pushed, rect, m_style);
 		}
 		else
 		{
-			draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_NORMAL));
+			fill_rects(rect, m_bg_color, c_my_resource::get_shape(BUTTON_PUSH));
 		}
-		m_font_color = GLT_RGB(255,255,255);
-		break;
-	case STATUS_DISABLED:
-		if (m_bitmap_disable)
-		{
-			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_disable, rect, m_style);
-		}
-		else
-		{
-			draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_DISABLE));
-		}
-		m_font_color = GLT_RGB(70,73,76);
+		m_font_color = GLT_RGB(255, 255, 255);
 		break;
 	default:
 		ASSERT(FALSE);

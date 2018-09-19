@@ -21,7 +21,7 @@ GLT_END_MESSAGE_MAP()
 void c_spin_box::pre_create_wnd()
 {
 	m_style = GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
-	m_font_type = c_font::get_font(FONT_ENG_SMB_AA);
+	m_font_type = c_my_resource::get_font(FONT_ENG_SMB_AA);
 	m_font_color = GLT_RGB(33,41,57);
 	m_bg_color = GLT_RGB(255,255,255);
 
@@ -122,15 +122,15 @@ void c_spin_box::show_arrow_button()
 	fill_rect(m_bt_up_rect.m_left, m_bt_up_rect.m_top, m_bt_down_rect.m_right, m_bt_down_rect.m_bottom, GLT_RGB(99,108,124));
 
 	m_bt_up.connect(this, ID_BT_ARROW_UP, 0, 0, m_wnd_rect.Height(), m_bt_up_rect.Width(),m_bt_up_rect.Height());
-	m_bt_up.set_bitmap(c_font::get_bmp(BITMAP_UP_BT_NORMAL));
-	m_bt_up.set_focus_bitmap(c_font::get_bmp(BITMAP_UP_BT_FOCUS));
-	m_bt_up.set_pushed_bitmap(c_font::get_bmp(BITMAP_UP_BT_FOCUS));
+	m_bt_up.set_bitmap(c_my_resource::get_bmp(BITMAP_UP_BT_NORMAL));
+	m_bt_up.set_focus_bitmap(c_my_resource::get_bmp(BITMAP_UP_BT_FOCUS));
+	m_bt_up.set_pushed_bitmap(c_my_resource::get_bmp(BITMAP_UP_BT_FOCUS));
 	m_bt_up.show_window();
 
 	m_bt_down.connect(this, ID_BT_ARROW_DOWN, 0, m_bt_up_rect.Width(), m_wnd_rect.Height(), m_bt_down_rect.Width(),m_bt_down_rect.Height());
-	m_bt_down.set_bitmap(c_font::get_bmp(BITMAP_DOWN_BT_NORMAL));
-	m_bt_down.set_focus_bitmap(c_font::get_bmp(BITMAP_DOWN_BT_FOCUS));
-	m_bt_down.set_pushed_bitmap(c_font::get_bmp(BITMAP_DOWN_BT_FOCUS));
+	m_bt_down.set_bitmap(c_my_resource::get_bmp(BITMAP_DOWN_BT_NORMAL));
+	m_bt_down.set_focus_bitmap(c_my_resource::get_bmp(BITMAP_DOWN_BT_FOCUS));
+	m_bt_down.set_pushed_bitmap(c_my_resource::get_bmp(BITMAP_DOWN_BT_FOCUS));
 	m_bt_down.show_window();
 }
 
@@ -149,6 +149,28 @@ void c_spin_box::on_paint()
 
 	switch(m_status)
 	{
+	case STATUS_NORMAL:
+		if (m_z_order > m_parent->get_z_order())
+		{
+			hide_arrow_button();
+			tmp_rect.Empty();
+			m_surface->set_frame_layer(tmp_rect, m_z_order);
+			m_z_order = m_parent->get_z_order();
+		}
+		fill_rects(rect, m_bg_color, c_my_resource::get_shape(BUTTON_NORMAL));
+		m_font_color = GLT_RGB(255, 255, 255);
+		break;
+	case STATUS_FOCUSED:
+		if (m_z_order > m_parent->get_z_order())
+		{
+			hide_arrow_button();
+			tmp_rect.Empty();
+			m_surface->set_frame_layer(tmp_rect, m_z_order);
+			m_z_order = m_parent->get_z_order();
+		}
+		fill_rects(rect, m_bg_color, c_my_resource::get_shape(BUTTON_FOCUS));
+		m_font_color = GLT_RGB(255, 255, 255);
+		break;
 	case STATUS_PUSHED:
 		if (m_z_order == m_parent->get_z_order())
 		{
@@ -159,32 +181,8 @@ void c_spin_box::on_paint()
 		m_surface->set_frame_layer(tmp_rect, m_z_order);
 		show_arrow_button();
 
-		m_surface->draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), c_font::get_shape(LIST_BOX_PUSH),m_parent->get_z_order());
+		m_surface->fill_rects(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_bg_color, c_my_resource::get_shape(LIST_BOX_PUSH),m_parent->get_z_order());
 		m_font_color = GLT_RGB(2,124,165);
-		break;
-	case STATUS_FOCUSED:
-		if (m_z_order > m_parent->get_z_order())
-		{
-			hide_arrow_button();
-			tmp_rect.Empty();
-			m_surface->set_frame_layer(tmp_rect, m_z_order);
-			m_z_order = m_parent->get_z_order();
-		}
-
-		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_FOCUS));
-		m_font_color = GLT_RGB(255,255,255);
-		break;
-	case STATUS_NORMAL:
-		if (m_z_order > m_parent->get_z_order())
-		{
-			hide_arrow_button();
-			tmp_rect.Empty();
-			m_surface->set_frame_layer(tmp_rect, m_z_order);
-			m_z_order = m_parent->get_z_order();
-		}
-
-		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_NORMAL));
-		m_font_color = GLT_RGB(255,255,255);
 		break;
 	default:
 		ASSERT(FALSE);

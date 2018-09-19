@@ -26,7 +26,7 @@ void c_list_box::on_init_children()
 {
 	m_item_total = 0;
 	m_selected_item = 0;	
-	m_font_type = c_font::get_font(FONT_ENG_SMB_AA);
+	m_font_type = c_my_resource::get_font(FONT_ENG_SMB_AA);
 	m_font_color = GLT_RGB(255,255,255);
 	m_bg_color = GLT_RGB(33,41,57);
 }
@@ -51,8 +51,26 @@ void c_list_box::on_paint()
 
 	switch(m_status)
 	{
+	case STATUS_NORMAL:
+		if (m_z_order > m_parent->get_z_order())
+		{
+			m_surface->set_frame_layer(empty_rect, m_z_order);
+			m_z_order = m_parent->get_z_order();
+		}
+		fill_rects(rect, m_bg_color, c_my_resource::get_shape(BUTTON_NORMAL));
+		m_font_color = GLT_RGB(255, 255, 255);
+		break;
+	case STATUS_FOCUSED:
+		if (m_z_order > m_parent->get_z_order())
+		{
+			m_surface->set_frame_layer(empty_rect, m_z_order);
+			m_z_order = m_parent->get_z_order();
+		}
+		fill_rects(rect, m_bg_color, c_my_resource::get_shape(BUTTON_FOCUS));
+		m_font_color = GLT_RGB(255, 255, 255);
+		break;
 	case STATUS_PUSHED:
-		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(LIST_BOX_PUSH));
+		fill_rects(rect, m_bg_color, c_my_resource::get_shape(LIST_BOX_PUSH));
 		m_font_color = GLT_RGB(2,124,165);
 		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
 		//draw list
@@ -66,30 +84,6 @@ void c_list_box::on_paint()
 			show_list();
 			return;
 		}
-		break;
-	case STATUS_FOCUSED:
-		if (m_z_order > m_parent->get_z_order())
-		{
-			m_surface->set_frame_layer(empty_rect, m_z_order);
-			m_z_order = m_parent->get_z_order();
-		}
-		draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_FOCUS));
-		m_font_color = GLT_RGB(255,255,255);
-		break;
-	case STATUS_NORMAL:
-		if (m_z_order > m_parent->get_z_order())
-		{
-			m_surface->set_frame_layer(empty_rect, m_z_order);
-			m_z_order = m_parent->get_z_order();
-		}
-		draw_custom_shape(rect,m_parent->get_bg_color(), c_font::get_shape(BUTTON_NORMAL));
-		m_font_color = GLT_RGB(255,255,255);
-		break;
-	case STATUS_DISABLED:
-		{
-			draw_custom_shape(rect, m_parent->get_bg_color(), c_font::get_shape(BUTTON_DISABLE));
-		}
-		m_font_color = GLT_RGB(70,73,76);
 		break;
 	default:
 		ASSERT(FALSE);
@@ -169,7 +163,7 @@ void c_list_box::update_list_size()
 
 void c_list_box::show_list()
 {
-	draw_custom_shape(m_list_screen_rect, m_bg_color, c_font::get_shape(LIST_BOX_EXTEND));
+	fill_rects(m_list_screen_rect, m_bg_color, c_my_resource::get_shape(LIST_BOX_EXTEND));
 
 	m_font_color = GLT_RGB(255, 255, 255);
 	//draw all items
@@ -189,7 +183,7 @@ void c_list_box::show_list()
 	tmp_rect.m_top = m_list_screen_rect.m_top + m_selected_item * ITEM_HEIGHT;
 	tmp_rect.m_bottom = tmp_rect.m_top + ITEM_HEIGHT;
 
-	draw_custom_shape(tmp_rect, GLT_RGB(0, 255, 0), c_font::get_shape(LIST_BOX_SELECT));
+	fill_rects(tmp_rect, GLT_RGB(0, 255, 0), c_my_resource::get_shape(LIST_BOX_SELECT));
 
 	m_font_color = GLT_RGB(255, 255, 255);
 	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], tmp_rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);

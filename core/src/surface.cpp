@@ -375,29 +375,28 @@ int c_surface::copy_layer_pixel_2_fb(int x, int y, unsigned int z_order)
 	return 0;
 }
 
-void c_surface::draw_custom_shape(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* shape, int z_order)
+void c_surface::fill_rects(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* rects, int z_order)
 {
-	if (NULL == shape)
+	if (NULL == rects)
 	{
 		return;
 	}
-	COLOR_RECT* p_shape = (COLOR_RECT*)shape;
-	int i = 0;
+
+	COLOR_RECT* p_item = (COLOR_RECT*)rects;
 	int templ, tempt, tempr, tempb;
-	unsigned int tempcolor;
-	while (INVALID_RGN != p_shape[i].l)
+	for(int i = 0; INVALID_RGN != p_item[i].l; i++)
 	{
-		templ = (p_shape[i].l < 0) ? (r + 1 + p_shape[i].l) : p_shape[i].l + l;
-		tempt = (p_shape[i].t < 0) ? (b + 1 + p_shape[i].t) : p_shape[i].t + t;
-		tempr = (p_shape[i].r < 0) ? (r + 1 + p_shape[i].r) : p_shape[i].r + l;
-		tempb = (p_shape[i].b < 0) ? (b + 1 + p_shape[i].b) : p_shape[i].b + t;
+		templ = (p_item[i].l < 0) ? (r + 1 + p_item[i].l) : p_item[i].l + l;
+		tempt = (p_item[i].t < 0) ? (b + 1 + p_item[i].t) : p_item[i].t + t;
+		tempr = (p_item[i].r < 0) ? (r + 1 + p_item[i].r) : p_item[i].r + l;
+		tempb = (p_item[i].b < 0) ? (b + 1 + p_item[i].b) : p_item[i].b + t;
 
 		if (templ >= tempr)
 			tempr = templ;
 		if (tempt >= tempb)
 			tempb = tempt;
 
-		tempcolor = (COLOR_USERDEF == p_shape[i].color) ? (color) : p_shape[i].color;
+		unsigned int tempcolor = (COLOR_USERDEF == p_item[i].color) ? (color) : p_item[i].color;
 	
 		for (int y = tempt ; y <= tempb; y++)
 		{ 
@@ -406,7 +405,6 @@ void c_surface::draw_custom_shape(int l, int t, int r, int b, unsigned int color
 				set_pixel(x , y, tempcolor, z_order);
 			}
 		}
-		i++;
 	}
 }
 

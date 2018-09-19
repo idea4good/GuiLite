@@ -129,8 +129,8 @@ protected:
 	void draw_rect(c_rect rect, unsigned int rgb);
 	void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb);
 	void fill_rect(c_rect rect, unsigned int rgb);
-	void draw_custom_shape(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* shape);
-	void draw_custom_shape(c_rect rect, unsigned int color, const COLOR_RECT* shape);
+	void fill_rects(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* shape);
+	void fill_rects(c_rect rect, unsigned int color, const COLOR_RECT* shape);
 protected:
 	WND_STATUS		m_status;
 	unsigned int	m_style;

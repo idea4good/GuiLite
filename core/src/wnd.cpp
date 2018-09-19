@@ -785,12 +785,12 @@ void c_wnd::fill_rect(c_rect rect, unsigned int rgb)
 	m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, rgb, m_z_order);
 }
 
-void c_wnd::draw_custom_shape(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* shape)
+void c_wnd::fill_rects(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* shape)
 {
-	m_surface->draw_custom_shape(l, t, r, b, color, shape, m_z_order);
+	m_surface->fill_rects(l, t, r, b, color, shape, m_z_order);
 }
 
-void c_wnd::draw_custom_shape(c_rect rect, unsigned int color, const COLOR_RECT* shape)
+void c_wnd::fill_rects(c_rect rect, unsigned int color, const COLOR_RECT* shape)
 {
-	m_surface->draw_custom_shape(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, color, shape, m_z_order);
+	m_surface->fill_rects(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, color, shape, m_z_order);
 }

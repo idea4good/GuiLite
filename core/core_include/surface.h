@@ -21,9 +21,10 @@ class c_display;
 class c_surface {
 	friend class c_display;
 public:
-	virtual void set_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
-	virtual void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
-	virtual unsigned int get_pixel(int x, int y, unsigned int z_order);
+	void set_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
+	unsigned int get_pixel(int x, int y, unsigned int z_order);
+	void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
+	void fill_rects(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* rects, int z_order);
 
 	int get_width() { return m_width; }
 	int get_height() { return m_height; }
@@ -31,7 +32,6 @@ public:
 	void draw_vline(int x, int y0, int y1, unsigned int rgb, unsigned int z_order);
 	void draw_line(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
 	void draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
-	void draw_custom_shape(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* shape, int z_order);
 	int flush_scrren(int left, int top, int right, int bottom);
 
 	bool is_valid(c_rect rect);
@@ -41,8 +41,8 @@ public:
 	int set_frame_layer(c_rect& rect, unsigned int z_order);
 	void set_active(bool flag){m_is_active = flag;}
 protected:
-	virtual void set_pixel_on_fb(int x, int y, unsigned int rgb);
-	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb);
+	void set_pixel_on_fb(int x, int y, unsigned int rgb);
+	void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb);
 
 	void set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order);
 	int copy_layer_pixel_2_fb(int x, int y, unsigned int z_order);
