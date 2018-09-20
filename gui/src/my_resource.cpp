@@ -1,12 +1,11 @@
 #include "core_include/rect.h"
 #include "core_include/resource.h"
 #include "../gui_include/my_resource.h"
-#include <map>
 
-static std::map<int, const GUI_FONT*> s_font_map;
-static std::map<int, const GUI_BITMAP*> s_bmp_map;
-static std::map<int, const COLOR_RECT*> s_shape_map;
-static std::map<int, unsigned int> s_color_map;
+static const GUI_FONT* s_font_map[FONT_MAX];
+static const GUI_BITMAP* s_bmp_map[BITMAP_MAX];
+static const COLOR_RECT* s_shape_map[SHAPE_MAX];
+static unsigned int s_color_map[COLOR_MAX];
 
 int c_my_resource::add_font(FONT_TYPE index, const GUI_FONT* font)
 {
