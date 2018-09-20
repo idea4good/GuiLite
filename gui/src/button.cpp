@@ -14,8 +14,8 @@ void c_button::pre_create_wnd()
 {
 	m_style |= GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
 	m_font_type = c_my_resource::get_font(FONT_ENG_SMB_AA);
-	m_font_color = GLT_RGB(255,255,255);
-	m_bg_color = GLT_RGB(36,36,36);
+	m_font_color = c_my_resource::get_color(CTRL_FORE_GROUND);
+	m_bg_color = c_my_resource::get_color(CTRL_BACK_GROUND);
 }
 
 void c_button::on_focus()
@@ -62,9 +62,8 @@ void c_button::on_paint()
 		}
 		else
 		{
-			fill_rects(rect, m_bg_color, c_my_resource::get_shape(BUTTON_NORMAL));
+			fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(BUTTON_NORMAL));
 		}
-		m_font_color = GLT_RGB(255, 255, 255);
 		break;
 	case STATUS_FOCUSED:
 		if (m_bitmap_focus)
@@ -73,9 +72,8 @@ void c_button::on_paint()
 		}
 		else
 		{
-			fill_rects(rect, m_bg_color, c_my_resource::get_shape(BUTTON_FOCUS));
+			fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(BUTTON_FOCUS));
 		}
-		m_font_color = GLT_RGB(255,255,255);
 		break;
 	case STATUS_PUSHED:
 		if (m_bitmap_pushed)
@@ -84,9 +82,8 @@ void c_button::on_paint()
 		}
 		else
 		{
-			fill_rects(rect, m_bg_color, c_my_resource::get_shape(BUTTON_PUSH));
+			fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(BUTTON_PUSH));
 		}
-		m_font_color = GLT_RGB(255, 255, 255);
 		break;
 	default:
 		ASSERT(FALSE);

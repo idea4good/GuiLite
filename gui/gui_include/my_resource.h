@@ -48,17 +48,26 @@ enum SHAPE_TYPE
 	KEY_BUTTON_PUSH
 };
 
+enum COLOR_TYPE
+{
+	CTRL_BACK_GROUND,
+	CTRL_FORE_GROUND
+};
+
 class c_my_resource
 {
 public:
-	static int add_font(FONT_TYPE index, const GUI_FONT* font_resource);
+	static int add_font(FONT_TYPE index, const GUI_FONT* font);
 	static const GUI_FONT* get_font(FONT_TYPE index);
 
-	static int add_bitmap(BITMAP_TYPE index, const GUI_BITMAP* bmp_resource);
+	static int add_bitmap(BITMAP_TYPE index, const GUI_BITMAP* bmp);
 	static const GUI_BITMAP* get_bmp(BITMAP_TYPE index);
 
-	static int add_shape(SHAPE_TYPE index, const COLOR_RECT* shape_resource);
+	static int add_shape(SHAPE_TYPE index, const COLOR_RECT* shape);
 	static const COLOR_RECT* get_shape(SHAPE_TYPE index);
+
+	static int add_color(COLOR_TYPE index, const unsigned int color);
+	static const unsigned int get_color(COLOR_TYPE index);
 };
 
 #endif

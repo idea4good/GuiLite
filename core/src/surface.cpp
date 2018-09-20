@@ -375,14 +375,14 @@ int c_surface::copy_layer_pixel_2_fb(int x, int y, unsigned int z_order)
 	return 0;
 }
 
-void c_surface::fill_rects(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* rects, int z_order)
+void c_surface::fill_rect_ex(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* extend_rects, int z_order)
 {
-	if (NULL == rects)
+	if (NULL == extend_rects)
 	{
-		return;
+		return fill_rect(l, t, r, b, color, z_order);
 	}
 
-	COLOR_RECT* p_item = (COLOR_RECT*)rects;
+	COLOR_RECT* p_item = (COLOR_RECT*)extend_rects;
 	int templ, tempt, tempr, tempb;
 	for(int i = 0; INVALID_RGN != p_item[i].l; i++)
 	{

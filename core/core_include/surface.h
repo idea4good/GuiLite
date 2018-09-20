@@ -24,7 +24,7 @@ public:
 	void set_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
 	unsigned int get_pixel(int x, int y, unsigned int z_order);
 	void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
-	void fill_rects(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* rects, int z_order);
+	void fill_rect_ex(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* extend_rects, int z_order);
 
 	int get_width() { return m_width; }
 	int get_height() { return m_height; }
