@@ -7,6 +7,8 @@
 ## New feature: Multi theme
 ![multi-theme](doc/multi-theme.png)
 
+[How to switch theme](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/resource/resource.cpp)
+
 ## Self monitor
 **Report build activities to cloud:**
 
