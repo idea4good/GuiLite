@@ -6,6 +6,8 @@
 ## 新功能：“换肤”功能
 ![multi-theme](multi-theme.png)
 
+[如何“换肤”](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/resource/resource.cpp)
+
 ## 自我监控
 **上报“编译/运行”情况至“云端”：**
 
