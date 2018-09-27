@@ -12,7 +12,7 @@ typedef struct struct_gui_bitmap
 } GUI_BITMAP;
 
 //FONT
-typedef struct 
+typedef struct
 {
 	unsigned char XSize;
 	unsigned char XDist;
@@ -20,7 +20,7 @@ typedef struct
 	void* pData;
 } GUI_CHARINFO;
 
-typedef struct 
+typedef struct
 {
 	unsigned short First;         /* first character               */
 	unsigned short Last;          /* last character                */
@@ -34,13 +34,27 @@ typedef struct struct_gui_font
 	unsigned char YDist;
 	unsigned char XMag;
 	unsigned char YMag;
-	union 
+	union
 	{
 		void  *pFontData;
 		const GUI_FONT_PROP* pProp;
 	} p;
 	unsigned char Baseline;
 } GUI_FONT;
+
+typedef struct struct_lattice
+{
+	unsigned int			utf8_code;
+	unsigned char			width;
+	unsigned char			height;
+	const unsigned char*	p_data;
+} LATTICE;
+
+typedef struct struct_font_info
+{
+	unsigned int	count;
+	LATTICE			lattice[];
+} FONT_INFO;
 
 //SHAPE
 #define INVALID_RGN 0xFFFFFF
