@@ -1,9 +1,9 @@
 #ifndef _MY_RESOURCE_H_
 #define _MY_RESOURCE_H_
 
-typedef struct struct_gui_font		GUI_FONT;
+typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;
-typedef struct struct_gui_bitmap	GUI_BITMAP;
+typedef struct struct_bitmap_info	BITMAP_INFO;
 
 //Redefine them to meet your need.
 #define DEFAULT_NORMAL_COLOR	GLT_RGB(211, 211, 211)
@@ -65,11 +65,11 @@ enum COLOR_TYPE
 class c_my_resource
 {
 public:
-	static int add_font(FONT_TYPE index, const GUI_FONT* font);
-	static const GUI_FONT* get_font(FONT_TYPE index);
+	static int add_font(FONT_TYPE index, const FONT_INFO* font);
+	static const FONT_INFO* get_font(FONT_TYPE index);
 
-	static int add_bitmap(BITMAP_TYPE index, const GUI_BITMAP* bmp);
-	static const GUI_BITMAP* get_bmp(BITMAP_TYPE index);
+	static int add_bitmap(BITMAP_TYPE index, const BITMAP_INFO* bmp);
+	static const BITMAP_INFO* get_bmp(BITMAP_TYPE index);
 
 	static int add_shape(SHAPE_TYPE index, const COLOR_RECT* shape);
 	static const COLOR_RECT* get_shape(SHAPE_TYPE index);

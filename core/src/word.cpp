@@ -7,21 +7,21 @@
 #include <stdio.h>
 
 #define BUFFER_LEN	16
-void c_word::draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
+void c_word::draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
 	char buf[BUFFER_LEN];
 	value_2_string(value, dot_position, buf, BUFFER_LEN);
 	draw_string_in_rect(surface, z_order, buf, rect, font, font_color, bg_color, align_type);
 }
 
-void c_word::draw_value(c_surface* surface, int z_order, int value, int dot_position, int x, int y, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
+void c_word::draw_value(c_surface* surface, int z_order, int value, int dot_position, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
 	char buf[BUFFER_LEN];
 	value_2_string(value, dot_position, buf, BUFFER_LEN);
 	draw_string(surface, z_order, buf, x, y, font, font_color, bg_color, align_type);
 }
 
-void c_word::draw_string_in_rect(c_surface* surface, int z_order, const char *s, c_rect rect, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
+void c_word::draw_string_in_rect(c_surface* surface, int z_order, const char *s, c_rect rect, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
 	if(NULL == s)
 	{
@@ -36,7 +36,7 @@ void c_word::draw_string_in_rect(c_surface* surface, int z_order, const char *s,
 	draw_string(surface, z_order, s, rect.m_left + x, rect.m_top + y, font, font_color, bg_color, ALIGN_LEFT);
 }
 
-void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, int y, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
+void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
 	if (NULL == s)
 	{
@@ -62,20 +62,20 @@ void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, 
 		s += line_len;
 		if (*s == '\n')
 		{
-			y += font->YSize;
+			y += font->height;
 		}
 		if (*s==0)
 			break;
 	}
 }
 
-const int c_word::get_font_ysize(const GUI_FONT* font_type)
+const int c_word::get_font_ysize(const FONT_INFO* font_type)
 {
 	if (!font_type)
 	{
 		return 0;
 	}
-	return font_type->YSize;
+	return font_type->height;
 }
 
 void c_word::value_2_string(int value, int dot_position, char* buf, int len)
@@ -129,7 +129,7 @@ int c_word::get_char_cnt_in_single_line(const char *s)
 	return len;
 }
 
-void c_word::draw_single_line_string(c_surface* surface, int z_order, const char *s, int x, int y, int len, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color)
+void c_word::draw_single_line_string(c_surface* surface, int z_order, const char *s, int x, int y, int len, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color)
 {
 	int offset = 0;
 	while (--len >= 0) 
@@ -139,17 +139,30 @@ void c_word::draw_single_line_string(c_surface* surface, int z_order, const char
 	}
 }
 
-const GUI_FONT_PROP* c_word::find_font_prop(const GUI_FONT_PROP* pProp, unsigned short code)
+const LATTICE* c_word::get_lattice(const FONT_INFO* font, unsigned int utf8_code)
 {
-	for (; pProp; pProp=(GUI_FONT_PROP*) pProp->pNext) 
+	int first = 0;
+	int last = font->count - 1;
+	int middle = (first + last) / 2;
+
+	while (first <= last) 
 	{
-		if ((code>=pProp->First) && (code<=pProp->Last))
-			break;
+		if (font->lattice[middle].utf8_code < utf8_code)
+			first = middle + 1;
+		else if (font->lattice[middle].utf8_code == utf8_code)
+		{
+			return &font->lattice[middle];
+		}
+		else
+		{
+			last = middle - 1;
+		}
+		middle = (first + last) / 2;
 	}
-	return pProp;
+	return NULL;
 }
 
-int c_word::draw_single_char(c_surface* surface, int z_order, unsigned short code, int x, int y, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color)
+int c_word::draw_single_char(c_surface* surface, int z_order, unsigned int utf8_code, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color)
 {
 	if (NULL == font)
 	{
@@ -157,61 +170,29 @@ int c_word::draw_single_char(c_surface* surface, int z_order, unsigned short cod
 		return 0;
 	}
 
-	const GUI_FONT_PROP* pProp = find_font_prop(font->p.pProp, code);
-	if (pProp) 
+	const LATTICE* p_lattice = get_lattice(font, utf8_code);
+	if (p_lattice)
 	{
-		const GUI_CHARINFO* pCharInfo = pProp->paCharInfo+(code - pProp->First);
-		int bytes_per_line = pCharInfo->BytesPerLine;
-		draw_lattice(surface, z_order, x, y, pCharInfo->XSize, font->YSize,
-			bytes_per_line, (unsigned char const *)pCharInfo->pData, font_color, bg_color, is_AA_font(pCharInfo));
-		return pCharInfo->XDist;
+		draw_lattice(surface, z_order, x, y, p_lattice->width, font->height,
+			p_lattice->width, (unsigned char const *)p_lattice->p_data, font_color, bg_color);
+		return p_lattice->width;
+	}
+	else
+	{
+		ASSERT(FALSE);
 	}
 	return 0;
 }
 
 void c_word::draw_lattice(c_surface* surface, int z_order, int x, int y, int width, int height,
 						int bytes_per_line, const unsigned char* pData,
-						unsigned int font_color, unsigned int bg_color, unsigned int font_aa_flag)
+						unsigned int font_color, unsigned int bg_color)
 {
-	int i;
-	if (!font_aa_flag)
+	for (int i = 0; i < height; i++)
 	{
-		for (i = 0; i < height; i++)
-		{
-			draw_bit_line(surface, z_order, x, i + y, pData, width, font_color, bg_color);
-			pData += bytes_per_line;
-		}
+		draw_bit_line_AA(surface, z_order, x, i + y, pData, width, font_color, bg_color);
+		pData += bytes_per_line;
 	}
-	else
-	{
-		for (i = 0; i < height; i++)
-		{
-			draw_bit_line_AA(surface, z_order, x, i + y, pData, width, font_color, bg_color);
-			pData += bytes_per_line;
-		}
-	}
-}
-
-void  c_word::draw_bit_line(c_surface* surface, int z_order, int x, int y, unsigned char const*p, int width, unsigned int font_color, unsigned int bg_color)
-{
-	unsigned int color;
-	int diff = 0;
-	do 
-	{
-		color = (*p & (0x80>>diff)) ? font_color : bg_color;
-
-		if (COLOR_TRANPARENT != color)
-		{
-			surface->set_pixel(x, y, color, z_order);
-		}
-
-		x++;
-		if (++diff == 8) 
-		{
-			diff = 0;
-			p++;
-		}
-	} while (--width);
 }
 
 void  c_word::draw_bit_line_AA(c_surface* surface, int z_order, int x, int y, unsigned char const*p, int width, unsigned int font_color, unsigned int bg_color)
@@ -250,7 +231,7 @@ void  c_word::draw_bit_line_AA(c_surface* surface, int z_order, int x, int y, un
 	} while (--width);
 }
 
-int c_word::get_str_pixel_length(const char *s, const GUI_FONT* font)
+int c_word::get_str_pixel_length(const char *s, const FONT_INFO* font)
 {
 	int ret = 0;
 	if(NULL == s)
@@ -265,20 +246,16 @@ int c_word::get_str_pixel_length(const char *s, const GUI_FONT* font)
 	for (; *s; s++)
 	{
 		int len = get_char_cnt_in_single_line(s);
-
-		unsigned char code_high;
-		int last_char_xdist = 0;
+		int lattice_width = 0;
 
 		while (--len >= 0) 
 		{
-			const GUI_FONT_PROP* pProp = find_font_prop(font->p.pProp, *s);
-			if (pProp) 
+			const LATTICE* p_lattice = get_lattice(font, *s);
+			if (p_lattice)
 			{
-				const GUI_CHARINFO* pCharInfo = pProp->paCharInfo+(*s - pProp->First);
-
-				last_char_xdist = pCharInfo->XDist;
+				lattice_width = p_lattice->width;
 			}
-			ret += last_char_xdist;
+			ret += lattice_width;
 			s++;
 		}
 		if (*s==0)
@@ -288,10 +265,10 @@ int c_word::get_str_pixel_length(const char *s, const GUI_FONT* font)
 	return ret;
 }
 
-void c_word::get_string_pos(const char *s, const GUI_FONT* font, c_rect rect, unsigned int align_type, int &x, int &y)
+void c_word::get_string_pos(const char *s, const FONT_INFO* font, c_rect rect, unsigned int align_type, int &x, int &y)
 {
 	int x_size = get_str_pixel_length(s, font);
-	int y_size = get_font_ysize(font);
+	int y_size = font->height;
 
 	int height = rect.m_bottom - rect.m_top + 1;
 	int width  = rect.m_right - rect.m_left + 1;
@@ -351,9 +328,4 @@ void c_word::get_string_pos(const char *s, const GUI_FONT* font, c_rect rect, un
 		ASSERT(0);
 		break;
 	}
-}
-
-bool c_word::is_AA_font(const GUI_CHARINFO* pCharInfo)
-{
-	return  (pCharInfo->XSize == pCharInfo->BytesPerLine) ? true : false;
 }

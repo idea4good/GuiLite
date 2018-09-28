@@ -27,8 +27,8 @@ public:
 	void set_wave_name(char* wave_name){ m_wave_name = wave_name;}
 	void set_wave_unit(char* wave_unit){ m_wave_unit = wave_unit;}
 
-	void set_wave_name_font_type(const GUI_FONT* wave_name_font_type){ m_wave_name_font_type = wave_name_font_type;}
-	void set_wave_unit_font_type(const GUI_FONT* wave_unit_font_type){ m_wave_unit_font_type = wave_unit_font_type;}
+	void set_wave_name_font_type(const FONT_INFO* wave_name_font_type){ m_wave_name_font_type = wave_name_font_type;}
+	void set_wave_unit_font_type(const FONT_INFO* wave_unit_font_type){ m_wave_unit_font_type = wave_unit_font_type;}
 
 	void set_wave_name_color(unsigned int wave_name_color){ m_wave_name_color = wave_name_color;}
 	void set_wave_unit_color(unsigned int wave_unit_color){ m_wave_unit_color = wave_unit_color;}
@@ -53,8 +53,8 @@ protected:
 	char* m_wave_name;
 	char* m_wave_unit;
 
-	const GUI_FONT* m_wave_name_font_type;
-	const GUI_FONT* m_wave_unit_font_type;
+	const FONT_INFO* m_wave_name_font_type;
+	const FONT_INFO* m_wave_unit_font_type;
 
 	unsigned int m_wave_name_color;
 	unsigned int m_wave_unit_color;
