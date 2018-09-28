@@ -174,61 +174,50 @@ int c_word::draw_single_char(c_surface* surface, int z_order, unsigned int utf8_
 	if (p_lattice)
 	{
 		draw_lattice(surface, z_order, x, y, p_lattice->width, font->height,
-			p_lattice->width, (unsigned char const *)p_lattice->p_data, font_color, bg_color);
+					(unsigned char const *)p_lattice->p_data, font_color, bg_color);
 		return p_lattice->width;
 	}
-	else
+	
+	int len = font->height;
+	for (int y_ = 0; y_ < len; y_++)
 	{
-		ASSERT(FALSE);
+		for (int x_ = 0; x_ < len; x_++)
+		{
+			((y_ % 4) == 0) ? surface->set_pixel((x + x_), (y + y_), 0, z_order) :
+							surface->set_pixel((x + x_), (y + y_), 0xFFFFFFFF, z_order);
+		}
 	}
-	return 0;
+	return len;
 }
 
 void c_word::draw_lattice(c_surface* surface, int z_order, int x, int y, int width, int height,
-						int bytes_per_line, const unsigned char* pData,
-						unsigned int font_color, unsigned int bg_color)
+						const unsigned char* p_data, unsigned int font_color, unsigned int bg_color)
 {
-	for (int i = 0; i < height; i++)
-	{
-		draw_bit_line_AA(surface, z_order, x, i + y, pData, width, font_color, bg_color);
-		pData += bytes_per_line;
-	}
-}
+	unsigned int r, g, b;
+	unsigned int bg_color_set = (COLOR_TRANPARENT == bg_color) ? surface->get_pixel(x, y, z_order) : bg_color;
 
-void  c_word::draw_bit_line_AA(c_surface* surface, int z_order, int x, int y, unsigned char const*p, int width, unsigned int font_color, unsigned int bg_color)
-{
-	unsigned int color, current_bg_color;
-	unsigned int b, g, r;
-
-	if(COLOR_TRANPARENT == bg_color)
+	for (int y_ = 0; y_ < height; y_++)
 	{
-		current_bg_color = surface->get_pixel(x, y, z_order);
-	}
-	else
-	{
-		current_bg_color = bg_color;
-	}
-
-	do 
-	{
-		if (0x00 == *p)
+		for (int x_ = 0; x_ < width; x_++)
 		{
-			if(bg_color != COLOR_TRANPARENT)
+			unsigned char value = *p_data;
+			if (0x00 == value)
 			{
-				surface->set_pixel(x, y, current_bg_color, z_order);
+				if (bg_color != COLOR_TRANPARENT)
+				{
+					surface->set_pixel(x + x_, y + y_, bg_color_set, z_order);
+				}
 			}
+			else
+			{
+				b = (GLT_RGB_B(font_color) * value + GLT_RGB_B(bg_color_set) * (255 - value)) >> 8;
+				g = (GLT_RGB_G(font_color) * value + GLT_RGB_G(bg_color_set) * (255 - value)) >> 8;
+				r = (GLT_RGB_R(font_color) * value + GLT_RGB_R(bg_color_set) * (255 - value)) >> 8;
+				surface->set_pixel((x + x_), (y + y_), GLT_RGB(r, g, b), z_order);
+			}
+			p_data++;
 		}
-		else
-		{
-			b = (GLT_RGB_B(font_color) * (*p) + GLT_RGB_B(current_bg_color) * (255 - *p)) >> 8;
-			g = (GLT_RGB_G(font_color) * (*p) + GLT_RGB_G(current_bg_color) * (255 - *p)) >> 8;
-			r = (GLT_RGB_R(font_color) * (*p) + GLT_RGB_R(current_bg_color) * (255 - *p)) >> 8;
-			color = GLT_RGB(r, g, b);
-			surface->set_pixel(x, y, color, z_order);
-		}
-		x++;
-		p++;
-	} while (--width);
+	}
 }
 
 int c_word::get_str_pixel_length(const char *s, const FONT_INFO* font)
