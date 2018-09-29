@@ -7,6 +7,45 @@
 #include <stdio.h>
 
 #define BUFFER_LEN	16
+unsigned char s_utf8_length_table[256] =
+{
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 1, 1
+};
+
+inline static int get_utf8_code(const char* s, unsigned int& output_utf8_code)
+{
+	unsigned char* us = (unsigned char*)s;
+	int utf8_bytes = s_utf8_length_table[*us];
+	switch (utf8_bytes)
+	{
+	case 1:
+		output_utf8_code = *us;
+		break;
+	case 3:
+		output_utf8_code = (*us << 16) | ((*(us + 1)) << 8) | *(us + 2);
+		break;
+	default:
+		ASSERT(FALSE);
+		break;
+	}
+	return utf8_bytes;
+}
+
 void c_word::draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
 	char buf[BUFFER_LEN];
@@ -46,36 +85,20 @@ void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, 
 	{
 		ASSERT(FALSE);
 	}
-	for (; *s; s++)
+
+	int offset = 0;
+	unsigned int utf8_code;
+	while (*s)
 	{
-		int line_len = get_char_cnt_in_single_line(s);
-		int str_pixel_length = get_str_pixel_length(s, font);
-		if (align_type == ALIGN_RIGHT)
-		{
-			x = x - str_pixel_length + 1;
-		}
-		else if (align_type == ALIGN_HCENTER)
-		{
-			x = x - str_pixel_length / 2;
-		}
-		draw_single_line_string(surface, z_order, s, x, y , line_len, font, font_color, bg_color);
-		s += line_len;
 		if (*s == '\n')
 		{
 			y += font->height;
+			offset = 0;
+			continue;
 		}
-		if (*s==0)
-			break;
+		s += get_utf8_code(s, utf8_code);
+		offset += draw_single_char(surface, z_order, utf8_code, (x + offset), y, font, font_color, bg_color);
 	}
-}
-
-const int c_word::get_font_ysize(const FONT_INFO* font_type)
-{
-	if (!font_type)
-	{
-		return 0;
-	}
-	return font_type->height;
 }
 
 void c_word::value_2_string(int value, int dot_position, char* buf, int len)
@@ -106,39 +129,6 @@ void c_word::value_2_string(int value, int dot_position, char* buf, int len)
 	}
 }
 
-int c_word::get_char_cnt_in_single_line(const char *s) 
-{
-	int len = 0;
-	unsigned char code_high;
-	while (((code_high = *(unsigned char*)s) != 0)) 
-	{
-		if (code_high > 127) 
-		{
-			len++; s++;
-		} 
-		else 
-		{
-			switch (code_high) 
-			{
-			case '\n': return len;
-			}
-		}
-		len++;
-		s++;
-	}
-	return len;
-}
-
-void c_word::draw_single_line_string(c_surface* surface, int z_order, const char *s, int x, int y, int len, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color)
-{
-	int offset = 0;
-	while (--len >= 0) 
-	{
-		offset = draw_single_char(surface, z_order, *s++, x, y, font, font_color, bg_color);
-		x += offset;
-	}
-}
-
 const LATTICE* c_word::get_lattice(const FONT_INFO* font, unsigned int utf8_code)
 {
 	int first = 0;
@@ -147,11 +137,11 @@ const LATTICE* c_word::get_lattice(const FONT_INFO* font, unsigned int utf8_code
 
 	while (first <= last) 
 	{
-		if (font->lattice[middle].utf8_code < utf8_code)
+		if (font->lattice_array[middle].utf8_code < utf8_code)
 			first = middle + 1;
-		else if (font->lattice[middle].utf8_code == utf8_code)
+		else if (font->lattice_array[middle].utf8_code == utf8_code)
 		{
-			return &font->lattice[middle];
+			return &font->lattice_array[middle];
 		}
 		else
 		{
@@ -222,36 +212,26 @@ void c_word::draw_lattice(c_surface* surface, int z_order, int x, int y, int wid
 
 int c_word::get_str_pixel_length(const char *s, const FONT_INFO* font)
 {
-	int ret = 0;
 	if(NULL == s)
 	{
-		return ret;
+		return 0;
 	}
 	if (NULL == font)
 	{
 		ASSERT(FALSE);
 	}
 
-	for (; *s; s++)
+	int lattice_width = 0;
+	unsigned int utf8_code;
+	int utf8_bytes;
+	while (*s)
 	{
-		int len = get_char_cnt_in_single_line(s);
-		int lattice_width = 0;
-
-		while (--len >= 0) 
-		{
-			const LATTICE* p_lattice = get_lattice(font, *s);
-			if (p_lattice)
-			{
-				lattice_width = p_lattice->width;
-			}
-			ret += lattice_width;
-			s++;
-		}
-		if (*s==0)
-			break;
+		utf8_bytes = get_utf8_code(s, utf8_code);
+		const LATTICE* p_lattice = get_lattice(font, utf8_code);
+		lattice_width += p_lattice?p_lattice->width:font->height;
+		s += utf8_bytes;
 	}
-
-	return ret;
+	return lattice_width;
 }
 
 void c_word::get_string_pos(const char *s, const FONT_INFO* font, c_rect rect, unsigned int align_type, int &x, int &y)

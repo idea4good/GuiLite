@@ -23,7 +23,7 @@ typedef struct struct_font_info
 {
 	unsigned char	height;
 	unsigned int	count;
-	LATTICE			lattice[];
+	LATTICE*		lattice_array;
 } FONT_INFO;
 
 //SHAPE

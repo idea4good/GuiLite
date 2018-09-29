@@ -12,10 +12,7 @@ public:
 	static void value_2_string(int value, int dot_position, char* buf, int len);
 
 	static int get_str_pixel_length(const char *s, const FONT_INFO* font);
-	static const int get_font_ysize(const FONT_INFO* font_type);
 private:
-	static int get_char_cnt_in_single_line(const char *s);
-	static void draw_single_line_string(c_surface* surface, int z_order, const char *s, int x, int y, int len, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color);
 	static int draw_single_char(c_surface* surface, int z_order, unsigned int utf8_code, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color);
 	static void draw_lattice(c_surface* surface, int z_order, int x, int y, int width, int height, const unsigned char* p_data, unsigned int font_color, unsigned int bg_color);
 	
