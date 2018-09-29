@@ -21,9 +21,9 @@ class c_display;
 class c_surface {
 	friend class c_display;
 public:
-	void set_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
-	unsigned int get_pixel(int x, int y, unsigned int z_order);
-	void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
+	virtual void set_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
+	virtual unsigned int get_pixel(int x, int y, unsigned int z_order);
+	virtual void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
 	void fill_rect_ex(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* extend_rects, int z_order);
 
 	int get_width() { return m_width; }
@@ -41,8 +41,8 @@ public:
 	int set_frame_layer(c_rect& rect, unsigned int z_order);
 	void set_active(bool flag){m_is_active = flag;}
 protected:
-	void set_pixel_on_fb(int x, int y, unsigned int rgb);
-	void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb);
+	virtual void set_pixel_on_fb(int x, int y, unsigned int rgb);
+	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb);
 
 	void set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order);
 	int copy_layer_pixel_2_fb(int x, int y, unsigned int z_order);
