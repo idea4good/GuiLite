@@ -11,6 +11,8 @@
 
 [How to draw unicode font?](https://github.com/idea4good/GuiLite/blob/master/core/src/word.cpp)
 
+[How to input unicode in your APP?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/ui_tree/Dialog/patient_setup/patient_setup_dlg_xml.cpp)
+
 ## Cross platform
 Ran on macOS & iOS:
 
