@@ -4,19 +4,11 @@
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
-## New feature: Multi theme
-![multi-theme](doc/multi-theme.png)
+## New feature: Unicode
+![unicode](doc/unicode.jpg)
 
-[How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/resource/resource.cpp)
-
-## Self monitor
-**Report build activities to cloud:**
-
-![BuildInfo](doc/BuildInfo.png)
-
-**Sync local data to cloud:**
-
-![DataOnCloud](doc/data_on_cloud.png)
+[How to build unicode font resource?](https://github.com/idea4good/GuiLiteToolkit)
+[How to draw unicode font?](https://github.com/idea4good/GuiLite/blob/master/core/src/word.cpp)
 
 ## Cross platform
 Ran on macOS & iOS:
@@ -30,6 +22,20 @@ Ran on Android & GNU/Linux embedded (ARM):
 Ran on Windows Mixed Reality & QQ developers' group:
 
 ![Win MR](doc/WinMR.gif) ![QQ group: 527251257](doc/qq.group.jpg)
+
+## Multi theme
+![multi-theme](doc/multi-theme.png)
+
+[How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/resource/resource.cpp)
+
+## Self monitor
+**Report build activities to cloud:**
+
+![BuildInfo](doc/BuildInfo.png)
+
+**Sync local data to cloud:**
+
+![DataOnCloud](doc/data_on_cloud.png)
 
 ## Quick Start
 - Download GuiLite samples: `git clone https://github.com/idea4good/GuiLiteSamples.git`
