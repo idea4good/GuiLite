@@ -9,6 +9,7 @@
 ![unicode](unicode.jpg)
 
 [如何制作多种文字资源?](https://github.com/idea4good/GuiLiteToolkit)
+
 [如何绘制Unicode文字?](https://github.com/idea4good/GuiLite/blob/master/core/src/word.cpp)
 
 ## 卓越的跨平台能力

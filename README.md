@@ -8,6 +8,7 @@
 ![unicode](doc/unicode.jpg)
 
 [How to build unicode font resource?](https://github.com/idea4good/GuiLiteToolkit)
+
 [How to draw unicode font?](https://github.com/idea4good/GuiLite/blob/master/core/src/word.cpp)
 
 ## Cross platform
