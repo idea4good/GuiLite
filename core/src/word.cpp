@@ -36,8 +36,14 @@ inline static int get_utf8_code(const char* s, unsigned int& output_utf8_code)
 	case 1:
 		output_utf8_code = *us;
 		break;
+	case 2:
+		output_utf8_code = (*us << 8) | (*(us + 1));
+		break;
 	case 3:
 		output_utf8_code = (*us << 16) | ((*(us + 1)) << 8) | *(us + 2);
+		break;
+	case 4:
+		output_utf8_code = (*us << 24) | ((*(us + 1)) << 16) | (*(us + 2) << 8) | *(us + 3);
 		break;
 	default:
 		ASSERT(FALSE);
