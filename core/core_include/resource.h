@@ -2,45 +2,29 @@
 #define  _RESOURCE_H_
 
 //BITMAP
-typedef struct struct_gui_bitmap
+typedef struct struct_bitmap_info
 {
 	unsigned short XSize;
 	unsigned short YSize;
 	unsigned short BytesPerLine;
 	unsigned short BitsPerPixel;
 	const unsigned char* pData; /* Pointer to picture data (indices) */
-} GUI_BITMAP;
+} BITMAP_INFO;
 
 //FONT
-typedef struct 
+typedef struct struct_lattice
 {
-	unsigned char XSize;
-	unsigned char XDist;
-	unsigned char BytesPerLine;
-	void* pData;
-} GUI_CHARINFO;
+	unsigned int			utf8_code;
+	unsigned char			width;
+	const unsigned char*	p_data;
+} LATTICE;
 
-typedef struct 
+typedef struct struct_font_info
 {
-	unsigned short First;         /* first character               */
-	unsigned short Last;          /* last character                */
-	const GUI_CHARINFO* paCharInfo;    /* address of first character    */
-	void* pNext;        /* pointer to next */
-} GUI_FONT_PROP;
-
-typedef struct struct_gui_font
-{
-	unsigned char YSize;
-	unsigned char YDist;
-	unsigned char XMag;
-	unsigned char YMag;
-	union 
-	{
-		void  *pFontData;
-		const GUI_FONT_PROP* pProp;
-	} p;
-	unsigned char Baseline;
-} GUI_FONT;
+	unsigned char	height;
+	unsigned int	count;
+	LATTICE*		lattice_array;
+} FONT_INFO;
 
 //SHAPE
 #define INVALID_RGN 0xFFFFFF

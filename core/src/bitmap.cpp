@@ -4,7 +4,7 @@
 #include "../core_include/bitmap.h"
 #include "../core_include/surface.h"
 
-void c_bitmap::draw_bitmap(c_surface* surface, int z_order, const GUI_BITMAP *pBitmap, int x, int y)
+void c_bitmap::draw_bitmap(c_surface* surface, int z_order, const BITMAP_INFO *pBitmap, int x, int y)
 {
 	if (0 == pBitmap)
 	{
@@ -15,7 +15,7 @@ void c_bitmap::draw_bitmap(c_surface* surface, int z_order, const GUI_BITMAP *pB
 		(unsigned char const *)pBitmap->pData);
 }
 
-void c_bitmap::draw_bitmap_in_rect(c_surface* surface, int z_order, const GUI_BITMAP *pBitmap, c_rect rect, unsigned int align_type)
+void c_bitmap::draw_bitmap_in_rect(c_surface* surface, int z_order, const BITMAP_INFO *pBitmap, c_rect rect, unsigned int align_type)
 {
 	if (0 == pBitmap)
 	{
@@ -28,7 +28,7 @@ void c_bitmap::draw_bitmap_in_rect(c_surface* surface, int z_order, const GUI_BI
 			pBitmap->XSize, pBitmap->YSize, (unsigned char const *)pBitmap->pData);
 }
 
-void c_bitmap::get_bitmap_pos(const GUI_BITMAP *pBitmap, c_rect rect, unsigned int align_type, int &x, int &y)
+void c_bitmap::get_bitmap_pos(const BITMAP_INFO *pBitmap, c_rect rect, unsigned int align_type, int &x, int &y)
 {
 	int x_size = pBitmap->XSize;
 	int y_size = pBitmap->YSize;

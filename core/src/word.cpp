@@ -7,21 +7,66 @@
 #include <stdio.h>
 
 #define BUFFER_LEN	16
-void c_word::draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
+unsigned char s_utf8_length_table[256] =
+{
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 1, 1
+};
+
+inline static int get_utf8_code(const char* s, unsigned int& output_utf8_code)
+{
+	unsigned char* us = (unsigned char*)s;
+	int utf8_bytes = s_utf8_length_table[*us];
+	switch (utf8_bytes)
+	{
+	case 1:
+		output_utf8_code = *us;
+		break;
+	case 2:
+		output_utf8_code = (*us << 8) | (*(us + 1));
+		break;
+	case 3:
+		output_utf8_code = (*us << 16) | ((*(us + 1)) << 8) | *(us + 2);
+		break;
+	case 4:
+		output_utf8_code = (*us << 24) | ((*(us + 1)) << 16) | (*(us + 2) << 8) | *(us + 3);
+		break;
+	default:
+		ASSERT(FALSE);
+		break;
+	}
+	return utf8_bytes;
+}
+
+void c_word::draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
 	char buf[BUFFER_LEN];
 	value_2_string(value, dot_position, buf, BUFFER_LEN);
 	draw_string_in_rect(surface, z_order, buf, rect, font, font_color, bg_color, align_type);
 }
 
-void c_word::draw_value(c_surface* surface, int z_order, int value, int dot_position, int x, int y, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
+void c_word::draw_value(c_surface* surface, int z_order, int value, int dot_position, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
 	char buf[BUFFER_LEN];
 	value_2_string(value, dot_position, buf, BUFFER_LEN);
 	draw_string(surface, z_order, buf, x, y, font, font_color, bg_color, align_type);
 }
 
-void c_word::draw_string_in_rect(c_surface* surface, int z_order, const char *s, c_rect rect, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
+void c_word::draw_string_in_rect(c_surface* surface, int z_order, const char *s, c_rect rect, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
 	if(NULL == s)
 	{
@@ -36,7 +81,7 @@ void c_word::draw_string_in_rect(c_surface* surface, int z_order, const char *s,
 	draw_string(surface, z_order, s, rect.m_left + x, rect.m_top + y, font, font_color, bg_color, ALIGN_LEFT);
 }
 
-void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, int y, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
+void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
 	if (NULL == s)
 	{
@@ -46,36 +91,20 @@ void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, 
 	{
 		ASSERT(FALSE);
 	}
-	for (; *s; s++)
+
+	int offset = 0;
+	unsigned int utf8_code;
+	while (*s)
 	{
-		int line_len = get_char_cnt_in_single_line(s);
-		int str_pixel_length = get_str_pixel_length(s, font);
-		if (align_type == ALIGN_RIGHT)
-		{
-			x = x - str_pixel_length + 1;
-		}
-		else if (align_type == ALIGN_HCENTER)
-		{
-			x = x - str_pixel_length / 2;
-		}
-		draw_single_line_string(surface, z_order, s, x, y , line_len, font, font_color, bg_color);
-		s += line_len;
 		if (*s == '\n')
 		{
-			y += font->YSize;
+			y += font->height;
+			offset = 0;
+			continue;
 		}
-		if (*s==0)
-			break;
+		s += get_utf8_code(s, utf8_code);
+		offset += draw_single_char(surface, z_order, utf8_code, (x + offset), y, font, font_color, bg_color);
 	}
-}
-
-const int c_word::get_font_ysize(const GUI_FONT* font_type)
-{
-	if (!font_type)
-	{
-		return 0;
-	}
-	return font_type->YSize;
 }
 
 void c_word::value_2_string(int value, int dot_position, char* buf, int len)
@@ -106,50 +135,30 @@ void c_word::value_2_string(int value, int dot_position, char* buf, int len)
 	}
 }
 
-int c_word::get_char_cnt_in_single_line(const char *s) 
+const LATTICE* c_word::get_lattice(const FONT_INFO* font, unsigned int utf8_code)
 {
-	int len = 0;
-	unsigned char code_high;
-	while (((code_high = *(unsigned char*)s) != 0)) 
+	int first = 0;
+	int last = font->count - 1;
+	int middle = (first + last) / 2;
+
+	while (first <= last) 
 	{
-		if (code_high > 127) 
+		if (font->lattice_array[middle].utf8_code < utf8_code)
+			first = middle + 1;
+		else if (font->lattice_array[middle].utf8_code == utf8_code)
 		{
-			len++; s++;
-		} 
-		else 
-		{
-			switch (code_high) 
-			{
-			case '\n': return len;
-			}
+			return &font->lattice_array[middle];
 		}
-		len++;
-		s++;
+		else
+		{
+			last = middle - 1;
+		}
+		middle = (first + last) / 2;
 	}
-	return len;
+	return NULL;
 }
 
-void c_word::draw_single_line_string(c_surface* surface, int z_order, const char *s, int x, int y, int len, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color)
-{
-	int offset = 0;
-	while (--len >= 0) 
-	{
-		offset = draw_single_char(surface, z_order, *s++, x, y, font, font_color, bg_color);
-		x += offset;
-	}
-}
-
-const GUI_FONT_PROP* c_word::find_font_prop(const GUI_FONT_PROP* pProp, unsigned short code)
-{
-	for (; pProp; pProp=(GUI_FONT_PROP*) pProp->pNext) 
-	{
-		if ((code>=pProp->First) && (code<=pProp->Last))
-			break;
-	}
-	return pProp;
-}
-
-int c_word::draw_single_char(c_surface* surface, int z_order, unsigned short code, int x, int y, const GUI_FONT* font, unsigned int font_color, unsigned int bg_color)
+int c_word::draw_single_char(c_surface* surface, int z_order, unsigned int utf8_code, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color)
 {
 	if (NULL == font)
 	{
@@ -157,141 +166,83 @@ int c_word::draw_single_char(c_surface* surface, int z_order, unsigned short cod
 		return 0;
 	}
 
-	const GUI_FONT_PROP* pProp = find_font_prop(font->p.pProp, code);
-	if (pProp) 
+	const LATTICE* p_lattice = get_lattice(font, utf8_code);
+	if (p_lattice)
 	{
-		const GUI_CHARINFO* pCharInfo = pProp->paCharInfo+(code - pProp->First);
-		int bytes_per_line = pCharInfo->BytesPerLine;
-		draw_lattice(surface, z_order, x, y, pCharInfo->XSize, font->YSize,
-			bytes_per_line, (unsigned char const *)pCharInfo->pData, font_color, bg_color, is_AA_font(pCharInfo));
-		return pCharInfo->XDist;
+		draw_lattice(surface, z_order, x, y, p_lattice->width, font->height, p_lattice->p_data, font_color, bg_color);
+		return p_lattice->width;
 	}
-	return 0;
+	
+	int len = font->height;
+	for (int y_ = 0; y_ < len; y_++)
+	{
+		for (int x_ = 0; x_ < len; x_++)
+		{
+			((y_ % 4) == 0) ? surface->set_pixel((x + x_), (y + y_), 0, z_order) :
+							surface->set_pixel((x + x_), (y + y_), 0xFFFFFFFF, z_order);
+		}
+	}
+	return len;
 }
 
 void c_word::draw_lattice(c_surface* surface, int z_order, int x, int y, int width, int height,
-						int bytes_per_line, const unsigned char* pData,
-						unsigned int font_color, unsigned int bg_color, unsigned int font_aa_flag)
+						const unsigned char* p_data, unsigned int font_color, unsigned int bg_color)
 {
-	int i;
-	if (!font_aa_flag)
+	unsigned int r, g, b;
+	unsigned int bg_color_set = (COLOR_TRANPARENT == bg_color) ? surface->get_pixel(x, y, z_order) : bg_color;
+
+	for (int y_ = 0; y_ < height; y_++)
 	{
-		for (i = 0; i < height; i++)
+		for (int x_ = 0; x_ < width; x_++)
 		{
-			draw_bit_line(surface, z_order, x, i + y, pData, width, font_color, bg_color);
-			pData += bytes_per_line;
-		}
-	}
-	else
-	{
-		for (i = 0; i < height; i++)
-		{
-			draw_bit_line_AA(surface, z_order, x, i + y, pData, width, font_color, bg_color);
-			pData += bytes_per_line;
-		}
-	}
-}
-
-void  c_word::draw_bit_line(c_surface* surface, int z_order, int x, int y, unsigned char const*p, int width, unsigned int font_color, unsigned int bg_color)
-{
-	unsigned int color;
-	int diff = 0;
-	do 
-	{
-		color = (*p & (0x80>>diff)) ? font_color : bg_color;
-
-		if (COLOR_TRANPARENT != color)
-		{
-			surface->set_pixel(x, y, color, z_order);
-		}
-
-		x++;
-		if (++diff == 8) 
-		{
-			diff = 0;
-			p++;
-		}
-	} while (--width);
-}
-
-void  c_word::draw_bit_line_AA(c_surface* surface, int z_order, int x, int y, unsigned char const*p, int width, unsigned int font_color, unsigned int bg_color)
-{
-	unsigned int color, current_bg_color;
-	unsigned int b, g, r;
-
-	if(COLOR_TRANPARENT == bg_color)
-	{
-		current_bg_color = surface->get_pixel(x, y, z_order);
-	}
-	else
-	{
-		current_bg_color = bg_color;
-	}
-
-	do 
-	{
-		if (0x00 == *p)
-		{
-			if(bg_color != COLOR_TRANPARENT)
+			unsigned char value = *p_data;
+			if (0x00 == value)
 			{
-				surface->set_pixel(x, y, current_bg_color, z_order);
+				if (bg_color != COLOR_TRANPARENT)
+				{
+					surface->set_pixel(x + x_, y + y_, bg_color_set, z_order);
+				}
 			}
+			else
+			{
+				b = (GLT_RGB_B(font_color) * value + GLT_RGB_B(bg_color_set) * (255 - value)) >> 8;
+				g = (GLT_RGB_G(font_color) * value + GLT_RGB_G(bg_color_set) * (255 - value)) >> 8;
+				r = (GLT_RGB_R(font_color) * value + GLT_RGB_R(bg_color_set) * (255 - value)) >> 8;
+				surface->set_pixel((x + x_), (y + y_), GLT_RGB(r, g, b), z_order);
+			}
+			p_data++;
 		}
-		else
-		{
-			b = (GLT_RGB_B(font_color) * (*p) + GLT_RGB_B(current_bg_color) * (255 - *p)) >> 8;
-			g = (GLT_RGB_G(font_color) * (*p) + GLT_RGB_G(current_bg_color) * (255 - *p)) >> 8;
-			r = (GLT_RGB_R(font_color) * (*p) + GLT_RGB_R(current_bg_color) * (255 - *p)) >> 8;
-			color = GLT_RGB(r, g, b);
-			surface->set_pixel(x, y, color, z_order);
-		}
-		x++;
-		p++;
-	} while (--width);
+	}
 }
 
-int c_word::get_str_pixel_length(const char *s, const GUI_FONT* font)
+int c_word::get_str_pixel_length(const char *s, const FONT_INFO* font)
 {
-	int ret = 0;
 	if(NULL == s)
 	{
-		return ret;
+		return 0;
 	}
 	if (NULL == font)
 	{
 		ASSERT(FALSE);
 	}
 
-	for (; *s; s++)
+	int lattice_width = 0;
+	unsigned int utf8_code;
+	int utf8_bytes;
+	while (*s)
 	{
-		int len = get_char_cnt_in_single_line(s);
-
-		unsigned char code_high;
-		int last_char_xdist = 0;
-
-		while (--len >= 0) 
-		{
-			const GUI_FONT_PROP* pProp = find_font_prop(font->p.pProp, *s);
-			if (pProp) 
-			{
-				const GUI_CHARINFO* pCharInfo = pProp->paCharInfo+(*s - pProp->First);
-
-				last_char_xdist = pCharInfo->XDist;
-			}
-			ret += last_char_xdist;
-			s++;
-		}
-		if (*s==0)
-			break;
+		utf8_bytes = get_utf8_code(s, utf8_code);
+		const LATTICE* p_lattice = get_lattice(font, utf8_code);
+		lattice_width += p_lattice?p_lattice->width:font->height;
+		s += utf8_bytes;
 	}
-
-	return ret;
+	return lattice_width;
 }
 
-void c_word::get_string_pos(const char *s, const GUI_FONT* font, c_rect rect, unsigned int align_type, int &x, int &y)
+void c_word::get_string_pos(const char *s, const FONT_INFO* font, c_rect rect, unsigned int align_type, int &x, int &y)
 {
 	int x_size = get_str_pixel_length(s, font);
-	int y_size = get_font_ysize(font);
+	int y_size = font->height;
 
 	int height = rect.m_bottom - rect.m_top + 1;
 	int width  = rect.m_right - rect.m_left + 1;
@@ -351,9 +302,4 @@ void c_word::get_string_pos(const char *s, const GUI_FONT* font, c_rect rect, un
 		ASSERT(0);
 		break;
 	}
-}
-
-bool c_word::is_AA_font(const GUI_CHARINFO* pCharInfo)
-{
-	return  (pCharInfo->XSize == pCharInfo->BytesPerLine) ? true : false;
 }

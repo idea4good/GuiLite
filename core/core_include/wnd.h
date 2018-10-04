@@ -9,7 +9,7 @@
 #define GLT_ATTR_DISABLED		0x40000000L
 #define GLT_ATTR_FOCUS			0x20000000L
 
-typedef struct struct_gui_font		GUI_FONT;
+typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;
 
 class c_wnd;
@@ -74,8 +74,8 @@ public:
 	unsigned int get_font_color() { return m_font_color; }
 	void set_bg_color(unsigned int color) { m_bg_color = color; }
 	unsigned int get_bg_color() { return m_bg_color; }
-	void set_font_type(const GUI_FONT *font_type) { m_font_type = font_type; }
-	const GUI_FONT* get_font_type() { return m_font_type; }
+	void set_font_type(const FONT_INFO *font_type) { m_font_type = font_type; }
+	const FONT_INFO* get_font_type() { return m_font_type; }
 
 	void set_wnd_pos(short x, short y, short width, short height);
 	void get_wnd_rect(c_rect &rect) const;
@@ -141,7 +141,7 @@ protected:
 	c_wnd*			m_next_sibling;
 	char*			m_str;
 
-	const GUI_FONT*		m_font_type;
+	const FONT_INFO*		m_font_type;
 	unsigned int		m_font_color;
 	unsigned int		m_bg_color;
 

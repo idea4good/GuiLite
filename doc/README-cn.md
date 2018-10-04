@@ -3,19 +3,16 @@
 - GuiLite可以嵌入在iOS、Android、MFC、QT等其他UI系统中，让你的界面集百家之长，又不失个性。
 - GuiLite鼓励混合编程，开发者可以用GuiLite接管UI部分，用Swift，Java，Go，C#，Python发开业务部分。
 
-## 新功能：“换肤”功能
-![multi-theme](multi-theme.png)
+相比QT、MFC，GuiLite不预设开发者的使用场景，不在具体功能上，大包大揽；用框架的简洁，换取开发的自由；GuiLite在图形绘制上面，力图一步到位，运行效率感人。
 
-[如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/resource/resource.cpp)
+## 新功能：支持多种文字：Unicode
+![unicode](unicode.jpg)
 
-## 自我监控
-**上报“编译/运行”情况至“云端”：**
+[如何制作多种文字资源?](https://github.com/idea4good/GuiLiteToolkit)
 
-![BuildInfo](BuildInfo.png)
+[如何绘制Unicode文字?](https://github.com/idea4good/GuiLite/blob/master/core/src/word.cpp)
 
-**同步“本地数据”至“云端”：**
-
-![DataOnCloud](data_on_cloud.png)
+[如何在你的APP中输入unicode字符?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/ui_tree/Dialog/patient_setup/patient_setup_dlg_xml.cpp)
 
 ## 卓越的跨平台能力
 在Mac, iOS下的运行效果:
@@ -30,7 +27,19 @@
 
 ![Win MR](WinMR.gif) ![QQ group: 527251257](qq.group.jpg)
 
-相比QT、MFC，GuiLite不预设开发者的使用场景，不在具体功能上，大包大揽；用框架的简洁，换取开发的自由；GuiLite在图形绘制上面，力图一步到位，运行效率感人。
+## “换肤”功能
+![multi-theme](multi-theme.png)
+
+[如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/resource/resource.cpp)
+
+## 自我监控
+**上报“编译/运行”情况至“云端”：**
+
+![BuildInfo](BuildInfo.png)
+
+**同步“本地数据”至“云端”：**
+
+![DataOnCloud](data_on_cloud.png)
 
 ## 为什么开发GuiLite？如何使用？
 任何UI框架都不是为你我而生的，只有掌握核心原理，对其深度定制，才能真正掌握自己的命运！因此，我们开发了GuiLite，希望用这6千行代码揭示UI的核心原理和定制方法。
