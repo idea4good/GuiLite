@@ -10,10 +10,6 @@
 
 [如何制作多种文字资源?](https://github.com/idea4good/GuiLiteToolkit)
 
-[如何绘制Unicode文字?](https://github.com/idea4good/GuiLite/blob/master/core/src/word.cpp)
-
-[如何在你的APP中输入unicode字符?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/ui_tree/Dialog/patient_setup/patient_setup_dlg_xml.cpp)
-
 ## 卓越的跨平台能力
 在Mac, iOS下的运行效果:
 
