@@ -1,5 +1,5 @@
 # GuiLite - 简洁出奇迹
-- GuiLite（超轻量UI框架）是6千行代码的**全平台UI框架**，可以完美运行在iOS，Android，Windows（包含VR），Mac，单片机*和市面所有的 ARM Linux物联网终端设备上。
+- GuiLite（超轻量UI框架）是6千行代码的**全平台UI框架**，可以完美运行在iOS，Android，Windows（包含VR），Mac，单片机和**市面所有的 ARM Linux物联网终端设备**上。
 - GuiLite可以嵌入在iOS、Android、MFC、QT等其他UI系统中，让你的界面集百家之长，又不失个性。
 - GuiLite鼓励混合编程，开发者可以用GuiLite接管UI部分，用Swift，Java，Go，C#，Python发开业务部分。
 
