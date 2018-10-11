@@ -121,7 +121,7 @@ protected:
 	virtual void on_focus();
 	virtual void on_kill_focus();
 
-	void set_pixel(int x, int y, unsigned int rgb);
+	void draw_pixel(int x, int y, unsigned int rgb);
 	void draw_hline(int x0, int x1, int y, unsigned int rgb);
 	void draw_vline(int x, int y0, int y1, unsigned int rgb);
 	void draw_line(int x0, int y0, int x1, int y1, unsigned int rgb);

@@ -169,7 +169,7 @@ int c_display::snap_shot(unsigned int display_id)
 	for (int i = 0; i < width * height; i++)
 	{
 		unsigned int rgb = *p_raw_data++;
-		p_bmp565_data[i] = GLT_RGB_32_to_16(rgb);
+		p_bmp565_data[i] = GL_RGB_32_to_16(rgb);
 	}
 
 	int ret = build_bmp(path, width, height, (unsigned char*)p_bmp565_data);

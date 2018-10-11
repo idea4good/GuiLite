@@ -21,10 +21,10 @@ class c_display;
 class c_surface {
 	friend class c_display;
 public:
-	virtual void set_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
-	virtual unsigned int get_pixel(int x, int y, unsigned int z_order);
+	virtual void draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
 	virtual void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
 	void fill_rect_ex(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* extend_rects, int z_order);
+	virtual unsigned int get_pixel(int x, int y, unsigned int z_order);
 
 	int get_width() { return m_width; }
 	int get_height() { return m_height; }
@@ -41,8 +41,8 @@ public:
 	int set_frame_layer(c_rect& rect, unsigned int z_order);
 	void set_active(bool flag){m_is_active = flag;}
 protected:
-	virtual void set_pixel_on_fb(int x, int y, unsigned int rgb);
 	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb);
+	virtual void set_pixel(int x, int y, unsigned int rgb);
 
 	void set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order);
 	int copy_layer_pixel_2_fb(int x, int y, unsigned int z_order);
@@ -64,10 +64,11 @@ class c_surface_16bits : public c_surface {
 	friend class c_display;
 	c_surface_16bits(c_display* display, void* phy_fb, unsigned int width, unsigned int height, unsigned int color_bytes) :
 					c_surface(display, phy_fb, width, height, color_bytes) {};
-	virtual void set_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
-	virtual void set_pixel_on_fb(int x, int y, unsigned int rgb);
+	virtual void draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
 	virtual void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
 	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb);
 	virtual unsigned int get_pixel(int x, int y, unsigned int z_order);
+protected:
+	virtual void set_pixel(int x, int y, unsigned int rgb);
 };
 #endif

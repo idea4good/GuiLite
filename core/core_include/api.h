@@ -15,13 +15,15 @@ void do_assert(const char* file, int line);
 
 void log_out(const char* log);
 
-#define COLOR_TRANPARENT 0xFF000000
-#define GLT_RGB(r, g, b) ((0xFF << 24) | (((unsigned int)(r)) << 16) | (((unsigned int)(g)) << 8) | ((unsigned int)(b)))
-#define GLT_RGB_R(rgb) ((((unsigned int)(rgb)) >> 16) & 0xFF)
-#define GLT_RGB_G(rgb) ((((unsigned int)(rgb)) >> 8) & 0xFF)
-#define GLT_RGB_B(rgb) (((unsigned int)(rgb)) & 0xFF)
-#define GLT_RGB_32_to_16(rgb) (((((unsigned int)(rgb)) & 0xFF) >> 3) | ((((unsigned int)(rgb)) & 0xFC00) >> 5) | ((((unsigned int)(rgb)) & 0xF80000) >> 8))
-#define GLT_RGB_16_to_32(rgb) (((((unsigned int)(rgb)) & 0x1F) << 3) | ((((unsigned int)(rgb)) & 0x7E0) << 5) | ((((unsigned int)(rgb)) & 0xF800) << 8))
+#define GL_ARGB(a, r, g, b) ((((unsigned int)(a)) << 24) | (((unsigned int)(r)) << 16) | (((unsigned int)(g)) << 8) | ((unsigned int)(b)))
+#define GL_ARGB_A(rgb) ((((unsigned int)(rgb)) >> 24) & 0xFF)
+
+#define GL_RGB(r, g, b) ((0xFF << 24) | (((unsigned int)(r)) << 16) | (((unsigned int)(g)) << 8) | ((unsigned int)(b)))
+#define GL_RGB_R(rgb) ((((unsigned int)(rgb)) >> 16) & 0xFF)
+#define GL_RGB_G(rgb) ((((unsigned int)(rgb)) >> 8) & 0xFF)
+#define GL_RGB_B(rgb) (((unsigned int)(rgb)) & 0xFF)
+#define GL_RGB_32_to_16(rgb) (((((unsigned int)(rgb)) & 0xFF) >> 3) | ((((unsigned int)(rgb)) & 0xFC00) >> 5) | ((((unsigned int)(rgb)) & 0xF80000) >> 8))
+#define GL_RGB_16_to_32(rgb) (((((unsigned int)(rgb)) & 0x1F) << 3) | ((((unsigned int)(rgb)) & 0x7E0) << 5) | ((((unsigned int)(rgb)) & 0xF800) << 8))
 
 typedef struct _T_TIME
 {

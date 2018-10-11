@@ -745,9 +745,9 @@ void c_wnd::notify_parent(unsigned short msg_id, unsigned int w_param, long l_pa
 	}
 }
 
-void c_wnd::set_pixel(int x, int y, unsigned int rgb)
+void c_wnd::draw_pixel(int x, int y, unsigned int rgb)
 {
-	m_surface->set_pixel(x, y, rgb, m_z_order);
+	m_surface->draw_pixel(x, y, rgb, m_z_order);
 }
 
 void c_wnd::draw_hline(int x0, int x1, int y, unsigned int rgb)

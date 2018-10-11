@@ -21,7 +21,7 @@ GLT_END_MESSAGE_MAP()
 void c_spin_box::pre_create_wnd()
 {
 	m_style = GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
-	m_font_type = c_my_resource::get_font(FONT_ENG_SMB_AA);
+	m_font_type = c_my_resource::get_font(FONT_ENG_SMB);
 	m_bg_color = c_my_resource::get_color(CTRL_BACK_GROUND);
 	m_font_color = c_my_resource::get_color(CTRL_FORE_GROUND);
 
@@ -119,7 +119,7 @@ void c_spin_box::on_kill_focus()
 
 void c_spin_box::show_arrow_button()
 {
-	fill_rect(m_bt_up_rect.m_left, m_bt_up_rect.m_top, m_bt_down_rect.m_right, m_bt_down_rect.m_bottom, GLT_RGB(99,108,124));
+	fill_rect(m_bt_up_rect.m_left, m_bt_up_rect.m_top, m_bt_down_rect.m_right, m_bt_down_rect.m_bottom, GL_RGB(99,108,124));
 
 	m_bt_up.connect(this, ID_BT_ARROW_UP, 0, 0, m_wnd_rect.Height(), m_bt_up_rect.Width(),m_bt_up_rect.Height());
 	m_bt_up.set_bitmap(c_my_resource::get_bmp(BITMAP_UP_BT_NORMAL));
@@ -180,7 +180,7 @@ void c_spin_box::on_paint()
 		show_arrow_button();
 
 		m_surface->fill_rect_ex(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_bg_color, c_my_resource::get_shape(LIST_BOX_PUSH),m_parent->get_z_order());
-		c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, GLT_RGB(2, 124, 165), COLOR_TRANPARENT, m_style);
+		c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, GL_RGB(2, 124, 165), GL_ARGB(0, 0, 0, 0), m_style);
 		return;
 		break;
 	default:
@@ -188,7 +188,7 @@ void c_spin_box::on_paint()
 		break;
 	}
 
-	c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+	c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 }
 
 void c_spin_box::on_arrow_up_bt_click(unsigned int ctr_id)

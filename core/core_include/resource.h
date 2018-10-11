@@ -28,7 +28,7 @@ typedef struct struct_font_info
 
 //SHAPE
 #define INVALID_RGN 0xFFFFFF
-#define COLOR_USERDEF GLT_RGB(41,49,49)
+#define COLOR_USERDEF GL_RGB(41,49,49)
 typedef struct struct_color_rect
 {
 	int l;

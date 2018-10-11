@@ -166,7 +166,7 @@ void c_keyboard::pre_create_wnd()
 {	
 	m_style = GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS;
 	m_cap_status = STATUS_UPPERCASE;
-	m_bg_color = GLT_RGB(39,39,39);
+	m_bg_color = GL_RGB(39,39,39);
 	memset(m_str, 0, sizeof(m_str));
 	m_str_len = 0;
 }
@@ -246,31 +246,31 @@ void c_keyboard_button::on_paint()
 	
 	if (m_resource_id == 0x14)
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 	}
 	else if (m_resource_id == 0x1B)
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 	}
 	else if (m_resource_id == ' ')
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 	}
 	else if (m_resource_id == '\n')
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 	}
 	else if (m_resource_id == '.')
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 	}
 	else if (m_resource_id == 0x7F)
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 	}
 	else if (m_resource_id == 0x90)
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 	}
 	
 	char letter[] = { 0, 0 };
@@ -282,5 +282,5 @@ void c_keyboard_button::on_paint()
 	{
 		letter[0] = m_resource_id;
 	}
-	c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+	c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 }

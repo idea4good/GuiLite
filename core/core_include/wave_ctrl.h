@@ -47,8 +47,8 @@ public:
 	
 protected:
 	void draw_smooth_vline(int y_min, int y_max, int mid, unsigned int rgb);
-	void erase_oldest_vline();
-	void save_foreground();
+	void restore_background();
+	void save_background();
 
 	char* m_wave_name;
 	char* m_wave_unit;
@@ -74,7 +74,7 @@ protected:
 	
 private:
 	c_wave_buffer*	m_wave;
-	void*			m_bg_fb;			//background frame buffer, could be used to draw scale line.
+	unsigned int*	m_bg_fb;			//background frame buffer, could be used to draw scale line.
 	int 			m_wave_cursor;
 	int 			m_wave_speed;		//pixels per refresh
 	int				m_wave_sample_rate;

@@ -27,7 +27,7 @@ void c_list_box::on_init_children()
 {
 	m_item_total = 0;
 	m_selected_item = 0;	
-	m_font_type = c_my_resource::get_font(FONT_ENG_SMB_AA);
+	m_font_type = c_my_resource::get_font(FONT_ENG_SMB);
 	m_font_color = c_my_resource::get_color(CTRL_FORE_GROUND);
 	m_bg_color = c_my_resource::get_color(CTRL_BACK_GROUND);
 }
@@ -70,7 +70,7 @@ void c_list_box::on_paint()
 		break;
 	case STATUS_PUSHED:
 		fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(LIST_BOX_PUSH));
-		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, GLT_RGB(2, 124, 165), COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
+		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, GL_RGB(2, 124, 165), GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
 		//draw list
 		if (m_item_total > 0)
 		{
@@ -87,11 +87,11 @@ void c_list_box::on_paint()
 		ASSERT(FALSE);
 		break;
 	}
-	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
+	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
 
 	if (m_item_total)
 	{
-		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, COLOR_TRANPARENT, m_style);
+		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 	}
 }
 
@@ -163,7 +163,7 @@ void c_list_box::show_list()
 {
 	fill_rect_ex(m_list_screen_rect, m_bg_color, c_my_resource::get_shape(LIST_BOX_EXTEND));
 
-	m_font_color = GLT_RGB(255, 255, 255);
+	m_font_color = GL_RGB(255, 255, 255);
 	//draw all items
 	c_rect tmp_rect;
 	for (int i = 0; i < m_item_total; i++)
@@ -172,8 +172,8 @@ void c_list_box::show_list()
 		tmp_rect.m_right = m_list_screen_rect.m_right;
 		tmp_rect.m_top = m_list_screen_rect.m_top + i * ITEM_HEIGHT;
 		tmp_rect.m_bottom = tmp_rect.m_top + ITEM_HEIGHT;
-		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
-		draw_hline(tmp_rect.m_left, tmp_rect.m_right, tmp_rect.m_bottom, GLT_RGB(99, 108, 124));
+		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
+		draw_hline(tmp_rect.m_left, tmp_rect.m_right, tmp_rect.m_bottom, GL_RGB(99, 108, 124));
 	}
 	//draw selected item	
 	tmp_rect.m_left = m_list_screen_rect.m_left;
@@ -181,10 +181,10 @@ void c_list_box::show_list()
 	tmp_rect.m_top = m_list_screen_rect.m_top + m_selected_item * ITEM_HEIGHT;
 	tmp_rect.m_bottom = tmp_rect.m_top + ITEM_HEIGHT;
 
-	fill_rect_ex(tmp_rect, GLT_RGB(0, 255, 0), c_my_resource::get_shape(LIST_BOX_SELECT));
+	fill_rect_ex(tmp_rect, GL_RGB(0, 255, 0), c_my_resource::get_shape(LIST_BOX_SELECT));
 
-	m_font_color = GLT_RGB(255, 255, 255);
-	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], tmp_rect, m_font_type, m_font_color, COLOR_TRANPARENT, ALIGN_HCENTER | ALIGN_VCENTER);
+	m_font_color = GL_RGB(255, 255, 255);
+	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], tmp_rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
 }
 
 int c_list_box::add_item(char* str)

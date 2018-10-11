@@ -178,8 +178,8 @@ int c_word::draw_single_char(c_surface* surface, int z_order, unsigned int utf8_
 	{
 		for (int x_ = 0; x_ < len; x_++)
 		{
-			((y_ % 4) == 0) ? surface->set_pixel((x + x_), (y + y_), 0, z_order) :
-							surface->set_pixel((x + x_), (y + y_), 0xFFFFFFFF, z_order);
+			((y_ % 4) == 0) ? surface->draw_pixel((x + x_), (y + y_), 0, z_order) :
+							surface->draw_pixel((x + x_), (y + y_), 0xFFFFFFFF, z_order);
 		}
 	}
 	return len;
@@ -189,7 +189,6 @@ void c_word::draw_lattice(c_surface* surface, int z_order, int x, int y, int wid
 						const unsigned char* p_data, unsigned int font_color, unsigned int bg_color)
 {
 	unsigned int r, g, b;
-	unsigned int bg_color_set = (COLOR_TRANPARENT == bg_color) ? surface->get_pixel(x, y, z_order) : bg_color;
 
 	for (int y_ = 0; y_ < height; y_++)
 	{
@@ -198,17 +197,17 @@ void c_word::draw_lattice(c_surface* surface, int z_order, int x, int y, int wid
 			unsigned char value = *p_data;
 			if (0x00 == value)
 			{
-				if (bg_color != COLOR_TRANPARENT)
+				if (GL_ARGB_A(bg_color))
 				{
-					surface->set_pixel(x + x_, y + y_, bg_color_set, z_order);
+					surface->draw_pixel(x + x_, y + y_, bg_color, z_order);
 				}
 			}
 			else
 			{
-				b = (GLT_RGB_B(font_color) * value + GLT_RGB_B(bg_color_set) * (255 - value)) >> 8;
-				g = (GLT_RGB_G(font_color) * value + GLT_RGB_G(bg_color_set) * (255 - value)) >> 8;
-				r = (GLT_RGB_R(font_color) * value + GLT_RGB_R(bg_color_set) * (255 - value)) >> 8;
-				surface->set_pixel((x + x_), (y + y_), GLT_RGB(r, g, b), z_order);
+				b = (GL_RGB_B(font_color) * value + GL_RGB_B(bg_color) * (255 - value)) >> 8;
+				g = (GL_RGB_G(font_color) * value + GL_RGB_G(bg_color) * (255 - value)) >> 8;
+				r = (GL_RGB_R(font_color) * value + GL_RGB_R(bg_color) * (255 - value)) >> 8;
+				surface->draw_pixel((x + x_), (y + y_), GL_RGB(r, g, b), z_order);
 			}
 			p_data++;
 		}

@@ -96,7 +96,7 @@ void c_bitmap::draw_bitmap_565(c_surface* surface, int z_order, int x, int y, in
 		for (int i = 0; i < xsize; i++) 
 		{
 			unsigned int rgb = *p++;
-			surface->set_pixel(x + i, y + j, GLT_RGB_16_to_32(rgb), z_order);
+			surface->draw_pixel(x + i, y + j, GL_RGB_16_to_32(rgb), z_order);
 		}
 		pData += BytesPerLine;
 	}
@@ -120,7 +120,7 @@ void c_bitmap::draw_bitmap_565_inrect(c_surface* surface, int z_order, int x, in
 			}
 
 			unsigned int rgb = *p++;
-			surface->set_pixel(x + i, y + j, GLT_RGB_16_to_32(rgb), z_order);
+			surface->draw_pixel(x + i, y + j, GL_RGB_16_to_32(rgb), z_order);
 		}
 		pData += BytesPerLine;
 	}
