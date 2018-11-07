@@ -7,12 +7,12 @@
 #define TRUE 	1
 #define FALSE 	0
 
-void do_assert(const char* file, int line);
+void register_debug_function(void(*my_assert)(const char* file, int line), void(*my_log_out)(const char* log));
+void _assert(const char* file, int line);
 #define ASSERT(condition)	\
 	do{                     \
-	if(!(condition))do_assert(__FILE__, __LINE__);\
+	if(!(condition))_assert(__FILE__, __LINE__);\
 	}while(0)
-
 void log_out(const char* log);
 
 #define GL_ARGB(a, r, g, b) ((((unsigned int)(a)) << 24) | (((unsigned int)(r)) << 16) | (((unsigned int)(g)) << 8) | ((unsigned int)(b)))

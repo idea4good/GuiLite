@@ -18,6 +18,39 @@
 #define MAX_TIMER_CNT 10
 #define TIMER_UNIT 50//ms
 
+static void(*do_assert)(const char* file, int line);
+static void(*do_log_out)(const char* log);
+void register_debug_function(void(*my_assert)(const char* file, int line), void(*my_log_out)(const char* log))
+{
+	do_assert = my_assert;
+	do_log_out = my_log_out;
+}
+
+void _assert(const char* file, int line)
+{
+	if(do_assert)
+	{
+		do_assert(file, line);
+	}
+	else
+	{
+		printf("assert@ file:%s, line:%d, error no: %d\n", file, line, errno);
+	} 
+}
+
+void log_out(const char* log)
+{
+	if (do_log_out)
+	{
+		do_log_out(log);
+	}
+	else
+	{
+		printf(log);
+		fflush(stdout);
+	}
+}
+
 typedef struct _timer_manage
 {
     struct  _timer_info

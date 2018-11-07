@@ -23,7 +23,7 @@ void c_bitmap::draw_bitmap_in_rect(c_surface* surface, int z_order, const BITMAP
 	}
 	int x, y;
 	get_bitmap_pos(pBitmap, rect, align_type, x, y);
-	draw_bitmap_565_inrect(surface, z_order, rect.m_left + x, rect.m_top + y,
+	draw_bitmap_565_in_rect(surface, z_order, rect.m_left + x, rect.m_top + y,
 			(rect.m_right - rect.m_left + 1), (rect.m_bottom - rect.m_top + 1),
 			pBitmap->XSize, pBitmap->YSize, (unsigned char const *)pBitmap->pData);
 }
@@ -55,7 +55,6 @@ void c_bitmap::get_bitmap_pos(const BITMAP_INFO *pBitmap, c_rect rect, unsigned 
 			x = width - x_size;
 		}
 		break;
-
 	default:
 		ASSERT(0);
 		break;
@@ -86,10 +85,7 @@ void c_bitmap::get_bitmap_pos(const BITMAP_INFO *pBitmap, c_rect rect, unsigned 
 
 void c_bitmap::draw_bitmap_565(c_surface* surface, int z_order, int x, int y, int xsize, int ysize, const unsigned char* pPixel)
 {
-	const unsigned short* pData;
-	pData = (const unsigned short*)pPixel;
-	int BytesPerLine;
-	BytesPerLine = xsize;
+	const unsigned short* pData = (const unsigned short*)pPixel;
 	for (int j = 0; j < ysize; j++) 
 	{
 		const unsigned short * p = pData;
@@ -98,16 +94,13 @@ void c_bitmap::draw_bitmap_565(c_surface* surface, int z_order, int x, int y, in
 			unsigned int rgb = *p++;
 			surface->draw_pixel(x + i, y + j, GL_RGB_16_to_32(rgb), z_order);
 		}
-		pData += BytesPerLine;
+		pData += xsize;
 	}
 }
 
-void c_bitmap::draw_bitmap_565_inrect(c_surface* surface, int z_order, int x, int y, int width, int height, int xsize, int ysize, const unsigned char* pPixel)
+void c_bitmap::draw_bitmap_565_in_rect(c_surface* surface, int z_order, int x, int y, int width, int height, int xsize, int ysize, const unsigned char* pPixel)
 {
-	const unsigned short* pData;
-	pData = (const unsigned short*)pPixel;
-	int BytesPerLine;
-	BytesPerLine = xsize;
+	const unsigned short* pData = (const unsigned short*)pPixel;
 	for (int j = 0; j < ysize; j++)
 	{
 		if(j >= height)break;
@@ -122,6 +115,6 @@ void c_bitmap::draw_bitmap_565_inrect(c_surface* surface, int z_order, int x, in
 			unsigned int rgb = *p++;
 			surface->draw_pixel(x + i, y + j, GL_RGB_16_to_32(rgb), z_order);
 		}
-		pData += BytesPerLine;
+		pData += xsize;
 	}
 }

@@ -5,9 +5,37 @@
 #include <time.h>
 #include <conio.h>
 #include <windows.h>
+#include <assert.h>
 
 #define MAX_TIMER_CNT 10
 #define TIMER_UNIT 50//ms
+
+static void(*do_assert)(const char* file, int line);
+static void(*do_log_out)(const char* log);
+void register_debug_function(void(*my_assert)(const char* file, int line), void(*my_log_out)(const char* log))
+{
+	do_assert = my_assert;
+	do_log_out = my_log_out;
+}
+
+void _assert(const char* file, int line)
+{
+	(do_assert) ? do_assert(file, line) : assert(false);
+}
+
+void log_out(const char* log)
+{
+	if (do_log_out)
+	{
+		do_log_out(log);
+	}
+	else
+	{
+		printf(log);
+		fflush(stdout);
+		OutputDebugStringA(log);
+	}
+}
 
 typedef struct _timer_manage
 {

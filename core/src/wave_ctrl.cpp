@@ -192,7 +192,7 @@ void c_wave_ctrl::draw_smooth_vline(int y_min, int y_max, int mid, unsigned int 
 	short r = GL_RGB_R(rgb);
 	short g = GL_RGB_G(rgb);
 	short b = GL_RGB_B(rgb);
-	int  index = dy / 2 + 2;
+	int  index = (dy >> 1) + 2;
 	int  y;
 
 	draw_pixel(m_wave_cursor, mid, rgb);
@@ -204,23 +204,23 @@ void c_wave_ctrl::draw_smooth_vline(int y_min, int y_max, int mid, unsigned int 
 
 	unsigned char cur_r,cur_g,cur_b;
 	unsigned int cur_rgb;
-	for (int i = 1; i <= dy/2 + 1; ++i )
+	for (int i = 1; i <= (dy >> 1) + 1; ++i )
 	{
 		if ( (mid + i) <= y_max )
 		{
 			y = mid + i;
-			cur_r = r*(index - i)/index;
-			cur_g = g*(index - i)/index;
-			cur_b = b*(index - i)/index;
+			cur_r = r * (index - i) / index;
+			cur_g = g * (index - i) / index;
+			cur_b = b * (index - i) / index;
 			cur_rgb = GL_RGB(cur_r, cur_g, cur_b);
 			draw_pixel(m_wave_cursor, y, cur_rgb);
 		}
 		if ( (mid - i) >= y_min )
 		{
 			y = mid - i;
-			cur_r = r*(index - i)/index;
-			cur_g = g*(index - i)/index;
-			cur_b = b*(index - i)/index;
+			cur_r = r * (index - i) / index;
+			cur_g = g * (index - i) / index;
+			cur_b = b * (index - i) / index;
 			cur_rgb = GL_RGB(cur_r, cur_g, cur_b);
 			draw_pixel(m_wave_cursor, y, cur_rgb);
 		}

@@ -59,7 +59,6 @@ public:
 	virtual void modify_style(unsigned int add_style = 0, unsigned int remove_style = 0);
 
 	void set_str(char* str) { m_str = str; }
-	char* get_str_id() const { return m_str; }
 
 	bool is_visible() const { return m_is_visible_now; }
 	bool is_foreground();
@@ -141,7 +140,7 @@ protected:
 	c_wnd*			m_next_sibling;
 	char*			m_str;
 
-	const FONT_INFO*		m_font_type;
+	const FONT_INFO*	m_font_type;
 	unsigned int		m_font_color;
 	unsigned int		m_bg_color;
 

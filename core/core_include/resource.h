@@ -6,7 +6,6 @@ typedef struct struct_bitmap_info
 {
 	unsigned short XSize;
 	unsigned short YSize;
-	unsigned short BytesPerLine;
 	unsigned short BitsPerPixel;
 	const unsigned char* pData; /* Pointer to picture data (indices) */
 } BITMAP_INFO;
