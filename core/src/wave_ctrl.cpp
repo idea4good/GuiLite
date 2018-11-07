@@ -61,7 +61,6 @@ void c_wave_ctrl::set_max_min_base(short max_data, short min_data, short data_ba
 void c_wave_ctrl::set_wave_gain(E_WAVE_GAIN gain)
 {
 	m_gain = gain;
-	on_paint();
 }
 
 void c_wave_ctrl::set_wave_sample_rate(unsigned int rate)
