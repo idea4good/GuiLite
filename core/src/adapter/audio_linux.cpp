@@ -30,7 +30,7 @@ static void* render_thread(void* param)
 		}
 		if(gAndroidPlayWav)
 		{
-			gAndroidPlayWav("hello");
+			gAndroidPlayWav("heart_beat.wav");
 		}
 	}
 }
