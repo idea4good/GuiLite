@@ -59,7 +59,7 @@ Ran on Windows Mixed Reality & QQ developers' group:
 ## Video links
 [GuiLite introduction](https://www.youtube.com/watch?v=grqXEz3bdC0)
 
-[GuiLite office](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
+[3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
 
 ## Sample code link
 [GuiLite Samples](https://github.com/idea4good/GuiLiteSamples)

@@ -65,7 +65,7 @@
 ## 视频链接:
 [GuiLite简介](https://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
 
-[GuiLite办公室](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
+[3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
 
 ## 实例代码链接
 [GuiLiteSamples](https://github.com/idea4good/GuiLiteSamples)
