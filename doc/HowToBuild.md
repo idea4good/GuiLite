@@ -12,12 +12,12 @@ depdency: Windows 10, visul stdio 2015/2017
 
 ## How to build core&gui libary for ARM Linux?
 ### Install cross compiler:
-For example: arm-linux-gnueabi-gcc
-
-`sudo apt-get install g++-arm-linux-gnueabi gcc-arm-linux-gnueabi`
-
+- For ARM32: `sudo apt-get install g++-arm-linux-gnueabi gcc-arm-linux-gnueabi`
+- For ARM64: `sudo apt-get install g++-aarch64-linux-gnu gcc-aarch64-linux-gnu`
+### Build
 - `cd GuiLite`
-- `cmake -D CMAKE_C_COMPILER="/usr/bin/arm-linux-gnueabi-gcc" -D CMAKE_CXX_COMPILER="/usr/bin/arm-linux-gnueabi-g++" .`
+- For ARM32: `cmake -D CMAKE_C_COMPILER="/usr/bin/arm-linux-gnueabi-gcc" -D CMAKE_CXX_COMPILER="/usr/bin/arm-linux-gnueabi-g++" .`
+- For ARM64: `cmake -D CMAKE_C_COMPILER="/usr/bin/aarch64-linux-gnu-gcc" -D CMAKE_CXX_COMPILER="/usr/bin/aarch64-linux-gnu-g++" .`
 - `make`
 - Output here: /GuiLite/libcore.a libgui.a
 
