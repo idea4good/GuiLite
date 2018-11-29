@@ -7,13 +7,9 @@
 #include "../core_include/wnd.h"
 
 c_wnd::c_wnd(): m_status(STATUS_NORMAL), m_style(GLT_ATTR_VISIBLE), m_parent(NULL), m_top_child(NULL), m_prev_sibling(NULL), m_next_sibling(NULL),
-	m_str(0), m_font_color(0), m_bg_color(0), m_is_visible_now(false),m_resource_id(0),	m_z_order(Z_ORDER_LEVEL_0),	m_active_child(NULL), m_surface(NULL)
+	m_str(0), m_font_color(0), m_bg_color(0), m_resource_id(0),	m_z_order(Z_ORDER_LEVEL_0),	m_active_child(NULL), m_surface(NULL)
 {
 	m_wnd_rect.Empty();
-}
-
-c_wnd:: ~c_wnd()
-{
 }
 
 void c_wnd::pre_create_wnd()
@@ -197,7 +193,6 @@ void c_wnd::disconnect()
 		m_parent->unlink_child(this);
 	}
 	m_active_child = 0;
-	m_is_visible_now = false;
 	m_resource_id = 0;
 }
 
@@ -236,117 +231,17 @@ void c_wnd::modify_style(unsigned int add_style, unsigned int remove_style)
 	}
 }
 
-bool c_wnd::is_foreground()
-{
-	return (m_surface->is_active() && m_is_visible_now);
-}
-
-void c_wnd::set_visible(bool visible)
-{
-	m_is_visible_now = visible;
-
-	c_wnd *child = m_top_child;
-	while (child)
-	{
-		child->set_visible(visible);
-		child = child->m_next_sibling;
-	}
-}
-
-void c_wnd::enable_wnd(int enable)
-{
-	int old_enable = is_wnd_enable();        
-
-	if ( enable != old_enable )
-	{
-		if ( enable )
-		{
-			m_style &= ~GLT_ATTR_DISABLED;
-			m_status = STATUS_NORMAL;
-		}
-		else
-		{
-			m_style |= GLT_ATTR_DISABLED;
-			m_status = STATUS_DISABLED;
-		}
-
-		if ( 0 != m_top_child )
-		{
-			c_wnd *child = m_top_child;
-			c_wnd *next_child = 0;
-
-			while ( child )
-			{
-				next_child = child->m_next_sibling;
-
-				child->enable_wnd(enable);
-				child = next_child;
-			}
-		}
-
-		if ( true == m_is_visible_now )
-		{
-			on_paint();
-		}
-	}
-}
-
-int c_wnd::is_wnd_enable() const
-{
-	if ( GLT_ATTR_DISABLED == (m_style & GLT_ATTR_DISABLED) )
-	{
-		return FALSE;
-	}
-	else
-	{
-		return TRUE;
-	}
-}
-
-void c_wnd::enable_focus(int enable)
-{
-	if (enable)
-	{
-		m_style |= GLT_ATTR_FOCUS;
-	}
-	else
-	{
-		m_style &= ~GLT_ATTR_FOCUS;
-	}
-	return;
-}
-
 int c_wnd::is_focus_wnd() const
 {
 	if ( (m_style & GLT_ATTR_VISIBLE)
 		&& !(m_style & GLT_ATTR_DISABLED)
-		&& (m_style & GLT_ATTR_FOCUS)
-		&& (true == m_is_visible_now))
+		&& (m_style & GLT_ATTR_FOCUS))
 	{
 		return TRUE;
 	}
 	else
 	{
 		return FALSE;
-	}
-}
-
-const int c_wnd::is_active_wnd() const
-{
-	if(!m_parent)
-	{
-		return TRUE;
-	}
-	else
-	{
-		if( this == m_parent->get_active_child() )
-		{
-			return TRUE;
-		}
-		else
-		{
-			return FALSE;
-		}
 	}
 }
 
@@ -630,56 +525,20 @@ int	c_wnd::unlink_child(c_wnd *child)
 	}
 }
 
-void c_wnd::display_window()
+void c_wnd::show_window()
 {
 	if (GLT_ATTR_VISIBLE == (m_style & GLT_ATTR_VISIBLE))
 	{
-		m_is_visible_now = true;
 		on_paint();
-
 		c_wnd *child = m_top_child;
 		if ( NULL != child )
 		{
 			while ( child )
 			{
-				child->show_window(GLT_WIN_SHOW);
+				child->show_window();
 				child = child->m_next_sibling;
 			}
 		}
-	}
-}
-
-void c_wnd::hide_widow()
-{
-	c_wnd *child = m_top_child;
-
-	if ( true == m_is_visible_now )
-	{
-		if ( NULL != child )
-		{
-			while ( child )
-			{
-				child->show_window(GLT_WIN_HIDE);
-				child = child->m_next_sibling;
-			}
-		}
-		m_is_visible_now = false;
-		if (m_parent && (m_parent->get_active_child() == this))
-		{
-			m_parent->on_kill_focus();
-		}
-	}
-}
-
-void c_wnd::show_window(int show_type)
-{    
-	if ( GLT_WIN_SHOW == show_type )
-	{
-		display_window();
-	}
-	else if (GLT_WIN_HIDE == show_type)
-	{
-		hide_widow();
 	}
 }
 
@@ -694,7 +553,7 @@ void c_wnd::on_touch_down(int x, int y)
 	{
 		while ( pChild )
 		{
-			if (pChild->is_visible())
+			if (GLT_ATTR_VISIBLE == (pChild->m_style & GLT_ATTR_VISIBLE))
 			{
 				pChild->get_wnd_rect(rect);
 				if ( TRUE == rect.PtInRect(x, y) )
@@ -721,7 +580,7 @@ void c_wnd::on_touch_up(int x, int y)
 	{
 		while ( pChild )
 		{
-			if (pChild->is_visible())
+			if (GLT_ATTR_VISIBLE == (pChild->m_style & GLT_ATTR_VISIBLE))
 			{
 				pChild->get_wnd_rect(rect);
 				if ( TRUE == rect.PtInRect(x, y) )

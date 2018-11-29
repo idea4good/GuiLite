@@ -9,7 +9,6 @@
 
 #include "../gui_include/button.h"
 #include "../gui_include/my_resource.h"
-#include "../gui_include/dialog.h"
 #include "../gui_include/list_box.h"
 #include <string.h>
 
@@ -17,7 +16,7 @@
 
 void c_list_box::pre_create_wnd()
 {
-	m_style |= GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
+	m_style = GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
 	memset(m_item_array, 0, sizeof(m_item_array));
 	m_item_total = 0;
 	m_font_color = c_my_resource::get_color(CTRL_FORE_GROUND);

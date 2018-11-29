@@ -9,7 +9,6 @@
 #include "../gui_include/label.h"
 #include "../gui_include/edit.h"
 #include "../gui_include/my_resource.h"
-#include "../gui_include/dialog.h"
 #include "../gui_include/keyboard.h"
 #include <string.h>
 
@@ -25,7 +24,7 @@ static c_keyboard  s_keyboard;
 
 void c_edit::pre_create_wnd()
 {
-	m_style |= GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER | KEY_BOARD_STYLE;
+	m_style = GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER | KEY_BOARD_STYLE;
 	m_font_type = c_my_resource::get_font(FONT_ENG_SMB);
 	m_font_color = c_my_resource::get_color(CTRL_FORE_GROUND);
 	m_bg_color = c_my_resource::get_color(CTRL_BACK_GROUND);

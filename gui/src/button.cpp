@@ -8,11 +8,10 @@
 #include "core_include/surface.h"
 #include "../gui_include/my_resource.h"
 #include "../gui_include/button.h"
-#include "../gui_include/dialog.h"
 
 void c_button::pre_create_wnd()
 {
-	m_style |= GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
+	m_style = GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
 	m_font_type = c_my_resource::get_font(FONT_ENG_SMB);
 	m_font_color = c_my_resource::get_color(CTRL_FORE_GROUND);
 	m_bg_color = c_my_resource::get_color(CTRL_BACK_GROUND);

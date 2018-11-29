@@ -54,14 +54,6 @@ int c_slide_group::set_active_slide(int index, bool is_redraw)
 	return 0;
 }
 
-void c_slide_group::display_window()
-{
-	if (GLT_ATTR_VISIBLE == (m_style & GLT_ATTR_VISIBLE))
-	{
-		m_is_visible_now = true;
-	}
-}
-
 int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, short y,
 			short width, short height, WND_TREE* p_child_tree, Z_ORDER_LEVEL max_zorder)
 {
