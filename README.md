@@ -7,9 +7,7 @@
 ## New feature: Beginner demo -- HelloGuiLite
 ![HelloGuiLite](doc/HelloGuiLite.gif)
 
-**Believe or not, it's only 100+ lines code**
-
-[Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/UIcode/helloGL.cpp)
+**Believe or not, it's only 100+ lines code!**[Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/UIcode/helloGL.cpp)
 
 ## Cross platform
 Ran on macOS & iOS:

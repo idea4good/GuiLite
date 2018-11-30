@@ -8,9 +8,7 @@
 ## 新功能：入门demo -- HelloGuiLite
 ![HelloGuiLite](HelloGuiLite.gif)
 
-**信不信由你，代码只有100+行!**
-
-[查阅代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/UIcode/helloGL.cpp)
+**信不信由你，代码只有100+行!**[查阅代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/UIcode/helloGL.cpp)
 
 ## 卓越的跨平台能力
 在Mac, iOS下的运行效果:
