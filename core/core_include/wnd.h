@@ -2,9 +2,9 @@
 #define _GUI_WND_H_
 
 //Window attribution
-#define GLT_ATTR_VISIBLE		0x80000000L
-#define GLT_ATTR_DISABLED		0x40000000L
-#define GLT_ATTR_FOCUS			0x20000000L
+#define GL_ATTR_VISIBLE		0x80000000L
+#define GL_ATTR_DISABLED		0x40000000L
+#define GL_ATTR_FOCUS			0x20000000L
 
 typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;

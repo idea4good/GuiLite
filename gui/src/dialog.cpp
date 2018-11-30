@@ -17,7 +17,7 @@
 DIALOG_ARRAY c_dialog::ms_the_dialogs[SURFACE_CNT_MAX];
 void c_dialog::pre_create_wnd()
 {
-	m_style = GLT_ATTR_FOCUS;
+	m_style = GL_ATTR_FOCUS;
 	m_z_order = Z_ORDER_LEVEL_1;
 	m_bg_color = GL_RGB(33,33,33);
 	m_divider_lines = 0;
@@ -74,14 +74,14 @@ int c_dialog::open_dialog(c_dialog* p_dlg)
 
 	if(cur_dlg)
 	{
-		cur_dlg->modify_style(0, GLT_ATTR_VISIBLE);
+		cur_dlg->modify_style(0, GL_ATTR_VISIBLE);
 	}
 
 	c_rect rc;
 	p_dlg->get_screen_rect(rc);
 	p_dlg->get_surface()->set_frame_layer(rc, Z_ORDER_LEVEL_1);
 
-	p_dlg->modify_style(GLT_ATTR_VISIBLE, 0);
+	p_dlg->modify_style(GL_ATTR_VISIBLE, 0);
 	p_dlg->show_window();
 	p_dlg->set_me_the_dialog();
 	return 1;
@@ -97,7 +97,7 @@ int c_dialog::close_dialog(c_surface* surface)
 	}
 	c_rect rc;
 	
-	dlg->modify_style(0, GLT_ATTR_VISIBLE);
+	dlg->modify_style(0, GL_ATTR_VISIBLE);
 	surface->set_frame_layer(rc, dlg->m_z_order);
 
 	//clear the dialog

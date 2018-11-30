@@ -11,7 +11,7 @@
 
 void c_label::pre_create_wnd()
 {
-	m_style = GLT_ATTR_VISIBLE | ALIGN_LEFT | ALIGN_VCENTER;
+	m_style = GL_ATTR_VISIBLE | ALIGN_LEFT | ALIGN_VCENTER;
 	m_font_color = GL_RGB(255,255,255);
 
 	m_font_type = c_my_resource::get_font(FONT_ENG_SMB);

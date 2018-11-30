@@ -6,7 +6,7 @@
 #include "../core_include/surface.h"
 #include "../core_include/wnd.h"
 
-c_wnd::c_wnd(): m_status(STATUS_NORMAL), m_style(GLT_ATTR_VISIBLE), m_parent(NULL), m_top_child(NULL), m_prev_sibling(NULL), m_next_sibling(NULL),
+c_wnd::c_wnd(): m_status(STATUS_NORMAL), m_style(GL_ATTR_VISIBLE), m_parent(NULL), m_top_child(NULL), m_prev_sibling(NULL), m_next_sibling(NULL),
 	m_str(0), m_font_color(0), m_bg_color(0), m_resource_id(0),	m_z_order(Z_ORDER_LEVEL_0),	m_active_child(NULL), m_surface(NULL)
 {
 	m_wnd_rect.Empty();
@@ -14,7 +14,7 @@ c_wnd::c_wnd(): m_status(STATUS_NORMAL), m_style(GLT_ATTR_VISIBLE), m_parent(NUL
 
 void c_wnd::pre_create_wnd()
 {
-	m_style = GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS;
+	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS;
 }
 
 int c_wnd::connect(c_wnd *parent, unsigned short resource_id, char* str,
@@ -218,7 +218,7 @@ void c_wnd::modify_style(unsigned int add_style, unsigned int remove_style)
 	m_style &= ~remove_style;
 	m_style |= add_style;
 
-	if ( GLT_ATTR_DISABLED == (m_style & GLT_ATTR_DISABLED) )
+	if ( GL_ATTR_DISABLED == (m_style & GL_ATTR_DISABLED) )
 	{
 		m_status = STATUS_DISABLED;
 	}
@@ -233,9 +233,9 @@ void c_wnd::modify_style(unsigned int add_style, unsigned int remove_style)
 
 int c_wnd::is_focus_wnd() const
 {
-	if ( (m_style & GLT_ATTR_VISIBLE)
-		&& !(m_style & GLT_ATTR_DISABLED)
-		&& (m_style & GLT_ATTR_FOCUS))
+	if ( (m_style & GL_ATTR_VISIBLE)
+		&& !(m_style & GL_ATTR_DISABLED)
+		&& (m_style & GL_ATTR_FOCUS))
 	{
 		return TRUE;
 	}
@@ -372,7 +372,7 @@ c_wnd* c_wnd::set_focus(c_wnd * new_active_child)
 
 int c_wnd::on_notify(unsigned short notify_code, unsigned short ctrl_id, long l_param)
 {
-	const GLT_MSG_ENTRY *entry = FindMsgEntry(GetMSgEntries(), MSG_TYPE_WND, notify_code, ctrl_id);
+	const GL_MSG_ENTRY *entry = FindMsgEntry(GetMSgEntries(), MSG_TYPE_WND, notify_code, ctrl_id);
 	if ( NULL != entry )
 	{
 		MSGFUNCS msg_funcs;
@@ -527,7 +527,7 @@ int	c_wnd::unlink_child(c_wnd *child)
 
 void c_wnd::show_window()
 {
-	if (GLT_ATTR_VISIBLE == (m_style & GLT_ATTR_VISIBLE))
+	if (GL_ATTR_VISIBLE == (m_style & GL_ATTR_VISIBLE))
 	{
 		on_paint();
 		c_wnd *child = m_top_child;
@@ -553,7 +553,7 @@ void c_wnd::on_touch_down(int x, int y)
 	{
 		while ( pChild )
 		{
-			if (GLT_ATTR_VISIBLE == (pChild->m_style & GLT_ATTR_VISIBLE))
+			if (GL_ATTR_VISIBLE == (pChild->m_style & GL_ATTR_VISIBLE))
 			{
 				pChild->get_wnd_rect(rect);
 				if ( TRUE == rect.PtInRect(x, y) )
@@ -580,7 +580,7 @@ void c_wnd::on_touch_up(int x, int y)
 	{
 		while ( pChild )
 		{
-			if (GLT_ATTR_VISIBLE == (pChild->m_style & GLT_ATTR_VISIBLE))
+			if (GL_ATTR_VISIBLE == (pChild->m_style & GL_ATTR_VISIBLE))
 			{
 				pChild->get_wnd_rect(rect);
 				if ( TRUE == rect.PtInRect(x, y) )

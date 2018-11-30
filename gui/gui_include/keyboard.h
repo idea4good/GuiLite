@@ -42,7 +42,7 @@ protected:
 	void on_enter_clicked(unsigned int ctrl_id);
 	void on_esc_clicked(unsigned int ctrl_id);
 
-	GLT_DECLARE_MESSAGE_MAP()
+	GL_DECLARE_MESSAGE_MAP()
 private:
 	char m_str[32];
 	int	 m_str_len;

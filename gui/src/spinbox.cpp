@@ -13,14 +13,14 @@
 #define ID_BT_ARROW_UP      1
 #define ID_BT_ARROW_DOWN    2
 
-GLT_BEGIN_MESSAGE_MAP(c_spin_box)
-ON_GLT_BN_CLICKED(ID_BT_ARROW_UP, c_spin_box::on_arrow_up_bt_click)
-ON_GLT_BN_CLICKED(ID_BT_ARROW_DOWN, c_spin_box::on_arrow_down_bt_click)
-GLT_END_MESSAGE_MAP()
+GL_BEGIN_MESSAGE_MAP(c_spin_box)
+ON_GL_BN_CLICKED(ID_BT_ARROW_UP, c_spin_box::on_arrow_up_bt_click)
+ON_GL_BN_CLICKED(ID_BT_ARROW_DOWN, c_spin_box::on_arrow_down_bt_click)
+GL_END_MESSAGE_MAP()
 
 void c_spin_box::pre_create_wnd()
 {
-	m_style = GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
+	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
 	m_font_type = c_my_resource::get_font(FONT_ENG_SMB);
 	m_bg_color = c_my_resource::get_color(CTRL_BACK_GROUND);
 	m_font_color = c_my_resource::get_color(CTRL_FORE_GROUND);
@@ -72,7 +72,7 @@ void c_spin_box::on_touch_down(int x, int y)
 			}
 			modify_status(STATUS_FOCUSED);
 			on_paint();
-			notify_parent(GLT_SPIN_CONFIRM, get_id(), 0);
+			notify_parent(GL_SPIN_CONFIRM, get_id(), 0);
 		}        
 	}
 }
@@ -83,7 +83,7 @@ void c_spin_box::on_touch_up(int x, int y)
 	{
 		modify_status(STATUS_PUSHED);
 		on_paint();
-		notify_parent(GLT_SPIN_SELECT, get_id(), 0);
+		notify_parent(GL_SPIN_SELECT, get_id(), 0);
 	}
 	else if (STATUS_PUSHED == m_status)
 	{
@@ -95,7 +95,7 @@ void c_spin_box::on_touch_up(int x, int y)
 			}
 			modify_status(STATUS_FOCUSED);
 			on_paint();
-			notify_parent(GLT_SPIN_CONFIRM, get_id(), 0);
+			notify_parent(GL_SPIN_CONFIRM, get_id(), 0);
 		}
 		else
 		{//click arrow button.
