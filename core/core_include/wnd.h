@@ -2,12 +2,9 @@
 #define _GUI_WND_H_
 
 //Window attribution
-#define GLT_WIN_SHOW			0x00000001
-#define GLT_WIN_HIDE			0x00000002
-
-#define GLT_ATTR_VISIBLE		0x80000000L
-#define GLT_ATTR_DISABLED		0x40000000L
-#define GLT_ATTR_FOCUS			0x20000000L
+#define GL_ATTR_VISIBLE		0x80000000L
+#define GL_ATTR_DISABLED		0x40000000L
+#define GL_ATTR_FOCUS			0x20000000L
 
 typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;
@@ -40,7 +37,7 @@ class c_wnd : public c_cmd_target
 	friend class c_dialog;
 public:
 	c_wnd();
-	virtual ~c_wnd();
+	virtual ~c_wnd() {};
 	virtual const char* get_class_name() const { return "c_wnd"; }
 	virtual int connect(c_wnd *parent, unsigned short resource_id, char* str,
 		short x, short y, short width, short height, WND_TREE* p_child_tree = NULL);
@@ -50,7 +47,7 @@ public:
 	virtual c_wnd* clone() = 0;
 	virtual void on_init_children() {}
 	virtual void on_paint() {}
-	void show_window(int show_type = GLT_WIN_SHOW);
+	virtual void show_window();
 
 	unsigned short get_id() const { return m_resource_id; }
 	int get_z_order() { return m_z_order; }
@@ -59,15 +56,7 @@ public:
 	virtual void modify_style(unsigned int add_style = 0, unsigned int remove_style = 0);
 
 	void set_str(char* str) { m_str = str; }
-
-	bool is_visible() const { return m_is_visible_now; }
-	bool is_foreground();
-	void set_visible(bool visible);
-	virtual void enable_wnd(int enable = TRUE);
-	int is_wnd_enable() const;
-	void enable_focus(int enable = TRUE);
 	int is_focus_wnd() const;
-	const int is_active_wnd() const;
 
 	void set_font_color(unsigned int color) { m_font_color = color; }
 	unsigned int get_font_color() { return m_font_color; }
@@ -103,8 +92,6 @@ public:
 	void set_surface(c_surface* surface) { m_surface = surface; }
 protected:
 	virtual void pre_create_wnd();
-	virtual void display_window();
-	void hide_widow();
 	void add_child_2_head(c_wnd *child);
 	void add_child_2_tail(c_wnd *child);
 
@@ -144,7 +131,6 @@ protected:
 	unsigned int		m_font_color;
 	unsigned int		m_bg_color;
 
-	bool				m_is_visible_now;
 	unsigned short		m_resource_id;
 
 	int					m_z_order;

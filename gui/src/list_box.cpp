@@ -9,7 +9,6 @@
 
 #include "../gui_include/button.h"
 #include "../gui_include/my_resource.h"
-#include "../gui_include/dialog.h"
 #include "../gui_include/list_box.h"
 #include <string.h>
 
@@ -17,7 +16,7 @@
 
 void c_list_box::pre_create_wnd()
 {
-	m_style |= GLT_ATTR_VISIBLE | GLT_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
+	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
 	memset(m_item_array, 0, sizeof(m_item_array));
 	m_item_total = 0;
 	m_font_color = c_my_resource::get_color(CTRL_FORE_GROUND);
@@ -114,7 +113,7 @@ void c_list_box::on_touch_down(int x, int y)
 		{
 			modify_status(STATUS_FOCUSED);
 			on_paint();
-			notify_parent(GLT_LIST_CONFIRM, get_id(), 0);
+			notify_parent(GL_LIST_CONFIRM, get_id(), 0);
 		}        
 	}
 }
@@ -125,7 +124,7 @@ void c_list_box::on_touch_up(int x, int y)
 	{
 		modify_status(STATUS_PUSHED);
 		on_paint();
-		notify_parent(GLT_LIST_SELECT, get_id(), 0);
+		notify_parent(GL_LIST_SELECT, get_id(), 0);
 	}
 	else if (STATUS_PUSHED == m_status)
 	{
@@ -139,7 +138,7 @@ void c_list_box::on_touch_up(int x, int y)
 			modify_status(STATUS_FOCUSED);
 			select_item((y - m_list_wnd_rect.m_top) / ITEM_HEIGHT);
 			on_paint();
-			notify_parent(GLT_LIST_CONFIRM, get_id(), 0);
+			notify_parent(GL_LIST_CONFIRM, get_id(), 0);
 		}
 		else
 		{

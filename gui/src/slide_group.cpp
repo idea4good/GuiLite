@@ -54,14 +54,6 @@ int c_slide_group::set_active_slide(int index, bool is_redraw)
 	return 0;
 }
 
-void c_slide_group::display_window()
-{
-	if (GLT_ATTR_VISIBLE == (m_style & GLT_ATTR_VISIBLE))
-	{
-		m_is_visible_now = true;
-	}
-}
-
 int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, short y,
 			short width, short height, WND_TREE* p_child_tree, Z_ORDER_LEVEL max_zorder)
 {
@@ -71,7 +63,7 @@ int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, 
 	}
 
 	c_surface* old_surface = get_surface();
-	c_surface* new_surface = old_surface->get_display()->create_surface(slide,max_zorder);
+	c_surface* new_surface = old_surface->get_display()->alloc_surface(slide,max_zorder);
 	new_surface->set_active(false);
 	set_surface(new_surface);
 	slide->connect(this, resource_id ,0 , x, y, width, height, p_child_tree);
@@ -125,7 +117,7 @@ int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, sho
 	}
 
 	c_surface* old_surface = get_surface();
-	c_surface* new_surface = old_surface->get_display()->create_surface(slide,max_zorder);
+	c_surface* new_surface = old_surface->get_display()->alloc_surface(slide,max_zorder);
 	new_surface->set_active(false);
 	set_surface(new_surface);
 	c_wnd* page_tmp = slide->connect_clone(this,resource_id,0,x,y,width,height,p_child_tree);

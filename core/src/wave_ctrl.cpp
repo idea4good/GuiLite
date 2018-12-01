@@ -243,10 +243,6 @@ void c_wave_ctrl::on_paint()
 
 void c_wave_ctrl::clear_wave(void)
 {
-	if (!m_is_visible_now)
-	{
-		return;
-	}
 	fill_rect(m_wave_left, m_wave_top, m_wave_right, m_wave_bottom, m_back_color);
 	m_wave_cursor = m_wave_left;
 }

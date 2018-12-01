@@ -5,14 +5,10 @@
 
 相比QT、MFC，GuiLite不预设开发者的使用场景，不在具体功能上，大包大揽；用框架的简洁，换取开发的自由；GuiLite在图形绘制上面，力图一步到位，运行效率感人。
 
-## 新功能：万国语和墙纸
-墙纸：
-![unicode](wallpaper.jpg)
+## 新功能：入门demo -- HelloGuiLite
+![HelloGuiLite](HelloGuiLite.gif)
 
-万国语(unicode)：
-![unicode](unicode.jpg)
-
-[如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
+**信不信由你，代码只有100+行！**[查阅代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/UIcode/helloGL.cpp)
 
 ## 卓越的跨平台能力
 在Mac, iOS下的运行效果:
@@ -26,6 +22,16 @@
 在Windows混合现实下的运行效果及开发者QQ群:
 
 ![Win MR](WinMR.gif) ![QQ group: 527251257](qq.group.jpg)
+
+## 国语和墙纸
+墙纸：
+![unicode](wallpaper.jpg)
+
+万国语(unicode)：
+![unicode](unicode.jpg)
+
+[如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
+
 
 ## “换肤”功能
 ![multi-theme](multi-theme.png)

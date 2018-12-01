@@ -4,16 +4,10 @@
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
-## New feature: Unicode & Bitmap
-Wallpaper with bitmap:
+## New feature: Beginner demo -- HelloGuiLite
+![HelloGuiLite](doc/HelloGuiLite.gif)
 
-![wallpaper](doc/wallpaper.jpg)
-
-Multi language:
-
-![unicode](doc/unicode.jpg)
-
-[How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
+**Believe or not, it's only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/UIcode/helloGL.cpp)
 
 ## Cross platform
 Ran on macOS & iOS:
@@ -27,6 +21,17 @@ Ran on Android & GNU/Linux embedded (ARM):
 Ran on Windows Mixed Reality & QQ developers' group:
 
 ![Win MR](doc/WinMR.gif) ![QQ group: 527251257](doc/qq.group.jpg)
+
+## Unicode & Bitmap
+Wallpaper with bitmap:
+
+![wallpaper](doc/wallpaper.jpg)
+
+Multi language:
+
+![unicode](doc/unicode.jpg)
+
+[How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
 
 ## Multi theme
 ![multi-theme](doc/multi-theme.png)

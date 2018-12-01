@@ -1,18 +1,18 @@
 #ifndef _SPIN_BOX_H_
 #define _SPIN_BOX_H_
 
-#define GLT_SPIN_SELECT						0x2222
-#define GLT_SPIN_CONFIRM					0x3333
-#define	GLT_SPIN_ROTATION					0x4444
+#define GL_SPIN_SELECT						0x2222
+#define GL_SPIN_CONFIRM					0x3333
+#define	GL_SPIN_ROTATION					0x4444
 
 #define ON_SPIN_SELECT(ctrlId, func)                                       \
-{MSG_TYPE_WND, GLT_SPIN_SELECT, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWV, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
+{MSG_TYPE_WND, GL_SPIN_SELECT, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWV, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
 
 #define ON_SPIN_CONFIRM(ctrlId, func)                                      \
-{MSG_TYPE_WND, GLT_SPIN_CONFIRM, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWV, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
+{MSG_TYPE_WND, GL_SPIN_CONFIRM, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWV, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
 
 #define ON_SPIN_ROTATION(ctrlId, func)                                     \
-{MSG_TYPE_WND, GLT_SPIN_ROTATION, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
+{MSG_TYPE_WND, GL_SPIN_ROTATION, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
 
 class c_spin_box : public c_wnd
 {
@@ -44,7 +44,7 @@ protected:
 	void on_arrow_up_bt_click(unsigned int ctr_id);
 	void on_arrow_down_bt_click(unsigned int ctr_id);
 
-	GLT_DECLARE_MESSAGE_MAP()
+	GL_DECLARE_MESSAGE_MAP()
 
 private:
 	void show_arrow_button();

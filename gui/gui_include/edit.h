@@ -23,7 +23,7 @@ protected:
 	virtual void on_touch_up(int x, int y);
 	
 	void on_key_board_click(unsigned int ctrl_id, long param);
-	GLT_DECLARE_MESSAGE_MAP()
+	GL_DECLARE_MESSAGE_MAP()
 private:
 	void show_keyboard();
 

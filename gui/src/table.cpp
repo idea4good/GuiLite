@@ -11,7 +11,7 @@
 
 void c_table::pre_create_wnd()
 {
-	m_style = GLT_ATTR_VISIBLE | (~GLT_ATTR_FOCUS);
+	m_style = GL_ATTR_VISIBLE;
 }
 
 int c_table::set_item(int row, int col, char* str, unsigned int with_bg_color)

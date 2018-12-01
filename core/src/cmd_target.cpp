@@ -1,11 +1,11 @@
 #include "../core_include/api.h"
 #include "../core_include/cmd_target.h"
 
-GLT_MSG_ENTRY c_cmd_target::ms_usr_map_entries[USR_MSG_MAX];
+GL_MSG_ENTRY c_cmd_target::ms_usr_map_entries[USR_MSG_MAX];
 unsigned short c_cmd_target::ms_user_map_size;
 
-GLT_BEGIN_MESSAGE_MAP(c_cmd_target)
-GLT_END_MESSAGE_MAP()
+GL_BEGIN_MESSAGE_MAP(c_cmd_target)
+GL_END_MESSAGE_MAP()
 
 c_cmd_target::c_cmd_target()
 {
@@ -34,7 +34,7 @@ int c_cmd_target::handle_usr_msg(unsigned int msgId, unsigned int wParam, unsign
 
 void c_cmd_target::load_cmd_msg()
 {
-	const GLT_MSG_ENTRY* p_entry = GetMSgEntries();
+	const GL_MSG_ENTRY* p_entry = GetMSgEntries();
 	if (0 == p_entry)
 	{
 		return;
@@ -85,7 +85,7 @@ void c_cmd_target::load_cmd_msg()
 	}
 }
 
-const GLT_MSG_ENTRY* c_cmd_target::FindMsgEntry(const GLT_MSG_ENTRY *pEntry, 
+const GL_MSG_ENTRY* c_cmd_target::FindMsgEntry(const GL_MSG_ENTRY *pEntry, 
 	unsigned int msgType, unsigned short msgId, unsigned short ctrlId)
 {
 	if ( MSG_TYPE_INVALID == msgType)

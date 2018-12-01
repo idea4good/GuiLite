@@ -20,7 +20,20 @@ void register_debug_function(void(*my_assert)(const char* file, int line), void(
 
 void _assert(const char* file, int line)
 {
-	(do_assert) ? do_assert(file, line) : assert(false);
+	static char s_buf[192];
+	if (do_assert) 
+	{
+		do_assert(file, line);
+	}
+	else
+	{
+		memset(s_buf, 0, sizeof(s_buf));
+		sprintf_s(s_buf, sizeof(s_buf), "vvvvvvvvvvvvvvvvvvvvvvvvvvvv\n\nAssert@ file = %s, line = %d\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n", file, line);
+		OutputDebugStringA(s_buf);
+		printf(s_buf);
+		fflush(stdout);
+		assert(false);
+	}
 }
 
 void log_out(const char* log)

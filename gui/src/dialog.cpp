@@ -4,6 +4,7 @@
 #include "core_include/wnd.h"
 #include "core_include/msg.h"
 #include "core_include/surface.h"
+#include "core_include/display.h"
 #include "core_include/resource.h"
 #include "core_include/bitmap.h"
 #include "core_include/word.h"
@@ -13,12 +14,13 @@
 
 #include <string.h>
 
-DIALOG_ARRAY c_dialog::ms_the_dialogs[MAX_DIALOG];
+DIALOG_ARRAY c_dialog::ms_the_dialogs[SURFACE_CNT_MAX];
 void c_dialog::pre_create_wnd()
 {
-	m_style |= GLT_ATTR_VISIBLE|GLT_ATTR_FOCUS;
+	m_style = GL_ATTR_FOCUS;
 	m_z_order = Z_ORDER_LEVEL_1;
 	m_bg_color = GL_RGB(33,33,33);
+	m_divider_lines = 0;
 }
 
 void c_dialog::on_paint()
@@ -47,7 +49,7 @@ void c_dialog::on_paint()
 
 c_dialog* c_dialog::get_the_dialog(c_surface* surface)
 {
-	for(int i = 0; i < MAX_DIALOG; i++)
+	for(int i = 0; i < SURFACE_CNT_MAX; i++)
 	{
 		if(ms_the_dialogs[i].surface == surface)
 		{
@@ -72,36 +74,34 @@ int c_dialog::open_dialog(c_dialog* p_dlg)
 
 	if(cur_dlg)
 	{
-		cur_dlg->show_window(GLT_WIN_HIDE);
-		cur_dlg->modify_style(0, GLT_ATTR_VISIBLE);
+		cur_dlg->modify_style(0, GL_ATTR_VISIBLE);
 	}
 
 	c_rect rc;
 	p_dlg->get_screen_rect(rc);
 	p_dlg->get_surface()->set_frame_layer(rc, Z_ORDER_LEVEL_1);
 
-	p_dlg->modify_style(GLT_ATTR_VISIBLE, 0);
+	p_dlg->modify_style(GL_ATTR_VISIBLE, 0);
 	p_dlg->show_window();
 	p_dlg->set_me_the_dialog();
 	return 1;
 }
 
-int c_dialog::close_dialog()
+int c_dialog::close_dialog(c_surface* surface)
 {
-	c_dialog* dlg = get_the_dialog(get_surface());
+	c_dialog* dlg = get_the_dialog(surface);
 
 	if (NULL == dlg)
 	{
 		return 0;
 	}
 	c_rect rc;
-	c_surface* surface = dlg->get_surface();
-	dlg->show_window(GLT_WIN_HIDE);
-	dlg->modify_style(0, GLT_ATTR_VISIBLE);
+	
+	dlg->modify_style(0, GL_ATTR_VISIBLE);
 	surface->set_frame_layer(rc, dlg->m_z_order);
 
 	//clear the dialog
-	for(int i = 0; i < MAX_DIALOG; i++)
+	for(int i = 0; i < SURFACE_CNT_MAX; i++)
 	{
 		if(ms_the_dialogs[i].surface == surface)
 		{
@@ -160,7 +160,7 @@ void c_dialog::on_touch_up(int x, int y)
 int c_dialog::set_me_the_dialog()
 {
 	c_surface* surface = get_surface();
-	for(int i = 0; i < MAX_DIALOG; i++)
+	for(int i = 0; i < SURFACE_CNT_MAX; i++)
 	{
 		if(ms_the_dialogs[i].surface == surface)
 		{
@@ -169,7 +169,7 @@ int c_dialog::set_me_the_dialog()
 		}
 	}
 
-	for(int i = 0; i < MAX_DIALOG; i++)
+	for(int i = 0; i < SURFACE_CNT_MAX; i++)
 	{
 		if(ms_the_dialogs[i].surface == NULL)
 		{

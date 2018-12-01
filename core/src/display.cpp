@@ -12,7 +12,7 @@ c_display* c_display::ms_displays[MAX_DISPLAY];
 
 c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int display_height,
 						unsigned int surface_width, unsigned int surface_height,
-						unsigned int color_bytes, unsigned int slides_cnt)
+						unsigned int color_bytes, unsigned int surface_cnt)
 {
 	if (color_bytes != 2 && color_bytes != 4)
 	{
@@ -34,7 +34,7 @@ c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int disp
 		}
 	}
 
-	m_surface_cnt = slides_cnt + 1;//slides + root
+	m_surface_cnt = surface_cnt;
 	if (m_surface_cnt > SURFACE_CNT_MAX)
 	{
 		ASSERT(FALSE);
@@ -47,7 +47,7 @@ c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int disp
 	}
 }
 
-c_surface* c_display::create_surface(void* usr, Z_ORDER_LEVEL max_zorder)
+c_surface* c_display::alloc_surface(void* usr, Z_ORDER_LEVEL max_zorder)
 {
 	int i = 0;
 	if (max_zorder >= Z_ORDER_LEVEL_MAX)
@@ -76,6 +76,7 @@ c_surface* c_display::create_surface(void* usr, Z_ORDER_LEVEL max_zorder)
 		}
 		i++;
 	}
+	//no surface for use
 	ASSERT(FALSE);
 	return NULL;
 }
