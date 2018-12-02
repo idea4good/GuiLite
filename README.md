@@ -1,6 +1,6 @@
 # GuiLite - Lighter & freer
 [中文](doc/README-cn.md)
-- GuiLite has 6000 lines of C++ code, providing **UI framework for all platforms** for developers. Just like the pictures above, GuiLite can run on iOS, Android, GNU/Linux, Windows and macOS platforms.
+- GuiLite has 5000 lines of C++ code, providing **UI framework for all platforms** for developers. Just like the pictures above, GuiLite can run on iOS, Android, GNU/Linux, Windows and macOS platforms.
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
@@ -18,9 +18,20 @@ Ran on Android & GNU/Linux embedded (ARM):
 
 ![Android](doc/Android.gif) ![GNU/Linux embedded (ARM)](doc/Linux.gif)
 
-Ran on Windows Mixed Reality & QQ developers' group:
+Ran on Windows Mixed Reality:
 
-![Win MR](doc/WinMR.gif) ![QQ group: 527251257](doc/qq.group.jpg)
+![Win MR](doc/WinMR.gif)
+
+## Unicode & Bitmap
+Wallpaper with bitmap:
+
+![wallpaper](doc/wallpaper.jpg)
+
+Multi language:
+
+![unicode](doc/unicode.jpg)
+
+[How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
 
 ## Unicode & Bitmap
 Wallpaper with bitmap:
@@ -71,3 +82,9 @@ Multi language:
 
 ## Gitee link
 [Link to Gitee in China](https://gitee.com/idea4good/GuiLite)
+
+## Thanks
+### Thanks the help from QQ group, you guys make GuiLite better! and welcome new frinend to join us.
+![QQ group: 527251257](doc/qq.group.jpg)
+### Thanks the donations from [Gitee users](https://gitee.com/idea4good/GuiLite), every penny of donations will be used for needy children or family of China.
+![Donators](doc/donation.jpg)

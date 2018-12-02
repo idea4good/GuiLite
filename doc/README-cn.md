@@ -1,5 +1,5 @@
 # GuiLite - 简洁出奇迹
-- GuiLite（超轻量UI框架）是6千行代码的**全平台UI框架**，可以完美运行在iOS，Android，Windows（包含VR），Mac，单片机和**市面所有的 ARM Linux物联网终端设备**上。
+- GuiLite（超轻量UI框架）是5千行代码的**全平台UI框架**，可以完美运行在iOS，Android，Windows（包含VR），Mac，单片机和**市面所有的 ARM Linux物联网终端设备**上。
 - GuiLite可以嵌入在iOS、Android、MFC、QT等其他UI系统中，让你的界面集百家之长，又不失个性。
 - GuiLite鼓励混合编程，开发者可以用GuiLite接管UI部分，用Swift，Java，Go，C#，Python发开业务部分。
 
@@ -19,9 +19,19 @@
 
 ![Android](Android.gif) ![Linux](Linux.gif)
 
-在Windows混合现实下的运行效果及开发者QQ群:
+在Windows混合现实下的运行效果:
 
-![Win MR](WinMR.gif) ![QQ group: 527251257](qq.group.jpg)
+![Win MR](WinMR.gif)
+
+## 国语和墙纸
+墙纸：
+![unicode](wallpaper.jpg)
+
+万国语(unicode)：
+![unicode](unicode.jpg)
+
+[如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
+
 
 ## 国语和墙纸
 墙纸：
@@ -48,7 +58,7 @@
 ![DataOnCloud](data_on_cloud.png)
 
 ## 为什么开发GuiLite？如何使用？
-任何UI框架都不是为你我而生的，只有掌握核心原理，对其深度定制，才能真正掌握自己的命运！因此，我们开发了GuiLite，希望用这6千行代码揭示UI的核心原理和定制方法。
+任何UI框架都不是为你我而生的，只有掌握核心原理，对其深度定制，才能真正掌握自己的命运！因此，我们开发了GuiLite，希望用这5千行代码揭示UI的核心原理和定制方法。
 
 我们不推荐开发者全盘使用GuiLite；鼓励开发者在吃透代码后，根据自身业务特点，修改出更加丰富、个性的界面；或者发展出适合自己的UI框架。
 
@@ -78,3 +88,9 @@
 
 ## Gitee链接
 [国内码云链接](https://gitee.com/idea4good/GuiLite)
+
+## 致谢
+### 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。
+![QQ group: 527251257](qq.group.jpg)
+### 感谢来自[码云用户](https://gitee.com/idea4good/GuiLite)的捐助，您的每一分钱都会用来帮助急需帮助的中国儿童或家庭。
+![Donators](donation.jpg)
