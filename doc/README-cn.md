@@ -32,17 +32,6 @@
 
 [如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
 
-
-## 国语和墙纸
-墙纸：
-![unicode](wallpaper.jpg)
-
-万国语(unicode)：
-![unicode](unicode.jpg)
-
-[如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
-
-
 ## “换肤”功能
 ![multi-theme](multi-theme.png)
 
