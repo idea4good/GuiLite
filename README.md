@@ -33,17 +33,6 @@ Multi language:
 
 [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
 
-## Unicode & Bitmap
-Wallpaper with bitmap:
-
-![wallpaper](doc/wallpaper.jpg)
-
-Multi language:
-
-![unicode](doc/unicode.jpg)
-
-[How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
-
 ## Multi theme
 ![multi-theme](doc/multi-theme.png)
 
