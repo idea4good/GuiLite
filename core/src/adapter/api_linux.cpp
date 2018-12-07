@@ -269,7 +269,7 @@ typedef struct{
 	unsigned int 	biBlueMask;
 }__attribute__((packed))Infohead;
 
-int build_bmp(char *filename, unsigned int width, unsigned int height, unsigned char *data)
+int build_bmp(const char *filename, unsigned int width, unsigned int height, unsigned char *data)
 {
 	FileHead bmp_head;
 	Infohead bmp_info;
