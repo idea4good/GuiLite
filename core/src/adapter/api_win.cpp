@@ -136,7 +136,7 @@ static int set_a_timer(int interval, void (* timer_proc) (void* ptmr, void* parg
 
 typedef void (*EXPIRE_ROUTINE)(void* arg);
 EXPIRE_ROUTINE s_expire_function;
-static c_fifo s_real_timer_fifo("real timer fifo");
+static c_fifo s_real_timer_fifo;
 
 static DWORD WINAPI fire_real_timer(LPVOID lpParam)
 {
@@ -276,7 +276,7 @@ typedef struct {
 }Infohead;
 #pragma pack(pop)
 
-int build_bmp(char *filename, unsigned int width, unsigned int height, unsigned char *data)
+int build_bmp(const char *filename, unsigned int width, unsigned int height, unsigned char *data)
 {
 	FileHead bmp_head;
 	Infohead bmp_info;

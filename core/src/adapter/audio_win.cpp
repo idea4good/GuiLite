@@ -30,7 +30,7 @@ typedef struct
 }WAV_RESOURCE;
 
 static WAV_RESOURCE s_wav_resource[AUDIO_MAX];
-static c_fifo s_request_fifo("aduio fifo");
+static c_fifo s_request_fifo;
 static IAudioClient* s_audio_client;
 static IAudioRenderClient* s_audio_render_client;
 static HANDLE s_audio_event;

@@ -5,7 +5,6 @@
 #include "core_include/display.h"
 #include "core_include/cmd_target.h"
 #include "core_include/wnd.h"
-#include "../gui_include/dialog.h"
 #include "../gui_include/gesture.h"
 #include "../gui_include/slide_group.h"
 #include <stdlib.h>
@@ -14,61 +13,31 @@
 #define FLIP_STEP			10//for PC & ANDROID
 #define MOVE_THRESHOLD		10
 
-c_gesture* c_gesture::ms_gesture[MAX_DISPLAY];
-
-void* c_gesture::task(void* param)
+void* c_gesture::task_handle_msg(void* param)
 {
+	c_gesture* This = (c_gesture*)param;
 	MSG_INFO msg;
 	while(1)
 	{
-		if(c_hid_pipe::read_hid_msg() < 0)
+		This->m_hid_fifo->read(&msg, sizeof(msg));
+		if(This->handle_flip(msg))
 		{
-			continue;
-		}
-
-		for(int i = 0; i < MAX_DISPLAY; i++)
-		{
-			if(!ms_gesture[i])
-			{
-				continue;
-			}
-
-			msg = ms_gesture[i]->m_hid_pipe->m_msg;
-			if(XXX == msg.dwMsgId)
-			{
-				continue;
-			}
-
-			if(ms_gesture[i]->handle_flip(msg))
-			{
-				ms_gesture[i]->handle_hid_msg(msg);
-			}
+			This->handle_hid_msg(msg);
 		}
 	}
 	return 0;
 }
 
-static unsigned long s_pid;
-c_gesture::c_gesture(c_wnd* root, c_slide_group* group,  c_hid_pipe* hid_pipe)
+c_gesture::c_gesture(c_wnd* root, c_slide_group* group, c_fifo* hid_fifo)
 {
 	m_root = root;
 	m_slide_group = group;
-	m_hid_pipe = hid_pipe;
+	m_hid_fifo = hid_fifo;
 	m_action = TOUCH_IDLE;
 	m_down_x = m_down_y = m_move_x = m_move_y = 0;
 
-	for(int i = 0; i < MAX_DISPLAY; i++)
-	{
-		if(!ms_gesture[i])
-		{
-			ms_gesture[i] = this;
-			break;
-		}
-	}
-	if(!s_pid)
-	{
-		create_thread(&s_pid, NULL, task, NULL);
-	}
+	unsigned long pid;
+	create_thread(&pid, NULL, task_handle_msg, this);
 }
 
 bool c_gesture::handle_flip(MSG_INFO &msg)

@@ -46,5 +46,5 @@ void register_timer(int milli_second, void func(void* ptmr, void* parg));
 unsigned int get_cur_thread_id();
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg);
 void thread_sleep(unsigned int milli_seconds);
-int build_bmp(char *filename, unsigned int width, unsigned int height, unsigned char *data);
+int build_bmp(const char *filename, unsigned int width, unsigned int height, unsigned char *data);
 #endif
