@@ -43,7 +43,7 @@ void c_dialog::on_paint()
 
 	if (m_str)
 	{
-		c_word::draw_string(m_surface, m_z_order, m_str, rect.m_left+35, rect.m_top, c_my_resource::get_font(FONT_ENG_MB), GL_RGB(255, 255, 255), GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
+		c_word::draw_string(m_surface, m_z_order, m_str, rect.m_left+35, rect.m_top, c_my_resource::get_font(FONT_DEFAULT), GL_RGB(255, 255, 255), GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
 	}
 }
 
