@@ -15,7 +15,7 @@ typedef struct
 	AUDIO_TYPE type;
 }AUDIO_REQUEST;
 
-static c_fifo s_request_fifo("aduio fifo");
+static c_fifo s_request_fifo;
 
 static void* render_thread(void* param)
 {

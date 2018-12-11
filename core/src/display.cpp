@@ -8,8 +8,6 @@
 #include <string.h>
 #include <stdio.h>
 
-c_display* c_display::ms_displays[MAX_DISPLAY];
-
 c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int display_height,
 						unsigned int surface_width, unsigned int surface_height,
 						unsigned int color_bytes, unsigned int surface_cnt)
@@ -24,15 +22,6 @@ c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int disp
 	m_height = display_height;
 	m_color_bytes = color_bytes;
 	m_phy_fb = phy_fb;
-	m_hid_pipe = new c_hid_pipe(NULL);
-	for (int i = 0; i < MAX_DISPLAY; i++)
-	{
-		if (!ms_displays[i])
-		{
-			ms_displays[i] = this;
-			break;
-		}
-	}
 
 	m_surface_cnt = surface_cnt;
 	if (m_surface_cnt > SURFACE_CNT_MAX)
@@ -118,54 +107,35 @@ int c_display::merge_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y
 	return 0;
 }
 
-void* c_display::get_frame_buffer(unsigned int display_id, int* width, int* height)
+void* c_display::get_frame_buffer(int* width, int* height)
 {
-	if (MAX_DISPLAY <= display_id)
+	if (width && height) 
 	{
-		ASSERT(FALSE);
-		return NULL;
+		*width = get_width();
+		*height = get_height();
 	}
-	if (ms_displays[display_id])
-	{
-		if (width && height) 
-		{
-			*width = ms_displays[display_id]->get_width();
-			*height = ms_displays[display_id]->get_height();
-		}
-		return ms_displays[display_id]->m_phy_fb;
-	}
-	return NULL;
+	return m_phy_fb;
 }
 
-int c_display::snap_shot(unsigned int display_id)
+int c_display::snap_shot(const char* file_name)
 {
-	if (MAX_DISPLAY <= display_id)
+	if (!m_phy_fb)
 	{
-		ASSERT(FALSE);
 		return -1;
 	}
 
-	if (!ms_displays[display_id] || !ms_displays[display_id]->m_phy_fb)
-	{
-		return -2;
-	}
-
-	char path[32];
-	memset(path, 0, sizeof(path));
-	sprintf(path, "snapshot_%d.bmp", display_id);
-
-	unsigned int width = ms_displays[display_id]->get_width();
-	unsigned int height = ms_displays[display_id]->get_height();
+	unsigned int width = get_width();
+	unsigned int height = get_height();
 
 	//16 bits framebuffer
-	if (ms_displays[display_id]->m_color_bytes == 2)
+	if (m_color_bytes == 2)
 	{
-		return build_bmp(path, width, height, (unsigned char*)ms_displays[display_id]->m_phy_fb);
+		return build_bmp(file_name, width, height, (unsigned char*)m_phy_fb);
 	}
 
 	//32 bits framebuffer
 	unsigned short* p_bmp565_data = new unsigned short[width * height];
-	unsigned int* p_raw_data = (unsigned int*)ms_displays[display_id]->m_phy_fb;
+	unsigned int* p_raw_data = (unsigned int*)m_phy_fb;
 
 	for (int i = 0; i < width * height; i++)
 	{
@@ -173,7 +143,7 @@ int c_display::snap_shot(unsigned int display_id)
 		p_bmp565_data[i] = GL_RGB_32_to_16(rgb);
 	}
 
-	int ret = build_bmp(path, width, height, (unsigned char*)p_bmp565_data);
+	int ret = build_bmp(file_name, width, height, (unsigned char*)p_bmp565_data);
 	delete []p_bmp565_data;
 	return ret;
 }

@@ -4,10 +4,10 @@
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
-## New feature: Beginner demo -- HelloGuiLite
-![HelloGuiLite](doc/HelloGuiLite.gif)
+## New feature: Multilingual demo -- HelloFont
+![HelloFont](doc/HelloFont.gif)
 
-**Believe or not, it's only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/UIcode/helloGL.cpp)
+**Believe or not, it's only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/UIcode/UIcode.cpp)
 
 ## Cross platform
 Ran on macOS & iOS:
