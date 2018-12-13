@@ -48,14 +48,16 @@ Multi language:
 ![DataOnCloud](doc/data_on_cloud.png)
 
 ## Demo
+GuiLite just a framework, it could not create UI by itself. In order to show how to build UI App with it, We provide [some samples](https://github.com/idea4good/GuiLiteSamples) for your reference.
 - Download GuiLite samples: `git clone https://github.com/idea4good/GuiLiteSamples.git`
-- Demo code discription:
-| Demo | Platform | discription | How to build | level |
-| --- | --- |
+- Sample code discription:
+
+| Sample name | Platform | Discription | Build code | level |
+| --- | --- | --- | --- | --- |
 | HelloGuiLite | Windows, Linux | Show how to Initilize UI, load resource, layout UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | Beginner |
 | HelloFont | Windows, Linux | Show how to use muti languages(UTF-8) | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostFont/README.md) | Beginner |
-| HelloSlide | Windows, Linux | Show how to slide pages | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | Beginner |
-| HostMonitor | Windows, Linux | Show how to build complex UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | Master |
+| HelloSlide | Windows, Linux | Show how to use sliding pages | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | Beginner |
+| HostMonitor | iOS, Mac, Android, Windows, Linux | Show how to build complex UI for all platforms | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | Master |
 
 ## Documents
 [How GuiLite work?](doc/CodeWalkthrough.md)
@@ -68,9 +70,6 @@ Multi language:
 [GuiLite introduction](https://www.youtube.com/watch?v=grqXEz3bdC0)
 
 [3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
-
-## Sample code link
-[GuiLite Samples](https://github.com/idea4good/GuiLiteSamples)
 
 ## Gitee link
 [Link to Gitee in China](https://gitee.com/idea4good/GuiLite)
