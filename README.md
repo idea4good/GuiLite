@@ -47,15 +47,18 @@ Multi language:
 
 ![DataOnCloud](doc/data_on_cloud.png)
 
-## Quick Start
+## Demo
 - Download GuiLite samples: `git clone https://github.com/idea4good/GuiLiteSamples.git`
-- `cd GuiLiteSamples\HostMonitor`
-- [Build and run on any platforms you like](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md)
+- Demo code discription:
+| Demo | Platform | discription | How to build | level |
+| --- | --- |
+| HelloGuiLite | Windows, Linux | Show how to Initilize UI, load resource, layout UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | Beginner |
+| HelloFont | Windows, Linux | Show how to use muti languages(UTF-8) | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostFont/README.md) | Beginner |
+| HelloSlide | Windows, Linux | Show how to slide pages | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | Beginner |
+| HostMonitor | Windows, Linux | Show how to build complex UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | Master |
 
 ## Documents
-[Code walkthrough](doc/CodeWalkthough.md)
-
-[How to build?](doc/HowToBuild.md)
+[How GuiLite work?](doc/CodeWalkthrough.md)
 
 [How to layout widgets?](doc/HowLayoutWork.md)
 
