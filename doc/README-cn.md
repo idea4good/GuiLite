@@ -53,11 +53,17 @@
 
 为了聚焦UI核心原理，GuiLite会一直保持单片机的代码体量。
 
-## 快速上手
+## Demo
+GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何用GuiLite开发App，我们提供了一些[实例程序](https://github.com/idea4good/GuiLiteSamples)给大家参考。
 - 下载实例代码: `git clone https://github.com/idea4good/GuiLiteSamples.git`
-- `cd GuiLiteSamples\HostMonitor`
-- [编译/运行在任意平台上](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md)
+- 实例代码的功能说明：
 
+| 实例名称 | 支持的平台 | 功能简介 | 编译方法 | 难度 |
+| --- | --- | --- | --- | --- |
+| HelloGuiLite | Windows, Linux | 初始化GuiLite，加载资源，布局界面元素，按钮响应 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | 入门级 |
+| HelloFont | Windows, Linux | 显示多种语言（不限：中、英文） | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HostFont/README.md) | 入门级 |
+| HelloSlide | Windows, Linux | 滑屏界面的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | 入门级 |
+| HostMonitor | iOS, Mac, Android, Windows, Linux | 创建复杂界面，扩展自定义控件，适配全平台 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | 大师级 |
 ## 开发文档
 [设计原理](CodeWalkthrough-cn.md)
 
@@ -69,9 +75,6 @@
 [GuiLite简介](https://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
 
 [3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
-
-## 实例代码链接
-[GuiLiteSamples](https://github.com/idea4good/GuiLiteSamples)
 
 ## Gitee链接
 [国内码云链接](https://gitee.com/idea4good/GuiLite)
