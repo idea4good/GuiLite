@@ -5,12 +5,7 @@ typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;
 typedef struct struct_bitmap_info	BITMAP_INFO;
 
-//Redefine them to meet your need.
-#define DEFAULT_NORMAL_COLOR	GL_RGB(211, 211, 211)
-#define DEFAULT_FOCUS_COLOR		GL_RGB(188, 185, 182)
-#define DEFAULT_PUSH_COLOR		GL_RGB(165, 162, 159)
-#define DEFAULT_FONT_COLOR		GL_RGB(0, 0, 0)
-
+//Rebuild gui library once you change this file
 enum FONT_TYPE
 {
 	FONT_NULL,
@@ -26,14 +21,17 @@ enum FONT_TYPE
 
 enum BITMAP_TYPE
 {
-	BITMAP_UP_BT_NORMAL,
-	BITMAP_UP_BT_FOCUS,
-	BITMAP_DOWN_BT_NORMAL,
-	BITMAP_DOWN_BT_FOCUS,
+	BITMAP_UP_ARROW1,
+	BITMAP_UP_ARROW2,
+	BITMAP_DOWN_ARROW1,
+	BITMAP_DOWN_ARROW2,
 
 	BITMAP_CUSTOM1,
 	BITMAP_CUSTOM2,
 	BITMAP_CUSTOM3,
+	BITMAP_CUSTOM4,
+	BITMAP_CUSTOM5,
+	BITMAP_CUSTOM6,
 
 	BITMAP_MAX
 };
@@ -59,8 +57,8 @@ enum SHAPE_TYPE
 
 enum COLOR_TYPE
 {
-	CTRL_BACK_GROUND,
-	CTRL_FORE_GROUND,
+	WND_BACKCOLOR,
+	WND_FORECOLOR,
 
 	COLOR_MAX
 };

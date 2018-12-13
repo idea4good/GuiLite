@@ -153,7 +153,7 @@ int c_gesture::flip_left()
 	int step = m_down_x - m_move_x;
 	c_rect rc;
 	m_slide_group->get_screen_rect(rc);
-	while(step <= rc.Width())
+	while(step < rc.Width())
 	{
 		s1->get_display()->merge_surface(s2, s1, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, step);
 		step += FLIP_STEP;
@@ -188,7 +188,7 @@ int c_gesture::flip_right()
 	c_rect rc;
 	m_slide_group->get_screen_rect(rc);
 	int step = rc.Width() - (m_move_x - m_down_x);
-	while(step >= 0)
+	while(step > 0)
 	{
 		s1->get_display()->merge_surface(s1, s2, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, step);
 		step -= FLIP_STEP;

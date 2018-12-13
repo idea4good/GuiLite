@@ -75,7 +75,7 @@ int c_display::merge_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y
 	int surface_width = s0->get_width();
 	int surface_height = s0->get_height();
 
-	if (offset < 0 || offset >= surface_width || y0 < 0 || y0 >= surface_height ||
+	if (offset < 0 || offset > surface_width || y0 < 0 || y0 >= surface_height ||
 		y1 < 0 || y1 >= surface_height || x0 < 0 || x0 >= surface_width || x1 < 0 || x1 >= surface_width)
 	{
 		ASSERT(FALSE);
@@ -83,7 +83,7 @@ int c_display::merge_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y
 	}
 
 	int width = (x1 - x0 + 1);
-	if (width < 0 || width >= surface_width || width < offset)
+	if (width < 0 || width > surface_width || width < offset)
 	{
 		ASSERT(FALSE);
 		return -1;

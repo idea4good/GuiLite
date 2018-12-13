@@ -22,8 +22,8 @@ void c_spin_box::pre_create_wnd()
 {
 	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
 	m_font_type = c_my_resource::get_font(FONT_DEFAULT);
-	m_bg_color = c_my_resource::get_color(CTRL_BACK_GROUND);
-	m_font_color = c_my_resource::get_color(CTRL_FORE_GROUND);
+	m_bg_color = c_my_resource::get_color(WND_BACKCOLOR);
+	m_font_color = c_my_resource::get_color(WND_FORECOLOR);
 
 	m_max = 6;
 	m_min = 1;
@@ -122,15 +122,15 @@ void c_spin_box::show_arrow_button()
 	fill_rect(m_bt_up_rect.m_left, m_bt_up_rect.m_top, m_bt_down_rect.m_right, m_bt_down_rect.m_bottom, GL_RGB(99,108,124));
 
 	m_bt_up.connect(this, ID_BT_ARROW_UP, 0, 0, m_wnd_rect.Height(), m_bt_up_rect.Width(),m_bt_up_rect.Height());
-	m_bt_up.set_bitmap(c_my_resource::get_bmp(BITMAP_UP_BT_NORMAL));
-	m_bt_up.set_focus_bitmap(c_my_resource::get_bmp(BITMAP_UP_BT_FOCUS));
-	m_bt_up.set_pushed_bitmap(c_my_resource::get_bmp(BITMAP_UP_BT_FOCUS));
+	m_bt_up.set_bitmap(c_my_resource::get_bmp(BITMAP_UP_ARROW1));
+	m_bt_up.set_focus_bitmap(c_my_resource::get_bmp(BITMAP_UP_ARROW2));
+	m_bt_up.set_pushed_bitmap(c_my_resource::get_bmp(BITMAP_UP_ARROW2));
 	m_bt_up.show_window();
 
 	m_bt_down.connect(this, ID_BT_ARROW_DOWN, 0, m_bt_up_rect.Width(), m_wnd_rect.Height(), m_bt_down_rect.Width(),m_bt_down_rect.Height());
-	m_bt_down.set_bitmap(c_my_resource::get_bmp(BITMAP_DOWN_BT_NORMAL));
-	m_bt_down.set_focus_bitmap(c_my_resource::get_bmp(BITMAP_DOWN_BT_FOCUS));
-	m_bt_down.set_pushed_bitmap(c_my_resource::get_bmp(BITMAP_DOWN_BT_FOCUS));
+	m_bt_down.set_bitmap(c_my_resource::get_bmp(BITMAP_DOWN_ARROW1));
+	m_bt_down.set_focus_bitmap(c_my_resource::get_bmp(BITMAP_DOWN_ARROW2));
+	m_bt_down.set_pushed_bitmap(c_my_resource::get_bmp(BITMAP_DOWN_ARROW2));
 	m_bt_down.show_window();
 }
 

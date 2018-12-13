@@ -19,7 +19,7 @@ void c_list_box::pre_create_wnd()
 	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
 	memset(m_item_array, 0, sizeof(m_item_array));
 	m_item_total = 0;
-	m_font_color = c_my_resource::get_color(CTRL_FORE_GROUND);
+	m_font_color = c_my_resource::get_color(WND_FORECOLOR);
 }
 
 void c_list_box::on_init_children()
@@ -27,8 +27,8 @@ void c_list_box::on_init_children()
 	m_item_total = 0;
 	m_selected_item = 0;	
 	m_font_type = c_my_resource::get_font(FONT_DEFAULT);
-	m_font_color = c_my_resource::get_color(CTRL_FORE_GROUND);
-	m_bg_color = c_my_resource::get_color(CTRL_BACK_GROUND);
+	m_font_color = c_my_resource::get_color(WND_FORECOLOR);
+	m_bg_color = c_my_resource::get_color(WND_BACKCOLOR);
 }
 
 void c_list_box::on_focus()

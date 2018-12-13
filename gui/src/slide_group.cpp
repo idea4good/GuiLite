@@ -67,16 +67,6 @@ int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, 
 	new_surface->set_active(false);
 	set_surface(new_surface);
 	slide->connect(this, resource_id ,0 , x, y, width, height, p_child_tree);
-
-	c_rect rect_this, rect_page;
-	get_screen_rect(rect_this);
-	slide->get_screen_rect(rect_page);
-	if (!(rect_page == rect_this))
-	{
-		ASSERT(FALSE);
-		return -2;
-	}
-
 	set_surface(old_surface);
 
 	int i = 0;
@@ -85,7 +75,7 @@ int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, 
 		if(m_slides[i] == slide)
 		{//slide has lived
 			ASSERT(FALSE);
-			return -3;
+			return -2;
 		}
 		i++;
 	}
@@ -105,7 +95,7 @@ int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, 
 
 	//no more slide can be add
 	ASSERT(FALSE);
-	return -4;
+	return -3;
 }
 
 int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, short x, short y,
@@ -121,16 +111,6 @@ int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, sho
 	new_surface->set_active(false);
 	set_surface(new_surface);
 	c_wnd* page_tmp = slide->connect_clone(this,resource_id,0,x,y,width,height,p_child_tree);
-
-	c_rect rect_this, rect_page;
-	get_screen_rect(rect_this);
-	page_tmp->get_screen_rect(rect_page);
-	if (!(rect_page == rect_this))
-	{
-		ASSERT(FALSE);
-		return -2;
-	}
-
 	set_surface(old_surface);
 
 	int i = 0;
@@ -139,7 +119,7 @@ int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, sho
 		if(m_slides[i] == page_tmp)
 		{//slide has lived
 			ASSERT(FALSE);
-			return -3;
+			return -2;
 		}
 		i++;
 	}
@@ -159,7 +139,7 @@ int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, sho
 
 	//no more slide can be add
 	ASSERT(FALSE);
-	return -4;
+	return -3;
 }
 
 void c_slide_group::disabel_all_slide()

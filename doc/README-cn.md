@@ -6,7 +6,7 @@
 相比QT、MFC，GuiLite不预设开发者的使用场景，不在具体功能上，大包大揽；用框架的简洁，换取开发的自由；GuiLite在图形绘制上面，力图一步到位，运行效率感人。
 
 ## 新功能：多语言demo -- HelloFont
-![HelloGuiLite](HelloFont.gif)
+![HelloFont](HelloFont.gif)
 
 **信不信由你，代码只有100+行！**[查阅代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/UIcode/UIcode.cpp)
 
