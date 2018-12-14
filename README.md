@@ -1,6 +1,5 @@
 # GuiLite - Lighter & freer
 - [中文](doc/README-cn.md)
-- [What is GuiLite?](What-is-GuiLite)
 - [Features](#Features)
 - [Demo](#Demo)
 - [Documents](#Documents)
