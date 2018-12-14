@@ -16,7 +16,6 @@
 **Believe or not, it's only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/UIcode/UIcode.cpp)
 
 ## Features
-
 ### Cross platform
 Ran on macOS & iOS:
 
@@ -69,6 +68,7 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 
 ## Documents
 - [How GuiLite work?](doc/CodeWalkthrough.md)
+- [UML chart](doc/UML.md)
 - [How to layout widgets?](doc/HowLayoutWork.md)
 - [How to dispatch messages?](doc/HowMessageWork.md)
 
