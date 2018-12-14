@@ -7,6 +7,7 @@ class c_hid_pipe;
 class c_surface;
 
 class c_display {
+	friend class c_surface;
 public:
 	c_display(void* phy_fb, unsigned int display_width, unsigned int display_height,
 					unsigned int surface_width, unsigned int surface_height,
@@ -23,6 +24,8 @@ private:
 	unsigned int	m_height;		//in pixels
 	unsigned int	m_color_bytes;	//16 bits, 32 bits only
 	void*			m_phy_fb;
+	int				m_phy_read_index;
+	int				m_phy_write_index;
 	c_surface* 		m_surface_group[SURFACE_CNT_MAX];
 	unsigned int	m_surface_cnt;
 };
