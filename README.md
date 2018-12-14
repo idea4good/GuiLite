@@ -1,5 +1,12 @@
 # GuiLite - Lighter & freer
-[中文](doc/README-cn.md)
+- [中文](doc/README-cn.md)
+- [What is GuiLite?](What-is-GuiLite?)
+- [Features](#Features)
+- [Demo](#Demo)
+- [Documents](#Documents)
+- [Thanks](#Thanks)
+***
+## What is GuiLite?
 - GuiLite has 5000 lines of C++ code, providing **UI framework for all platforms** for developers. Just like the pictures above, GuiLite can run on iOS, Android, GNU/Linux, Windows and macOS platforms.
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
@@ -9,7 +16,9 @@
 
 **Believe or not, it's only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/UIcode/UIcode.cpp)
 
-## Cross platform
+## Features
+
+### Cross platform
 Ran on macOS & iOS:
 
 ![macOS](doc/Mac.gif) ![iOS](doc/Ios.landscape.gif)
@@ -22,7 +31,7 @@ Ran on Windows Mixed Reality:
 
 ![Win MR](doc/WinMR.gif)
 
-## Unicode & Bitmap
+### Unicode & Bitmap
 Wallpaper with bitmap:
 
 ![wallpaper](doc/wallpaper.jpg)
@@ -33,12 +42,12 @@ Multi language:
 
 [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
 
-## Multi theme
+### Multi theme
 ![multi-theme](doc/multi-theme.png)
 
 [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/resource/resource.cpp)
 
-## Self monitor
+### Self monitor
 **Report build activities to cloud:**
 
 ![BuildInfo](doc/BuildInfo.png)
@@ -48,8 +57,8 @@ Multi language:
 ![DataOnCloud](doc/data_on_cloud.png)
 
 ## Demo
-GuiLite just a framework, it could not create UI by itself. In order to show how to build UI App with it, We provide [some samples](https://github.com/idea4good/GuiLiteSamples) for your reference.
-- Download GuiLite samples: `git clone https://github.com/idea4good/GuiLiteSamples.git`
+GuiLite just a framework, it could not create UI by itself. In order to show how to build UI App with it, We provide some samples for your reference.
+- Click [here](https://github.com/idea4good/GuiLiteSamples) to preview UI effect.
 - Sample code discription:
 
 | Sample name | Platform | Discription | Build code | level |
@@ -60,16 +69,13 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 | HostMonitor | iOS, Mac, Android, Windows, Linux | Show how to build complex UI for all platforms | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | Master |
 
 ## Documents
-[How GuiLite work?](doc/CodeWalkthrough.md)
-
-[How to layout widgets?](doc/HowLayoutWork.md)
-
-[How to dispatch messages?](doc/HowMessageWork.md)
+- [How GuiLite work?](doc/CodeWalkthrough.md)
+- [How to layout widgets?](doc/HowLayoutWork.md)
+- [How to dispatch messages?](doc/HowMessageWork.md)
 
 ## Video links
-[GuiLite introduction](https://www.youtube.com/watch?v=grqXEz3bdC0)
-
-[3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
+- [GuiLite introduction](https://www.youtube.com/watch?v=grqXEz3bdC0)
+- [3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
 
 ## Gitee link
 [Link to Gitee in China](https://gitee.com/idea4good/GuiLite)
