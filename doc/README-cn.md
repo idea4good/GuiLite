@@ -16,10 +16,10 @@
 - 我们不推荐开发者全盘使用GuiLite；鼓励开发者在吃透代码后，根据自身业务特点，修改出更加丰富、个性的界面；或者发展出适合自己的UI框架。
 - 为了聚焦UI核心原理，GuiLite会一直保持单片机的代码体量。
 
-## 新功能：多语言demo -- HelloFont
-![HelloFont](HelloFont.gif)
+## 新功能：滑屏demo -- HelloSlide
+![HelloSlide](HelloSlide.gif)
 
-**信不信由你，代码只有100+行！**[查阅代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/UIcode/UIcode.cpp)
+**信不信由你，代码只有100+行！**[查阅代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/UIcode/UIcode.cpp)
 
 ## 功能介绍
 ### 卓越的跨平台能力
