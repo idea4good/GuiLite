@@ -46,7 +46,7 @@ protected:
 
 	void set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order);
 	int copy_layer_pixel_2_fb(int x, int y, unsigned int z_order);
-	c_surface(c_display* display, void* phy_fb, unsigned int width, unsigned int height, unsigned int color_bytes);
+	c_surface(c_display* display, unsigned int width, unsigned int height, unsigned int color_bytes);
 	int						m_width;		//in pixels
 	int						m_height;		//in pixels
 	int						m_color_bytes;	//16 bits, 32 bits only
@@ -57,13 +57,14 @@ protected:
 	Z_ORDER_LEVEL			m_max_zorder;
 	Z_ORDER_LEVEL			m_top_zorder;
 	void*					m_phy_fb;
+	int*					m_phy_write_index;
 	c_display*				m_display;
 };
 
 class c_surface_16bits : public c_surface {
 	friend class c_display;
-	c_surface_16bits(c_display* display, void* phy_fb, unsigned int width, unsigned int height, unsigned int color_bytes) :
-					c_surface(display, phy_fb, width, height, color_bytes) {};
+	c_surface_16bits(c_display* display, unsigned int width, unsigned int height, unsigned int color_bytes) :
+					c_surface(display, width, height, color_bytes) {};
 	virtual void draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
 	virtual void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
 	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb);

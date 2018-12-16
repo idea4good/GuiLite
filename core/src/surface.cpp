@@ -8,13 +8,14 @@
 #include <string.h>
 #include <stdlib.h>
 
-c_surface::c_surface(c_display* display, void* phy_fb, unsigned int width, unsigned int height, unsigned int color_bytes)
+c_surface::c_surface(c_display* display,  unsigned int width, unsigned int height, unsigned int color_bytes)
 {
 	m_width = width;
 	m_height = height;
 	m_color_bytes = color_bytes;
 	m_display = display;
-	m_phy_fb = phy_fb;
+	m_phy_fb = display->m_phy_fb;
+	m_phy_write_index = &display->m_phy_write_index;
 	m_fb = m_usr = NULL;
 	m_top_zorder = m_max_zorder = Z_ORDER_LEVEL_0;
 	m_is_active = false;
@@ -94,6 +95,7 @@ void c_surface::set_pixel(int x, int y, unsigned int rgb)
 	if (m_is_active && (x < display_width) && (y < display_height))
 	{
 		((unsigned int*)m_phy_fb)[y * (m_display->get_width()) + x] = rgb;
+		*m_phy_write_index = *m_phy_write_index + 1;
 	}
 }
 
@@ -143,6 +145,7 @@ void c_surface::fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb
 		x = x0;
 		fb = &((unsigned int*)m_fb)[y0 * m_width + x];
 		phy_fb = &((unsigned int*)m_phy_fb)[y0 * display_width + x];
+		*m_phy_write_index = *m_phy_write_index + 1;
 		for (; x <= x1; x++)
 		{
 			*fb++ = rgb;
@@ -361,6 +364,7 @@ int c_surface::copy_layer_pixel_2_fb(int x, int y, unsigned int z_order)
 		if (m_is_active && (x < display_width) && (y < display_height))
 		{
 			((unsigned int*)m_phy_fb)[y * display_width + x] = rgb;
+			*m_phy_write_index = *m_phy_write_index + 1;
 		}
 	}
 	else//16 bits
@@ -370,6 +374,7 @@ int c_surface::copy_layer_pixel_2_fb(int x, int y, unsigned int z_order)
 		if (m_is_active && (x < display_width) && (y < display_height))
 		{
 			((short*)m_phy_fb)[y * display_width + x] = rgb;
+			*m_phy_write_index = *m_phy_write_index + 1;
 		}
 	}
 	return 0;
@@ -435,6 +440,7 @@ int c_surface::flush_scrren(int left, int top, int right, int bottom)
 		void* d_addr = (char*)m_phy_fb + ((y * display_width + left) * m_color_bytes);
 		memcpy(d_addr, s_addr, (right - left) * m_color_bytes);
 	}
+	*m_phy_write_index = *m_phy_write_index + 1;
 	return 0;
 }
 
@@ -514,6 +520,7 @@ void c_surface_16bits::set_pixel(int x, int y, unsigned int rgb)
 	if (m_is_active && (x < display_width) && (y < display_height))
 	{
 		((unsigned short*)m_phy_fb)[y * (m_display->get_width()) + x] = rgb;
+		*m_phy_write_index = *m_phy_write_index + 1;
 	}
 }
 
@@ -562,6 +569,7 @@ void c_surface_16bits::fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned 
 		x = x0;
 		fb = &((unsigned short*)m_fb)[y0 * m_width + x];
 		phy_fb = &((unsigned short*)m_phy_fb)[y0 * display_width + x];
+		*m_phy_write_index = *m_phy_write_index + 1;
 		for (; x <= x1; x++)
 		{
 			*fb++ = rgb;

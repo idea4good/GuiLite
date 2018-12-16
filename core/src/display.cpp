@@ -22,6 +22,7 @@ c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int disp
 	m_height = display_height;
 	m_color_bytes = color_bytes;
 	m_phy_fb = phy_fb;
+	m_phy_read_index = m_phy_write_index = 0;
 
 	m_surface_cnt = surface_cnt;
 	if (m_surface_cnt > SURFACE_CNT_MAX)
@@ -31,8 +32,8 @@ c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int disp
 	memset(m_surface_group, 0, sizeof(m_surface_group));
 	for (int i = 0; i < m_surface_cnt; i++)
 	{
-		m_surface_group[i] = (color_bytes == 4) ? new c_surface(this, m_phy_fb, surface_width, surface_height, color_bytes) :
-												  new c_surface_16bits(this, m_phy_fb, surface_width, surface_height, color_bytes);
+		m_surface_group[i] = (color_bytes == 4) ? new c_surface(this, surface_width, surface_height, color_bytes) :
+												  new c_surface_16bits(this, surface_width, surface_height, color_bytes);
 	}
 }
 
@@ -104,16 +105,26 @@ int c_display::merge_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y
 		addr_d = ((char*)(m_phy_fb) + (y * m_width + x0 + (width - offset)) * m_color_bytes);
 		memcpy(addr_d, addr_s, offset * m_color_bytes);
 	}
+	m_phy_write_index++;
 	return 0;
 }
 
-void* c_display::get_frame_buffer(int* width, int* height)
+void* c_display::get_updated_fb(int* width, int* height, bool force_update)
 {
 	if (width && height) 
 	{
 		*width = get_width();
 		*height = get_height();
 	}
+	if (force_update)
+	{
+		return m_phy_fb;
+	}
+	if (m_phy_read_index == m_phy_write_index)
+	{//No update
+		return NULL;
+	}
+	m_phy_read_index = m_phy_write_index;
 	return m_phy_fb;
 }
 

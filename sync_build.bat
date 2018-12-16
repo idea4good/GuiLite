@@ -24,3 +24,5 @@ set raw_data=[{^
 
 curl.exe --include --request POST --header "Content-Type: application/json" --data-binary^
  "%raw_data%" "%url%"
+
+exit /B 0
