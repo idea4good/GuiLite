@@ -109,15 +109,19 @@ int c_display::merge_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y
 	return 0;
 }
 
-void* c_display::get_frame_buffer(int* width, int* height)
+void* c_display::get_updated_fb(int* width, int* height, bool force_update)
 {
 	if (width && height) 
 	{
 		*width = get_width();
 		*height = get_height();
 	}
-	if (m_phy_read_index == m_phy_write_index)
+	if (force_update)
 	{
+		return m_phy_fb;
+	}
+	if (m_phy_read_index == m_phy_write_index)
+	{//No update
 		return NULL;
 	}
 	m_phy_read_index = m_phy_write_index;

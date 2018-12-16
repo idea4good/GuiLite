@@ -17,7 +17,7 @@ public:
 	unsigned int get_width() { return m_width; }
 	unsigned int get_height() { return m_height; }
 
-	void* get_frame_buffer(int* width, int* height);
+	void* get_updated_fb(int* width, int* height, bool force_update = false);
 	int snap_shot(const char* file_name);
 private:
 	unsigned int	m_width;		//in pixels
