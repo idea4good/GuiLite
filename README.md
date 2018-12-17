@@ -3,6 +3,7 @@
 - [Features](#Features)
 - [Demo](#Demo)
 - [Documents](#Documents)
+- [Videos](#Videos)
 - [Thanks](#Thanks)
 ***
 ## What is GuiLite?
@@ -73,7 +74,7 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 - [How to layout widgets?](doc/HowLayoutWork.md)
 - [How to dispatch messages?](doc/HowMessageWork.md)
 
-## Video links
+## Videos
 - [GuiLite introduction](https://www.youtube.com/watch?v=grqXEz3bdC0)
 - [3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
 
