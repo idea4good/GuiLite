@@ -64,6 +64,7 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 | --- | --- | --- | --- | --- |
 | HelloGuiLite | Windows, Linux | Show how to Initilize UI, load resource, layout UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | Beginner |
 | HelloFont | Windows, Linux | Show how to use muti languages(UTF-8) | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | Beginner |
+| HelloAnimation | Windows, Linux | Show how to make animation | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/README.md) | Beginner |
 | HelloSlide | Windows, Linux | Show how to use sliding pages | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | Intermediate |
 | HostMonitor | iOS, Mac, Android, Windows, Linux | Show how to build complex UI for all platforms | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | Master |
 
