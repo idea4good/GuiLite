@@ -24,7 +24,7 @@ typedef struct struct_wnd_tree
 {
 	c_wnd*					p_wnd;
 	unsigned int			resource_id;
-	char*					str;
+	const char*				str;
 	short   				x;
 	short   				y;
 	short   				width;
@@ -39,9 +39,9 @@ public:
 	c_wnd();
 	virtual ~c_wnd() {};
 	virtual const char* get_class_name() const { return "c_wnd"; }
-	virtual int connect(c_wnd *parent, unsigned short resource_id, char* str,
+	virtual int connect(c_wnd *parent, unsigned short resource_id, const char* str,
 		short x, short y, short width, short height, WND_TREE* p_child_tree = NULL);
-	virtual c_wnd* connect_clone(c_wnd *parent, unsigned short resource_id, char* str,
+	virtual c_wnd* connect_clone(c_wnd *parent, unsigned short resource_id, const char* str,
 		short x, short y, short width, short height, WND_TREE* p_child_tree = NULL);
 	void disconnect();
 	virtual c_wnd* clone() = 0;
@@ -55,7 +55,7 @@ public:
 	unsigned int get_style() const { return m_style; }
 	virtual void modify_style(unsigned int add_style = 0, unsigned int remove_style = 0);
 
-	void set_str(char* str) { m_str = str; }
+	void set_str(const char* str) { m_str = str; }
 	int is_focus_wnd() const;
 
 	void set_font_color(unsigned int color) { m_font_color = color; }
@@ -125,7 +125,7 @@ protected:
 	c_wnd*			m_top_child;
 	c_wnd*			m_prev_sibling;
 	c_wnd*			m_next_sibling;
-	char*			m_str;
+	const char*		m_str;
 
 	const FONT_INFO*	m_font_type;
 	unsigned int		m_font_color;

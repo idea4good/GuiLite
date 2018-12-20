@@ -17,7 +17,7 @@ void c_wnd::pre_create_wnd()
 	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS;
 }
 
-int c_wnd::connect(c_wnd *parent, unsigned short resource_id, char* str,
+int c_wnd::connect(c_wnd *parent, unsigned short resource_id, const char* str,
 		   short x, short y, short width, short height, WND_TREE* p_child_tree )
 {
 	if(0 == resource_id)
@@ -94,7 +94,7 @@ int c_wnd::load_child_wnd(WND_TREE *p_child_tree)
 	return sum;
 }
 
-c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, char* str,
+c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, const char* str,
 		   short x, short y, short width, short height, WND_TREE* p_child_tree )
 {
 	if(0 == resource_id)
