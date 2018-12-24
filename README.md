@@ -1,4 +1,4 @@
-# GuiLite - Lighter & freer
+# GuiLite - The samllest UI framework
 - [中文](doc/README-cn.md)
 - [Features](#Features)
 - [Demo](#Demo)
@@ -11,10 +11,10 @@
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
-## New feature: Sliding demo -- HelloSlide
-![HelloSlide](doc/HelloSlide.gif)
+## New feature: Animation demo -- HelloAnimation
+![HelloAnimation](doc/HelloAnimation.gif)
 
-**Believe or not, it's only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/UIcode/UIcode.cpp)
+**Believe or not, it's only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/UIcode/UIcode.cpp)
 
 ## Features
 ### Cross platform
@@ -64,6 +64,7 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 | --- | --- | --- | --- | --- |
 | HelloGuiLite | Windows, Linux | Show how to Initilize UI, load resource, layout UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | Beginner |
 | HelloFont | Windows, Linux | Show how to use muti languages(UTF-8) | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | Beginner |
+| HelloAnimation | Windows, Linux | Show how to make animation | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/README.md) | Beginner |
 | HelloSlide | Windows, Linux | Show how to use sliding pages | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | Intermediate |
 | HostMonitor | iOS, Mac, Android, Windows, Linux | Show how to build complex UI for all platforms | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | Master |
 

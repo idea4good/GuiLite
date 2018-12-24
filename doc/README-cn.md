@@ -1,4 +1,4 @@
-# GuiLite - 简洁出奇迹
+# GuiLite - 最小UI框架
 - [功能介绍](#功能介绍)
 - [实例程序](#实例程序)
 - [开发文档](#开发文档)
@@ -17,10 +17,10 @@
 - 我们不推荐开发者全盘使用GuiLite；鼓励开发者在吃透代码后，根据自身业务特点，修改出更加丰富、个性的界面；或者发展出适合自己的UI框架。
 - 为了聚焦UI核心原理，GuiLite会一直保持单片机的代码体量。
 
-## 新功能：滑屏demo -- HelloSlide
-![HelloSlide](HelloSlide.gif)
+## 新功能：动画demo -- HelloAnimation
+![HelloAnimation](HelloAnimation.gif)
 
-**信不信由你，代码只有100+行！**[查阅代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/UIcode/UIcode.cpp)
+**信不信由你，代码只有100+行！**[查阅代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/UIcode/UIcode.cpp)
 
 ## 功能介绍
 ### 卓越的跨平台能力
@@ -68,6 +68,7 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 | --- | --- | --- | --- | --- |
 | HelloGuiLite | Windows, Linux | 初始化GuiLite，加载资源，布局界面元素，按钮响应 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | 初级 |
 | HelloFont | Windows, Linux | 显示多种语言（不限：中、英文） | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | 初级 |
+| HelloAnimation | Windows, Linux | 动画的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/README.md) | 初级 |
 | HelloSlide | Windows, Linux | 滑屏界面的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | 中级 |
 | HostMonitor | iOS, Mac, Android, Windows, Linux | 创建复杂界面，扩展自定义控件，适配全平台 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | 高级 |
 ## 开发文档
