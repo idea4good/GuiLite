@@ -1,4 +1,4 @@
-# GuiLite - Lighter & freer
+# GuiLite - The samllest UI framework
 - [中文](doc/README-cn.md)
 - [Features](#Features)
 - [Demo](#Demo)
