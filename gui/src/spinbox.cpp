@@ -22,8 +22,7 @@ void c_spin_box::pre_create_wnd()
 {
 	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
 	m_font_type = c_my_resource::get_font(FONT_DEFAULT);
-	m_bg_color = c_my_resource::get_color(WND_BACKCOLOR);
-	m_font_color = c_my_resource::get_color(WND_FORECOLOR);
+	m_font_color = c_my_resource::get_color(COLOR_WND_FONT);
 
 	m_max = 6;
 	m_min = 1;
@@ -70,7 +69,7 @@ void c_spin_box::on_touch_down(int x, int y)
 			{
 				m_value = m_cur_value;
 			}
-			modify_status(STATUS_FOCUSED);
+			m_status = STATUS_FOCUSED;
 			on_paint();
 			notify_parent(GL_SPIN_CONFIRM, get_id(), 0);
 		}        
@@ -81,7 +80,7 @@ void c_spin_box::on_touch_up(int x, int y)
 {
 	if (STATUS_FOCUSED == m_status)
 	{
-		modify_status(STATUS_PUSHED);
+		m_status = STATUS_PUSHED;
 		on_paint();
 		notify_parent(GL_SPIN_SELECT, get_id(), 0);
 	}
@@ -93,7 +92,7 @@ void c_spin_box::on_touch_up(int x, int y)
 			{
 				m_value = m_cur_value;
 			}
-			modify_status(STATUS_FOCUSED);
+			m_status = STATUS_FOCUSED;
 			on_paint();
 			notify_parent(GL_SPIN_CONFIRM, get_id(), 0);
 		}
@@ -106,14 +105,14 @@ void c_spin_box::on_touch_up(int x, int y)
 
 void c_spin_box::on_focus()
 {
-	modify_status(STATUS_FOCUSED);
+	m_status = STATUS_FOCUSED;
 	on_paint();
 }
 
 void c_spin_box::on_kill_focus()
 {
 	m_cur_value = m_value;
-	modify_status(STATUS_NORMAL);
+	m_status = STATUS_NORMAL;
 	on_paint();
 }
 
@@ -157,7 +156,7 @@ void c_spin_box::on_paint()
 			m_surface->set_frame_layer(tmp_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
 		}
-		fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(BUTTON_NORMAL));
+		fill_rect(rect, c_my_resource::get_color(COLOR_WND_NORMAL));
 		break;
 	case STATUS_FOCUSED:
 		if (m_z_order > m_parent->get_z_order())
@@ -167,7 +166,7 @@ void c_spin_box::on_paint()
 			m_surface->set_frame_layer(tmp_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
 		}
-		fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(BUTTON_FOCUS));
+		fill_rect(rect, c_my_resource::get_color(COLOR_WND_FOCUS));
 		break;
 	case STATUS_PUSHED:
 		if (m_z_order == m_parent->get_z_order())
@@ -179,7 +178,8 @@ void c_spin_box::on_paint()
 		m_surface->set_frame_layer(tmp_rect, m_z_order);
 		show_arrow_button();
 
-		m_surface->fill_rect_ex(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_bg_color, c_my_resource::get_shape(LIST_BOX_PUSH),m_parent->get_z_order());
+		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_my_resource::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());
+		m_surface->draw_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_my_resource::get_color(COLOR_WND_BORDER), m_parent->get_z_order(), 2);
 		c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, GL_RGB(2, 124, 165), GL_ARGB(0, 0, 0, 0), m_style);
 		return;
 		break;

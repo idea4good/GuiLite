@@ -8,33 +8,15 @@
 #include "../gui_include/my_resource.h"
 #include "../gui_include/table.h"
 
-
-void c_table::pre_create_wnd()
+void c_table::set_item(int row, int col, char* str, unsigned int color)
 {
-	m_style = GL_ATTR_VISIBLE;
+	draw_item( row, col, str, color);
 }
 
-int c_table::set_item(int row, int col, char* str, unsigned int with_bg_color)
-{
-	draw_item( row, col, str, with_bg_color);
-	return 1;
-}
-
-void c_table::draw_item(int row, int col, const char* str, unsigned int with_bg_color)
+void c_table::draw_item(int row, int col, const char* str, unsigned int color)
 {
 	c_rect rect = get_item_rect(row, col);
-
-	unsigned int back_color = 0;
-	if (with_bg_color == 0xFFFFFFFF)
-	{
-		back_color = m_bg_color;
-	}
-	else
-	{
-		back_color = with_bg_color;
-	}
-	fill_rect(rect.m_left+1, rect.m_top+1, rect.m_right-1, rect.m_bottom-1, back_color);
-
+	fill_rect(rect.m_left+1, rect.m_top+1, rect.m_right-1, rect.m_bottom-1, color);
 	c_word::draw_string_in_rect(m_surface, m_z_order, str, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_align_type);
 }
 

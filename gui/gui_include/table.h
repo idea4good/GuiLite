@@ -16,15 +16,13 @@ public:
 	int set_row_height(unsigned int index, unsigned int height);
 	int set_col_width(unsigned int index, unsigned int width);
 
-	int set_item(int row, int col, char* str, unsigned int with_bg_color = -1);
+	void set_item(int row, int col, char* str, unsigned int color);
 
 	unsigned int get_row_num(){ return m_row_num;}
 	unsigned int get_col_num(){ return m_col_num;}
 	c_rect get_item_rect(int row, int col);
 protected:
-	virtual void pre_create_wnd();
-
-	void draw_item(int col, int row, const char* str, unsigned int with_bg_color = -1);
+	void draw_item(int col, int row, const char* str, unsigned int color);
 
 	unsigned int m_align_type;	
 	unsigned int m_row_num;

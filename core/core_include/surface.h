@@ -23,7 +23,6 @@ class c_surface {
 public:
 	virtual void draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
 	virtual void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
-	void fill_rect_ex(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* extend_rects, int z_order);
 	virtual unsigned int get_pixel(int x, int y, unsigned int z_order);
 
 	int get_width() { return m_width; }
@@ -31,7 +30,7 @@ public:
 	void draw_hline(int x0, int x1, int y, unsigned int rgb, unsigned int z_order);
 	void draw_vline(int x, int y0, int y1, unsigned int rgb, unsigned int z_order);
 	void draw_line(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
-	void draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
+	void draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order, unsigned int size = 1);
 	int flush_scrren(int left, int top, int right, int bottom);
 
 	bool is_valid(c_rect rect);
@@ -45,7 +44,6 @@ protected:
 	virtual void set_pixel(int x, int y, unsigned int rgb);
 
 	void set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order);
-	int copy_layer_pixel_2_fb(int x, int y, unsigned int z_order);
 	c_surface(c_display* display, unsigned int width, unsigned int height, unsigned int color_bytes);
 	int						m_width;		//in pixels
 	int						m_height;		//in pixels

@@ -25,16 +25,4 @@ typedef struct struct_font_info
 	LATTICE*		lattice_array;
 } FONT_INFO;
 
-//SHAPE
-#define INVALID_RGN 0xFFFFFF
-#define COLOR_USERDEF GL_RGB(41,49,49)
-typedef struct struct_color_rect
-{
-	int l;
-	int t;
-	int r;
-	int b;
-	unsigned int color;
-}COLOR_RECT;
-
 #endif

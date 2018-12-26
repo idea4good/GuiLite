@@ -166,7 +166,6 @@ void c_keyboard::pre_create_wnd()
 {	
 	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS;
 	m_cap_status = STATUS_UPPERCASE;
-	m_bg_color = GL_RGB(39,39,39);
 	memset(m_str, 0, sizeof(m_str));
 	m_str_len = 0;
 }
@@ -231,13 +230,14 @@ void c_keyboard_button::on_paint()
 	switch(m_status)
 	{
 	case STATUS_NORMAL:
-		fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(KEY_BUTTON_NORMAL));
+		fill_rect(rect, c_my_resource::get_color(COLOR_WND_NORMAL));
 		break;
 	case STATUS_FOCUSED:
-		fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(BUTTON_FOCUS));
+		fill_rect(rect, c_my_resource::get_color(COLOR_WND_FOCUS));
 		break;
 	case STATUS_PUSHED:
-		fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(KEY_BUTTON_PUSH));
+		fill_rect(rect, c_my_resource::get_color(COLOR_WND_PUSHED));
+		draw_rect(rect, c_my_resource::get_color(COLOR_WND_BORDER), 2);
 		break;
 	default:
 		ASSERT(FALSE);
