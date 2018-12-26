@@ -338,44 +338,42 @@ int c_surface::set_frame_layer(c_rect& rect, unsigned int z_order)
 	m_top_zorder = (Z_ORDER_LEVEL)z_order;
 	
 	c_rect current_rect = m_frame_layers[z_order].rect;
-	if (current_rect.IsEmpty())
+	if (!current_rect.IsEmpty())
 	{
-		goto FINISHED;
-	}
+		//Recover the lower layer
+		int src_zorder = (Z_ORDER_LEVEL)(z_order - 1);
+		int display_width = m_display->get_width();
+		int display_height = m_display->get_height();
 
-	//Recover the lower layer
-	int src_zorder = (Z_ORDER_LEVEL)(z_order - 1);
-	int display_width = m_display->get_width();
-	int display_height = m_display->get_height();
-
-	for(int y = current_rect.m_top; y <= current_rect.m_bottom; y++)
-	{
-		for(int x = current_rect.m_left; x <= current_rect.m_right; x++)
+		for (int y = current_rect.m_top; y <= current_rect.m_bottom; y++)
 		{
-			if(m_frame_layers[src_zorder].rect.PtInRect(x,y))
+			for (int x = current_rect.m_left; x <= current_rect.m_right; x++)
 			{
-				if (m_color_bytes == 4)
+				if (m_frame_layers[src_zorder].rect.PtInRect(x, y))
 				{
-					unsigned int rgb = ((unsigned int*)(m_frame_layers[src_zorder].fb))[x + y * m_width];
-					((unsigned int*)m_fb)[y * m_width + x] = rgb;
-					if (m_is_active && (x < display_width) && (y < display_height))
+					if (m_color_bytes == 4)
 					{
-						((unsigned int*)m_phy_fb)[y * display_width + x] = rgb;
+						unsigned int rgb = ((unsigned int*)(m_frame_layers[src_zorder].fb))[x + y * m_width];
+						((unsigned int*)m_fb)[y * m_width + x] = rgb;
+						if (m_is_active && (x < display_width) && (y < display_height))
+						{
+							((unsigned int*)m_phy_fb)[y * display_width + x] = rgb;
+						}
 					}
-				}
-				else//16 bits
-				{
-					short rgb = ((short*)(m_frame_layers[src_zorder].fb))[x + y * m_width];
-					((short*)m_fb)[y * m_width + x] = rgb;
-					if (m_is_active && (x < display_width) && (y < display_height))
+					else//16 bits
 					{
-						((short*)m_phy_fb)[y * display_width + x] = rgb;
+						short rgb = ((short*)(m_frame_layers[src_zorder].fb))[x + y * m_width];
+						((short*)m_fb)[y * m_width + x] = rgb;
+						if (m_is_active && (x < display_width) && (y < display_height))
+						{
+							((short*)m_phy_fb)[y * display_width + x] = rgb;
+						}
 					}
 				}
 			}
 		}
 	}
-FINISHED:
+
 	m_frame_layers[z_order].rect = rect;
 	if (rect.IsEmpty())
 	{
