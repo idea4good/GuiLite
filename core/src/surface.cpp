@@ -506,13 +506,14 @@ void c_surface_16bits::fill_rect(int x0, int y0, int x1, int y1, unsigned int rg
 	{
 		int x, y;
 		unsigned short *mem_fb;
+		unsigned int rgb_16 = GL_RGB_32_to_16(rgb);
 		for (y = y0; y <= y1; y++)
 		{
 			x = x0;
 			mem_fb = &((unsigned short*)m_frame_layers[z_order].fb)[y * m_width + x];
 			for (; x <= x1; x++)
 			{
-				*mem_fb++ = rgb;
+				*mem_fb++ = rgb_16;
 			}
 		}
 		return fill_rect_on_fb(x0, y0, x1, y1, GL_RGB_32_to_16(rgb));
