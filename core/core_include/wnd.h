@@ -85,9 +85,6 @@ public:
 
 	c_wnd* get_active_child() const { return m_active_child; }
 
-	void modify_status(WND_STATUS status) { m_status = status; }
-	WND_STATUS get_status() { return m_status; }
-
 	c_surface* get_surface() { return m_surface; }
 	void set_surface(c_surface* surface) { m_surface = surface; }
 protected:
@@ -111,12 +108,10 @@ protected:
 	void draw_hline(int x0, int x1, int y, unsigned int rgb);
 	void draw_vline(int x, int y0, int y1, unsigned int rgb);
 	void draw_line(int x0, int y0, int x1, int y1, unsigned int rgb);
-	void draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb);
-	void draw_rect(c_rect rect, unsigned int rgb);
+	void draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int size = 1);
+	void draw_rect(c_rect rect, unsigned int rgb, unsigned int size = 1);
 	void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb);
 	void fill_rect(c_rect rect, unsigned int rgb);
-	void fill_rect_ex(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* extend_rects);
-	void fill_rect_ex(c_rect rect, unsigned int color, const COLOR_RECT* extend_rects);
 protected:
 	WND_STATUS		m_status;
 	unsigned int	m_style;

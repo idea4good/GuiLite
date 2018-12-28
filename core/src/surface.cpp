@@ -300,117 +300,87 @@ void c_surface::draw_line(int x1, int y1, int x2, int y2, unsigned int rgb, unsi
 	}
 }
 
-void c_surface::draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order)
+void c_surface::draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order, unsigned int size)
 {
-	draw_hline(x0, x1, y0, rgb, z_order);
-	draw_hline(x0, x1, y1, rgb, z_order);
-	draw_vline(x0, y0, y1, rgb, z_order);
-	draw_vline(x1, y0, y1, rgb, z_order);
+	for (unsigned int offset = 0; offset < size; offset++)
+	{
+		draw_hline(x0 + offset, x1 - offset, y0 + offset, rgb, z_order);
+		draw_hline(x0 + offset, x1 - offset, y1 - offset, rgb, z_order);
+		draw_vline(x0 + offset, y0 + offset, y1 - offset, rgb, z_order);
+		draw_vline(x1 - offset, y0 + offset, y1 - offset, rgb, z_order);
+	}
 }
 
 int c_surface::set_frame_layer(c_rect& rect, unsigned int z_order)
 {
-	if (z_order <= Z_ORDER_LEVEL_0 || z_order >= Z_ORDER_LEVEL_MAX)
+	if (rect == m_frame_layers[z_order].rect)
+	{
+		return 0;
+	}
+	if (rect.m_left < 0 || rect.m_left >= m_width ||
+		rect.m_right < 0 || rect.m_right >= m_width ||
+		rect.m_top < 0 || rect.m_top >= m_height ||
+		rect.m_bottom < 0 || rect.m_bottom >=m_height)
 	{
 		ASSERT(FALSE);
 		return -1;
 	}
-	if (!(rect == m_frame_layers[z_order].rect))
-	{//release current zone, and recover the lower layer
-		c_rect rc = m_frame_layers[z_order].rect;
-		int src_order = m_top_zorder = (Z_ORDER_LEVEL)(z_order - 1);
-		
-		int x,y;
-		for(y = rc.m_top; y <= rc.m_bottom; y++)
-		{
-			for(x = rc.m_left; x <= rc.m_right; x++)
-			{
-				if(m_frame_layers[src_order].rect.PtInRect(x,y))
-				{
-					copy_layer_pixel_2_fb(x, y, src_order);
-				}
-				else
-				{
-					if(src_order - 1 < Z_ORDER_LEVEL_0)continue;
+	if (!(z_order > Z_ORDER_LEVEL_0 || z_order < Z_ORDER_LEVEL_MAX))
+	{
+		ASSERT(FALSE);
+		return -2;
+	}
+	if (z_order < m_top_zorder)
+	{
+		ASSERT(FALSE);
+		return -3;
+	}
+	m_top_zorder = (Z_ORDER_LEVEL)z_order;
+	
+	c_rect current_rect = m_frame_layers[z_order].rect;
+	if (!current_rect.IsEmpty())
+	{
+		//Recover the lower layer
+		int src_zorder = (Z_ORDER_LEVEL)(z_order - 1);
+		int display_width = m_display->get_width();
+		int display_height = m_display->get_height();
 
-					if(m_frame_layers[src_order - 1].rect.PtInRect(x,y))
+		for (int y = current_rect.m_top; y <= current_rect.m_bottom; y++)
+		{
+			for (int x = current_rect.m_left; x <= current_rect.m_right; x++)
+			{
+				if (m_frame_layers[src_zorder].rect.PtInRect(x, y))
+				{
+					if (m_color_bytes == 4)
 					{
-						copy_layer_pixel_2_fb(x, y, src_order - 1);
+						unsigned int rgb = ((unsigned int*)(m_frame_layers[src_zorder].fb))[x + y * m_width];
+						((unsigned int*)m_fb)[y * m_width + x] = rgb;
+						if (m_is_active && (x < display_width) && (y < display_height))
+						{
+							((unsigned int*)m_phy_fb)[y * display_width + x] = rgb;
+						}
+					}
+					else//16 bits
+					{
+						short rgb = ((short*)(m_frame_layers[src_zorder].fb))[x + y * m_width];
+						((short*)m_fb)[y * m_width + x] = rgb;
+						if (m_is_active && (x < display_width) && (y < display_height))
+						{
+							((short*)m_phy_fb)[y * display_width + x] = rgb;
+						}
 					}
 				}
 			}
 		}
 	}
+
 	m_frame_layers[z_order].rect = rect;
-	return 1;
-}
-
-int c_surface::copy_layer_pixel_2_fb(int x, int y, unsigned int z_order)
-{
-	if (x >= m_width || y >= m_height || x < 0 || y < 0 ||
-		z_order >= Z_ORDER_LEVEL_MAX)
+	if (rect.IsEmpty())
 	{
-		ASSERT(FALSE);
-		return 0;
+		m_top_zorder = (Z_ORDER_LEVEL)(z_order - 1);
 	}
-
-	int display_width = m_display->get_width();
-	int display_height = m_display->get_height();
-
-	if (m_color_bytes == 4)
-	{
-		unsigned int rgb = ((unsigned int*)(m_frame_layers[z_order].fb))[x + y * m_width];
-		((unsigned int*)m_fb)[y * m_width + x] = rgb;
-		if (m_is_active && (x < display_width) && (y < display_height))
-		{
-			((unsigned int*)m_phy_fb)[y * display_width + x] = rgb;
-			*m_phy_write_index = *m_phy_write_index + 1;
-		}
-	}
-	else//16 bits
-	{
-		short rgb = ((short*)(m_frame_layers[z_order].fb))[x + y * m_width];
-		((short*)m_fb)[y * m_width + x] = rgb;
-		if (m_is_active && (x < display_width) && (y < display_height))
-		{
-			((short*)m_phy_fb)[y * display_width + x] = rgb;
-			*m_phy_write_index = *m_phy_write_index + 1;
-		}
-	}
+	*m_phy_write_index = *m_phy_write_index + 1;
 	return 0;
-}
-
-void c_surface::fill_rect_ex(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* extend_rects, int z_order)
-{
-	if (NULL == extend_rects)
-	{
-		return fill_rect(l, t, r, b, color, z_order);
-	}
-
-	COLOR_RECT* p_item = (COLOR_RECT*)extend_rects;
-	int templ, tempt, tempr, tempb;
-	for(int i = 0; INVALID_RGN != p_item[i].l; i++)
-	{
-		templ = (p_item[i].l < 0) ? (r + 1 + p_item[i].l) : p_item[i].l + l;
-		tempt = (p_item[i].t < 0) ? (b + 1 + p_item[i].t) : p_item[i].t + t;
-		tempr = (p_item[i].r < 0) ? (r + 1 + p_item[i].r) : p_item[i].r + l;
-		tempb = (p_item[i].b < 0) ? (b + 1 + p_item[i].b) : p_item[i].b + t;
-
-		if (templ >= tempr)
-			tempr = templ;
-		if (tempt >= tempb)
-			tempb = tempt;
-
-		unsigned int tempcolor = (COLOR_USERDEF == p_item[i].color) ? (color) : p_item[i].color;
-	
-		for (int y = tempt ; y <= tempb; y++)
-		{ 
-			for(int x = templ; x <= tempr; x++)
-			{
-				draw_pixel(x , y, tempcolor, z_order);
-			}
-		}
-	}
 }
 
 int c_surface::flush_scrren(int left, int top, int right, int bottom)
@@ -534,13 +504,14 @@ void c_surface_16bits::fill_rect(int x0, int y0, int x1, int y1, unsigned int rg
 	{
 		int x, y;
 		unsigned short *mem_fb;
+		unsigned int rgb_16 = GL_RGB_32_to_16(rgb);
 		for (y = y0; y <= y1; y++)
 		{
 			x = x0;
 			mem_fb = &((unsigned short*)m_frame_layers[z_order].fb)[y * m_width + x];
 			for (; x <= x1; x++)
 			{
-				*mem_fb++ = rgb;
+				*mem_fb++ = rgb_16;
 			}
 		}
 		return fill_rect_on_fb(x0, y0, x1, y1, GL_RGB_32_to_16(rgb));

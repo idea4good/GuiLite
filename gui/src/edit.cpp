@@ -26,8 +26,7 @@ void c_edit::pre_create_wnd()
 {
 	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER | KEY_BOARD_STYLE;
 	m_font_type = c_my_resource::get_font(FONT_DEFAULT);
-	m_font_color = c_my_resource::get_color(WND_FORECOLOR);
-	m_bg_color = c_my_resource::get_color(WND_BACKCOLOR);
+	m_font_color = c_my_resource::get_color(COLOR_WND_FONT);
 
 	memset(m_str_input, 0, sizeof(m_str_input));
 	memset(m_str, 0, sizeof(m_str));
@@ -65,7 +64,7 @@ void c_edit::on_touch_down(int x, int y)
 	{
 		if (STATUS_PUSHED == m_status)
 		{
-			modify_status(STATUS_FOCUSED);
+			m_status = STATUS_FOCUSED;
 			on_paint();
 		}        
 	}
@@ -75,14 +74,14 @@ void c_edit::on_touch_up(int x, int y)
 {
 	if (STATUS_FOCUSED == m_status)
 	{
-		modify_status(STATUS_PUSHED);
+		m_status = STATUS_PUSHED;
 		on_paint();
 	}
 	else if (STATUS_PUSHED == m_status)
 	{
 		if (m_wnd_rect.PtInRect(x,y))
 		{//click edit box
-			modify_status(STATUS_FOCUSED);
+			m_status = STATUS_FOCUSED;
 			on_paint();
 		}
 		else
@@ -94,13 +93,13 @@ void c_edit::on_touch_up(int x, int y)
 
 void c_edit::on_focus()
 {
-	modify_status(STATUS_FOCUSED);
+	m_status = STATUS_FOCUSED;
 	on_paint();
 }
 
 void c_edit::on_kill_focus()
 {
-	modify_status(STATUS_NORMAL);
+	m_status = STATUS_NORMAL;
 	on_paint();
 }
 
@@ -119,7 +118,7 @@ void c_edit::on_paint()
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
 		}
-		fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(BUTTON_NORMAL));
+		fill_rect(rect, c_my_resource::get_color(COLOR_WND_NORMAL));
 		break;
 	case STATUS_FOCUSED:
 		if (m_z_order > m_parent->get_z_order())
@@ -128,7 +127,7 @@ void c_edit::on_paint()
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
 		}
-		fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(BUTTON_FOCUS));
+		fill_rect(rect, c_my_resource::get_color(COLOR_WND_FOCUS));
 		break;
 	case STATUS_PUSHED:
 		if (m_z_order == m_parent->get_z_order())
@@ -136,7 +135,8 @@ void c_edit::on_paint()
 			m_z_order++;
 			show_keyboard();
 		}
-		m_surface->fill_rect_ex(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_bg_color, c_my_resource::get_shape(LIST_BOX_SELECT), m_parent->get_z_order());
+		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_my_resource::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());
+		m_surface->draw_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_my_resource::get_color(COLOR_WND_BORDER), m_parent->get_z_order(), 2);
 		break;
 	default:
 		ASSERT(FALSE);
@@ -163,15 +163,13 @@ void c_edit::show_keyboard()
 
 	if ((get_style()&KEY_BOARD_STYLE) == KEY_BOARD_STYLE )
 	{
-		c_rect parent_rc;
-		m_parent->get_wnd_rect(parent_rc);
 		s_keyboard.set_style(STYLE_ALL_BOARD);
-		s_keyboard.create(this, IDD_ALL_KEY_BOARD, 0, m_wnd_rect.m_left, m_wnd_rect.m_top, parent_rc.Width(), parent_rc.Height(), NULL);
+		s_keyboard.connect(this, IDD_ALL_KEY_BOARD);
 	}
 	else
 	{
 		s_keyboard.set_style(STYLE_NUM_BOARD);
-		s_keyboard.create(this, IDD_NUM_KEY_BOARD, 0, 0, m_wnd_rect.Height(), 0, 0, NULL);
+		s_keyboard.connect(this, IDD_NUM_KEY_BOARD);
 	}
 
 	c_rect kb_rect;
@@ -193,12 +191,12 @@ void c_edit::on_key_board_click(unsigned int ctrl_id, long param)
 		{
 			memcpy(m_str, m_str_input, sizeof(m_str_input));
 		}
-		modify_status(STATUS_FOCUSED);
+		m_status = STATUS_FOCUSED;
 		on_paint();
 		break;
 	case CLICK_ESC:
 		memset(m_str_input, 0, sizeof(m_str_input));
-		modify_status(STATUS_FOCUSED);
+		m_status = STATUS_FOCUSED;
 		on_paint();
 		break;
 	default:

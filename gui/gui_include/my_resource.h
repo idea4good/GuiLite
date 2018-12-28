@@ -36,29 +36,20 @@ enum BITMAP_TYPE
 	BITMAP_MAX
 };
 
-enum SHAPE_TYPE
-{
-	BUTTON_NORMAL,
-	BUTTON_FOCUS,
-	BUTTON_PUSH,
-
-	LIST_BOX_SELECT,
-	LIST_BOX_PUSH,
-	LIST_BOX_EXTEND,
-
-	KEY_BUTTON_NORMAL,
-	KEY_BUTTON_PUSH,
-
-	SHAPE_CUSTOM1,
-	SHAPE_CUSTOM2,
-	SHAPE_CUSTOM3,
-	SHAPE_MAX
-};
-
 enum COLOR_TYPE
 {
-	WND_BACKCOLOR,
-	WND_FORECOLOR,
+	COLOR_WND_FONT,
+	COLOR_WND_NORMAL,
+	COLOR_WND_PUSHED,
+	COLOR_WND_FOCUS,
+	COLOR_WND_BORDER,
+
+	COLOR_CUSTOME1,
+	COLOR_CUSTOME2,
+	COLOR_CUSTOME3,
+	COLOR_CUSTOME4,
+	COLOR_CUSTOME5,
+	COLOR_CUSTOME6,
 
 	COLOR_MAX
 };
@@ -71,9 +62,6 @@ public:
 
 	static int add_bitmap(BITMAP_TYPE index, const BITMAP_INFO* bmp);
 	static const BITMAP_INFO* get_bmp(BITMAP_TYPE index);
-
-	static int add_shape(SHAPE_TYPE index, const COLOR_RECT* shape);
-	static const COLOR_RECT* get_shape(SHAPE_TYPE index);
 
 	static int add_color(COLOR_TYPE index, const unsigned int color);
 	static const unsigned int get_color(COLOR_TYPE index);

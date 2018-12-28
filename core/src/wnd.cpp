@@ -624,14 +624,14 @@ void c_wnd::draw_line(int x0, int y0, int x1, int y1, unsigned int rgb)
 	m_surface->draw_line(x0, y0, x1, y1, rgb, m_z_order);
 }
 
-void c_wnd::draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb)
+void c_wnd::draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int size)
 {
-	m_surface->draw_rect(x0, y0, x1, y1, rgb, m_z_order);
+	m_surface->draw_rect(x0, y0, x1, y1, rgb, m_z_order, size);
 }
 
-void c_wnd::draw_rect(c_rect rect, unsigned int rgb)
+void c_wnd::draw_rect(c_rect rect, unsigned int rgb, unsigned int size)
 {
-	m_surface->draw_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, rgb, m_z_order);
+	m_surface->draw_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, rgb, m_z_order, size);
 }
 
 void c_wnd::fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb)
@@ -642,14 +642,4 @@ void c_wnd::fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb)
 void c_wnd::fill_rect(c_rect rect, unsigned int rgb)
 {
 	m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, rgb, m_z_order);
-}
-
-void c_wnd::fill_rect_ex(int l, int t, int r, int b, unsigned int color, const COLOR_RECT* extend_rects)
-{
-	m_surface->fill_rect_ex(l, t, r, b, color, extend_rects, m_z_order);
-}
-
-void c_wnd::fill_rect_ex(c_rect rect, unsigned int color, const COLOR_RECT* extend_rects)
-{
-	m_surface->fill_rect_ex(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, color, extend_rects, m_z_order);
 }

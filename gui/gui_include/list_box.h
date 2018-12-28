@@ -27,7 +27,6 @@ public:
 protected:
 	virtual c_wnd* clone(){return new c_list_box();}
 	virtual void pre_create_wnd();
-	virtual void on_init_children();
 	virtual void on_paint();
 	virtual void on_focus();
 	virtual void on_kill_focus();

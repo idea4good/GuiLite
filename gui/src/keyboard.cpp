@@ -145,28 +145,31 @@ ON_GL_BN_CLICKED('\n', c_keyboard::on_enter_clicked)
 ON_GL_BN_CLICKED(0x1B, c_keyboard::on_esc_clicked)
 GL_END_MESSAGE_MAP()
 
-int c_keyboard::create(c_wnd *parent, unsigned short resource_id, char* str,
-	short x, short y, short width, short height, WND_TREE* p_child_tree)
+int c_keyboard::connect(c_wnd *user, unsigned short resource_id)
 {
+	c_rect user_rect;
+	user->get_wnd_rect(user_rect);
 	if (m_style == STYLE_ALL_BOARD)
-	{
-		return c_wnd::connect(parent, resource_id, str, (0 - x), (height - y - KEYBOARD_HEIGHT), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
+	{//Place keyboard at the bottom of user's parent window.
+		c_rect user_parent_rect;
+		user->get_parent()->get_wnd_rect(user_parent_rect);
+		return c_wnd::connect(user, resource_id, NULL, (0 - user_rect.m_left), (user_parent_rect.Height() - user_rect.m_top - KEYBOARD_HEIGHT), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
 	}
 	else if(m_style == STYLE_NUM_BOARD)
-	{
-		return c_wnd::connect(parent, resource_id, str, x, y, NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
+	{//Place keyboard below the user window.
+		return c_wnd::connect(user, resource_id, NULL, 0, user_rect.Height(), NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
 	}
 	else
 	{
 		ASSERT(FALSE);
 	}
+	return -1;
 }
 
 void c_keyboard::pre_create_wnd()
 {	
 	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS;
 	m_cap_status = STATUS_UPPERCASE;
-	m_bg_color = GL_RGB(39,39,39);
 	memset(m_str, 0, sizeof(m_str));
 	m_str_len = 0;
 }
@@ -231,13 +234,14 @@ void c_keyboard_button::on_paint()
 	switch(m_status)
 	{
 	case STATUS_NORMAL:
-		fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(KEY_BUTTON_NORMAL));
+		fill_rect(rect, c_my_resource::get_color(COLOR_WND_NORMAL));
 		break;
 	case STATUS_FOCUSED:
-		fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(BUTTON_FOCUS));
+		fill_rect(rect, c_my_resource::get_color(COLOR_WND_FOCUS));
 		break;
 	case STATUS_PUSHED:
-		fill_rect_ex(rect, m_bg_color, c_my_resource::get_shape(KEY_BUTTON_PUSH));
+		fill_rect(rect, c_my_resource::get_color(COLOR_WND_PUSHED));
+		draw_rect(rect, c_my_resource::get_color(COLOR_WND_BORDER), 2);
 		break;
 	default:
 		ASSERT(FALSE);
