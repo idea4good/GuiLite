@@ -163,15 +163,13 @@ void c_edit::show_keyboard()
 
 	if ((get_style()&KEY_BOARD_STYLE) == KEY_BOARD_STYLE )
 	{
-		c_rect parent_rc;
-		m_parent->get_wnd_rect(parent_rc);
 		s_keyboard.set_style(STYLE_ALL_BOARD);
-		s_keyboard.create(this, IDD_ALL_KEY_BOARD, 0, m_wnd_rect.m_left, m_wnd_rect.m_top, parent_rc.Width(), parent_rc.Height(), NULL);
+		s_keyboard.connect(this, IDD_ALL_KEY_BOARD);
 	}
 	else
 	{
 		s_keyboard.set_style(STYLE_NUM_BOARD);
-		s_keyboard.create(this, IDD_NUM_KEY_BOARD, 0, 0, m_wnd_rect.Height(), 0, 0, NULL);
+		s_keyboard.connect(this, IDD_NUM_KEY_BOARD);
 	}
 
 	c_rect kb_rect;

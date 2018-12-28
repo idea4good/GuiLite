@@ -15,6 +15,7 @@ class c_dialog : public c_wnd
 public:
 	static int open_dialog(c_dialog* p_dlg);
 	static int close_dialog(c_surface* surface);
+	static c_dialog* get_the_dialog(c_surface* surface);
 	void set_divider_lines(unsigned char lines){m_divider_lines = lines;}
 	virtual void on_touch_down(int x, int y);
 	virtual void on_touch_up(int x, int y);
@@ -24,7 +25,6 @@ protected:
 	virtual void on_paint();
 	static DIALOG_ARRAY ms_the_dialogs[SURFACE_CNT_MAX];
 private:
-	static c_dialog* get_the_dialog(c_surface* surface);
 	int set_me_the_dialog();
 	unsigned char m_divider_lines;
 };
