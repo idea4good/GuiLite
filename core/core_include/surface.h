@@ -42,8 +42,7 @@ public:
 protected:
 	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb);
 	virtual void set_pixel(int x, int y, unsigned int rgb);
-
-	void set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order);
+	virtual void set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order);
 	c_surface(c_display* display, unsigned int width, unsigned int height, unsigned int color_bytes);
 	int						m_width;		//in pixels
 	int						m_height;		//in pixels
@@ -69,5 +68,24 @@ class c_surface_16bits : public c_surface {
 	virtual unsigned int get_pixel(int x, int y, unsigned int z_order);
 protected:
 	virtual void set_pixel(int x, int y, unsigned int rgb);
+};
+
+struct EXTERNAL_GFX_OP
+{
+	void (*draw_pixel)(int x, int y, unsigned int rgb);
+	void (*fill_rect)(int x0, int y0, int x1, int y1, unsigned int rgb);
+};
+class c_surface_mcu : public c_surface {
+	friend class c_display;
+	c_surface_mcu(c_display* display, unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op);
+	virtual void draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
+	virtual void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
+	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb);
+	virtual unsigned int get_pixel(int x, int y, unsigned int z_order);
+protected:
+	virtual void set_pixel(int x, int y, unsigned int rgb);
+	virtual void set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order);
+private:
+	struct EXTERNAL_GFX_OP* m_gfx_op;
 };
 #endif

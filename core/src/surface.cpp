@@ -568,3 +568,55 @@ unsigned int c_surface_16bits::get_pixel(int x, int y, unsigned int z_order)
 
 	return GL_RGB_16_to_32(((unsigned short*)(m_frame_layers[z_order].fb))[y * m_width + x]);
 }
+
+//////////////////////////////////////////////////////////////////////////////////////
+c_surface_mcu::c_surface_mcu(c_display* display, unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op) :
+	c_surface(display, width, height, color_bytes)
+{
+	m_gfx_op = gfx_op;
+}
+
+void c_surface_mcu::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
+{
+	if (x >= m_width || y >= m_height || x < 0 || y < 0)
+	{
+		return;
+	}
+	if (m_gfx_op && m_gfx_op->draw_pixel)
+	{
+		m_gfx_op->draw_pixel(x, y, rgb);
+	}
+}
+
+void c_surface_mcu::fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order)
+{
+	if (m_gfx_op && m_gfx_op->fill_rect)
+	{
+		return m_gfx_op->fill_rect(x0, y0, x1, y1, rgb);
+	}
+	for (; y0 <= y1; y0++)
+	{
+		draw_hline(x0, x1, y0, rgb, z_order);
+	}
+}
+
+void c_surface_mcu::fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb)
+{//Not support
+	ASSERT(FALSE);
+}
+
+unsigned int c_surface_mcu::get_pixel(int x, int y, unsigned int z_order)
+{//Not support
+	return 0;
+}
+
+void c_surface_mcu::set_pixel(int x, int y, unsigned int rgb)
+{//Not support
+	ASSERT(FALSE);
+}
+
+void c_surface_mcu::set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order)
+{
+	m_usr = wnd_root;
+	m_max_zorder = max_z_order;
+}

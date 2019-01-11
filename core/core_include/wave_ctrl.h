@@ -27,13 +27,13 @@ public:
 	void set_wave_name(char* wave_name){ m_wave_name = wave_name;}
 	void set_wave_unit(char* wave_unit){ m_wave_unit = wave_unit;}
 
-	void set_wave_name_font_type(const FONT_INFO* wave_name_font_type){ m_wave_name_font_type = wave_name_font_type;}
-	void set_wave_unit_font_type(const FONT_INFO* wave_unit_font_type){ m_wave_unit_font_type = wave_unit_font_type;}
+	void set_wave_name_font(const FONT_INFO* wave_name_font_type){ m_wave_name_font = wave_name_font_type;}
+	void set_wave_unit_font(const FONT_INFO* wave_unit_font_type){ m_wave_unit_font = wave_unit_font_type;}
 
 	void set_wave_name_color(unsigned int wave_name_color){ m_wave_name_color = wave_name_color;}
 	void set_wave_unit_color(unsigned int wave_unit_color){ m_wave_unit_color = wave_unit_color;}
 	void set_wave_color(unsigned int color){ m_wave_color = color;}
-	void set_wave_sample_rate(unsigned int rate);//speed = module sample rate
+	void set_wave_in_out_rate(unsigned int data_rate, unsigned int refresh_rate);
 	void set_wave_speed(unsigned int speed);
 
 	void set_max_min_base(short max_data, short min_data, short data_base);
@@ -53,8 +53,8 @@ protected:
 	char* m_wave_name;
 	char* m_wave_unit;
 
-	const FONT_INFO* m_wave_name_font_type;
-	const FONT_INFO* m_wave_unit_font_type;
+	const FONT_INFO* m_wave_name_font;
+	const FONT_INFO* m_wave_unit_font;
 
 	unsigned int m_wave_name_color;
 	unsigned int m_wave_unit_color;
@@ -77,7 +77,8 @@ private:
 	unsigned int*	m_bg_fb;			//background frame buffer, could be used to draw scale line.
 	int 			m_wave_cursor;
 	int 			m_wave_speed;		//pixels per refresh
-	int				m_wave_sample_rate;
+	unsigned int	m_wave_data_rate;	//data sample rate
+	unsigned int	m_wave_refresh_rate;//refresh cycle in millisecond
 	unsigned char 	m_frame_len_map[64];
 	unsigned char 	m_frame_len_map_index;
 };

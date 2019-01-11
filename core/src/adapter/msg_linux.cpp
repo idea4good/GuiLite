@@ -1,11 +1,6 @@
 #include "../../core_include/api.h"
-#include "../../core_include/rect.h"
-#include "../../core_include/surface.h"
-#include "../../core_include/display.h"
 #include "../../core_include/msg.h"
 #include <stdlib.h>
-#include <string.h>
-#include <errno.h>
 #include <pthread.h>
 #include <semaphore.h>
 

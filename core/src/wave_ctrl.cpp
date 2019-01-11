@@ -23,13 +23,14 @@ c_wave_ctrl::c_wave_ctrl()
 {
 	m_wave = NULL;
 	m_bg_fb = NULL;
-	m_wave_name_font_type  = m_wave_unit_font_type = NULL;
+	m_wave_name_font  = m_wave_unit_font = NULL;
 	m_wave_name = m_wave_unit = 0;
 	m_max_data = 500;
 	m_min_data = 0;
 	m_pivot_data  = 250;
 	m_wave_speed = 4;
-	m_wave_sample_rate = 0;
+	m_wave_data_rate = 0;
+	m_wave_refresh_rate = 1000;
 	m_gain = ZOOM_100;
 	m_frame_len_map_index = 0;
 
@@ -63,19 +64,16 @@ void c_wave_ctrl::set_wave_gain(E_WAVE_GAIN gain)
 	m_gain = gain;
 }
 
-void c_wave_ctrl::set_wave_sample_rate(unsigned int rate)
+void c_wave_ctrl::set_wave_in_out_rate(unsigned int data_rate, unsigned int refresh_rate)
 {
-	if(rate > 500)
-	{
-		ASSERT(FALSE);
-	}
-	m_wave_sample_rate = rate;
-	int read_times_per_second = m_wave_speed * 1000 / REAL_TIME_TASK_CYCLE_MS;
+	m_wave_data_rate = data_rate;
+	m_wave_refresh_rate = refresh_rate;
+	int read_times_per_second = m_wave_speed * 1000 / m_wave_refresh_rate;
 
 	memset(m_frame_len_map, 0, sizeof(m_frame_len_map));
 	for (unsigned int i = 1; i < sizeof(m_frame_len_map) + 1; i++)
 	{
-		m_frame_len_map[i-1] = rate * i / read_times_per_second - rate * (i-1) / read_times_per_second;
+		m_frame_len_map[i-1] = data_rate * i / read_times_per_second - data_rate * (i-1) / read_times_per_second;
 	}
 	m_frame_len_map_index = 0;
 }
@@ -94,7 +92,7 @@ void c_wave_ctrl::set_wave_speed(unsigned int speed)
 		ASSERT(FALSE);
 		break;
 	}
-	set_wave_sample_rate(m_wave_sample_rate);
+	set_wave_in_out_rate(m_wave_data_rate, m_wave_refresh_rate);
 }
 
 void c_wave_ctrl::clear_data()
@@ -234,9 +232,9 @@ void c_wave_ctrl::on_paint()
 	fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_back_color);
 	
 	//show name
-	c_word::draw_string(m_surface, m_z_order, m_wave_name, m_wave_left + 10, rect.m_top, m_wave_name_font_type, m_wave_name_color, GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
+	c_word::draw_string(m_surface, m_z_order, m_wave_name, m_wave_left + 10, rect.m_top, m_wave_name_font, m_wave_name_color, GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
 	//show unit
-	c_word::draw_string(m_surface, m_z_order, m_wave_unit, m_wave_left + 60, rect.m_top, m_wave_unit_font_type, m_wave_unit_color, GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
+	c_word::draw_string(m_surface, m_z_order, m_wave_unit, m_wave_left + 60, rect.m_top, m_wave_unit_font, m_wave_unit_color, GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
 
 	save_background();
 }
@@ -260,16 +258,18 @@ void c_wave_ctrl::restore_background()
 	register int width = rect.Width();
 	register int top = rect.m_top;
 	register int left = rect.m_left;
-	unsigned int* p_fb = m_bg_fb;
-
 	for (int y_pos = (m_wave_top - 1); y_pos <= (m_wave_bottom + 1); y_pos++)
 	{
-		draw_pixel(x, y_pos, p_fb[(y_pos - top) * width + (x - left)]);
+		(m_bg_fb) ? draw_pixel(x, y_pos, m_bg_fb[(y_pos - top) * width + (x - left)]) : draw_pixel(x, y_pos, 0);
 	}
 }
 
 void c_wave_ctrl::save_background()
 {
+	if (!m_bg_fb)
+	{
+		return;
+	}
 	c_rect rect;
 	get_screen_rect(rect);
 	

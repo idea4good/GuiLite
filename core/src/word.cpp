@@ -72,10 +72,6 @@ void c_word::draw_string_in_rect(c_surface* surface, int z_order, const char *s,
 	{
 		return;
 	}
-	if (NULL == font)
-	{
-		ASSERT(FALSE);
-	}
 	int x, y;
 	get_string_pos(s, font, rect, align_type, x, y);
 	draw_string(surface, z_order, s, rect.m_left + x, rect.m_top + y, font, font_color, bg_color, ALIGN_LEFT);
@@ -87,21 +83,11 @@ void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, 
 	{
 		return;
 	}
-	if (NULL == font)
-	{
-		ASSERT(FALSE);
-	}
 
 	int offset = 0;
 	unsigned int utf8_code;
 	while (*s)
 	{
-		if (*s == '\n')
-		{
-			y += font->height;
-			offset = 0;
-			continue;
-		}
 		s += get_utf8_code(s, utf8_code);
 		offset += draw_single_char(surface, z_order, utf8_code, (x + offset), y, font, font_color, bg_color);
 	}
@@ -160,26 +146,31 @@ const LATTICE* c_word::get_lattice(const FONT_INFO* font, unsigned int utf8_code
 
 int c_word::draw_single_char(c_surface* surface, int z_order, unsigned int utf8_code, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color)
 {
-	if (NULL == font)
+	unsigned int error_color = 0xFFFFFFFF;
+	if (font)
 	{
-		ASSERT(FALSE);
-		return 0;
+		const LATTICE* p_lattice = get_lattice(font, utf8_code);
+		if (p_lattice)
+		{
+			draw_lattice(surface, z_order, x, y, p_lattice->width, font->height, p_lattice->p_data, font_color, bg_color);
+			return p_lattice->width;
+		}
 	}
-
-	const LATTICE* p_lattice = get_lattice(font, utf8_code);
-	if (p_lattice)
+	else
 	{
-		draw_lattice(surface, z_order, x, y, p_lattice->width, font->height, p_lattice->p_data, font_color, bg_color);
-		return p_lattice->width;
+		error_color = GL_RGB(255, 0, 0);
 	}
 	
-	int len = font->height;
+	//lattice/font not found, draw "X"
+	int len = 16;
 	for (int y_ = 0; y_ < len; y_++)
 	{
 		for (int x_ = 0; x_ < len; x_++)
 		{
-			((y_ % 4) == 0) ? surface->draw_pixel((x + x_), (y + y_), 0, z_order) :
-							surface->draw_pixel((x + x_), (y + y_), 0xFFFFFFFF, z_order);
+			int diff = (x_ - y_);
+			int sum = (x_ + y_);
+			(diff == 0 || diff == -1 || diff == 1 || sum == len || sum == (len - 1) || sum == (len + 1)) ?
+			surface->draw_pixel((x + x_), (y + y_), error_color, z_order) : surface->draw_pixel((x + x_), (y + y_), 0, z_order);
 		}
 	}
 	return len;
@@ -214,15 +205,12 @@ void c_word::draw_lattice(c_surface* surface, int z_order, int x, int y, int wid
 	}
 }
 
-int c_word::get_str_pixel_length(const char *s, const FONT_INFO* font)
+int c_word::get_str_size(const char *s, const FONT_INFO* font, int& width, int& height)
 {
-	if(NULL == s)
+	if(NULL == s || NULL == font)
 	{
-		return 0;
-	}
-	if (NULL == font)
-	{
-		ASSERT(FALSE);
+		width = height = 0;
+		return -1;
 	}
 
 	int lattice_width = 0;
@@ -235,13 +223,15 @@ int c_word::get_str_pixel_length(const char *s, const FONT_INFO* font)
 		lattice_width += p_lattice?p_lattice->width:font->height;
 		s += utf8_bytes;
 	}
-	return lattice_width;
+	width = lattice_width;
+	height = font->height;
+	return 0;
 }
 
 void c_word::get_string_pos(const char *s, const FONT_INFO* font, c_rect rect, unsigned int align_type, int &x, int &y)
 {
-	int x_size = get_str_pixel_length(s, font);
-	int y_size = font->height;
+	int x_size, y_size;
+	get_str_size(s, font, x_size, y_size);
 
 	int height = rect.m_bottom - rect.m_top + 1;
 	int width  = rect.m_right - rect.m_left + 1;

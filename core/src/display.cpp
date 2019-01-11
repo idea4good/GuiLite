@@ -37,6 +37,15 @@ c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int disp
 	}
 }
 
+c_display::c_display(unsigned int display_width, unsigned int display_height, unsigned int color_bytes, EXTERNAL_GFX_OP* gfx_op)
+{
+	m_width = display_width;
+	m_height = display_height;
+	m_surface_cnt = 1;
+	m_phy_fb = NULL;
+	m_surface_group[0] = new c_surface_mcu(this, display_width, display_height, color_bytes, gfx_op);
+}
+
 c_surface* c_display::alloc_surface(void* usr, Z_ORDER_LEVEL max_zorder)
 {
 	int i = 0;

@@ -11,7 +11,7 @@ public:
 	static void draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT);
 	static void value_2_string(int value, int dot_position, char* buf, int len);
 
-	static int get_str_pixel_length(const char *s, const FONT_INFO* font);
+	static int get_str_size(const char *s, const FONT_INFO* font, int& width, int& height);
 private:
 	static int draw_single_char(c_surface* surface, int z_order, unsigned int utf8_code, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color);
 	static void draw_lattice(c_surface* surface, int z_order, int x, int y, int width, int height, const unsigned char* p_data, unsigned int font_color, unsigned int bg_color);

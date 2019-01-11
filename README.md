@@ -11,10 +11,12 @@
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
-## New feature: Animation demo -- HelloAnimation
-![HelloAnimation](doc/HelloAnimation.gif)
-
-**Believe or not, it's only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/UIcode/UIcode.cpp)
+## New feature: MCU demo -- HelloMCU
+![HelloMCU](doc/HelloMCU.gif)
+- Hardware: STM32F103ZET6(512K ROM, 64K RAM) + 240*320 16bits color TFT LCD
+- Software: None of OS + GuiLite
+- **Believe or not, it's only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMCU/UIcode/UIcode.cpp)
+- [How to porting for any MCU?](https://github.com/idea4good/GuiLiteSamples/blob/master/doc/HowToPorting.jpg)
 
 ## Features
 ### Cross platform
@@ -66,6 +68,7 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 | HelloFont | Windows, Linux | Show how to use muti languages(UTF-8) | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | Beginner |
 | HelloAnimation | Windows, Linux | Show how to make animation | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/README.md) | Beginner |
 | HelloSlide | Windows, Linux | Show how to use sliding pages | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | Intermediate |
+| HelloMCU | Windows, STM32 | Show how to use on MCU | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMCU/README.md) | Intermediate |
 | HostMonitor | iOS, Mac, Android, Windows, Linux | Show how to build complex UI for all platforms | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | Master |
 
 ## Documents
@@ -78,6 +81,7 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 ## Videos
 - [GuiLite introduction](https://www.youtube.com/watch?v=grqXEz3bdC0)
 - [3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
+- [GuiLite + STM32](https://v.youku.com/v_show/id_XNDAwNzM5MTM3Ng)
 
 ## Gitee link
 [Link to Gitee in China](https://gitee.com/idea4good/GuiLite)
