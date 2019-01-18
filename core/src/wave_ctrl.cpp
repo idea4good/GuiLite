@@ -16,8 +16,8 @@
 }while(0)
 
 #define WAVE_CURSOR_WIDTH		8
-#define DATA_THRESHOLD			4
 #define	WAVE_LINE_WIDTH			1
+#define	WAVE_MARGIN				5
 
 c_wave_ctrl::c_wave_ctrl()
 {
@@ -27,11 +27,9 @@ c_wave_ctrl::c_wave_ctrl()
 	m_wave_name = m_wave_unit = 0;
 	m_max_data = 500;
 	m_min_data = 0;
-	m_pivot_data  = 250;
 	m_wave_speed = 4;
 	m_wave_data_rate = 0;
 	m_wave_refresh_rate = 1000;
-	m_gain = ZOOM_100;
 	m_frame_len_map_index = 0;
 
 	m_wave_name_color  = m_wave_unit_color = m_wave_color = GL_RGB(255,0,0);
@@ -43,25 +41,19 @@ void c_wave_ctrl::on_init_children()
 	c_rect rect;
 	get_screen_rect(rect);
 
-	m_wave_left 	= rect.m_left + 22;
-	m_wave_right	= rect.m_right;
-	m_wave_top		= rect.m_top + 2;
-	m_wave_bottom	= rect.m_bottom - 4;
+	m_wave_left 	= rect.m_left + WAVE_MARGIN;
+	m_wave_right	= rect.m_right - WAVE_MARGIN;
+	m_wave_top		= rect.m_top + WAVE_MARGIN;
+	m_wave_bottom	= rect.m_bottom - WAVE_MARGIN;
 	m_wave_cursor	= m_wave_left;
 
 	m_bg_fb = (unsigned int*)calloc(rect.Width() * rect.Height(), 4);
 }
 
-void c_wave_ctrl::set_max_min_base(short max_data, short min_data, short data_base)
+void c_wave_ctrl::set_max_min(short max_data, short min_data)
 {
 	m_max_data = max_data;
 	m_min_data = min_data;
-	m_pivot_data = data_base;
-}
-
-void c_wave_ctrl::set_wave_gain(E_WAVE_GAIN gain)
-{
-	m_gain = gain;
 }
 
 void c_wave_ctrl::set_wave_in_out_rate(unsigned int data_rate, unsigned int refresh_rate)
@@ -112,8 +104,7 @@ bool c_wave_ctrl::is_data_enough()
 		ASSERT(FALSE);
 		return false;
 	}
-	return ((m_frame_len_map[m_frame_len_map_index] * m_wave_speed - m_wave->get_cnt()) <
-			DATA_THRESHOLD)?true:false;
+	return (m_wave->get_cnt() - m_frame_len_map[m_frame_len_map_index] * m_wave_speed);
 }
 
 void c_wave_ctrl::refresh_wave(unsigned char frame)
@@ -124,62 +115,36 @@ void c_wave_ctrl::refresh_wave(unsigned char frame)
 		return;
 	}
 
-	short max, min, mid, speed;
-	speed = m_wave_speed;
-	while(--speed >= 0)
+	short max, min, mid;
+	for(short offset = 0; offset < m_wave_speed; offset++)
 	{
 		//get wave value
 		mid = m_wave->read_wave_data_by_frame(max, min,
 							m_frame_len_map[m_frame_len_map_index++],
-							(frame | (speed << 8) | (((unsigned long)this & 0xffff) << 16)));
+							frame, offset);
 		m_frame_len_map_index %= sizeof(m_frame_len_map);
-		//gain
-		switch(m_gain)
-		{
-		case ZOOM_025:
-			mid = ((mid - m_pivot_data) >> 2) + m_pivot_data;
-			max = ((max - m_pivot_data) >> 2) + m_pivot_data;
-			min = ((min - m_pivot_data) >> 2) + m_pivot_data;
-			break;
-		case ZOOM_050:
-			mid = ((mid - m_pivot_data) >> 1) + m_pivot_data;
-			max = ((max - m_pivot_data) >> 1) + m_pivot_data;
-			min = ((min - m_pivot_data) >> 1) + m_pivot_data;
-			break;
-		case ZOOM_200:
-			mid = ((mid - m_pivot_data) << 1) + m_pivot_data;
-			max = ((max - m_pivot_data) << 1) + m_pivot_data;
-			min = ((min - m_pivot_data) << 1) + m_pivot_data;
-			break;
-		case ZOOM_100:
-		default:
-			break;
-		}
+		
 		//map to wave ctrl
 		int y_min,y_max;
 		if(m_max_data == m_min_data)
 		{
 			ASSERT(FALSE);
 		}
-		y_max = WAVE_LINE_WIDTH + m_wave_bottom - (m_wave_bottom - m_wave_top)*(min - m_min_data)/(m_max_data - m_min_data);
-		y_min = (-WAVE_LINE_WIDTH) + m_wave_bottom - (m_wave_bottom - m_wave_top)*(max - m_min_data)/(m_max_data - m_min_data);
+		y_max = m_wave_bottom + WAVE_LINE_WIDTH - (m_wave_bottom - m_wave_top)*(min - m_min_data)/(m_max_data - m_min_data);
+		y_min = m_wave_bottom - WAVE_LINE_WIDTH - (m_wave_bottom - m_wave_top)*(max - m_min_data)/(m_max_data - m_min_data);
 		mid = m_wave_bottom - (m_wave_bottom - m_wave_top)*(mid - m_min_data)/(m_max_data - m_min_data);
 
 		CORRECT(y_min, m_wave_bottom, m_wave_top);
 		CORRECT(y_max, m_wave_bottom, m_wave_top);
 		CORRECT(mid, m_wave_bottom, m_wave_top);
 
+		if (m_wave_cursor > m_wave_right)
+		{
+			m_wave_cursor = m_wave_left;
+		}
 		draw_smooth_vline(y_min, y_max, mid, m_wave_color);
 		restore_background();
-		//ring the wave
-		if ((m_wave_cursor + 1) > m_wave_right)
-		{
-			m_wave_cursor = m_wave_left ;
-		}
-		else
-		{
-			m_wave_cursor++;
-		}
+		m_wave_cursor++;
 	}
 }
 

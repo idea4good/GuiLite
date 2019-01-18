@@ -7,14 +7,6 @@ typedef enum
 	SCAN_MODE
 }E_WAVE_DRAW_MODE;
 
-typedef enum
-{
-	ZOOM_025,
-	ZOOM_050,
-	ZOOM_100,
-	ZOOM_200
-}E_WAVE_GAIN;
-
 class c_wave_buffer;
 class c_wave_ctrl : public c_wnd
 {
@@ -36,8 +28,7 @@ public:
 	void set_wave_in_out_rate(unsigned int data_rate, unsigned int refresh_rate);
 	void set_wave_speed(unsigned int speed);
 
-	void set_max_min_base(short max_data, short min_data, short data_base);
-	void set_wave_gain(E_WAVE_GAIN gain);
+	void set_max_min(short max_data, short min_data);
 	void set_wave(c_wave_buffer* wave){m_wave = wave;}
 	c_wave_buffer* get_wave(){return m_wave;}
 	void clear_data();
@@ -69,8 +60,6 @@ protected:
 
 	short m_max_data;
 	short m_min_data;
-	short m_pivot_data;					//for wave gain and fill mode
-	E_WAVE_GAIN		m_gain;				//wave gain
 	
 private:
 	c_wave_buffer*	m_wave;

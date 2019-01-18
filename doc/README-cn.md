@@ -17,12 +17,12 @@
 - 我们不推荐开发者全盘使用GuiLite；鼓励开发者在吃透代码后，根据自身业务特点，修改出更加丰富、个性的界面；或者发展出适合自己的UI框架。
 - 为了聚焦UI核心原理，GuiLite会一直保持单片机的代码体量。
 
-## 新功能：支持单片机 -- HelloMCU
-![HelloMCU](HelloMCU.gif)
+## 新功能：“波形控件”实例及在单片机上运行 -- HelloWave
+![HelloWave](HelloWave.gif)
 - 硬件配置：STM32F103ZET6(512K ROM，64K RAM) + 240*320 16位TFT屏
 - 软件配置：无操作系统 + GuiLite
-- **信不信由你，代码只有100+行！**[查阅代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMCU/UIcode/UIcode.cpp)
-- [移植方法 -- 适用于任意单片机平台？](https://github.com/idea4good/GuiLiteSamples/blob/master/doc/HowToPorting.jpg)
+- Hello Wave 仅有[100多行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp)，用于向开发者展示：如何使用GuiLite进行波形开发，及如何进行单片机移植。
+- [移植方法 -- 适用于任意单片机平台？](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
 
 ## 功能介绍
 ### 卓越的跨平台能力
@@ -34,18 +34,18 @@
 
 ![Android](Android.gif) ![Linux](Linux.gif)
 
-在Windows混合现实下的运行效果:
+在Windows混合现实，及单片机下的运行效果:
 
-![Win MR](WinMR.gif)
+![Win MR](WinMR.gif) ![MCU](HelloWave.gif)
 
 ### 万国语和墙纸
-墙纸：
+- 墙纸：
 ![unicode](wallpaper.jpg)
 
-万国语(unicode)：
+- 万国语(unicode)：
 ![unicode](unicode.jpg)
 
-[如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
+- [如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
 
 ### “换肤”功能
 ![multi-theme](multi-theme.png)
@@ -53,11 +53,11 @@
 [如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/resource/resource.cpp)
 
 ### 自我监控
-**上报“编译/运行”情况至“云端”：**
+- **上报“编译/运行”情况至“云端”：**
 
 ![BuildInfo](BuildInfo.png)
 
-**同步“本地数据”至“云端”：**
+- **同步“本地数据”至“云端”：**
 
 ![DataOnCloud](data_on_cloud.png)
 
@@ -72,7 +72,7 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 | HelloFont | Windows, Linux | 显示多种语言（不限：中、英文） | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | 初级 |
 | HelloAnimation | Windows, Linux | 动画的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/README.md) | 初级 |
 | HelloSlide | Windows, Linux | 滑屏界面的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | 中级 |
-| HelloMCU | Windows, STM32 | 单片机的应用 | [编译/运行](https://gitub.com/idea4good/GuiLiteSamples/blob/master/HelloMCU/README.md) | 中级 |
+| HelloWave | Windows, STM32F103, STM32F429 | 波形控件的应用，及单片机移植办法 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md) | 中级 |
 | HostMonitor | iOS, Mac, Android, Windows, Linux | 创建复杂界面，扩展自定义控件，适配全平台 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | 高级 |
 ## 开发文档
 - [如何编译?](HowToBuild.md)
