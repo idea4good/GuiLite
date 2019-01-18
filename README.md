@@ -7,7 +7,7 @@
 - [Thanks](#Thanks)
 ***
 ## What is GuiLite?
-- GuiLite has 5000 lines of C++ code, providing **UI framework for all platforms** for developers. Just like the pictures above, GuiLite can run on iOS, Android, GNU/Linux, Windows and macOS platforms.
+- GuiLite has 5000 lines of C++ code, providing **UI framework for all platforms** for developers. Just like the pictures above, GuiLite can run on iOS, Android, GNU/Linux, Windows, macOS and **MCU** platforms.
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
