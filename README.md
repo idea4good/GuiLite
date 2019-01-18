@@ -28,9 +28,9 @@ Ran on Android & GNU/Linux embedded (ARM):
 
 ![Android](doc/Android.gif) ![GNU/Linux embedded (ARM)](doc/Linux.gif)
 
-Ran on Windows Mixed Reality:
+Ran on Windows Mixed Reality & MCU:
 
-![Win MR](doc/WinMR.gif)
+![Win MR](doc/WinMR.gif) ![MCU](doc/HelloWave.gif)
 
 ### Unicode & Bitmap
 Wallpaper with bitmap:
