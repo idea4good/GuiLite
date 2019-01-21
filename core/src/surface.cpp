@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-c_surface::c_surface(c_display* display,  unsigned int width, unsigned int height, unsigned int color_bytes)
+c_surface::c_surface(c_display* display,  unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op)
 {
 	m_width = width;
 	m_height = height;
@@ -19,6 +19,7 @@ c_surface::c_surface(c_display* display,  unsigned int width, unsigned int heigh
 	m_fb = m_usr = NULL;
 	m_top_zorder = m_max_zorder = Z_ORDER_LEVEL_0;
 	m_is_active = false;
+	m_gfx_op = gfx_op;
 
 	m_fb = calloc(m_width * m_height, color_bytes);
 	m_frame_layers[Z_ORDER_LEVEL_0].rect = c_rect(0, 0, m_width, m_height);
@@ -570,12 +571,6 @@ unsigned int c_surface_16bits::get_pixel(int x, int y, unsigned int z_order)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
-c_surface_mcu::c_surface_mcu(c_display* display, unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op) :
-	c_surface(display, width, height, color_bytes)
-{
-	m_gfx_op = gfx_op;
-}
-
 void c_surface_mcu::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 {
 	if (x >= m_width || y >= m_height || x < 0 || y < 0)
@@ -617,6 +612,7 @@ void c_surface_mcu::set_pixel(int x, int y, unsigned int rgb)
 
 void c_surface_mcu::set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order)
 {
+	ASSERT(max_z_order == Z_ORDER_LEVEL_0);
 	m_usr = wnd_root;
 	m_max_zorder = max_z_order;
 }

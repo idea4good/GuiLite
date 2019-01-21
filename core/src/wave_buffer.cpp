@@ -25,7 +25,7 @@ int c_wave_buffer::write_wave_data(short data)
 {
 	if ((m_tail + 1) % WAVE_BUFFER_LEN == m_head)
 	{//full
-		log_out("wave buf full\n");
+		//log_out("wave buf full\n");
 		return BUFFER_FULL;
 	}
 	m_wave_buf[m_tail] = data;
@@ -37,7 +37,7 @@ int c_wave_buffer::read_data()
 {
 	if (m_head == m_tail)
 	{//empty
-		log_out("wave buf empty\n");
+		//log_out("wave buf empty\n");
 		return BUFFER_EMPTY;
 	}
 	int ret = m_wave_buf[m_head];

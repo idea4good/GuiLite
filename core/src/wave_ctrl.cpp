@@ -27,7 +27,7 @@ c_wave_ctrl::c_wave_ctrl()
 	m_wave_name = m_wave_unit = 0;
 	m_max_data = 500;
 	m_min_data = 0;
-	m_wave_speed = 4;
+	m_wave_speed = 1;
 	m_wave_data_rate = 0;
 	m_wave_refresh_rate = 1000;
 	m_frame_len_map_index = 0;
@@ -72,18 +72,7 @@ void c_wave_ctrl::set_wave_in_out_rate(unsigned int data_rate, unsigned int refr
 
 void c_wave_ctrl::set_wave_speed(unsigned int speed)
 {
-	switch(speed)
-	{
-	case 1:
-	case 2:
-	case 4:
-	case 8:
-		m_wave_speed = speed;
-		break;
-	default:
-		ASSERT(FALSE);
-		break;
-	}
+	m_wave_speed = speed;
 	set_wave_in_out_rate(m_wave_data_rate, m_wave_refresh_rate);
 }
 

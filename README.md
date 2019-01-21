@@ -30,7 +30,7 @@ Ran on Android & GNU/Linux embedded (ARM):
 
 Ran on Windows Mixed Reality & MCU:
 
-![Win MR](doc/WinMR.gif) ![MCU](doc/HelloWave.gif)
+![Win MR](doc/WinMR.gif) ![MCU](doc/MCU.gif)
 
 ### Unicode & Bitmap
 Wallpaper with bitmap:
@@ -68,7 +68,7 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 | HelloFont | Windows, Linux | Show how to use muti languages(UTF-8) | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | Beginner |
 | HelloAnimation | Windows, Linux | Show how to make animation | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/README.md) | Beginner |
 | HelloSlide | Windows, Linux | Show how to use sliding pages | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | Intermediate |
-| HelloWave | Windows, STM32F103, STM32F429 | Show how to use wave widget, and port it on MCU | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md) | Intermediate |
+| HelloWave | Windows, Linux, STM32F103, STM32F429 | Show how to use wave widget, and port it on MCU | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md) | Intermediate |
 | HostMonitor | iOS, Mac, Android, Windows, Linux | Show how to build complex UI for all platforms | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | Master |
 
 ## Documents

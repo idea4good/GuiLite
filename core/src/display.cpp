@@ -10,7 +10,7 @@
 
 c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int display_height,
 						unsigned int surface_width, unsigned int surface_height,
-						unsigned int color_bytes, unsigned int surface_cnt)
+						unsigned int color_bytes, unsigned int surface_cnt, EXTERNAL_GFX_OP* gfx_op)
 {
 	if (color_bytes != 2 && color_bytes != 4)
 	{
@@ -23,36 +23,26 @@ c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int disp
 	m_color_bytes = color_bytes;
 	m_phy_fb = phy_fb;
 	m_phy_read_index = m_phy_write_index = 0;
-
-	m_surface_cnt = surface_cnt;
-	if (m_surface_cnt > SURFACE_CNT_MAX)
-	{
-		ASSERT(FALSE);
-	}
 	memset(m_surface_group, 0, sizeof(m_surface_group));
+	m_surface_cnt = surface_cnt;
+	ASSERT(m_surface_cnt <= SURFACE_CNT_MAX);
+	if (!phy_fb)
+	{
+		ASSERT(m_surface_cnt == 1);
+		m_surface_group[0] = new c_surface_mcu(this, surface_width, surface_height, color_bytes, gfx_op);
+		return;
+	}
 	for (int i = 0; i < m_surface_cnt; i++)
 	{
-		m_surface_group[i] = (color_bytes == 4) ? new c_surface(this, surface_width, surface_height, color_bytes) :
-												  new c_surface_16bits(this, surface_width, surface_height, color_bytes);
+		m_surface_group[i] = (color_bytes == 4) ? new c_surface(this, surface_width, surface_height, color_bytes , gfx_op) :
+												  new c_surface_16bits(this, surface_width, surface_height, color_bytes, gfx_op);
 	}
-}
-
-c_display::c_display(unsigned int display_width, unsigned int display_height, unsigned int color_bytes, EXTERNAL_GFX_OP* gfx_op)
-{
-	m_width = display_width;
-	m_height = display_height;
-	m_surface_cnt = 1;
-	m_phy_fb = NULL;
-	m_surface_group[0] = new c_surface_mcu(this, display_width, display_height, color_bytes, gfx_op);
 }
 
 c_surface* c_display::alloc_surface(void* usr, Z_ORDER_LEVEL max_zorder)
 {
 	int i = 0;
-	if (max_zorder >= Z_ORDER_LEVEL_MAX)
-	{
-		ASSERT(FALSE);
-	}
+	ASSERT(max_zorder < Z_ORDER_LEVEL_MAX);
 
 	while (i < m_surface_cnt)
 	{
