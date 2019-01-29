@@ -428,14 +428,14 @@
               <FilePath>.\core\src\word.cpp</FilePath>
             </File>
             <File>
-              <FileName>api_none.cpp</FileName>
+              <FileName>api_unknow.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\core\src\adapter\api_none.cpp</FilePath>
+              <FilePath>.\core\src\adapter\api_unknow.cpp</FilePath>
             </File>
             <File>
-              <FileName>msg_none.cpp</FileName>
+              <FileName>msg_unknow.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\core\src\adapter\msg_none.cpp</FilePath>
+              <FilePath>.\core\src\adapter\msg_unknow.cpp</FilePath>
             </File>
           </Files>
         </Group>

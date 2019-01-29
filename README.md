@@ -3,11 +3,13 @@
 - [Features](#Features)
 - [Demo](#Demo)
 - [Documents](#Documents)
+- [How to Learn](#How-to-Learn-)
 - [Videos](#Videos)
 - [Thanks](#Thanks)
 ***
 ## What is GuiLite?
-- GuiLite has 5000 lines of C++ code, providing **UI framework for all platforms** for developers. Just like the pictures above, GuiLite can run on iOS, Android, GNU/Linux, Windows, macOS and **MCU** platforms.
+- GuiLite has 5000 lines of C++ code, providing **UI framework for all platforms** for developers. could run on iOS, Android, GNU/Linux, Windows, macOS and **all ARM Linux** IOT platforms.
+- GuiLite is OS independent, even could run on any kind of MCU without any OS.
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
@@ -16,7 +18,7 @@
 - MCU Hardware: STM32F103ZET6(512K ROM, 64K RAM) + 240*320 16bits color TFT LCD
 - MCU Software: None OS + GuiLite
 - **Believe or not, it's only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp). Showing you how to use wave widget, and port it on MCU.
-- [How to porting for any MCU?](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
+- [How to porting on any MCU in 5 minutes?](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
 - Still support: Windows & Linux
 
 ## Features
@@ -78,6 +80,14 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 - [UML chart](doc/UML.md)
 - [How to layout widgets?](doc/HowLayoutWork.md)
 - [How to dispatch messages?](doc/HowMessageWork.md)
+
+## How to learn?
+1. **Beginner** - 成功编译GuiLite库
+2. **Beginner** - 成功运行HelloXXX实例程序
+3. **Intermediate** - 研读/修改100+行的`HelloXXX/UIcode/UIcode.cpp`源代码
+4. **Intermediate** - 研读`gui`目录下的代码
+5. **Master** - 研读`core`目录下的代码
+6. **Master** - 丰富，扩展自己的UI功能
 
 ## Videos
 - [GuiLite introduction](https://www.youtube.com/watch?v=grqXEz3bdC0)

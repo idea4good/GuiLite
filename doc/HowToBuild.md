@@ -30,10 +30,10 @@ Prerequisite: Windows 10, visul stdio 2015/2017
 - `make`
 - Output here: /GuiLite/libcore.a libgui.a
 
-## How to build GuiLite libary for MCU without OS?
+## How to build GuiLite libary for any MCU?
 ### Prerequisite: Install Keil uvsion 5.6 or above.
 ### Build
 - Open `GuiLite.uvprojx` with Keil uvsion.
-- Implement function(e.g, thread_sleep) in `core\src\adapter\api_none.cpp` to meet your need.
+- Implement function(e.g, thread_sleep) in `core\src\adapter\api_unknow.cpp` to meet your need.
 - Choose your Device type(Default: STM32F103ZE) from option for target.
 - Build GuiLite.

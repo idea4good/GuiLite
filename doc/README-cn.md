@@ -2,11 +2,13 @@
 - [功能介绍](#功能介绍)
 - [实例程序](#实例程序)
 - [开发文档](#开发文档)
+- [学习方法](#学习方法)
 - [视频链接](#视频链接)
 - [致谢](#致谢)
 ***
 ## GuiLite是什么鬼？
-- GuiLite（超轻量UI框架）是5千行代码的**全平台UI框架**，可以完美运行在iOS，Android，Windows（包含VR），Mac，单片机和**市面所有的 ARM Linux物联网终端设备**上。
+- GuiLite（超轻量UI框架）是5千行代码的**全平台UI框架**，可以完美运行在iOS，Android，Windows（包含VR），Mac，和**市面所有的 ARM Linux物联网终端设备**上。
+- GuiLite与操作系统无关，甚至也可以运行在无OS的单片机环境。
 - GuiLite可以嵌入在iOS、Android、MFC、QT等其他UI系统中，让你的界面集百家之长，又不失个性。
 - GuiLite鼓励混合编程，开发者可以用GuiLite接管UI部分，用Swift，Java，Go，C#，Python开发业务部分。
 
@@ -22,7 +24,7 @@
 - 单片机硬件配置：STM32F103ZET6(512K ROM，64K RAM) + 240*320 16位TFT屏
 - 单片机软件配置：无操作系统 + GuiLite
 - Hello Wave 仅有[100多行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp)，用于向开发者展示：如何使用GuiLite进行波形开发，及如何进行单片机移植。
-- [移植方法 -- 适用于任意单片机平台？](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
+- [1分钟“无痛”移植到任意单片机平台？](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
 - 该实例亦可支持Windows和Linux平台
 
 ## 功能介绍
@@ -81,6 +83,14 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 - [UML示意图](UML.md)
 - [如何布局UI?](HowLayoutWork.md)
 - [如何传递消息?](HowMessageWork.md)
+
+## 学习方法
+1. **外围** - 成功编译GuiLite库
+2. **前戏** - 成功运行HelloXXX实例程序
+3. **交流** - 研读/修改100+行的`HelloXXX/UIcode/UIcode.cpp`源代码
+4. **深交** - 研读`gui`目录下的代码
+5. **攻核** - 研读`core`目录下的代码
+6. **分家** - 丰富，扩展自己的UI功能
 
 ## 视频链接:
 - [GuiLite简介](https://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
