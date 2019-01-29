@@ -3,7 +3,7 @@
 - [Features](#Features)
 - [Demo](#Demo)
 - [Documents](#Documents)
-- [How to Learn](#How-to-Learn)
+- [How to Learn?](#How-to-Learn)
 - [Videos](#Videos)
 - [Thanks](#Thanks)
 ***
