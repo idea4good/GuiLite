@@ -3,7 +3,7 @@
 - [Features](#Features)
 - [Demo](#Demo)
 - [Documents](#Documents)
-- [How to Learn](#How-to-Learn-)
+- [How to Learn](#How-to-Learn)
 - [Videos](#Videos)
 - [Thanks](#Thanks)
 ***
@@ -82,12 +82,12 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 - [How to dispatch messages?](doc/HowMessageWork.md)
 
 ## How to learn?
-1. **Beginner** - 成功编译GuiLite库
-2. **Beginner** - 成功运行HelloXXX实例程序
-3. **Intermediate** - 研读/修改100+行的`HelloXXX/UIcode/UIcode.cpp`源代码
-4. **Intermediate** - 研读`gui`目录下的代码
-5. **Master** - 研读`core`目录下的代码
-6. **Master** - 丰富，扩展自己的UI功能
+1. **Beginner** - Build/Run GuiLite library
+2. **Beginner** - Build/Run HelloXXX demos
+3. **Intermediate** - Read/Modify `HelloXXX/UIcode/UIcode.cpp` code
+4. **Intermediate** - Read/Modify `gui` code
+5. **Master** - Read/Modify `core` code
+6. **Master** - Build your UI framework
 
 ## Videos
 - [GuiLite introduction](https://www.youtube.com/watch?v=grqXEz3bdC0)
