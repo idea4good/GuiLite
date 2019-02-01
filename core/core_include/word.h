@@ -1,5 +1,5 @@
-#ifndef _WORD_UNIT_H_
-#define _WORD_UNIT_H_
+#ifndef WORD_UNIT_H
+#define WORD_UNIT_H
 
 class c_surface;
 class c_word
