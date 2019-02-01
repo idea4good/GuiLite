@@ -1,5 +1,5 @@
-#ifndef _GESTURE_H_
-#define _GESTURE_H_
+#ifndef GESTURE_H
+#define GESTURE_H
 
 typedef enum{
 	TOUCH_MOVE,
