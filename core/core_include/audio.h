@@ -1,5 +1,5 @@
-#ifndef __AUDIO_MANGE_H__
-#define __AUDIO_MANGE_H__
+#ifndef AUDIO_MANGE_H
+#define AUDIO_MANGE_H
 
 enum AUDIO_TYPE
 {
