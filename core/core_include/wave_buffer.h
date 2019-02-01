@@ -1,5 +1,5 @@
-#ifndef _WAVE_BUFFER_H_
-#define _WAVE_BUFFER_H_
+#ifndef WAVE_BUFFER_H
+#define WAVE_BUFFER_H
 
 #define WAVE_BUFFER_LEN	1024
 #define WAVE_READ_CACHE_LEN	8
