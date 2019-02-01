@@ -1,4 +1,4 @@
-# GuiLite - The samllest UI framework
+# GuiLite - The smallest UI framework
 - [中文](doc/README-cn.md)
 - [Features](#Features)
 - [Demo](#Demo)
