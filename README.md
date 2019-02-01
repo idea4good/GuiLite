@@ -45,7 +45,7 @@ Wallpaper with bitmap:
 
 ![wallpaper](doc/wallpaper.jpg)
 
-Multi-language:
+### Multi-language:
 
 ![unicode](doc/unicode.jpg)
 
