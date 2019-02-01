@@ -1,5 +1,5 @@
-#ifndef _MY_RESOURCE_H_
-#define _MY_RESOURCE_H_
+#ifndef MY_RESOURCE_H
+#define MY_RESOURCE_H
 
 typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;
