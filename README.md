@@ -13,7 +13,9 @@
 - GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features as well.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
-⚠️We never encourage any people use GuiLite, but hope people understand UI itself. We hope GuiLite is small enough to help you understand how UI framework work, and build unique UI for yourself. We believe you're the only person understand your UI, not any UI libraries.
+- ⚠️We never encourage people accept GuiLite, but want people understand UI itself.
+- ⚙️We hope GuiLite is small enough to help you understand how UI work, and build unique UI yourself.
+- 👑You should be the king of your UI, not any UI library.
 
 ## New feature: Demo on MCU -- HelloWave + HelloParticle
 ![HelloWave](doc/HelloWave.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloParticle](doc/HelloParticle.gif)
