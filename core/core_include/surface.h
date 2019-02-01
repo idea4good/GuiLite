@@ -1,5 +1,5 @@
-#ifndef _GAL_H_
-#define _GAL_H_
+#ifndef GAL_H
+#define GAL_H
 
 struct FRAME_LAYER
 {
