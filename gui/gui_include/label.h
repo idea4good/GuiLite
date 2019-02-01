@@ -1,5 +1,5 @@
-#ifndef _LABEL_H_
-#define _LABEL_H_
+#ifndef LABEL_H
+#define LABEL_H
 
 class c_label : public c_wnd
 {
