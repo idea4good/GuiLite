@@ -1,5 +1,5 @@
-#ifndef _KEYBOARD_H_
-#define _KEYBOARD_H_
+#ifndef KEYBOARD_H
+#define KEYBOARD_H
 
 #define KEYBORAD_CLICK			0x5014
 #define ON_KEYBORAD_UPDATE(ctrlId, func)  \
