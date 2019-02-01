@@ -1,5 +1,5 @@
-#ifndef _WAVE_CTRL_H_
-#define _WAVE_CTRL_H_
+#ifndef WAVE_CTRL_H
+#define WAVE_CTRL_H
 
 typedef enum
 {
