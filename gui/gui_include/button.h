@@ -1,5 +1,5 @@
-#ifndef _BUTTON_H_
-#define _BUTTON_H_
+#ifndef BUTTON_H
+#define BUTTON_H
 
 #define GL_BN_CLICKED							0x1111
 #define ON_GL_BN_CLICKED(ctrlId, func)                                       \
