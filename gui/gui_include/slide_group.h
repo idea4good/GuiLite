@@ -1,5 +1,5 @@
-#ifndef PAGE_GROUP_H_
-#define PAGE_GROUP_H_
+#ifndef PAGE_GROUP_H
+#define PAGE_GROUP_H
 
 #define MAX_PAGES	5
 
