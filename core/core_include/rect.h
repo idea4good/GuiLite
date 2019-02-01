@@ -1,5 +1,5 @@
-#ifndef _RECT_H
-#define _RECT_H
+#ifndef RECT_H
+#define RECT_H
 
 #define ALIGN_HCENTER		0x00000000L
 #define ALIGN_LEFT			0x01000000L
