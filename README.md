@@ -15,7 +15,7 @@
 
 - ⚠️We never encourage people accept GuiLite totally and uncritically, but want people master principles of UI itself.
 - ⚙️We hope GuiLite is small enough to help you understand how UI work, and build unique UI yourself.
-- 👑You should be the master of your UI, not any other UI library.
+- 👑You should be the master of your UI, not any UI library include GUILite itself.
 
 ## New feature: Demo on MCU -- HelloWave + HelloParticle
 ![HelloWave](doc/HelloWave.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloParticle](doc/HelloParticle.gif)
