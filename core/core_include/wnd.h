@@ -1,5 +1,5 @@
-#ifndef _GUI_WND_H_
-#define _GUI_WND_H_
+#ifndef GUI_WND_H
+#define GUI_WND_H
 
 //Window attribution
 #define GL_ATTR_VISIBLE		0x80000000L

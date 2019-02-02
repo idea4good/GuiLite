@@ -1,5 +1,5 @@
-#ifndef _LIST_BOX_H_
-#define _LIST_BOX_H_
+#ifndef LIST_BOX_H
+#define LIST_BOX_H
 
 #define MAX_ITEM_NUM			12
 

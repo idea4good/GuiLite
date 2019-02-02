@@ -1,5 +1,5 @@
-#ifndef _DISPLAY_H_
-#define _DISPLAY_H_
+#ifndef DISPLAY_H
+#define DISPLAY_H
 
 #define SURFACE_CNT_MAX	6//root + pages
 

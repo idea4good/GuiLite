@@ -1,5 +1,5 @@
-#ifndef _API_H_
-#define _API_H_
+#ifndef API_H
+#define API_H
 
 #define REAL_TIME_TASK_CYCLE_MS		50
 #define XXX		-999

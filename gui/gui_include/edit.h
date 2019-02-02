@@ -1,5 +1,5 @@
-#ifndef _EDIT_H_
-#define _EDIT_H_
+#ifndef EDIT_H
+#define EDIT_H
 
 #define KEY_BOARD_STYLE    	0x00001000L
 #define NUM_BOARD_STYLE    	0x00002000L

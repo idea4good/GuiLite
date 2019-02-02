@@ -1,5 +1,5 @@
-#ifndef _BITMAP_UNIT_H_
-#define _BITMAP_UNIT_H_
+#ifndef BITMAP_UNIT_H
+#define BITMAP_UNIT_H
 
 class c_surface;
 class c_bitmap

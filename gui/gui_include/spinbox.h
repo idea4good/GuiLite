@@ -1,5 +1,5 @@
-#ifndef _SPIN_BOX_H_
-#define _SPIN_BOX_H_
+#ifndef SPIN_BOX_H
+#define SPIN_BOX_H
 
 #define GL_SPIN_SELECT						0x2222
 #define GL_SPIN_CONFIRM					0x3333

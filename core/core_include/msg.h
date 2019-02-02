@@ -1,5 +1,5 @@
-#ifndef _MSG_H
-#define _MSG_H
+#ifndef MSG_H
+#define MSG_H
 
 typedef struct
 {

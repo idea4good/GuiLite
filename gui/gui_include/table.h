@@ -1,5 +1,5 @@
-#ifndef _TABLE_H_
-#define  _TABLE_H_
+#ifndef TABLE_H
+#define TABLE_H
 
 #define  MAX_COL_NUM  30
 #define  MAX_ROW_NUM  30

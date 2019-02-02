@@ -1,5 +1,5 @@
-#ifndef  _RESOURCE_H_
-#define  _RESOURCE_H_
+#ifndef  RESOURCE_H
+#define  RESOURCE_H
 
 //BITMAP
 typedef struct struct_bitmap_info

@@ -1,5 +1,5 @@
-#ifndef _DIALOG_H_
-#define _DIALOG_H_
+#ifndef DIALOG_H
+#define DIALOG_H
 
 class c_surface;
 class c_dialog;
