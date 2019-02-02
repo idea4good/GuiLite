@@ -8,14 +8,14 @@
 - [Thanks](#Thanks)
 ***
 ## What is GuiLite?
-- GuiLite has 5000 lines of C++ code, providing **UI framework for all platforms**, could run on iOS, Android, GNU/Linux, Windows, macOS and **all ARM Linux** IOT platforms.
-- GuiLite is OS independent, even could run on any kind of **MCU without OS**.
-- GuiLite is a embedded UI framework. It can work with Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features as well.
+- GuiLite, a tiny and light framework, has only 5000 lines of C++ code, supporting **all computing platforms**. It could run on iOS, Android, GNU/Linux, Windows, macOS and **all ARM Linux** IOT platforms.
+- GuiLite is without reference to OS, it even could run on any kind of **MCU without OS**.
+- GuiLite is a embedded framework. It can work with another UI framework such as Qt/MFC/UWP/XCode, which also means that you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features on your project.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 
-- ⚠️We never encourage people accept GuiLite, but want people understand UI itself.
+- ⚠️We never encourage people accept GuiLite totally and uncritically, but want people master principles of UI itself.
 - ⚙️We hope GuiLite is small enough to help you understand how UI work, and build unique UI yourself.
-- 👑You should be the king of your UI, not any UI library.
+- 👑You should be the master of your UI, not any other UI library.
 
 ## New feature: Demo on MCU -- HelloWave + HelloParticle
 ![HelloWave](doc/HelloWave.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloParticle](doc/HelloParticle.gif)
@@ -24,19 +24,19 @@
 - **Hello Wave has only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp). Showing you how to use wave widget.
 - **Hello Particle has only 100- lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/UIcode/UIcode.cpp). Showing you how to develop particle system.
 - [How to porting on any MCU in 5 minutes?](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
-- Still support: Windows & Linux
+- Also support: Windows & Linux
 
 ## Features
 ### Cross platform
-Ran on macOS & iOS:
+On macOS & iOS:
 
 ![macOS](doc/Mac.gif) ![iOS](doc/Ios.landscape.gif)
 
-Ran on Android & GNU/Linux embedded (ARM):
+On Android & GNU/Linux embedded (ARM):
 
 ![Android](doc/Android.gif) ![GNU/Linux embedded (ARM)](doc/Linux.gif)
 
-Ran on Windows Mixed Reality & MCU:
+On Windows Mixed Reality & MCU:
 
 ![Win MR](doc/WinMR.gif) ![MCU](doc/MCU.gif)
 
@@ -45,13 +45,13 @@ Wallpaper with bitmap:
 
 ![wallpaper](doc/wallpaper.jpg)
 
-Multi language:
+### Multi-language:
 
 ![unicode](doc/unicode.jpg)
 
 [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
 
-### Multi theme
+### Multi-theme
 ![multi-theme](doc/multi-theme.png)
 
 [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/resource/resource.cpp)
@@ -66,14 +66,14 @@ Multi language:
 ![DataOnCloud](doc/data_on_cloud.png)
 
 ## Demo
-GuiLite just a framework, it could not create UI by itself. In order to show how to build UI App with it, We provide some samples for your reference.
-- Click [here](https://github.com/idea4good/GuiLiteSamples) to preview UI effect.
+GuiLite is only a framework, it could not create UI by itself. In order to show how to build UI App with it, We provide some samples for you.
+- Click [here](https://github.com/idea4good/GuiLiteSamples) to preview its effect.
 - Sample code description:
 
 | Sample name | Platform | Description | Build code | level |
 | --- | --- | --- | --- | --- |
 | HelloGuiLite | Windows, Linux | Show how to Initialize UI, load resource, layout UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | Beginner |
-| HelloFont | Windows, Linux | Show how to use multi languages(UTF-8) | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | Beginner |
+| HelloFont | Windows, Linux | Show how to use multi-language feature(UTF-8) | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | Beginner |
 | HelloAnimation | Windows, Linux | Show how to make animation | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/README.md) | Beginner |
 | HelloParticle | Windows, Linux, STM32F103, STM32F429 | Show how to develop particle system | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | Beginner |
 | HelloSlide | Windows, Linux | Show how to use sliding pages | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | Intermediate |
@@ -84,15 +84,15 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 - [How to build?](doc/HowToBuild.md)
 - [How GuiLite work?](doc/CodeWalkthrough.md)
 - [UML chart](doc/UML.md)
-- [How to layout widgets?](doc/HowLayoutWork.md)
+- [Layout widgets?](doc/HowLayoutWork.md)
 - [How to dispatch messages?](doc/HowMessageWork.md)
 
 ## How to learn?
-1. **Beginner** - Build/Run GuiLite library
+1. **Total Beginner** - Build/Run GuiLite library
 2. **Beginner** - Build/Run HelloXXX demos
-3. **Intermediate** - Read/Modify `HelloXXX/UIcode/UIcode.cpp` code
-4. **Intermediate** - Read/Modify `gui` code
-5. **Master** - Read/Modify `core` code
+3. **Competent User** - Read/Modify `HelloXXX/UIcode/UIcode.cpp` code
+4. **Good User** - Read/Modify `gui` code
+5. **Very Good User** - Read/Modify `core` code
 6. **Master** - Build your UI framework
 
 ## Videos
@@ -101,10 +101,11 @@ GuiLite just a framework, it could not create UI by itself. In order to show how
 - [GuiLite + STM32](https://v.youku.com/v_show/id_XNDAwNzM5MTM3Ng)
 
 ## Gitee link
-[Link to Gitee in China](https://gitee.com/idea4good/GuiLite)
+[Gitee in China](https://gitee.com/idea4good/GuiLite)
 
 ## Thanks
-### Thanks the help from QQ group, you guys make GuiLite better! and welcome new friend to join us.
+### Thanks the help from QQ group, you guys make GuiLite better! And welcome new friend to join us.
 ![QQ group: 527251257](doc/qq.group.jpg)
 ### Thanks the donations from [Gitee users](https://gitee.com/idea4good/GuiLite), every penny of donations will be used for needy children or family of China.
 ![Donators](doc/donation.jpg)
+
