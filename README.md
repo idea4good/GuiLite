@@ -10,18 +10,18 @@
 ## What is GuiLite?
 - GuiLite, a tiny and light framework, has only 5000 lines of C++ code, supporting **all computing platforms**. It could run on iOS, Android, GNU/Linux, Windows, macOS and **all ARM Linux** IOT platforms.
 - GuiLite is without reference to OS, it even could run on any kind of **MCU without OS**.
-- GuiLite is a embedded framework. It can work with another UI framework such as Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features on your project.
+- GuiLite is an embedded framework. It can work with an another UI framework such as Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features on your project.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 - ⚠️We never encourage people accept GuiLite totally and uncritically, but want people master principles of UI itself.
 - ⚙️We hope GuiLite is small enough to help you understand how UI work, and build unique UI yourself.
-- 👑You should be the master of your UI, not any UI library(include GuiLite).
+- 👑You should be the master of your UI, not any UI library (including GuiLite).
 
 ## New feature: Demo on MCU -- HelloWave + HelloParticle
 ![HelloWave](doc/HelloWave.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloParticle](doc/HelloParticle.gif)
 - MCU Hardware: STM32F103ZET6(512K ROM, 64K RAM) + 240*320 16bits color TFT LCD
 - MCU Software: None OS + GuiLite
-- **Hello Wave has only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp). Showing you how to use wave widget.
-- **Hello Particle has only 100- lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/UIcode/UIcode.cpp). Showing you how to develop particle system.
+- **Hello Wave has only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp). Showing you how to use the wave widget.
+- **Hello Particle has only 100- lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/UIcode/UIcode.cpp). Showing you how to develop a particle system.
 - [How to porting on any MCU in 5 minutes?](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
 - Also support: Windows & Linux
 
