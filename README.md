@@ -9,7 +9,7 @@
 ***
 ## What is GuiLite?
 - GuiLite, a tiny and light framework, has only 5000 lines of C++ code, supporting **all computing platforms**. It could run on iOS, Android, GNU/Linux, Windows, macOS and **all ARM Linux** IOT platforms.
-- GuiLite is without reference to OS, it even could run on any kind of **MCU without OS**.
+- GuiLite is without reference to OS & Grphic library, it even could run on any kind of **MCU without OS**.
 - GuiLite is an embedded framework. It can work with an another UI framework such as Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features on your project.
 - GuiLite can work with other languages(e.g. Swift, Java, C#).
 - ⚠️We never encourage people accept GuiLite totally and uncritically, but want people master principles of UI itself.
