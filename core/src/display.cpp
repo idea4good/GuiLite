@@ -26,16 +26,10 @@ c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int disp
 	memset(m_surface_group, 0, sizeof(m_surface_group));
 	m_surface_cnt = surface_cnt;
 	ASSERT(m_surface_cnt <= SURFACE_CNT_MAX);
-	if (!phy_fb)
-	{
-		ASSERT(m_surface_cnt == 1);
-		m_surface_group[0] = new c_surface_mcu(this, surface_width, surface_height, color_bytes, gfx_op);
-		return;
-	}
+	
 	for (int i = 0; i < m_surface_cnt; i++)
 	{
-		m_surface_group[i] = (color_bytes == 4) ? new c_surface(this, surface_width, surface_height, color_bytes , gfx_op) :
-												  new c_surface_16bits(this, surface_width, surface_height, color_bytes, gfx_op);
+		m_surface_group[i] = phy_fb ? new c_surface(this, surface_width, surface_height, color_bytes) : new c_surface_no_fb(this, surface_width, surface_height, color_bytes, gfx_op);
 	}
 }
 
@@ -93,17 +87,56 @@ int c_display::merge_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y
 	x1 = (x1 >= m_width) ? (m_width - 1) : x1;
 	y0 = (y0 >= m_height) ? (m_height - 1) : y0;
 	y1 = (y1 >= m_height) ? (m_height - 1) : y1;
-	for (int y = y0; y <= y1; y++)
+	
+	if (m_phy_fb)
 	{
-		//Left surface
-		char* addr_s = ((char*)(s0->m_fb) + (y * (s0->get_width()) + x0 + offset) * m_color_bytes);
-		char* addr_d = ((char*)(m_phy_fb) + (y * m_width + x0) * m_color_bytes);
-		memcpy(addr_d, addr_s, (width - offset) * m_color_bytes);
-		//Right surface
-		addr_s = ((char*)(s1->m_fb) + (y * (s1->get_width()) + x0) * m_color_bytes);
-		addr_d = ((char*)(m_phy_fb) + (y * m_width + x0 + (width - offset)) * m_color_bytes);
-		memcpy(addr_d, addr_s, offset * m_color_bytes);
+		for (int y = y0; y <= y1; y++)
+		{
+			//Left surface
+			char* addr_s = ((char*)(s0->m_fb) + (y * (s0->get_width()) + x0 + offset) * m_color_bytes);
+			char* addr_d = ((char*)(m_phy_fb)+(y * m_width + x0) * m_color_bytes);
+			memcpy(addr_d, addr_s, (width - offset) * m_color_bytes);
+			//Right surface
+			addr_s = ((char*)(s1->m_fb) + (y * (s1->get_width()) + x0) * m_color_bytes);
+			addr_d = ((char*)(m_phy_fb)+(y * m_width + x0 + (width - offset)) * m_color_bytes);
+			memcpy(addr_d, addr_s, offset * m_color_bytes);
+		}
 	}
+	else if(m_color_bytes == 4)
+	{
+		void(*draw_pixel)(int x, int y, unsigned int rgb) = ((c_surface_no_fb*)s0)->m_gfx_op->draw_pixel;
+		for (int y = y0; y <= y1; y++)
+		{
+			//Left surface
+			for (int x = x0; x <= (x1 - offset); x++)
+			{
+				draw_pixel(x, y, ((unsigned int*)s0->m_fb)[y * m_width + x + offset]);
+			}
+			//Right surface
+			for (int x = x1 - offset; x <= x1; x++)
+			{
+				draw_pixel(x, y, ((unsigned int*)s1->m_fb)[y * m_width + x + offset - x1 + x0]);
+			}
+		}
+	}
+	else if (m_color_bytes == 2)
+	{
+		void(*draw_pixel)(int x, int y, unsigned int rgb) = ((c_surface_no_fb*)s0)->m_gfx_op->draw_pixel;
+		for (int y = y0; y <= y1; y++)
+		{
+			//Left surface
+			for (int x = x0; x <= (x1 - offset); x++)
+			{
+				draw_pixel(x, y, GL_RGB_16_to_32(((unsigned short*)s0->m_fb)[y * m_width + x + offset]));
+			}
+			//Right surface
+			for (int x = x1 - offset; x <= x1; x++)
+			{
+				draw_pixel(x, y, GL_RGB_16_to_32(((unsigned short*)s1->m_fb)[y * m_width + x + offset - x1 + x0]));
+			}
+		}
+	}
+
 	m_phy_write_index++;
 	return 0;
 }
