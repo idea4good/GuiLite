@@ -15,14 +15,15 @@
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
-## 新功能：在单片机上运行“波形/粒子”效果 -- HelloWave + HelloParticle
-![HelloWave](HelloWave.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloParticle](HelloParticle.gif)
+## 新功能：单片机系列 - “超级玛丽” -- HelloMario + HelloParticle + HelloWave
+![HelloMario](HelloMario.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloParticle](HelloParticle.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloWave](HelloWave.gif)
 - 单片机硬件配置：STM32F103ZET6(512K ROM，64K RAM) + 240*320 16位TFT屏
 - 单片机软件配置：无操作系统 + GuiLite
-- Hello Wave 仅有[100+行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp)，用于向开发者展示：如何使用GuiLite进行“波形”效果的开发。
+- Hello Mario 仅有[100+行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/UIcode/UIcode.cpp)，以“超级玛丽”为例，用于向开发者展示：如何使用GuiLite进行多图层的开发。
 - Hello Particle 仅有[100-行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/UIcode/UIcode.cpp)，用于向开发者展示：如何使用GuiLite进行“粒子”效果的开发。
+- Hello Wave 仅有[100+行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp)，用于向开发者展示：如何使用GuiLite进行“波形”效果的开发。
 - [1分钟“无痛”移植到任意单片机平台？](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
-- 该实例亦可支持Windows和Linux平台
+- 这些实例亦可支持Windows和Linux平台
 
 ## 功能介绍
 ### 卓越的跨平台能力
@@ -68,13 +69,15 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 
 | 实例名称 | 支持的平台 | 功能简介 | 编译方法 | 难度 |
 | --- | --- | --- | --- | --- |
+| HelloParticle | Windows, Linux, STM32F103, STM32F429 | 粒子效果的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
 | HelloGuiLite | Windows, Linux | 初始化GuiLite，加载资源，布局界面元素，按钮响应 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | ★★ |
+| HelloMario | Windows, Linux, STM32F103, STM32F429 | 多图层的UI系统 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/README.md) | ★★|
 | HelloFont | Windows, Linux | 显示多种语言（不限：中、英文） | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | ★★ |
 | HelloAnimation | Windows, Linux | 动画的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/README.md) | ★★ |
-| HelloParticle | Windows, Linux, STM32F103, STM32F429 | 粒子效果的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
 | HelloSlide | Windows, Linux | 滑屏界面的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | ★★★ |
 | HelloWave | Windows, Linux, STM32F103, STM32F429 | 波形控件的应用，及单片机移植办法 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md) | ★★★ |
 | HostMonitor | iOS, Mac, Android, Windows, Linux | 创建复杂界面，扩展自定义控件，适配全平台 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | ★★★★ |
+
 ## 开发文档
 - [如何编译?](HowToBuild.md)
 - [设计原理](CodeWalkthrough-cn.md)

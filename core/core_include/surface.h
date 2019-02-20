@@ -25,7 +25,7 @@ struct EXTERNAL_GFX_OP
 
 class c_display;
 class c_surface {
-	friend class c_display;
+	friend class c_display; friend class c_bitmap;
 public:
 	virtual void draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
 	virtual void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);

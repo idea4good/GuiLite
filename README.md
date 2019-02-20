@@ -16,12 +16,13 @@
 - ⚙️We hope GuiLite is small enough to help you understand how UI work, and build unique UI yourself.
 - 👑You should be the master of your UI, not any UI library (including GuiLite).
 
-## New feature: Demo on MCU -- HelloWave + HelloParticle
-![HelloWave](doc/HelloWave.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloParticle](doc/HelloParticle.gif)
+## New feature: MCU demos: HelloMario + HelloParticle + HelloWave
+![HelloMario](doc/HelloMario.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloParticle](doc/HelloParticle.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloWave](doc/HelloWave.gif);
 - MCU Hardware: STM32F103ZET6(512K ROM, 64K RAM) + 240*320 16bits color TFT LCD
 - MCU Software: None OS + GuiLite
-- **Hello Wave has only 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp). Showing you how to use the wave widget.
-- **Hello Particle has only 100- lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/UIcode/UIcode.cpp). Showing you how to develop a particle system.
+- **Hello Mario has 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/UIcode/UIcode.cpp), showing you how to develop a multi-layer UI system.
+- **Hello Particle 100- lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/UIcode/UIcode.cpp), showing you how to develop a particle system.
+- **Hello Wave has 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp), showing you how to use the wave widget.
 - [How to porting on any MCU in 5 minutes?](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
 - Also support: Windows & Linux
 
@@ -71,10 +72,11 @@ GuiLite is only a framework, it could not create UI by itself. In order to show 
 
 | Sample name | Platform | Description | Build code | level |
 | --- | --- | --- | --- | --- |
+| HelloParticle | Windows, Linux, STM32F103, STM32F429 | Show how to develop particle system | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
 | HelloGuiLite | Windows, Linux | Show how to Initialize UI, load resource, layout UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | ★★ |
+| HelloMario | Windows, STM32F103, STM32F429 | Show how to develop multi-layer UI system | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/README.md) | ★★ |
 | HelloFont | Windows, Linux | Show how to use multi-language feature(UTF-8) | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | ★★ |
 | HelloAnimation | Windows, Linux | Show how to make animation | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/README.md) | ★★ |
-| HelloParticle | Windows, Linux, STM32F103, STM32F429 | Show how to develop particle system | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
 | HelloSlide | Windows, Linux | Show how to use sliding pages | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | ★★★ |
 | HelloWave | Windows, Linux, STM32F103, STM32F429 | Show how to use wave widget | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md) | ★★★ |
 | HostMonitor | iOS, Mac, Android, Windows, Linux | Show how to build complex UI for all platforms | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | ★★★★ |

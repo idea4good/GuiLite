@@ -380,39 +380,20 @@ int c_surface::set_frame_layer(c_rect& rect, unsigned int z_order)
 	}
 	m_top_zorder = (Z_ORDER_LEVEL)z_order;
 	
-	c_rect current_rect = m_frame_layers[z_order].rect;
-	if (!current_rect.IsEmpty())
-	{
-		//Recover the lower layer
-		int src_zorder = (Z_ORDER_LEVEL)(z_order - 1);
-		int display_width = m_display->get_width();
-		int display_height = m_display->get_height();
+	c_rect old_rect = m_frame_layers[z_order].rect;
+	//Recover the lower layer
+	int src_zorder = (Z_ORDER_LEVEL)(z_order - 1);
+	int display_width = m_display->get_width();
+	int display_height = m_display->get_height();
 
-		for (int y = current_rect.m_top; y <= current_rect.m_bottom; y++)
+	for (int y = old_rect.m_top; y <= old_rect.m_bottom; y++)
+	{
+		for (int x = old_rect.m_left; x <= old_rect.m_right; x++)
 		{
-			for (int x = current_rect.m_left; x <= current_rect.m_right; x++)
+			if (!rect.PtInRect(x, y))
 			{
-				if (m_frame_layers[src_zorder].rect.PtInRect(x, y))
-				{
-					unsigned int rgb = ((unsigned short*)(m_frame_layers[src_zorder].fb))[x + y * m_width];
-					if (m_color_bytes == 4)
-					{
-						rgb = GL_RGB_16_to_32(rgb);
-						if (m_fb) { ((unsigned int*)m_fb)[y * m_width + x] = rgb; }
-						if (m_is_active && (x < display_width) && (y < display_height))
-						{
-							((unsigned int*)m_phy_fb)[y * display_width + x] = rgb;
-						}
-					}
-					else if(m_color_bytes == 2)
-					{
-						if (m_fb) { ((unsigned short*)m_fb)[y * m_width + x] = rgb; }
-						if (m_is_active && (x < display_width) && (y < display_height))
-						{
-							((unsigned short*)m_phy_fb)[y * display_width + x] = rgb;
-						}
-					}
-				}
+				unsigned int rgb = ((unsigned short*)(m_frame_layers[src_zorder].fb))[x + y * m_width];
+				draw_pixel_on_fb(x, y, GL_RGB_16_to_32(rgb));
 			}
 		}
 	}
@@ -422,7 +403,6 @@ int c_surface::set_frame_layer(c_rect& rect, unsigned int z_order)
 	{
 		m_top_zorder = (Z_ORDER_LEVEL)(z_order - 1);
 	}
-	*m_phy_write_index = *m_phy_write_index + 1;
 	return 0;
 }
 
@@ -524,10 +504,6 @@ void c_surface_no_fb::fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned i
 
 void c_surface_no_fb::draw_pixel_on_fb(int x, int y, unsigned int rgb)
 {
-	if (x >= m_width || y >= m_height || x < 0 || y < 0)
-	{
-		return;
-	}
 	if (m_gfx_op && m_gfx_op->draw_pixel && m_is_active)
 	{
 		m_gfx_op->draw_pixel(x, y, rgb);
