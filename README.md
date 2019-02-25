@@ -21,7 +21,7 @@
 - MCU Hardware: STM32F103ZET6(512K ROM, 64K RAM) + 240*320 16bits color TFT LCD
 - MCU Software: None OS + GuiLite
 - **Hello Mario has 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/UIcode/UIcode.cpp), showing you how to develop a multi-layer UI system.
-- **Hello Particle 100- lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/UIcode/UIcode.cpp), showing you how to develop a particle system.
+- **Hello Particle has 100- lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/UIcode/UIcode.cpp), showing you how to develop a particle system.
 - **Hello Wave has 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp), showing you how to use the wave widget.
 - [How to porting on any MCU in 5 minutes?](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
 - Also support: Windows & Linux
