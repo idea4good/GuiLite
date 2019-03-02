@@ -16,7 +16,7 @@
 - ⚙️We hope GuiLite is small enough to help you understand how UI work, and build unique UI yourself.
 - 👑You should be the master of your UI, not any UI library (including GuiLite).
 
-## New feature: Run GuiLite demos in Docker container
+## New feature: Run GuiLite demos in ![Docker](http://www.serverwatch.com/imagesvr_ce/3753/icon-docker-r.jpg)
 `docker run -it idea4good/gui-lite:0.2 bash /run.sh`
 
 ## Features
