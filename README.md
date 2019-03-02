@@ -16,15 +16,8 @@
 - ⚙️We hope GuiLite is small enough to help you understand how UI work, and build unique UI yourself.
 - 👑You should be the master of your UI, not any UI library (including GuiLite).
 
-## New feature: MCU demos: HelloMario + HelloParticle + HelloWave
-![HelloMario](doc/HelloMario.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloParticle](doc/HelloParticle.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloWave](doc/HelloWave.gif);
-- MCU Hardware: STM32F103ZET6(512K ROM, 64K RAM) + 240*320 16bits color TFT LCD
-- MCU Software: None OS + GuiLite
-- **Hello Mario has 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/UIcode/UIcode.cpp), showing you how to develop a multi-layer UI system.
-- **Hello Particle has 100- lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/UIcode/UIcode.cpp), showing you how to develop a particle system.
-- **Hello Wave has 100+ lines code!** [Check the code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp), showing you how to use the wave widget.
-- [How to porting on any MCU in 5 minutes?](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
-- Also support: Windows & Linux
+## New feature: Run GuiLite demos in Docker container
+`docker run -it idea4good/gui-lite:0.2 bash /run.sh`
 
 ## Features
 ### Cross platform
