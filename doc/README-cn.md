@@ -15,15 +15,10 @@
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
-## 新功能：单片机系列 - “超级玛丽” -- HelloMario + HelloParticle + HelloWave
-![HelloMario](HelloMario.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloParticle](HelloParticle.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![HelloWave](HelloWave.gif)
-- 单片机硬件配置：STM32F103ZET6(512K ROM，64K RAM) + 240*320 16位TFT屏
-- 单片机软件配置：无操作系统 + GuiLite
-- Hello Mario 仅有[100+行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/UIcode/UIcode.cpp)，以“超级玛丽”为例，用于向开发者展示：如何使用GuiLite进行多图层的开发。
-- Hello Particle 仅有[100-行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/UIcode/UIcode.cpp)，用于向开发者展示：如何使用GuiLite进行“粒子”效果的开发。
-- Hello Wave 仅有[100+行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/UIcode/UIcode.cpp)，用于向开发者展示：如何使用GuiLite进行“波形”效果的开发。
-- [1分钟“无痛”移植到任意单片机平台？](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md#How-to-port-on-any-MCU-)
-- 这些实例亦可支持Windows和Linux平台
+## 新的打开方式：![Docker](http://www.serverwatch.com/imagesvr_ce/3753/icon-docker-r.jpg)
+我们将GuiLite demo做成了Docker容器，从此，你只需要一行命令，就可以尝鲜最新的GuiLite demo了
+
+`docker run -it idea4good/gui-lite:0.2 bash /run.sh`
 
 ## 功能介绍
 ### 卓越的跨平台能力
