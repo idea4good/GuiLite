@@ -17,10 +17,12 @@
 - 👑You should be the master of your UI, not any UI library (including GuiLite).
 
 ## New feature: Run GuiLite demos in ![Docker](http://www.serverwatch.com/imagesvr_ce/3753/icon-docker-r.jpg)
-`docker run -it idea4good/gui-lite:0.2 bash /run.sh`
+We build GuiLite demo as docker container, you can update/deploy/run the latest GuiLite demo on your device with single command below:
+- For x64 Linux: `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:0.3 bash /run.sh`
+- For armhf(Raspberry Pi): `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite-armhf:0.2 bash /run.sh`
 
 ## Features
-### Cross platform
+### Cross platform(include MCU platform without OS)
 On macOS & iOS:
 
 ![macOS](doc/Mac.gif) ![iOS](doc/Ios.landscape.gif)

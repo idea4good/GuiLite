@@ -16,12 +16,12 @@
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
 ## 新的打开方式：![Docker](http://www.serverwatch.com/imagesvr_ce/3753/icon-docker-r.jpg)
-我们将GuiLite demo做成了Docker容器，从此，你只需要一行命令，就可以尝鲜最新的GuiLite demo了
-
-`docker run -it idea4good/gui-lite:0.2 bash /run.sh`
+我们把GuiLite demo做成了Docker容器，只需一行命令，就可以将最新的GuiLite demo升级/部署/运行在你的设备上了。
+- For x64 Linux: `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:0.3 bash /run.sh`
+- For armhf(Raspberry Pi): `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite-armhf:0.2 bash /run.sh`
 
 ## 功能介绍
-### 卓越的跨平台能力
+### 卓越的跨平台能力(包括有/无操作系统的单片机平台)
 在Mac, iOS下的运行效果:
 
 ![Mac](Mac.gif) ![iOS](Ios.landscape.gif)
