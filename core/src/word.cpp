@@ -179,14 +179,19 @@ int c_word::draw_single_char(c_surface* surface, int z_order, unsigned int utf8_
 void c_word::draw_lattice(c_surface* surface, int z_order, int x, int y, int width, int height,
 						const unsigned char* p_data, unsigned int font_color, unsigned int bg_color)
 {
-	unsigned int r, g, b;
-
+	unsigned int r, g, b, rgb;
+	unsigned char blk_value = *p_data++;
+	unsigned char blk_cnt = *p_data++;
+	b = (GL_RGB_B(font_color) * blk_value + GL_RGB_B(bg_color) * (255 - blk_value)) >> 8;
+	g = (GL_RGB_G(font_color) * blk_value + GL_RGB_G(bg_color) * (255 - blk_value)) >> 8;
+	r = (GL_RGB_R(font_color) * blk_value + GL_RGB_R(bg_color) * (255 - blk_value)) >> 8;
+	rgb = GL_RGB(r, g, b);
 	for (int y_ = 0; y_ < height; y_++)
 	{
 		for (int x_ = 0; x_ < width; x_++)
 		{
-			unsigned char value = *p_data;
-			if (0x00 == value)
+			ASSERT(blk_cnt);
+			if (0x00 == blk_value)
 			{
 				if (GL_ARGB_A(bg_color))
 				{
@@ -195,12 +200,17 @@ void c_word::draw_lattice(c_surface* surface, int z_order, int x, int y, int wid
 			}
 			else
 			{
-				b = (GL_RGB_B(font_color) * value + GL_RGB_B(bg_color) * (255 - value)) >> 8;
-				g = (GL_RGB_G(font_color) * value + GL_RGB_G(bg_color) * (255 - value)) >> 8;
-				r = (GL_RGB_R(font_color) * value + GL_RGB_R(bg_color) * (255 - value)) >> 8;
-				surface->draw_pixel((x + x_), (y + y_), GL_RGB(r, g, b), z_order);
+				surface->draw_pixel((x + x_), (y + y_), rgb, z_order);
 			}
-			p_data++;
+			if (--blk_cnt == 0)
+			{//reload new block
+				blk_value = *p_data++;
+				blk_cnt = *p_data++;
+				b = (GL_RGB_B(font_color) * blk_value + GL_RGB_B(bg_color) * (255 - blk_value)) >> 8;
+				g = (GL_RGB_G(font_color) * blk_value + GL_RGB_G(bg_color) * (255 - blk_value)) >> 8;
+				r = (GL_RGB_R(font_color) * blk_value + GL_RGB_R(bg_color) * (255 - blk_value)) >> 8;
+				rgb = GL_RGB(r, g, b);
+			}
 		}
 	}
 }
