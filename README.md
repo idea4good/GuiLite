@@ -1,70 +1,63 @@
 # GuiLite - The smallest UI framework
+![badge_build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![badge_docker](https://img.shields.io/badge/docker%20build-passing-brightgreen.svg) ![badge_platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS%20%7C%20iOS%20%7C%20Android%20%7C%20MCU-brightgreen.svg) ![badge_lincense](https://img.shields.io/badge/license-Apache%202-blue.svg) ![badge_lincense](https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg) 
 - [中文](doc/README-cn.md)
 - [Features](#Features)
-- [Demo](#Demo)
+- [Start with Demo](#Start-with-Demo)
 - [Documents](#Documents)
 - [How to Learn?](#How-to-Learn)
 - [Videos](#Videos)
 - [Thanks](#Thanks)
 ***
-## What is GuiLite?
-- GuiLite, a tiny and light framework, has only 5000 lines of C++ code, supporting **all computing platforms**. It could run on iOS, Android, Linux(ARM/x86-64), Windows, macOS and **Docker container**.
-- GuiLite is without reference to OS & Grphic library, it even could run on any kind of **MCU without OS**.
-- GuiLite is an embeddable framework. It can work with an another UI framework such as Qt/MFC/UWP/XCode, which means you can get not only GuiLite features but also iOS/Android/macOS/Qt/MFC/UWP features on your project.
-- GuiLite can work with other languages(e.g. Swift, Java, C#).
-- ⚠️We never encourage people accept GuiLite totally and uncritically, but want people master principles of UI itself.
-- ⚙️We hope GuiLite is small enough to help you understand how UI work, and build unique UI yourself.
+## Introduction
+- GuiLite is a barebone UI framework with 5000 lines of C++ code, could run on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS and **Docker container**).
+- GuiLite is embeddable, could work inside other UI framework(e.g, Qt, MFC, Winform, Cocoa). You could get GuiLite feature and host UI feature simultaneously.
+- GuiLite render UI by itself, independent of OS & Grphic library.
+- GuiLite could work with many languages(e.g. Swift, Java, C#).
+- ⚠️We never encourage people accept GuiLite totally, but want people customize it.
+- ⚙️We hope GuiLite is small enough to help you understand how UI work.
 - 👑You should be the master of your UI, not any UI library (including GuiLite).
 
-## New feature: Run GuiLite demos in ![Docker](http://www.serverwatch.com/imagesvr_ce/3753/icon-docker-r.jpg)
-We build GuiLite demo as docker container, you can update/deploy/run the latest GuiLite demo on your device with single command below:
+## 🔥New feature: Run GuiLite demos in ![Docker](http://www.serverwatch.com/imagesvr_ce/3753/icon-docker-r.jpg)
+We build GuiLite demo as docker image, you can update/deploy/run the latest GuiLite demo on your device with single command below:
 - `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 
 ## Features
-### Cross platform(include MCU platform without OS)
-On macOS & iOS:
+### Cross platform
+| ARM Linux | STM32 Without OS |
+| --- | --- |
+| ![ARM Linux](doc/Linux.gif) | ![MCU](doc/HelloParticle.gif) ![MCU](doc/HelloWave.gif) |
 
-![macOS](doc/Mac.gif) ![iOS](doc/Ios.landscape.gif)
+| Windows Mixed Reality | Android |
+| --- | --- |
+| ![Win MR](doc/WinMR.gif) | ![Android](doc/Android.gif) |
 
-On Android & GNU/Linux embedded (ARM):
-
-![Android](doc/Android.gif) ![GNU/Linux embedded (ARM)](doc/Linux.gif)
-
-On Windows Mixed Reality & MCU:
-
-![Win MR](doc/WinMR.gif) ![MCU](doc/MCU.gif)
-
-### Unicode & Bitmap
-Wallpaper with bitmap:
-
+| macOS | iOS |
+| --- | --- |
+| ![macOS](doc/Mac.gif) | ![iOS](doc/Ios.landscape.gif) |
+***
+### Docker Container
+We build GuiLite demo as docker image, you can update/deploy/run the latest GuiLite demo on your device with single command below:
+- `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
+***
+### Easy customization
 ![wallpaper](doc/wallpaper.jpg)
-
+***
 ### Multi-language:
-
 ![unicode](doc/unicode.jpg)
-
-[How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
-
+***
 ### Multi-theme
 ![multi-theme](doc/multi-theme.png)
-
-[How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/resource/resource.cpp)
-
+***
 ### Self monitor
-**Report build activities to cloud:**
+- Report build activities to cloud:<br>![BuildInfo](doc/BuildInfo.png)
+- Sync local data to cloud:<br>![DataOnCloud](doc/data_on_cloud.png)
+***
+## Start with Demo
+GuiLite is only a framework, could not create UI by itself. In order to show how to build UI App with it, We provide some samples for you.
+- Sample code [here](https://github.com/idea4good/GuiLiteSamples).
+- Sample introduction:
 
-![BuildInfo](doc/BuildInfo.png)
-
-**Sync local data to cloud:**
-
-![DataOnCloud](doc/data_on_cloud.png)
-
-## Demo
-GuiLite is only a framework, it could not create UI by itself. In order to show how to build UI App with it, We provide some samples for you.
-- Click [here](https://github.com/idea4good/GuiLiteSamples) to preview its effect.
-- Sample code description:
-
-| Sample name | Platform | Description | Build code | level |
+| Sample name | Platform | Description | Build guidance | Diffculty level |
 | --- | --- | --- | --- | --- |
 | HelloParticle | Windows, Linux, STM32F103, STM32F429 | Show how to develop particle system | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
 | HelloGuiLite | Windows, Linux | Show how to Initialize UI, load resource, layout UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | ★★ |
@@ -78,9 +71,11 @@ GuiLite is only a framework, it could not create UI by itself. In order to show 
 ## Documents
 - [How to build?](doc/HowToBuild.md)
 - [How GuiLite work?](doc/CodeWalkthrough.md)
-- [UML chart](doc/UML.md)
-- [Layout widgets?](doc/HowLayoutWork.md)
+- [How to Layout widgets?](doc/HowLayoutWork.md)
+- [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
+- [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/resource/resource.cpp)
 - [How to dispatch messages?](doc/HowMessageWork.md)
+- [UML chart of GuiLite core](doc/UML.md)
 
 ## How to learn?
 1. Build/Run GuiLite library
@@ -95,12 +90,9 @@ GuiLite is only a framework, it could not create UI by itself. In order to show 
 - [3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
 - [GuiLite + STM32](https://v.youku.com/v_show/id_XNDAwNzM5MTM3Ng)
 
-## Gitee link
+## Mirror repository
 [Gitee in China](https://gitee.com/idea4good/GuiLite)
 
 ## Thanks
-### Thanks the help from QQ group, you guys make GuiLite better! And welcome new friend to join us.
-![QQ group: 527251257](doc/qq.group.jpg)
-### Thanks the donations from [Gitee users](https://gitee.com/idea4good/GuiLite), every penny of donations will be used for needy children or family of China.
-![Donators](doc/donation.jpg)
-
+- Thanks the help from QQ group, you guys make GuiLite better! And welcome new friend to join us.<br>![QQ group: 527251257](doc/qq.group.jpg)
+- Thanks the donations from [Gitee users](https://gitee.com/idea4good/GuiLite), every penny of donations will be used for needy children or family of China.
