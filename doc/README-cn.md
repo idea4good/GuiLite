@@ -16,9 +16,8 @@
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
-## 🔥新的打开方式：![Docker](http://www.serverwatch.com/imagesvr_ce/3753/icon-docker-r.jpg)
-我们把GuiLite demo做成了Docker映像，只需一行命令，就可以将最新的GuiLite demo升级/部署/运行在你的设备上了。
-- `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
+## 🔥新功能：Golang + GuiLite
+为了演示GuiLite与Golang协同开发，我们为[HostMonitor](https://gitee.com/idea4good/GuiLiteSamples/tree/master/HostMonitor)增加了[Golang版本](https://gitee.com/idea4good/GuiLiteSamples/tree/master/HostMonitor/BuildGo)
 
 ## 功能介绍
 ### 卓越的跨平台能力
@@ -34,7 +33,7 @@
 | --- | --- |
 | ![macOS](Mac.gif) | ![iOS](Ios.landscape.gif) |
 ***
-### Docker容器
+### 支持Docker容器
 我们把GuiLite demo做成了Docker映像，只需一行命令，就可以将最新的GuiLite demo升级/部署/运行在你的设备上了。
 - `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 ***

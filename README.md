@@ -17,9 +17,8 @@
 - ⚙️We hope GuiLite is small enough to help you understand how UI work.
 - 👑You should be the master of your UI, not any UI library (including GuiLite).
 
-## 🔥New feature: Run GuiLite demos in ![Docker](http://www.serverwatch.com/imagesvr_ce/3753/icon-docker-r.jpg)
-We build GuiLite demo as docker image, you can update/deploy/run the latest GuiLite demo on your device with single command below:
-- `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
+## 🔥New feature：Golang + GuiLite
+In order to show how GuiLite work with Golang, we add [BuildGo](https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor/BuildGo) for [HostMonitor](https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor)
 
 ## Features
 ### Cross platform
@@ -35,7 +34,7 @@ We build GuiLite demo as docker image, you can update/deploy/run the latest GuiL
 | --- | --- |
 | ![macOS](doc/Mac.gif) | ![iOS](doc/Ios.landscape.gif) |
 ***
-### Docker Container
+### Support Docker Container
 We build GuiLite demo as docker image, you can update/deploy/run the latest GuiLite demo on your device with single command below:
 - `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 ***
