@@ -9,13 +9,13 @@
 - [Thanks](#Thanks)
 ***
 ## Introduction
-- GuiLite is a barebone UI framework with 5000 lines of C++ code, could run on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS and **Docker container**).
-- GuiLite is embeddable, could work inside other UI framework(e.g, Qt, MFC, Winform, Cocoa). You could get GuiLite feature and host UI feature simultaneously.
+- GuiLite is a barebone UI framework with 5000 lines of C++ code, it runs on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS and **Docker container**).
+- GuiLite is embeddable, it runs inside other UI frameworks(e.g, Qt, MFC, Winform, Cocoa). You could use GuiLite features and host UI features simultaneously.
 - GuiLite render UI by itself, independent of OS & Grphic library.
 - GuiLite could work with many languages(e.g. Swift, Java, C#, Golang).
-- ⚠️We never encourage people accept GuiLite totally, but want people customize it.
-- ⚙️We hope GuiLite is small enough to help you understand how UI work.
-- 👑You should be the master of your UI, not any UI library (including GuiLite).
+- ⚠️We want people to customize GuiLite.
+- ⚙️We hope GuiLite is small enough to help you understand how UI works.
+- 👑You should be the master of your UI and not be tied to a specific framework.
 
 ## 🔥New feature：Golang + GuiLite
 In order to show how GuiLite work with Golang, we add [BuildGo](https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor/BuildGo) for [HostMonitor](https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor)
