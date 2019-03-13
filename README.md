@@ -12,7 +12,7 @@
 - GuiLite is a barebone UI framework with 5000 lines of C++ code, could run on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS and **Docker container**).
 - GuiLite is embeddable, could work inside other UI framework(e.g, Qt, MFC, Winform, Cocoa). You could get GuiLite feature and host UI feature simultaneously.
 - GuiLite render UI by itself, independent of OS & Grphic library.
-- GuiLite could work with many languages(e.g. Swift, Java, C#).
+- GuiLite could work with many languages(e.g. Swift, Java, C#, Golang).
 - ⚠️We never encourage people accept GuiLite totally, but want people customize it.
 - ⚙️We hope GuiLite is small enough to help you understand how UI work.
 - 👑You should be the master of your UI, not any UI library (including GuiLite).

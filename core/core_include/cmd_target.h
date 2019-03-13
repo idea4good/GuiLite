@@ -6,7 +6,7 @@ class c_cmd_target;
 #define MSG_TYPE_INVALID	0xFFFF
 #define MSG_TYPE_WND		0x0001
 #define MSG_TYPE_USR		0x0002
-#define USR_MSG_MAX			1024
+#define USR_MSG_MAX			32
 
 typedef void (c_cmd_target::*MsgFuncVV)();
 

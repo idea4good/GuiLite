@@ -20,7 +20,6 @@ void c_dialog::pre_create_wnd()
 	m_style = GL_ATTR_FOCUS;
 	m_z_order = Z_ORDER_LEVEL_1;
 	m_bg_color = GL_RGB(33, 42, 53);
-	m_divider_lines = 0;
 }
 
 void c_dialog::on_paint()
@@ -28,17 +27,6 @@ void c_dialog::on_paint()
 	c_rect rect;
 	get_screen_rect(rect);
 	fill_rect(rect, m_bg_color);
-
-	int start_y = 29;
-	int interval = 41;
-	//draw border
-	if ( m_divider_lines )
-	{
-		for ( unsigned int i = 0; i < m_divider_lines; i++ )
-		{
-			draw_hline(rect.m_left + 35, rect.m_right - 35, rect.m_top + start_y + (i * interval), GL_RGB(70, 73, 76));
-		}
-	}
 
 	if (m_str)
 	{
