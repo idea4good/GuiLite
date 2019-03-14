@@ -48,6 +48,7 @@ We build GuiLite demo as docker image, you can update/deploy/run the latest GuiL
 ![multi-theme](doc/multi-theme.png)
 ***
 ### Who touched my code?
+⚠️Remove all shell/batch files if you do not want to share the data.
 - Report build activities to cloud:<br>![BuildInfo](doc/BuildInfo.png)
 - Sync running data to cloud:<br>![DataOnCloud](doc/data_on_cloud.png)
 ***
