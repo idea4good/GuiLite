@@ -46,9 +46,9 @@
 ### “换肤”功能
 ![multi-theme](multi-theme.png)
 ***
-### 自我监控
+### 谁动了我的代码？
 - 上报“编译/运行”情况至“云端”：<br>![BuildInfo](BuildInfo.png)
-- 同步“本地数据”至“云端”：<br>![DataOnCloud](data_on_cloud.png)
+- 同步“运行数据”至“云端”：<br>![DataOnCloud](data_on_cloud.png)
 ***
 ## 快速上手
 GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何用GuiLite开发App，我们提供了一些实例程序给大家参考。
