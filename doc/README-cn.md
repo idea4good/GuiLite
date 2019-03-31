@@ -92,5 +92,5 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 [中国码云链接](https://gitee.com/idea4good/GuiLite)
 
 ## 致谢
-- 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>![QQ group: 527251257](qq.group.jpg)
+- 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>![QQ group: 841031761](qq.group.jpg)
 - 感谢来自[码云用户](https://gitee.com/idea4good/GuiLite)的捐赠，您的每一分钱都会用来帮助急需帮助的中国儿童或家庭。
