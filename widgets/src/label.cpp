@@ -5,16 +5,16 @@
 #include "core_include/surface.h"
 #include "core_include/resource.h"
 #include "core_include/bitmap.h"
+#include "core_include/theme.h"
 #include "core_include/word.h"
-#include "../gui_include/my_resource.h"
-#include "../gui_include/label.h"
+#include "../widgets_include/label.h"
 
 void c_label::pre_create_wnd()
 {
 	m_style = GL_ATTR_VISIBLE | ALIGN_LEFT | ALIGN_VCENTER;
 	m_font_color = GL_RGB(255,255,255);
 
-	m_font_type = c_my_resource::get_font(FONT_DEFAULT);
+	m_font_type = c_theme::get_font(FONT_DEFAULT);
 }
 
 void c_label::on_paint()
@@ -24,7 +24,7 @@ void c_label::on_paint()
 
 	if (m_str)
 	{
-		fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, get_parent()->get_bg_color());
+		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, get_parent()->get_bg_color(), m_z_order);
 		c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 	}
 }

@@ -1,12 +1,12 @@
-﻿#include "../core_include/api.h"
-#include "../core_include/rect.h"
-#include "../core_include/cmd_target.h"
-#include "../core_include/wnd.h"
-#include "../core_include/wave_buffer.h"
-#include "../core_include/surface.h"
-#include "../core_include/resource.h"
-#include "../core_include/word.h"
-#include "../core_include/wave_ctrl.h"
+#include "core_include/api.h"
+#include "core_include/rect.h"
+#include "core_include/cmd_target.h"
+#include "core_include/wnd.h"
+#include "core_include/surface.h"
+#include "core_include/resource.h"
+#include "core_include/word.h"
+#include "../widgets_include/wave_buffer.h"
+#include "../widgets_include/wave_ctrl.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -146,7 +146,7 @@ void c_wave_ctrl::draw_smooth_vline(int y_min, int y_max, int mid, unsigned int 
 	int  index = (dy >> 1) + 2;
 	int  y;
 
-	draw_pixel(m_wave_cursor, mid, rgb);
+	m_surface->draw_pixel(m_wave_cursor, mid, rgb, m_z_order);
 
 	if (dy < 1)
 	{
@@ -164,7 +164,7 @@ void c_wave_ctrl::draw_smooth_vline(int y_min, int y_max, int mid, unsigned int 
 			cur_g = g * (index - i) / index;
 			cur_b = b * (index - i) / index;
 			cur_rgb = GL_RGB(cur_r, cur_g, cur_b);
-			draw_pixel(m_wave_cursor, y, cur_rgb);
+			m_surface->draw_pixel(m_wave_cursor, y, cur_rgb, m_z_order);
 		}
 		if ( (mid - i) >= y_min )
 		{
@@ -173,7 +173,7 @@ void c_wave_ctrl::draw_smooth_vline(int y_min, int y_max, int mid, unsigned int 
 			cur_g = g * (index - i) / index;
 			cur_b = b * (index - i) / index;
 			cur_rgb = GL_RGB(cur_r, cur_g, cur_b);
-			draw_pixel(m_wave_cursor, y, cur_rgb);
+			m_surface->draw_pixel(m_wave_cursor, y, cur_rgb, m_z_order);
 		}
 	}
 }
@@ -183,7 +183,7 @@ void c_wave_ctrl::on_paint()
 	c_rect rect;
 	get_screen_rect(rect);
 	
-	fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_back_color);
+	m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_back_color, m_z_order);
 	
 	//show name
 	c_word::draw_string(m_surface, m_z_order, m_wave_name, m_wave_left + 10, rect.m_top, m_wave_name_font, m_wave_name_color, GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
@@ -195,7 +195,7 @@ void c_wave_ctrl::on_paint()
 
 void c_wave_ctrl::clear_wave(void)
 {
-	fill_rect(m_wave_left, m_wave_top, m_wave_right, m_wave_bottom, m_back_color);
+	m_surface->fill_rect(m_wave_left, m_wave_top, m_wave_right, m_wave_bottom, m_back_color, m_z_order);
 	m_wave_cursor = m_wave_left;
 }
 
@@ -214,7 +214,7 @@ void c_wave_ctrl::restore_background()
 	register int left = rect.m_left;
 	for (int y_pos = (m_wave_top - 1); y_pos <= (m_wave_bottom + 1); y_pos++)
 	{
-		(m_bg_fb) ? draw_pixel(x, y_pos, m_bg_fb[(y_pos - top) * width + (x - left)]) : draw_pixel(x, y_pos, 0);
+		(m_bg_fb) ? m_surface->draw_pixel(x, y_pos, m_bg_fb[(y_pos - top) * width + (x - left)], m_z_order) : m_surface->draw_pixel(x, y_pos, 0, m_z_order);
 	}
 }
 

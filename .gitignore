@@ -36,8 +36,8 @@ CMakeFiles
 cmake_install.cmake
 Makefile
 
-libcore.a
-libgui.a
+libGuiLite.a
+libGuiLite.so
 
 # Keil
 GuiLite.uvguix.*

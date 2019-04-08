@@ -27,18 +27,27 @@ class c_display;
 class c_surface {
 	friend class c_display; friend class c_bitmap;
 public:
-	virtual void draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
-	virtual void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
-	unsigned int get_pixel(int x, int y, unsigned int z_order);
-
 	int get_width() { return m_width; }
 	int get_height() { return m_height; }
+	unsigned int get_pixel(int x, int y, unsigned int z_order);
+
+	void draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order);
+	void fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
 	void draw_hline(int x0, int x1, int y, unsigned int rgb, unsigned int z_order);
 	void draw_vline(int x, int y0, int y1, unsigned int rgb, unsigned int z_order);
 	void draw_line(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order);
 	void draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order, unsigned int size = 1);
-	int flush_scrren(int left, int top, int right, int bottom);
 
+	inline void draw_rect(c_rect rect, unsigned int rgb, unsigned int size, unsigned int z_order)
+	{
+		draw_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, rgb, z_order, size);
+	}
+	inline void fill_rect(c_rect rect, unsigned int rgb, unsigned int z_order)
+	{
+		fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, rgb, z_order);
+	}
+
+	int flush_scrren(int left, int top, int right, int bottom);
 	bool is_valid(c_rect rect);
 	bool is_active() { return m_is_active; }
 	c_display* get_display() { return m_display; }

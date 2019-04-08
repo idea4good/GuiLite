@@ -5,9 +5,9 @@
 #include "core_include/cmd_target.h"
 #include "core_include/wnd.h"
 #include "core_include/surface.h"
-#include "../gui_include/button.h"
-#include "../gui_include/my_resource.h"
-#include "../gui_include/keyboard.h"
+#include "core_include/theme.h"
+#include "../widgets_include/button.h"
+#include "../widgets_include/keyboard.h"
 #include <string.h>
 
 #define KEYBOARD_WIDTH		(1024 * 2 / 3 - 10)//change this will change every key proportional
@@ -234,14 +234,14 @@ void c_keyboard_button::on_paint()
 	switch(m_status)
 	{
 	case STATUS_NORMAL:
-		fill_rect(rect, c_my_resource::get_color(COLOR_WND_NORMAL));
+		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 		break;
 	case STATUS_FOCUSED:
-		fill_rect(rect, c_my_resource::get_color(COLOR_WND_FOCUS));
+		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
 		break;
 	case STATUS_PUSHED:
-		fill_rect(rect, c_my_resource::get_color(COLOR_WND_PUSHED));
-		draw_rect(rect, c_my_resource::get_color(COLOR_WND_BORDER), 2);
+		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_PUSHED), m_z_order);
+		m_surface->draw_rect(rect, c_theme::get_color(COLOR_WND_BORDER), 2, m_z_order);
 		break;
 	default:
 		ASSERT(FALSE);

@@ -8,9 +8,9 @@
 #include "core_include/resource.h"
 #include "core_include/bitmap.h"
 #include "core_include/word.h"
-#include "../gui_include/button.h"
-#include "../gui_include/my_resource.h"
-#include "../gui_include/dialog.h"
+#include "core_include/theme.h"
+#include "../widgets_include/button.h"
+#include "../widgets_include/dialog.h"
 
 #include <string.h>
 
@@ -26,11 +26,11 @@ void c_dialog::on_paint()
 {
 	c_rect rect;
 	get_screen_rect(rect);
-	fill_rect(rect, m_bg_color);
+	m_surface->fill_rect(rect, m_bg_color, m_z_order);
 
 	if (m_str)
 	{
-		c_word::draw_string(m_surface, m_z_order, m_str, rect.m_left+35, rect.m_top, c_my_resource::get_font(FONT_DEFAULT), GL_RGB(255, 255, 255), GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
+		c_word::draw_string(m_surface, m_z_order, m_str, rect.m_left+35, rect.m_top, c_theme::get_font(FONT_DEFAULT), GL_RGB(255, 255, 255), GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
 	}
 }
 

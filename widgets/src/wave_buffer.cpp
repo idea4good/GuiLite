@@ -1,5 +1,5 @@
-#include "../core_include/api.h"
-#include "../core_include/wave_buffer.h"
+#include "core_include/api.h"
+#include "../widgets_include/wave_buffer.h"
 #include <string.h>
 #include <stdio.h>
 

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\bitmap.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\cmd_target.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\display.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\rect.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\surface.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\wnd.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\word.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\button.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\dialog.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\edit.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\label.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\keyboard.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\list_box.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\slide_group.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\spinbox.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\table.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\gesture.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\wave_buffer.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\wave_ctrl.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\theme.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\adapter\api_win.cpp">
+      <Filter>core\adapter</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\adapter\audio_win.cpp">
+      <Filter>core\adapter</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\adapter\msg_win.cpp">
+      <Filter>core\adapter</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{90BF9B29-451D-34AC-BF45-13C635ED39CD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="widgets">
+      <UniqueIdentifier>{338d9696-2a1d-4569-b435-dd3da382a8d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\adapter">
+      <UniqueIdentifier>{691801eb-7076-4af6-aa0c-5ce5b0fcb21c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

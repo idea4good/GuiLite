@@ -54,7 +54,7 @@ enum COLOR_TYPE
 	COLOR_MAX
 };
 
-class c_my_resource
+class c_theme
 {
 public:
 	static int add_font(FONT_TYPE index, const FONT_INFO* font);

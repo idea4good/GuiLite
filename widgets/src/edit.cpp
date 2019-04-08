@@ -5,11 +5,11 @@
 #include "core_include/resource.h"
 #include "core_include/word.h"
 #include "core_include/surface.h"
-#include "../gui_include/button.h"
-#include "../gui_include/label.h"
-#include "../gui_include/edit.h"
-#include "../gui_include/my_resource.h"
-#include "../gui_include/keyboard.h"
+#include "core_include/theme.h"
+#include "../widgets_include/button.h"
+#include "../widgets_include/label.h"
+#include "../widgets_include/edit.h"
+#include "../widgets_include/keyboard.h"
 #include <string.h>
 
 #define IDD_ALL_KEY_BOARD		0x5012
@@ -25,8 +25,8 @@ static c_keyboard  s_keyboard;
 void c_edit::pre_create_wnd()
 {
 	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER | KEY_BOARD_STYLE;
-	m_font_type = c_my_resource::get_font(FONT_DEFAULT);
-	m_font_color = c_my_resource::get_color(COLOR_WND_FONT);
+	m_font_type = c_theme::get_font(FONT_DEFAULT);
+	m_font_color = c_theme::get_color(COLOR_WND_FONT);
 
 	memset(m_str_input, 0, sizeof(m_str_input));
 	memset(m_str, 0, sizeof(m_str));
@@ -118,7 +118,7 @@ void c_edit::on_paint()
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
 		}
-		fill_rect(rect, c_my_resource::get_color(COLOR_WND_NORMAL));
+		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 		break;
 	case STATUS_FOCUSED:
 		if (m_z_order > m_parent->get_z_order())
@@ -127,7 +127,7 @@ void c_edit::on_paint()
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
 		}
-		fill_rect(rect, c_my_resource::get_color(COLOR_WND_FOCUS));
+		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
 		break;
 	case STATUS_PUSHED:
 		if (m_z_order == m_parent->get_z_order())
@@ -135,8 +135,8 @@ void c_edit::on_paint()
 			m_z_order++;
 			show_keyboard();
 		}
-		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_my_resource::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());
-		m_surface->draw_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_my_resource::get_color(COLOR_WND_BORDER), m_parent->get_z_order(), 2);
+		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());
+		m_surface->draw_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_BORDER), m_parent->get_z_order(), 2);
 		break;
 	default:
 		ASSERT(FALSE);

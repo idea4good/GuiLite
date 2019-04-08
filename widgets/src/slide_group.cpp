@@ -5,8 +5,8 @@
 #include "core_include/cmd_target.h"
 #include "core_include/wnd.h"
 #include "core_include/surface.h"
-#include "../gui_include/dialog.h"
-#include "../gui_include/slide_group.h"
+#include "../widgets_include/dialog.h"
+#include "../widgets_include/slide_group.h"
 
 c_slide_group::c_slide_group()
 {

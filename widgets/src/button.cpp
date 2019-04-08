@@ -6,14 +6,14 @@
 #include "core_include/bitmap.h"
 #include "core_include/word.h"
 #include "core_include/surface.h"
-#include "../gui_include/my_resource.h"
-#include "../gui_include/button.h"
+#include "core_include/theme.h"
+#include "../widgets_include/button.h"
 
 void c_button::pre_create_wnd()
 {
 	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
-	m_font_type = c_my_resource::get_font(FONT_DEFAULT);
-	m_font_color = c_my_resource::get_color(COLOR_WND_FONT);
+	m_font_type = c_theme::get_font(FONT_DEFAULT);
+	m_font_color = c_theme::get_color(COLOR_WND_FONT);
 }
 
 void c_button::on_focus()
@@ -60,7 +60,7 @@ void c_button::on_paint()
 		}
 		else
 		{
-			fill_rect(rect, c_my_resource::get_color(COLOR_WND_NORMAL));
+			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 		}
 		break;
 	case STATUS_FOCUSED:
@@ -70,7 +70,7 @@ void c_button::on_paint()
 		}
 		else
 		{
-			fill_rect(rect, c_my_resource::get_color(COLOR_WND_FOCUS));
+			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
 		}
 		break;
 	case STATUS_PUSHED:
@@ -80,8 +80,8 @@ void c_button::on_paint()
 		}
 		else
 		{
-			fill_rect(rect, c_my_resource::get_color(COLOR_WND_PUSHED));
-			draw_rect(rect, c_my_resource::get_color(COLOR_WND_BORDER), 2);
+			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_PUSHED), m_z_order);
+			m_surface->draw_rect(rect, c_theme::get_color(COLOR_WND_BORDER), 2, m_z_order);
 		}
 		break;
 	default:

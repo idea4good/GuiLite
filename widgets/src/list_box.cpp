@@ -6,10 +6,10 @@
 #include "core_include/surface.h"
 #include "core_include/bitmap.h"
 #include "core_include/word.h"
+#include "core_include/theme.h"
 
-#include "../gui_include/button.h"
-#include "../gui_include/my_resource.h"
-#include "../gui_include/list_box.h"
+#include "../widgets_include/button.h"
+#include "../widgets_include/list_box.h"
 #include <string.h>
 
 #define ITEM_HEIGHT				45
@@ -20,8 +20,8 @@ void c_list_box::pre_create_wnd()
 	memset(m_item_array, 0, sizeof(m_item_array));
 	m_item_total = 0;
 	m_selected_item = 0;
-	m_font_type = c_my_resource::get_font(FONT_DEFAULT);
-	m_font_color = c_my_resource::get_color(COLOR_WND_FONT);
+	m_font_type = c_theme::get_font(FONT_DEFAULT);
+	m_font_color = c_theme::get_color(COLOR_WND_FONT);
 }
 
 void c_list_box::on_focus()
@@ -50,7 +50,7 @@ void c_list_box::on_paint()
 			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
 		}
-		fill_rect(rect, c_my_resource::get_color(COLOR_WND_NORMAL));
+		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 		break;
 	case STATUS_FOCUSED:
 		if (m_z_order > m_parent->get_z_order())
@@ -58,11 +58,11 @@ void c_list_box::on_paint()
 			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
 		}
-		fill_rect(rect, c_my_resource::get_color(COLOR_WND_FOCUS));
+		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
 		break;
 	case STATUS_PUSHED:
-		fill_rect(rect, c_my_resource::get_color(COLOR_WND_PUSHED));
-		draw_rect(rect, c_my_resource::get_color(COLOR_WND_BORDER), 2);
+		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_PUSHED), m_z_order);
+		m_surface->draw_rect(rect, c_theme::get_color(COLOR_WND_BORDER), 2, m_z_order);
 		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, GL_RGB(2, 124, 165), GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
 		//draw list
 		if (m_item_total > 0)
@@ -154,7 +154,7 @@ void c_list_box::update_list_size()
 
 void c_list_box::show_list()
 {
-	fill_rect(m_list_screen_rect, GL_RGB(17, 17, 17));
+	m_surface->fill_rect(m_list_screen_rect, GL_RGB(17, 17, 17), m_z_order);
 	//draw all items
 	c_rect tmp_rect;
 	for (int i = 0; i < m_item_total; i++)
@@ -164,7 +164,7 @@ void c_list_box::show_list()
 		tmp_rect.m_top = m_list_screen_rect.m_top + i * ITEM_HEIGHT;
 		tmp_rect.m_bottom = tmp_rect.m_top + ITEM_HEIGHT;
 		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
-		draw_hline(tmp_rect.m_left, tmp_rect.m_right, tmp_rect.m_bottom, GL_RGB(99, 108, 124));
+		m_surface->draw_hline(tmp_rect.m_left, tmp_rect.m_right, tmp_rect.m_bottom, GL_RGB(99, 108, 124), m_z_order);
 	}
 	//draw selected item	
 	tmp_rect.m_left = m_list_screen_rect.m_left;
@@ -172,7 +172,7 @@ void c_list_box::show_list()
 	tmp_rect.m_top = m_list_screen_rect.m_top + m_selected_item * ITEM_HEIGHT;
 	tmp_rect.m_bottom = tmp_rect.m_top + ITEM_HEIGHT;
 
-	fill_rect(tmp_rect, c_my_resource::get_color(COLOR_WND_FOCUS));
+	m_surface->fill_rect(tmp_rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
 	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], tmp_rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
 }
 

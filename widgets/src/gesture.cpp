@@ -5,8 +5,8 @@
 #include "core_include/display.h"
 #include "core_include/cmd_target.h"
 #include "core_include/wnd.h"
-#include "../gui_include/gesture.h"
-#include "../gui_include/slide_group.h"
+#include "../widgets_include/gesture.h"
+#include "../widgets_include/slide_group.h"
 #include <stdlib.h>
 
 //#define FLIP_STEP			300//for arm
