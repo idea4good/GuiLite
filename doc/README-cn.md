@@ -8,11 +8,12 @@
 - [致谢](#致谢)
 ***
 ## GuiLite是什么鬼？
-- GuiLite（超轻量UI框架）是5千行代码的**全平台UI框架**，可以完美运行在iOS，Android，Linux（ARM/x86-64），Windows（包含VR），Mac，和**Docker容器**上。
+- GuiLite（超轻量UI框架）是5千行代码的**全平台UI框架**，可以完美运行在iOS，Android，Linux（ARM/x86-64），Windows（包含VR），Mac，Docker和**有(无
+)操作系统的MCU**上。
 - GuiLite可以嵌入在iOS、Android、MFC、QT等其他UI系统中，让你的界面集百家之长，又不失个性。
 - GuiLite与操作系统及第三方图形库无关，甚至也可以运行在无OS的单片机环境。
 - GuiLite鼓励混合编程，开发者可以用GuiLite接管UI部分，用Swift，Java，Golang，C#，Python开发业务部分。
-- ⚠️不鼓励大家全盘接受GuiLite，更愿意大家自主定制GuiLite
+- 🔧不鼓励大家全盘接受GuiLite，更愿意大家自主定制GuiLite
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
