@@ -100,7 +100,7 @@ int c_dialog::close_dialog(c_surface* surface)
 	return -1;
 }
 
-void c_dialog::on_touch_down(int x, int y)
+bool c_dialog::on_touch(int x, int y, TOUCH_ACTION action)
 {
 	c_wnd *child = m_top_child;
 	c_rect rect;
@@ -114,34 +114,13 @@ void c_dialog::on_touch_down(int x, int y)
 			{
 				x -= rect.m_left;
 				y -= rect.m_top;
-				child->on_touch_down(x, y);
-				return;
+				child->on_touch(x, y, action);
+				return true;
 			}
 			child = child->m_next_sibling;
 		}
 	}
-	c_wnd::on_touch_down(x, y);
-}
-
-void c_dialog::on_touch_up(int x, int y)
-{
-	c_wnd *child = m_top_child;
-	c_rect rect;
-	get_wnd_rect(rect);
-	if ( NULL != child )
-	{
-		while ( child )
-		{
-			if (child->m_z_order > m_z_order)
-			{
-				x -= rect.m_left;
-				y -= rect.m_top;
-				return child->on_touch_up(x, y);
-			}
-			child = child->m_next_sibling;
-		}
-	}
-	c_wnd::on_touch_up(x, y);
+	return c_wnd::on_touch(x, y, action);
 }
 
 int c_dialog::set_me_the_dialog()

@@ -243,10 +243,10 @@ void c_gesture::handle_hid_msg(MSG_INFO &msg)
 	switch(msg.dwMsgId)
 	{
 	case 0x4700://MOUSE_LBUTTONDOWN
-		m_root->on_touch_down(msg.dwParam1, msg.dwParam2);
+		m_root->on_touch(msg.dwParam1, msg.dwParam2, TOUCH_DOWN);
 		break;
 	case 0x4600://MOUSE_LBUTTONUP
-		m_root->on_touch_up(msg.dwParam1, msg.dwParam2);
+		m_root->on_touch(msg.dwParam1, msg.dwParam2, TOUCH_UP);
 		break;
 	}
 }

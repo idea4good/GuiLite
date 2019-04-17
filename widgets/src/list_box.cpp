@@ -88,18 +88,24 @@ void c_list_box::on_paint()
 	}
 }
 
+bool c_list_box::on_touch(int x, int y, TOUCH_ACTION action)
+{
+	(action == TOUCH_DOWN) ? on_touch_down(x, y) : on_touch_up(x, y);
+	return true;
+}
+
 void c_list_box::on_touch_down(int x, int y)
 {
 	if (m_wnd_rect.PtInRect(x, y) )
 	{//click base
 		if (STATUS_NORMAL == m_status)
 		{
-			get_parent()->set_focus(this);
+			m_parent->set_child_focus(this);
 		}
 	}
 	else if (m_list_wnd_rect.PtInRect(x, y))
 	{//click extend list
-		c_wnd::on_touch_down(x, y);
+		c_wnd::on_touch(x, y, TOUCH_DOWN);
 	}
 	else
 	{
@@ -136,7 +142,7 @@ void c_list_box::on_touch_up(int x, int y)
 		}
 		else
 		{
-			c_wnd::on_touch_up(x, y);
+			c_wnd::on_touch(x, y, TOUCH_UP);
 		}
 	}
 }

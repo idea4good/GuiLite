@@ -28,22 +28,31 @@ void c_button::on_kill_focus()
 	on_paint();
 }
 
-void c_button::on_touch_down(int x, int y)
+bool c_button::on_touch(int x, int y, TOUCH_ACTION action)
 {
-	get_parent()->set_focus(this);
-	m_status = STATUS_PUSHED;
-	on_paint();
-}
-
-void c_button::on_touch_up(int x, int y)
-{
-	if (STATUS_PUSHED == m_status)
+	if (action == TOUCH_DOWN)
+	{
+		m_parent->set_child_focus(this);
+		m_status = STATUS_PUSHED;
+		on_paint();
+	}
+	else
 	{
 		m_status = STATUS_FOCUSED;
 		on_paint();
-
 		notify_parent(GL_BN_CLICKED, get_id(), 0);
 	}
+	return false;// Do not handle TOUCH_ACTION by other wnd.
+}
+
+bool c_button::on_key(KEY_TYPE key)
+{
+	if (key == KEY_ENTER)
+	{
+		notify_parent(GL_BN_CLICKED, get_id(), 0);
+		return false;// Do not handle KEY_ENTER by other wnd.
+	}
+	return true;// Handle KEY_FOWARD/KEY_BACKWARD by parent wnd.
 }
 
 void c_button::on_paint()

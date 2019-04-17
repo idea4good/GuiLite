@@ -40,6 +40,12 @@ void c_edit::set_text(const char* str)
 	}
 }
 
+bool c_edit::on_touch(int x, int y, TOUCH_ACTION action)
+{
+	(action == TOUCH_DOWN) ? on_touch_down(x, y) : on_touch_up(x, y);
+	return true;
+}
+
 void c_edit::on_touch_down(int x, int y)
 {
 	c_rect kb_rect_relate_2_edit_parent;
@@ -53,12 +59,12 @@ void c_edit::on_touch_down(int x, int y)
 	{//click edit box
 		if (STATUS_NORMAL == m_status)
 		{
-			get_parent()->set_focus(this);
+			m_parent->set_child_focus(this);
 		}
 	}
 	else if (kb_rect_relate_2_edit_parent.PtInRect(x,y))
 	{//click key board
-        c_wnd::on_touch_down(x, y);
+        c_wnd::on_touch(x, y, TOUCH_DOWN);
 	}
 	else
 	{
@@ -86,7 +92,7 @@ void c_edit::on_touch_up(int x, int y)
 		}
 		else
 		{
-			c_wnd::on_touch_up(x, y);
+			c_wnd::on_touch(x, y, TOUCH_UP);
 		}
 	}
 }

@@ -19,13 +19,14 @@ protected:
 	virtual void on_paint();
 	virtual void on_focus();
 	virtual void on_kill_focus();
-	virtual void on_touch_down(int x, int y);
-	virtual void on_touch_up(int x, int y);
+	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
 	
 	void on_key_board_click(unsigned int ctrl_id, long param);
 	GL_DECLARE_MESSAGE_MAP()
 private:
 	void show_keyboard();
+	void on_touch_down(int x, int y);
+	void on_touch_up(int x, int y);
 
 	char m_str_input[MAX_EDIT_STRLEN];
 	char m_str[MAX_EDIT_STRLEN];

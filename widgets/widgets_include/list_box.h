@@ -30,12 +30,13 @@ protected:
 	virtual void on_paint();
 	virtual void on_focus();
 	virtual void on_kill_focus();
-	virtual void on_touch_down(int x, int y);
-	virtual void on_touch_up(int x, int y);
+	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
 	
 private:
 	void update_list_size();
 	void show_list();
+	void on_touch_down(int x, int y);
+	void on_touch_up(int x, int y);
 
 	short			m_selected_item;
 	short			m_item_total;

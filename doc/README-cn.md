@@ -16,8 +16,10 @@
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
-## 🔥新功能：Golang + GuiLite
-为了演示GuiLite与Golang协同开发，我们为[HostMonitor](https://gitee.com/idea4good/GuiLiteSamples/tree/master/HostMonitor)增加了[Golang版本](https://gitee.com/idea4good/GuiLiteSamples/tree/master/HostMonitor/BuildGo)
+## 🔥新功能：支持非触摸屏（硬按键“导航”）
+![HelloNavigation](HelloNavigation.gif)
+- Hello Navigation 仅有[100+行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloNavigation/UIcode/UIcode.cpp)，用于向开发者展示：如何在非触摸屏场景下，使用硬按键进行：“移动焦点”和“点击”操作。
+- 支持：MCU / Windows / Linux
 
 ## 功能介绍
 ### 卓越的跨平台能力
@@ -60,6 +62,7 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 | HelloParticle | Windows, Linux, STM32F103, STM32F429 | 粒子效果的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
 | HelloGuiLite | Windows, Linux | 初始化GuiLite，加载资源，布局界面元素，按钮响应 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | ★★ |
 | HelloMario | Windows, Linux, STM32F103, STM32F429 | 多图层的UI系统 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/README.md) | ★★|
+| HelloNavigation | Windows, Linux, STM32F103, STM32F429 | 用于非触摸屏场景，通过硬按键进行UI“导航” | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloNavigation/README.md) | ★★|
 | HelloFont | Windows, Linux | 显示多种语言（不限：中、英文） | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | ★★ |
 | HelloAnimation | Windows, Linux | 动画的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/README.md) | ★★ |
 | HelloSlide | Windows, Linux | 滑屏界面的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | ★★★ |

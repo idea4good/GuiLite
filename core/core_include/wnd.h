@@ -1,10 +1,10 @@
-#ifndef GUI_WND_H
-#define GUI_WND_H
+#ifndef WND_H
+#define WND_H
 
 //Window attribution
 #define GL_ATTR_VISIBLE		0x80000000L
-#define GL_ATTR_DISABLED		0x40000000L
-#define GL_ATTR_FOCUS			0x20000000L
+#define GL_ATTR_DISABLED	0x40000000L
+#define GL_ATTR_FOCUS		0x20000000L
 
 typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;
@@ -19,6 +19,19 @@ typedef enum
 	STATUS_FOCUSED,
 	STATUS_DISABLED
 }WND_STATUS;
+
+typedef enum
+{
+	KEY_FORWARD,
+	KEY_BACKWARD,
+	KEY_ENTER
+}KEY_TYPE;
+
+typedef enum
+{
+	TOUCH_DOWN,
+	TOUCH_UP
+}TOUCH_ACTION;
 
 typedef struct struct_wnd_tree
 {
@@ -69,7 +82,7 @@ public:
 	void get_wnd_rect(c_rect &rect) const;
 	void get_screen_rect(c_rect &rect) const;
 
-	c_wnd* set_focus(c_wnd *new_active_child);
+	c_wnd* set_child_focus(c_wnd *focus_child);
 
 	c_wnd* get_parent() const { return m_parent; }
 	c_wnd* get_last_child() const;
@@ -80,16 +93,13 @@ public:
 	void notify_parent(unsigned short msg_id, unsigned int w_param, long l_param);
 	virtual int	on_notify(unsigned short notify_code, unsigned short ctrl_id, long l_param);
 
-	virtual void on_touch_up(int x, int y);
-	virtual void on_touch_down(int x, int y);
-
-	c_wnd* get_active_child() const { return m_active_child; }
+	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
+	virtual bool on_key(KEY_TYPE key);
 
 	c_surface* get_surface() { return m_surface; }
 	void set_surface(c_surface* surface) { m_surface = surface; }
 protected:
-	virtual void pre_create_wnd();
-	void add_child_2_head(c_wnd *child);
+	virtual void pre_create_wnd() {};
 	void add_child_2_tail(c_wnd *child);
 
 	void wnd2screen(int &x, int &y) const;
@@ -99,10 +109,10 @@ protected:
 
 	int load_child_wnd(WND_TREE *p_child_tree);
 	int load_clone_child_wnd(WND_TREE *p_child_tree);
-	void set_active_child(c_wnd* child) { m_active_child = child; }
+	void set_active_child(c_wnd* child) { m_focus_child = child; }
 
-	virtual void on_focus();
-	virtual void on_kill_focus();
+	virtual void on_focus() {};
+	virtual void on_kill_focus() {};
 protected:
 	WND_STATUS		m_status;
 	unsigned int	m_style;
@@ -120,7 +130,7 @@ protected:
 	unsigned short		m_resource_id;
 
 	int					m_z_order;
-	c_wnd*				m_active_child;
+	c_wnd*				m_focus_child;//current focused wnd
 	c_surface*			m_surface;
 private:
 	c_wnd(const c_wnd &win);

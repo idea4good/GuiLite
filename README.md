@@ -17,8 +17,10 @@
 - ⚙️We hope GuiLite is small enough to help you understand how UI works.
 - 👑You should be the master of your UI and not be tied to a specific framework.
 
-## 🔥New feature：Golang + GuiLite
-In order to show how GuiLite work with Golang, we add [BuildGo](https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor/BuildGo) for [HostMonitor](https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor)
+## 🔥New feature：Support non-touch GUI
+![HelloNavigation](doc/HelloNavigation.gif)
+- Hello Navigation has only [100+ lines code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloNavigation/UIcode/UIcode.cpp), showing you how to navigate/click widgets by hard button.
+- Support: MCU / Windows / Linux
 
 ## Features
 ### Cross platform

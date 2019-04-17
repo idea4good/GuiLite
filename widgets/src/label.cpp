@@ -24,7 +24,7 @@ void c_label::on_paint()
 
 	if (m_str)
 	{
-		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, get_parent()->get_bg_color(), m_z_order);
+		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), m_z_order);
 		c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 	}
 }

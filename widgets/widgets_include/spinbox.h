@@ -1,9 +1,9 @@
 #ifndef SPIN_BOX_H
 #define SPIN_BOX_H
 
-#define GL_SPIN_SELECT						0x2222
+#define GL_SPIN_SELECT					0x2222
 #define GL_SPIN_CONFIRM					0x3333
-#define	GL_SPIN_ROTATION					0x4444
+#define	GL_SPIN_ROTATION				0x4444
 
 #define ON_SPIN_SELECT(ctrlId, func)                                       \
 {MSG_TYPE_WND, GL_SPIN_SELECT, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWV, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
@@ -35,12 +35,9 @@ protected:
 	virtual void on_paint();
 	virtual void on_focus();
 	virtual void on_kill_focus();
-	
-	virtual void on_touch_down(int x, int y);
-	virtual void on_touch_up(int x, int y);
 	virtual void pre_create_wnd();
+	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
 
-protected:
 	void on_arrow_up_bt_click(unsigned int ctr_id);
 	void on_arrow_down_bt_click(unsigned int ctr_id);
 
@@ -49,6 +46,8 @@ protected:
 private:
 	void show_arrow_button();
 	void hide_arrow_button();
+	void on_touch_down(int x, int y);
+	void on_touch_up(int x, int y);
 
 protected:
 	short			m_cur_value;

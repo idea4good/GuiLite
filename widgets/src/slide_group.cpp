@@ -151,5 +151,4 @@ void c_slide_group::disabel_all_slide()
 			m_slides[i]->get_surface()->set_active(false);
 		}
 	}
-	m_active_child = NULL;
 }

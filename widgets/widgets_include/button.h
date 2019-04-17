@@ -20,9 +20,10 @@ protected:
 	virtual void on_paint();
 	virtual void on_focus();
 	virtual void on_kill_focus();
-	virtual void on_touch_down(int x, int y);
-	virtual void on_touch_up(int x, int y);
 	virtual void pre_create_wnd();
+
+	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
+	virtual bool on_key(KEY_TYPE key);
 
 	const BITMAP_INFO*	m_bitmap_normal;
 	const BITMAP_INFO*	m_bitmap_focus;
