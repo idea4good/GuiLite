@@ -1,66 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\bitmap.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\cmd_target.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\display.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\rect.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\surface.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\wnd.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\core\src\word.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\button.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\dialog.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\edit.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\label.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\keyboard.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\list_box.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\slide_group.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\spinbox.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\table.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\private\Noodle\GuiLite.gitee\widgets\src\gesture.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\wave_buffer.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\wave_ctrl.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="core\src\theme.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
     <ClCompile Include="core\src\adapter\api_win.cpp">
       <Filter>core\adapter</Filter>
     </ClCompile>
@@ -69,6 +9,66 @@
     </ClCompile>
     <ClCompile Include="core\src\adapter\msg_win.cpp">
       <Filter>core\adapter</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\button.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\dialog.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\edit.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\gesture.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\keyboard.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\label.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\list_box.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\slide_group.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\spinbox.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\table.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\wave_buffer.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\src\wave_ctrl.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\bitmap.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\cmd_target.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\display.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\rect.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\surface.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\theme.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\wnd.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\src\word.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
