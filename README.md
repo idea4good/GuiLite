@@ -17,9 +17,9 @@
 - ⚙️We hope GuiLite is small enough to help you understand how UI works.
 - 👑You should be the master of your UI and not be tied to a specific framework.
 
-## 🔥New feature：Support non-touch GUI
-![HelloNavigation](doc/HelloNavigation.gif)
-- Hello Navigation has only [100+ lines code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloNavigation/UIcode/UIcode.cpp), showing you how to navigate/click widgets by hard button.
+## 🔥New feature：Hello Star
+![HelloNavigation](doc/HelloStar.gif)
+- Hello Star has only [100+ lines code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloStar/UIcode/UIcode.cpp), showing you how to develop star field effect with GuiLite.
 - Support: MCU / Windows / Linux
 
 ## Features
@@ -61,7 +61,8 @@ GuiLite is only a framework, could not create UI by itself. In order to show how
 
 | Sample name | Platform | Description | Build guidance | Diffculty level |
 | --- | --- | --- | --- | --- |
-| HelloParticle | Windows, Linux, STM32F103, STM32F429 | Show how to develop particle system | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
+| HelloParticle | Windows, Linux, STM32F103, STM32F429 | Show how to develop particle effect | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
+| HelloStar | Windows, Linux, STM32F103, STM32F429 | Show how to develop star field effect | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloStar/README.md) | ★ |
 | HelloGuiLite | Windows, Linux | Show how to Initialize UI, load resource, layout UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | ★★ |
 | HelloMario | Windows, Linux, STM32F103, STM32F429 | Show how to develop multi-layer UI system | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/README.md) | ★★ |
 | HelloNavigation | Windows, Linux, STM32F103, STM32F429 | Show how to navigate/click widgets by hard button in non-touch GUI scenario | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloNavigation/README.md) | ★★|
