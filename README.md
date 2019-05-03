@@ -98,5 +98,5 @@ GuiLite is only a framework, could not create UI by itself. In order to show how
 [Gitee in China](https://gitee.com/idea4good/GuiLite)
 
 ## Thanks
-- Thanks the help from QQ group, you guys make GuiLite better! And welcome new friend to join us.<br>![QQ group: 841031761](doc/qq.group.jpg)
+- Thanks the help from QQ group, you guys make GuiLite better! And welcome new friend to join us.<br>[<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
 - Thanks the donations from [Gitee users](https://gitee.com/idea4good/GuiLite), every penny of donations will be used for needy children or family of China.
