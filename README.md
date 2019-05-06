@@ -74,7 +74,7 @@ GuiLite is only a framework, could not create UI by itself. In order to show how
 
 ## Documents
 - [How to build?](doc/HowToBuild.md)
-- [How GuiLite work?](doc/CodeWalkthrough.md)
+- [How GuiLite work?](doc/HowToWork.md)
 - [How to Layout widgets?](doc/HowLayoutWork.md)
 - [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
 - [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
