@@ -18,7 +18,7 @@ Rendring include:
 - Set frame layer; While your drawing, you should input frame layer index to make your drawing at a specific layer
 - Update frame layer; While frame layer changed(e,g: open/close dialog), GuiLite would determine which pixel of frame layer should be display on screen
 
-👉Note: Rendering do not depend on Widgets management, In some case, you would rendering directly without any widgets in your GUI system. For example: Limted resource MCU platform.
+👉Note: Rendering do not depend on Widgets management, In some case, you would render line/text/bitmap directly without any widgets in your GUI system. For example: Limted resource MCU platform.
 
 ## How to customize/extend GuiLite?
 In order to make GuiLite simple and clear, GuiLite only provide basic widgets(e,g: button, label, keyboard, spinx etc) implementation. If you want do more things on widgets, you can do it like this:
