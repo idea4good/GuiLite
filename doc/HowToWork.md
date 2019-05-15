@@ -9,23 +9,23 @@
 GuiLite do 2 things only: widgets management and rendering.
 
 Widgets management include:
-- Add/Remove GUI element(e,g: button, label, dialog), set caption and location.
-- Dispatch/Response intput message: By analysis the location information from the message, GuiLite would find the widget which should be reponse, and call response function(e,g; on_mouse_click, on_keyboard_click)
-- Dispatch/Response customer message: By analysis the ID of message, GuiLite would find response funciotn, and calll it(e,g: on_timer, on_custmer_refresh)
+- Add/Remove GUI element(e.g, button, label, dialog), set caption and location.
+- Dispatch/Response intput message: By analysis the location information from the message, GuiLite would find the widget which should be reponse, and call response function(e.g, on_mouse_click, on_keyboard_click)
+- Dispatch/Response customer message: By analysis the ID of message, GuiLite would find response funciotn, and calll it(: on_timer, on_custmer_refresh)
 
 Rendring include:
 - Draw pixel, line, rect
 - Set frame layer; While your drawing, you should input frame layer index to make your drawing at a specific layer
-- Update frame layer; While frame layer changed(e,g: open/close dialog), GuiLite would determine which pixel of frame layer should be display on screen
+- Update frame layer; While frame layer changed(e.g, open/close dialog), GuiLite would determine which pixel of frame layer should be display on screen
 
 👉Note: Rendering do not depend on Widgets management, In some case, you would render line/text/bitmap directly without any widgets in your GUI system. For example: Limted resource MCU platform.
 
 ## How to customize/extend GuiLite?
-In order to make GuiLite simple and clear, GuiLite only provide basic widgets(e,g: button, label, keyboard, spinx etc) implementation. If you want do more things on widgets, you can do it like this:
+In order to make GuiLite simple and clear, GuiLite only provide basic widgets(e.g, button, label, keyboard, spinx etc) implementation. If you want do more things on widgets, you can do it like this:
 - Update widgets code in GuiLite directly
 - Add new widgets file, and implement new widgets by reference GuiLite widgets code.
 
-If you would extend drawing method(e,g: draw circle/eclipse etc.), you can add your method in surface.cpp directly.
+If you would extend drawing method(e.g, draw circle/eclipse etc.), you can add your method in surface.cpp directly.
 
 How to render?
 See function draw_xxx() in surface.cpp word.cpp bitmap.cpp.
@@ -42,7 +42,7 @@ widgets folder:
 ## Widgets management
 Widgets include button, spinbox, label, keyboard, dialog, view; GuiLite will link all widgets by function: connect, then GuiLite will easy to find/add/remove any widget quickly. All the connections looks like a tree.
 
-For example: When you click a button, device get your finger location(x, y) will be send the root of the tree, GuiLite would find the button you click by comparing location information, then call the response function(e,g: repaint the button/change button status)
+For example: When you click a button, device get your finger location(x, y) will be send the root of the tree, GuiLite would find the button you click by comparing location information, then call the response function(e.g, repaint the button/change button status)
 
 ### How to create widgets?
 All widgets derived from class c_wnd. The widget will be created when the class has been instanced, at this time, the widget still alone, has nothing to do with UI system, could not response any user operation.
