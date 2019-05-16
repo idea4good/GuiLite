@@ -71,8 +71,8 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 | HostMonitor | iOS, Mac, Android, Windows, Linux | 创建复杂界面，扩展自定义控件，适配全平台 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | ★★★★ |
 
 ## 开发文档
+- [软件设计说明](HowToWork-cn.md)
 - [如何编译?](HowToBuild.md)
-- [设计原理](HowToWork-cn.md)
 - [如何布局UI?](HowLayoutWork.md)
 - [如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
 - [如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)

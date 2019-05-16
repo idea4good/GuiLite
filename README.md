@@ -73,8 +73,8 @@ GuiLite is only a framework, could not create UI by itself. In order to show how
 | HostMonitor | iOS, Mac, Android, Windows, Linux | Show how to build complex UI for all platforms | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | ★★★★ |
 
 ## Documents
+- [Design specification?](doc/HowToWork.md)
 - [How to build?](doc/HowToBuild.md)
-- [How GuiLite work?](doc/HowToWork.md)
 - [How to Layout widgets?](doc/HowLayoutWork.md)
 - [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
 - [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
