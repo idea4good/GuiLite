@@ -17,6 +17,8 @@ public:
 				short width, short height, WND_TREE* p_child_tree = NULL,
 				Z_ORDER_LEVEL max_zorder =  Z_ORDER_LEVEL_0);
 	void disabel_all_slide();
+	virtual bool c_slide_group::on_touch(int x, int y, TOUCH_ACTION action);
+	virtual bool on_key(KEY_TYPE key);
 protected:
 	virtual c_wnd* clone(){return new c_slide_group();}
 	c_wnd* m_slides[MAX_PAGES];

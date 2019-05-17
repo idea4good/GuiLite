@@ -152,3 +152,21 @@ void c_slide_group::disabel_all_slide()
 		}
 	}
 }
+
+bool c_slide_group::on_touch(int x, int y, TOUCH_ACTION action)
+{
+	if (m_slides[m_active_slide_index])
+	{
+		m_slides[m_active_slide_index]->on_touch(x, y, action);
+	}
+	return true;
+}
+
+bool c_slide_group::on_key(KEY_TYPE key)
+{
+	if (m_slides[m_active_slide_index])
+	{
+		m_slides[m_active_slide_index]->on_key(key);
+	}
+	return true;
+}
