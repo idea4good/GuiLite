@@ -9,7 +9,7 @@
 - [Thanks](#Thanks)
 ***
 ## Introduction
-- GuiLite is a barebone UI framework with 5000 lines of C++ code, it runs on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS, Docker and **MCU with or without OS**).
+- GuiLite is the smallest GUI library with 5000 lines of C++ code, it runs on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS, Docker and **MCU with or without OS**).
 - GuiLite is embeddable, it runs inside other UI frameworks(e.g, Qt, MFC, Winform, Cocoa). You could use GuiLite features and host UI features simultaneously.
 - GuiLite render UI by itself, independent of OS & Grphic library.
 - GuiLite could work with many languages(e.g. Swift, Java, C#, Golang).
@@ -73,13 +73,18 @@ GuiLite is only a framework, could not create UI by itself. In order to show how
 | HostMonitor | iOS, Mac, Android, Windows, Linux | Show how to build complex UI for all platforms | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | ★★★★ |
 
 ## Documents
-- [Design specification?](doc/HowToWork.md)
-- [How to build?](doc/HowToBuild.md)
-- [How to Layout widgets?](doc/HowLayoutWork.md)
-- [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
-- [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
-- [How to dispatch messages?](doc/HowMessageWork.md)
-- [UML chart of GuiLite core](doc/UML.md)
+GuiLite is the smallest and simplest GUI library.
+1. Just 5,000 line C++ code
+2. Only use basic C++ feature(class, virtual function), no complex syntax
+3. All rendering base on draw_pixel, no algorithm
+4. Full documents and small live demos for reference
+    - [Design specification](doc/HowToWork.md)
+    - [How to build?](doc/HowToBuild.md)
+    - [How to Layout widgets?](doc/HowLayoutWork.md)
+    - [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
+    - [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
+    - [How to dispatch messages?](doc/HowMessageWork.md)
+    - [UML chart of GuiLite core](doc/UML.md)
 
 ## How to learn?
 1. Build/Run GuiLite library

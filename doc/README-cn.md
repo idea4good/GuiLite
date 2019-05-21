@@ -1,4 +1,4 @@
-# GuiLite - 最轻量/最易懂的GUI库
+# GuiLite（超轻量UI框架） - 最轻量/最易懂的GUI库
 ![badge_build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![badge_docker](https://img.shields.io/badge/docker%20build-passing-brightgreen.svg) ![badge_platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS%20%7C%20iOS%20%7C%20Android%20%7C%20MCU-brightgreen.svg) ![badge_lincense](https://img.shields.io/badge/license-Apache%202-blue.svg) ![badge_lincense](https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg) 
 - [功能介绍](#功能介绍)
 - [快速上手](#快速上手)
@@ -8,7 +8,7 @@
 - [致谢](#致谢)
 ***
 ## GuiLite是什么鬼？
-- GuiLite（超轻量UI框架）是5千行代码的**全平台UI框架**，可以完美运行在iOS，Android，Linux（ARM/x86-64），Windows（包含VR），Mac，Docker和**有(无)操作系统的MCU**上。
+- GuiLite是5千行代码的**全平台UI框架**，可以完美运行在: iOS，Android，Linux（ARM/x86-64），Windows（包含VR），Mac，Docker和**有(无)操作系统的MCU**上。
 - GuiLite可以嵌入在iOS、Android、MFC、QT等其他UI系统中，让你的界面集百家之长，又不失个性。
 - GuiLite与操作系统及第三方图形库无关，甚至也可以运行在无OS的单片机环境。
 - GuiLite鼓励混合编程，开发者可以用GuiLite接管UI部分，用Swift，Java，Golang，C#，Python开发业务部分。
@@ -71,13 +71,18 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 | HostMonitor | iOS, Mac, Android, Windows, Linux | 创建复杂界面，扩展自定义控件，适配全平台 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | ★★★★ |
 
 ## 开发文档
-- [软件设计说明](HowToWork-cn.md)
-- [如何编译?](HowToBuild.md)
-- [如何布局UI?](HowLayoutWork.md)
-- [如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
-- [如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
-- [如何传递消息?](HowMessageWork.md)
-- [核心UML示意图](UML.md)
+GuiLite是最简单，易学的GUI库。
+1. 只有5千行C++代码
+2. 只使用C++的基本特性（类和虚函数），不涉及复杂语法
+3. 图形绘制以描点为基础，不使用任何算法
+4. 设计简单，并配有丰富的文档和QQ开发群在线支持。
+    - [软件设计说明](HowToWork-cn.md)
+    - [如何编译?](HowToBuild.md)
+    - [如何布局UI?](HowLayoutWork.md)
+    - [如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
+    - [如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
+    - [如何传递消息?](HowMessageWork.md)
+    - [核心UML示意图](UML.md)
 
 ## 学习方法
 1. **外围** - 成功编译GuiLite库
