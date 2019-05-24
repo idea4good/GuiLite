@@ -5,6 +5,7 @@
 #define GL_ATTR_VISIBLE		0x80000000L
 #define GL_ATTR_DISABLED	0x40000000L
 #define GL_ATTR_FOCUS		0x20000000L
+#define GL_ATTR_PRIORITY	0x10000000L// Handle touch action at high priority
 
 typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;
@@ -66,7 +67,7 @@ public:
 	int get_z_order() { return m_z_order; }
 	c_wnd* get_wnd_ptr(unsigned short id) const;
 	unsigned int get_style() const { return m_style; }
-	virtual void modify_style(unsigned int add_style = 0, unsigned int remove_style = 0);
+	void set_style(unsigned int style);
 
 	void set_str(const char* str) { m_str = str; }
 	int is_focus_wnd() const;
@@ -90,11 +91,10 @@ public:
 	c_wnd* get_prev_sibling() const { return m_prev_sibling; }
 	c_wnd* get_next_sibling() const { return m_next_sibling; }
 
-	void notify_parent(unsigned short msg_id, unsigned int w_param, long l_param);
-	virtual int	on_notify(unsigned short notify_code, unsigned short ctrl_id, long l_param);
+	void notify_parent(unsigned int msg_id, unsigned int ctrl_id, int param);
 
-	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
-	virtual bool on_key(KEY_TYPE key);
+	virtual bool on_touch(int x, int y, TOUCH_ACTION action);// return true: handled; false: not be handled.
+	virtual bool on_key(KEY_TYPE key);// return false: skip handling by parent;
 
 	c_surface* get_surface() { return m_surface; }
 	void set_surface(c_surface* surface) { m_surface = surface; }
@@ -116,7 +116,7 @@ protected:
 protected:
 	WND_STATUS		m_status;
 	unsigned int	m_style;
-	c_rect			m_wnd_rect;//position relative to parent wnd.
+	c_rect			m_wnd_rect;// position relative to parent wnd.
 	c_wnd*			m_parent;
 	c_wnd*			m_top_child;
 	c_wnd*			m_prev_sibling;

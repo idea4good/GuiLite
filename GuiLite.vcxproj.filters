@@ -1,74 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="core\src\adapter\api_win.cpp">
+    <ClCompile Include="widgets\button.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\dialog.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\edit.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\gesture.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\keyboard.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\label.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\list_box.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\slide_group.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\spinbox.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\table.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\wave_buffer.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\wave_ctrl.cpp">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="core\bitmap.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\cmd_target.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\display.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\rect.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\surface.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\theme.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\wnd.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\word.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\adapter\api_win.cpp">
       <Filter>core\adapter</Filter>
     </ClCompile>
-    <ClCompile Include="core\src\adapter\audio_win.cpp">
+    <ClCompile Include="core\adapter\audio_win.cpp">
       <Filter>core\adapter</Filter>
     </ClCompile>
-    <ClCompile Include="core\src\adapter\msg_win.cpp">
+    <ClCompile Include="core\adapter\msg_win.cpp">
       <Filter>core\adapter</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\button.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\dialog.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\edit.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\gesture.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\keyboard.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\label.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\list_box.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\slide_group.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\spinbox.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\table.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\wave_buffer.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\src\wave_ctrl.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="core\src\bitmap.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\src\cmd_target.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\src\display.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\src\rect.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\src\surface.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\src\theme.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\src\wnd.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\src\word.cpp">
-      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

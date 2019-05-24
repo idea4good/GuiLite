@@ -16,7 +16,6 @@ public:
 	static int open_dialog(c_dialog* p_dlg);
 	static int close_dialog(c_surface* surface);
 	static c_dialog* get_the_dialog(c_surface* surface);
-	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
 protected:
 	virtual const char* get_class_name(void) const {return "c_dialog";}
 	virtual void pre_create_wnd();

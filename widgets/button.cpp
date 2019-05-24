@@ -42,7 +42,7 @@ bool c_button::on_touch(int x, int y, TOUCH_ACTION action)
 		on_paint();
 		notify_parent(GL_BN_CLICKED, get_id(), 0);
 	}
-	return false;// Do not handle TOUCH_ACTION by other wnd.
+	return true;
 }
 
 bool c_button::on_key(KEY_TYPE key)

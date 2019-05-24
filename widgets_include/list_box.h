@@ -1,20 +1,11 @@
 #ifndef LIST_BOX_H
 #define LIST_BOX_H
 
-#define MAX_ITEM_NUM			12
+#define MAX_ITEM_NUM			4
+#define GL_LIST_CONFIRM			0x1
 
-#define GL_LIST_SELECT			0x1
-#define GL_LIST_CONFIRM		0x2
-#define GL_LIST_ROTATION		0x3
-
-#define ON_LIST_SELECT(ctrlId, func)                                       \
-{MSG_TYPE_WND, GL_LIST_SELECT, (c_cmd_target*)ctrlId, ctrlId, MSG_CALLBACK_VWV, reinterpret_cast<MsgFuncVV>(&func)},
-
-#define ON_LIST_CONFIRM(ctrlId, func)                                      \
-{MSG_TYPE_WND, GL_LIST_CONFIRM, (c_cmd_target*)ctrlId, ctrlId, MSG_CALLBACK_VWV, reinterpret_cast<MsgFuncVV>(&func)},
-
-#define ON_LIST_ROTATION(ctrlId, func)                                     \
-{MSG_TYPE_WND, GL_LIST_ROTATION, (c_cmd_target*)ctrlId, ctrlId, MSG_CALLBACK_VWL, reinterpret_cast<MsgFuncVV>(&func)},
+#define ON_LIST_CONFIRM(ctrlId, func) \
+{MSG_TYPE_WND, GL_LIST_CONFIRM, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, int)>(&func))},
 
 class c_list_box : public c_wnd
 {

@@ -16,10 +16,11 @@
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
-## 🔥新功能：星空效果
-![HelloStar](HelloStar.gif)
-- Hello Star 仅有[100+行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloStar/UIcode/UIcode.cpp)，用于向开发者展示：如何使用GuiLite开发“星空”效果。
-- 支持：MCU / Windows / Linux
+## 🔥新功能：控件的应用
+![HelloWidgets](HelloWidgets.gif)
+
+Hello Widgets 仅有[100多行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWidgets/UIcode/UIcode.cpp)，用于向初学者展示：如何使用GuiLite自带的控件。
+- 支持：Windows / Linux
 
 ## 功能介绍
 ### 卓越的跨平台能力
@@ -62,8 +63,9 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 | HelloParticle | Windows, Linux, STM32F103, STM32F429 | 粒子效果的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
 | HelloStar | Windows, Linux, STM32F103, STM32F429 | 星空效果的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloStar/README.md) | ★|
 | HelloGuiLite | Windows, Linux | 初始化GuiLite，加载资源，布局界面元素，按钮响应 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | ★★ |
+| HelloWidgets | Windows, Linux | 用于演示基本控件的使用方法 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWidgets/README.md) | ★★|
 | HelloMario | Windows, Linux, STM32F103, STM32F429 | 多图层的UI系统 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/README.md) | ★★|
-| HelloNavigation | Windows, Linux, STM32F103, STM32F429 | 用于非触摸屏场景，通过硬按键进行UI“导航” | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloNavigation/README.md) | ★★|
+| HelloNoTouch | Windows, Linux, STM32F103, STM32F429 | 用于非触摸屏场景，通过硬按键进行UI“导航” | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloNoTouch/README.md) | ★★|
 | HelloFont | Windows, Linux | 显示多种语言（不限：中、英文） | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | ★★ |
 | HelloAnimation | Windows, Linux | 动画的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloAnimation/README.md) | ★★ |
 | HelloSlide | Windows, Linux | 滑屏界面的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloSlide/README.md) | ★★★ |

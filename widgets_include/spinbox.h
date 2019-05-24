@@ -1,18 +1,14 @@
 #ifndef SPIN_BOX_H
 #define SPIN_BOX_H
 
-#define GL_SPIN_SELECT					0x2222
-#define GL_SPIN_CONFIRM					0x3333
-#define	GL_SPIN_ROTATION				0x4444
+#define GL_SPIN_CONFIRM				0x2222
+#define	GL_SPIN_CHANGE				0x3333
 
-#define ON_SPIN_SELECT(ctrlId, func)                                       \
-{MSG_TYPE_WND, GL_SPIN_SELECT, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWV, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
+#define ON_SPIN_CONFIRM(ctrlId, func) \
+{MSG_TYPE_WND, GL_SPIN_CONFIRM, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, int)>(&func))},
 
-#define ON_SPIN_CONFIRM(ctrlId, func)                                      \
-{MSG_TYPE_WND, GL_SPIN_CONFIRM, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWV, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
-
-#define ON_SPIN_ROTATION(ctrlId, func)                                     \
-{MSG_TYPE_WND, GL_SPIN_ROTATION, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
+#define ON_SPIN_CHANGE(ctrlId, func) \
+{MSG_TYPE_WND, GL_SPIN_CHANGE, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, int)>(&func))},
 
 class c_spin_box : public c_wnd
 {

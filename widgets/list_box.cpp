@@ -40,7 +40,6 @@ void c_list_box::on_paint()
 {
 	c_rect rect, empty_rect;
 	get_screen_rect(rect);
-	empty_rect.Empty();
 
 	switch(m_status)
 	{
@@ -49,6 +48,7 @@ void c_list_box::on_paint()
 		{
 			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
+			m_style &= ~GL_ATTR_PRIORITY;
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 		break;
@@ -57,6 +57,7 @@ void c_list_box::on_paint()
 		{
 			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
+			m_style &= ~GL_ATTR_PRIORITY;
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
 		break;
@@ -72,6 +73,7 @@ void c_list_box::on_paint()
 				m_z_order++;
 			}
 			m_surface->set_frame_layer(m_list_screen_rect, m_z_order);
+			m_style |= GL_ATTR_PRIORITY;
 			show_list();
 			return;
 		}
@@ -113,7 +115,7 @@ void c_list_box::on_touch_down(int x, int y)
 		{
 			m_status = STATUS_FOCUSED;
 			on_paint();
-			notify_parent(GL_LIST_CONFIRM, get_id(), 0);
+			notify_parent(GL_LIST_CONFIRM, get_id(), m_selected_item);
 		}        
 	}
 }
@@ -124,7 +126,6 @@ void c_list_box::on_touch_up(int x, int y)
 	{
 		m_status = STATUS_PUSHED;
 		on_paint();
-		notify_parent(GL_LIST_SELECT, get_id(), 0);
 	}
 	else if (STATUS_PUSHED == m_status)
 	{
@@ -138,7 +139,7 @@ void c_list_box::on_touch_up(int x, int y)
 			m_status = STATUS_FOCUSED;
 			select_item((y - m_list_wnd_rect.m_top) / ITEM_HEIGHT);
 			on_paint();
-			notify_parent(GL_LIST_CONFIRM, get_id(), 0);
+			notify_parent(GL_LIST_CONFIRM, get_id(), m_selected_item);
 		}
 		else
 		{

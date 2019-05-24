@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\core</IncludePath>
+              <IncludePath>./</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -385,52 +385,52 @@
             <File>
               <FileName>bitmap.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\core\src\bitmap.cpp</FilePath>
+              <FilePath>.\core\bitmap.cpp</FilePath>
             </File>
             <File>
               <FileName>cmd_target.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\core\src\cmd_target.cpp</FilePath>
+              <FilePath>.\core\cmd_target.cpp</FilePath>
             </File>
             <File>
               <FileName>display.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\core\src\display.cpp</FilePath>
+              <FilePath>.\core\display.cpp</FilePath>
             </File>
             <File>
               <FileName>rect.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\core\src\rect.cpp</FilePath>
+              <FilePath>.\core\rect.cpp</FilePath>
             </File>
             <File>
               <FileName>surface.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\core\src\surface.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>wnd.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\src\wnd.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>word.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\src\word.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>api_unknow.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\src\adapter\api_unknow.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>msg_unknow.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\src\adapter\msg_unknow.cpp</FilePath>
+              <FilePath>.\core\surface.cpp</FilePath>
             </File>
             <File>
               <FileName>theme.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\core\src\theme.cpp</FilePath>
+              <FilePath>.\core\theme.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>wnd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\core\wnd.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>word.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\core\word.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>api_unknow.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\core\adapter\api_unknow.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>msg_unknow.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\core\adapter\msg_unknow.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -440,22 +440,22 @@
             <File>
               <FileName>button.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\widgets\src\button.cpp</FilePath>
+              <FilePath>.\widgets\button.cpp</FilePath>
             </File>
             <File>
               <FileName>label.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\widgets\src\label.cpp</FilePath>
+              <FilePath>.\widgets\label.cpp</FilePath>
             </File>
             <File>
               <FileName>wave_buffer.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\widgets\src\wave_buffer.cpp</FilePath>
+              <FilePath>.\widgets\wave_buffer.cpp</FilePath>
             </File>
             <File>
               <FileName>wave_ctrl.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\widgets\src\wave_ctrl.cpp</FilePath>
+              <FilePath>.\widgets\wave_ctrl.cpp</FilePath>
             </File>
           </Files>
         </Group>

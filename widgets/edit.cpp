@@ -30,6 +30,7 @@ void c_edit::pre_create_wnd()
 
 	memset(m_str_input, 0, sizeof(m_str_input));
 	memset(m_str, 0, sizeof(m_str));
+	set_text(c_wnd::m_str);
 }
 
 void c_edit::set_text(const char* str)
@@ -123,6 +124,7 @@ void c_edit::on_paint()
 			s_keyboard.disconnect();
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
+			m_style &= ~GL_ATTR_PRIORITY;
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 		break;
@@ -132,6 +134,7 @@ void c_edit::on_paint()
 			s_keyboard.disconnect();
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
+			m_style &= ~GL_ATTR_PRIORITY;
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
 		break;
@@ -139,6 +142,7 @@ void c_edit::on_paint()
 		if (m_z_order == m_parent->get_z_order())
 		{
 			m_z_order++;
+			m_style |= GL_ATTR_PRIORITY;
 			show_keyboard();
 		}
 		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());

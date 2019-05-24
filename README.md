@@ -17,10 +17,10 @@
 - ⚙️We hope GuiLite is small enough to help you understand how UI works.
 - 👑You should be the master of your UI and not be tied to a specific framework.
 
-## 🔥New feature：Hello Star
-![HelloNavigation](doc/HelloStar.gif)
-- Hello Star has only [100+ lines code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloStar/UIcode/UIcode.cpp), showing you how to develop star field effect with GuiLite.
-- Support: MCU / Windows / Linux
+## 🔥New feature：Hello Widgets
+![HelloWidgets](doc/HelloWidgets.gif)
+- Hello Widgets has only [100+ lines code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWidgets/UIcode/UIcode.cpp), showing you how to use GuiLite widgets.
+- Support: Windows / Linux
 
 ## Features
 ### Cross platform
@@ -64,6 +64,7 @@ GuiLite is only a framework, could not create UI by itself. In order to show how
 | HelloParticle | Windows, Linux, STM32F103, STM32F429 | Show how to develop particle effect | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
 | HelloStar | Windows, Linux, STM32F103, STM32F429 | Show how to develop star field effect | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloStar/README.md) | ★ |
 | HelloGuiLite | Windows, Linux | Show how to Initialize UI, load resource, layout UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | ★★ |
+| HelloWidgets | Windows, Linux | Show how to use GuiLite widgets | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWidgets/README.md) | ★★ |
 | HelloMario | Windows, Linux, STM32F103, STM32F429 | Show how to develop multi-layer UI system | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/README.md) | ★★ |
 | HelloNavigation | Windows, Linux, STM32F103, STM32F429 | Show how to navigate/click widgets by hard button in non-touch GUI scenario | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloNavigation/README.md) | ★★|
 | HelloFont | Windows, Linux | Show how to use multi-language feature(UTF-8) | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/README.md) | ★★ |

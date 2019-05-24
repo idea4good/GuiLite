@@ -18,11 +18,6 @@ private:
 	
 	static const LATTICE* get_lattice(const FONT_INFO* font, unsigned int utf8_code);
 	static void get_string_pos(const char *s, const FONT_INFO* font, c_rect rect, unsigned int align_type, int &x, int &y);
-private:
-	c_word(){};
-	c_word(const c_word&);
-	c_word& operator=(const c_word&);
-	~c_word(){}
 };
 
 #endif

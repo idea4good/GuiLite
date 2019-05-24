@@ -115,7 +115,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>core;widgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Debug/</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -151,7 +151,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>core;widgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Debug/</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -187,7 +187,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>core;widgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Release/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -223,7 +223,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>core;widgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Release/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -388,29 +388,29 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="core\src\adapter\api_win.cpp" />
-    <ClCompile Include="core\src\adapter\audio_win.cpp" />
-    <ClCompile Include="core\src\adapter\msg_win.cpp" />
-    <ClCompile Include="core\src\bitmap.cpp" />
-    <ClCompile Include="core\src\cmd_target.cpp" />
-    <ClCompile Include="core\src\display.cpp" />
-    <ClCompile Include="core\src\rect.cpp" />
-    <ClCompile Include="core\src\surface.cpp" />
-    <ClCompile Include="core\src\theme.cpp" />
-    <ClCompile Include="core\src\wnd.cpp" />
-    <ClCompile Include="core\src\word.cpp" />
-    <ClCompile Include="widgets\src\button.cpp" />
-    <ClCompile Include="widgets\src\dialog.cpp" />
-    <ClCompile Include="widgets\src\edit.cpp" />
-    <ClCompile Include="widgets\src\gesture.cpp" />
-    <ClCompile Include="widgets\src\keyboard.cpp" />
-    <ClCompile Include="widgets\src\label.cpp" />
-    <ClCompile Include="widgets\src\list_box.cpp" />
-    <ClCompile Include="widgets\src\slide_group.cpp" />
-    <ClCompile Include="widgets\src\spinbox.cpp" />
-    <ClCompile Include="widgets\src\table.cpp" />
-    <ClCompile Include="widgets\src\wave_buffer.cpp" />
-    <ClCompile Include="widgets\src\wave_ctrl.cpp" />
+    <ClCompile Include="core\adapter\api_win.cpp" />
+    <ClCompile Include="core\adapter\audio_win.cpp" />
+    <ClCompile Include="core\adapter\msg_win.cpp" />
+    <ClCompile Include="core\bitmap.cpp" />
+    <ClCompile Include="core\cmd_target.cpp" />
+    <ClCompile Include="core\display.cpp" />
+    <ClCompile Include="core\rect.cpp" />
+    <ClCompile Include="core\surface.cpp" />
+    <ClCompile Include="core\theme.cpp" />
+    <ClCompile Include="core\wnd.cpp" />
+    <ClCompile Include="core\word.cpp" />
+    <ClCompile Include="widgets\button.cpp" />
+    <ClCompile Include="widgets\dialog.cpp" />
+    <ClCompile Include="widgets\edit.cpp" />
+    <ClCompile Include="widgets\gesture.cpp" />
+    <ClCompile Include="widgets\keyboard.cpp" />
+    <ClCompile Include="widgets\label.cpp" />
+    <ClCompile Include="widgets\list_box.cpp" />
+    <ClCompile Include="widgets\slide_group.cpp" />
+    <ClCompile Include="widgets\spinbox.cpp" />
+    <ClCompile Include="widgets\table.cpp" />
+    <ClCompile Include="widgets\wave_buffer.cpp" />
+    <ClCompile Include="widgets\wave_ctrl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

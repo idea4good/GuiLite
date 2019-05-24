@@ -1,4 +1,4 @@
-#include "core_include/api.h"
+﻿#include "core_include/api.h"
 #include "core_include/rect.h"
 #include "core_include/cmd_target.h"
 #include "core_include/wnd.h"
@@ -47,65 +47,39 @@ void c_spin_box::pre_create_wnd()
 bool c_spin_box::on_touch(int x, int y, TOUCH_ACTION action)
 {
 	(action == TOUCH_DOWN) ? on_touch_down(x, y) : on_touch_up(x, y);
-	return true;
+	return c_wnd::on_touch(x, y, action);
 }
 
 void c_spin_box::on_touch_down(int x, int y)
 {
-	c_rect arrow_rect = m_wnd_rect;
-	arrow_rect.m_right = m_bt_down_rect.m_right;
-	arrow_rect.m_bottom = m_bt_down_rect.m_bottom;
-
-	if ( TRUE == m_wnd_rect.PtInRect(x, y) )
-	{//click spin box
-		if (STATUS_NORMAL == m_status)
-		{
-			m_parent->set_child_focus(this);
-		}
+	if (FALSE == m_wnd_rect.PtInRect(x, y))
+	{//maybe click on up/down arrow button
+		return;
 	}
-	else if (TRUE == arrow_rect.PtInRect(x, y))
-	{//click arrow button
-        c_wnd::on_touch(x, y, TOUCH_DOWN);
-	}
-	else
-	{//click invalid place.
-		if (STATUS_PUSHED == m_status)
-		{
-			if (m_value != m_cur_value)
-			{
-				m_value = m_cur_value;
-			}
-			m_status = STATUS_FOCUSED;
-			on_paint();
-			notify_parent(GL_SPIN_CONFIRM, get_id(), 0);
-		}        
+	if (STATUS_NORMAL == m_status)
+	{
+		m_parent->set_child_focus(this);
 	}
 }
 
 void c_spin_box::on_touch_up(int x, int y)
 {
+	if (FALSE == m_wnd_rect.PtInRect(x, y))
+	{//maybe click on up/down arrow button
+		return;
+	}
+
 	if (STATUS_FOCUSED == m_status)
 	{
 		m_status = STATUS_PUSHED;
 		on_paint();
-		notify_parent(GL_SPIN_SELECT, get_id(), 0);
 	}
 	else if (STATUS_PUSHED == m_status)
 	{
-		if (m_wnd_rect.PtInRect(x, y))
-		{//click spin box.
-			if (m_value != m_cur_value)
-			{
-				m_value = m_cur_value;
-			}
-			m_status = STATUS_FOCUSED;
-			on_paint();
-			notify_parent(GL_SPIN_CONFIRM, get_id(), 0);
-		}
-		else
-		{//click arrow button.
-			c_wnd::on_touch(x, y, TOUCH_UP);
-		}
+		m_value = m_cur_value;
+		m_status = STATUS_FOCUSED;
+		on_paint();
+		notify_parent(GL_SPIN_CONFIRM, get_id(), m_value);
 	}
 }
 
@@ -124,30 +98,24 @@ void c_spin_box::on_kill_focus()
 
 void c_spin_box::show_arrow_button()
 {
-	m_surface->fill_rect(m_bt_up_rect.m_left, m_bt_up_rect.m_top, m_bt_down_rect.m_right, m_bt_down_rect.m_bottom, GL_RGB(99,108,124), m_z_order);
-
-	m_bt_up.connect(this, ID_BT_ARROW_UP, 0, 0, m_wnd_rect.Height(), m_bt_up_rect.Width(),m_bt_up_rect.Height());
-	m_bt_up.set_bitmap(c_theme::get_bmp(BITMAP_UP_ARROW1));
-	m_bt_up.set_focus_bitmap(c_theme::get_bmp(BITMAP_UP_ARROW2));
-	m_bt_up.set_pushed_bitmap(c_theme::get_bmp(BITMAP_UP_ARROW2));
+	m_bt_up.connect(this, ID_BT_ARROW_UP, "\xe2\x96\xb2"/*▲*/, 0, m_wnd_rect.Height(), m_bt_up_rect.Width(),m_bt_up_rect.Height());
 	m_bt_up.show_window();
-
-	m_bt_down.connect(this, ID_BT_ARROW_DOWN, 0, m_bt_up_rect.Width(), m_wnd_rect.Height(), m_bt_down_rect.Width(),m_bt_down_rect.Height());
-	m_bt_down.set_bitmap(c_theme::get_bmp(BITMAP_DOWN_ARROW1));
-	m_bt_down.set_focus_bitmap(c_theme::get_bmp(BITMAP_DOWN_ARROW2));
-	m_bt_down.set_pushed_bitmap(c_theme::get_bmp(BITMAP_DOWN_ARROW2));
+	m_bt_down.connect(this, ID_BT_ARROW_DOWN, "\xe2\x96\xbc"/*▼*/, m_bt_up_rect.Width(), m_wnd_rect.Height(), m_bt_down_rect.Width(),m_bt_down_rect.Height());
 	m_bt_down.show_window();
+
+	m_style |= GL_ATTR_PRIORITY;
 }
 
 void c_spin_box::hide_arrow_button()
 {
 	m_bt_up.disconnect();
 	m_bt_down.disconnect();
+	m_style &= ~GL_ATTR_PRIORITY;
 }
 
 void c_spin_box::on_paint()
 {
-	c_rect rect,tmp_rect;
+	c_rect rect, tmp_rect, empty_rect;
 	get_screen_rect(rect);
 	tmp_rect.m_left = rect.m_left;
 	tmp_rect.m_right = rect.m_right;
@@ -158,8 +126,7 @@ void c_spin_box::on_paint()
 		if (m_z_order > m_parent->get_z_order())
 		{
 			hide_arrow_button();
-			tmp_rect.Empty();
-			m_surface->set_frame_layer(tmp_rect, m_z_order);
+			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
@@ -168,8 +135,7 @@ void c_spin_box::on_paint()
 		if (m_z_order > m_parent->get_z_order())
 		{
 			hide_arrow_button();
-			tmp_rect.Empty();
-			m_surface->set_frame_layer(tmp_rect, m_z_order);
+			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
@@ -199,26 +165,22 @@ void c_spin_box::on_paint()
 
 void c_spin_box::on_arrow_up_bt_click(unsigned int ctr_id)
 {
+	if (m_cur_value + m_step > m_max)
+	{
+		return;
+	}
 	m_cur_value += m_step;
-	if (m_cur_value > m_max)
-	{
-		m_cur_value = m_max;
-	}
-	else
-	{
-		on_paint();
-	}
+	notify_parent(GL_SPIN_CHANGE, get_id(), m_cur_value);
+	on_paint();
 }
 
 void c_spin_box::on_arrow_down_bt_click(unsigned int ctr_id)
 {
+	if (m_cur_value - m_step < m_min)
+	{
+		return;
+	}
 	m_cur_value -= m_step;
-	if (m_cur_value < m_min)
-	{
-		m_cur_value = m_min;
-	}
-	else
-	{
-		on_paint();
-	}
+	notify_parent(GL_SPIN_CHANGE, get_id(), m_cur_value);
+	on_paint();
 }

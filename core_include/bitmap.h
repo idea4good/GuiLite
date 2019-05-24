@@ -12,11 +12,6 @@ private:
 	static void draw_bitmap_565(c_surface* surface, int z_order, int x, int y, int xsize, int ysize, const unsigned char* pPixel, unsigned int mask_color);
 	static void get_bitmap_pos(const BITMAP_INFO *pBitmap, c_rect rect, unsigned int align_type, int &x, int &y);
 	static void draw_bitmap_565_in_rect(c_surface* surface, int z_order, int x, int y, int width, int height, int xsize, int ysize, const unsigned char* pPixel, unsigned int mask_color);
-
-	c_bitmap(){}
-	c_bitmap(const c_bitmap&);
-	c_bitmap& operator=(const c_bitmap&);
-	~c_bitmap(){}
 };
 
 #endif

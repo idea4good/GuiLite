@@ -4,15 +4,15 @@ PROJECT(GuiLite)
 
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR})
 
-INCLUDE_DIRECTORIES(core widgets)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR})
 
 # core
-FILE(GLOB CORE_SRC      core/src/*.cpp)
-FILE(GLOB CORE_ADAPTER  core/src/adapter/api_linux.cpp
-                        core/src/adapter/audio_linux.cpp
-                        core/src/adapter/msg_linux.cpp)
+FILE(GLOB CORE_SRC      core/*.cpp)
+FILE(GLOB CORE_ADAPTER  core/adapter/api_linux.cpp
+                        core/adapter/audio_linux.cpp
+                        core/adapter/msg_linux.cpp)
 # gui
-FILE(GLOB WIDGETS_SRC       widgets/src/*.cpp)
+FILE(GLOB WIDGETS_SRC       widgets/*.cpp)
 
 # build static library
 ADD_LIBRARY(GuiLite STATIC ${CORE_SRC} ${CORE_ADAPTER} ${WIDGETS_SRC})
