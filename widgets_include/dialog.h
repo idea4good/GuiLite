@@ -13,7 +13,7 @@ typedef struct
 class c_dialog : public c_wnd
 {
 public:
-	static int open_dialog(c_dialog* p_dlg);
+	static int open_dialog(c_dialog* p_dlg, bool modal_mode = true);
 	static int close_dialog(c_surface* surface);
 	static c_dialog* get_the_dialog(c_surface* surface);
 protected:

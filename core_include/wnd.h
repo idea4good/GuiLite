@@ -5,7 +5,7 @@
 #define GL_ATTR_VISIBLE		0x80000000L
 #define GL_ATTR_DISABLED	0x40000000L
 #define GL_ATTR_FOCUS		0x20000000L
-#define GL_ATTR_PRIORITY	0x10000000L// Handle touch action at high priority
+#define GL_ATTR_MODAL		0x10000000L// Handle touch action at high priority
 
 typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;
@@ -52,7 +52,6 @@ class c_wnd : public c_cmd_target
 public:
 	c_wnd();
 	virtual ~c_wnd() {};
-	virtual const char* get_class_name() const { return "c_wnd"; }
 	virtual int connect(c_wnd *parent, unsigned short resource_id, const char* str,
 		short x, short y, short width, short height, WND_TREE* p_child_tree = NULL);
 	virtual c_wnd* connect_clone(c_wnd *parent, unsigned short resource_id, const char* str,

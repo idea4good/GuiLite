@@ -155,6 +155,8 @@ void c_slide_group::disabel_all_slide()
 
 bool c_slide_group::on_touch(int x, int y, TOUCH_ACTION action)
 {
+	x -= m_wnd_rect.m_left;
+	y -= m_wnd_rect.m_top;
 	if (m_slides[m_active_slide_index])
 	{
 		m_slides[m_active_slide_index]->on_touch(x, y, action);

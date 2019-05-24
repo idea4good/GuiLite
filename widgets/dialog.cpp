@@ -41,7 +41,7 @@ c_dialog* c_dialog::get_the_dialog(c_surface* surface)
 	return NULL;
 }
 
-int c_dialog::open_dialog(c_dialog* p_dlg)
+int c_dialog::open_dialog(c_dialog* p_dlg, bool modal_mode)
 {
 	if (NULL == p_dlg)
 	{
@@ -63,7 +63,7 @@ int c_dialog::open_dialog(c_dialog* p_dlg)
 	p_dlg->get_screen_rect(rc);
 	p_dlg->get_surface()->set_frame_layer(rc, Z_ORDER_LEVEL_1);
 
-	p_dlg->set_style(GL_ATTR_VISIBLE | GL_ATTR_FOCUS | GL_ATTR_PRIORITY);
+	p_dlg->set_style(modal_mode ? (GL_ATTR_VISIBLE | GL_ATTR_FOCUS | GL_ATTR_MODAL) : (GL_ATTR_VISIBLE | GL_ATTR_FOCUS));
 	p_dlg->show_window();
 	p_dlg->set_me_the_dialog();
 	return 1;

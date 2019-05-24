@@ -477,7 +477,7 @@ bool c_wnd::on_touch(int x, int y, TOUCH_ACTION action)
 		if (GL_ATTR_VISIBLE == (child->m_style & GL_ATTR_VISIBLE))
 		{
 			child->get_wnd_rect(rect);
-			if (TRUE == rect.PtInRect(x, y) || child->m_style & GL_ATTR_PRIORITY)
+			if (TRUE == rect.PtInRect(x, y) || child->m_style & GL_ATTR_MODAL)
 			{
 				if (TRUE == child->is_focus_wnd())
 				{

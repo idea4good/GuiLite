@@ -48,7 +48,7 @@ void c_list_box::on_paint()
 		{
 			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
-			m_style &= ~GL_ATTR_PRIORITY;
+			m_style &= ~GL_ATTR_MODAL;
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 		break;
@@ -57,7 +57,7 @@ void c_list_box::on_paint()
 		{
 			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
-			m_style &= ~GL_ATTR_PRIORITY;
+			m_style &= ~GL_ATTR_MODAL;
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
 		break;
@@ -73,7 +73,7 @@ void c_list_box::on_paint()
 				m_z_order++;
 			}
 			m_surface->set_frame_layer(m_list_screen_rect, m_z_order);
-			m_style |= GL_ATTR_PRIORITY;
+			m_style |= GL_ATTR_MODAL;
 			show_list();
 			return;
 		}

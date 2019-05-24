@@ -124,7 +124,7 @@ void c_edit::on_paint()
 			s_keyboard.disconnect();
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
-			m_style &= ~GL_ATTR_PRIORITY;
+			m_style &= ~GL_ATTR_MODAL;
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 		break;
@@ -134,7 +134,7 @@ void c_edit::on_paint()
 			s_keyboard.disconnect();
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
-			m_style &= ~GL_ATTR_PRIORITY;
+			m_style &= ~GL_ATTR_MODAL;
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
 		break;
@@ -142,7 +142,7 @@ void c_edit::on_paint()
 		if (m_z_order == m_parent->get_z_order())
 		{
 			m_z_order++;
-			m_style |= GL_ATTR_PRIORITY;
+			m_style |= GL_ATTR_MODAL;
 			show_keyboard();
 		}
 		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());

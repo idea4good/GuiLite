@@ -9,7 +9,6 @@ typedef struct struct_bitmap_info BITMAP_INFO;
 class c_button : public c_wnd
 {
 public:
-	virtual const char* get_class_name() const {return "c_button";}
 	virtual c_wnd* clone(){return new c_button();}
 
 	void set_bitmap(const BITMAP_INFO *pBitmap) { m_bitmap_normal = pBitmap; }

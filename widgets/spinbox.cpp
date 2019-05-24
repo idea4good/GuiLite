@@ -103,14 +103,14 @@ void c_spin_box::show_arrow_button()
 	m_bt_down.connect(this, ID_BT_ARROW_DOWN, "\xe2\x96\xbc"/*▼*/, m_bt_up_rect.Width(), m_wnd_rect.Height(), m_bt_down_rect.Width(),m_bt_down_rect.Height());
 	m_bt_down.show_window();
 
-	m_style |= GL_ATTR_PRIORITY;
+	m_style |= GL_ATTR_MODAL;
 }
 
 void c_spin_box::hide_arrow_button()
 {
 	m_bt_up.disconnect();
 	m_bt_down.disconnect();
-	m_style &= ~GL_ATTR_PRIORITY;
+	m_style &= ~GL_ATTR_MODAL;
 }
 
 void c_spin_box::on_paint()
