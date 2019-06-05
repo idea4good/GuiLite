@@ -17,10 +17,9 @@
 - ⚙️We hope GuiLite is small enough to help you understand how UI works.
 - 👑You should be the master of your UI and not be tied to a specific framework.
 
-## 🔥New feature：Hello Widgets
-![HelloWidgets](doc/HelloWidgets.gif)
-- Hello Widgets has only [100+ lines code](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWidgets/UIcode/UIcode.cpp), showing you how to use GuiLite widgets.
-- Support: Windows / Linux
+## 🔥New feature：GuiLite previewer
+[GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer) is a Visual Studio Code extion, could read layout information from source code, and show it on preview page. With its help, you could design your GUI by coding(no dragging at all :)
+![GuiLitePreviewer](doc/Previewer.gif)
 
 ## Features
 ### Cross platform

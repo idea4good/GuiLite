@@ -16,11 +16,10 @@
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
-## 🔥新功能：控件的应用
-![HelloWidgets](HelloWidgets.gif)
+## 🔥新功能：GuiLite Previewer(设计器)
+[GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer)是一个Visual Studio Code插件，它可以直接从开发者的代码中读取“布局”信息，并直接展示在预览页面上；从而，让开发者用最熟悉的（代码）方式，进行GUI设计。
+![GuiLitePreviewer](Previewer.gif)
 
-Hello Widgets 仅有[100多行代码](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWidgets/UIcode/UIcode.cpp)，用于向初学者展示：如何使用GuiLite自带的控件。
-- 支持：Windows / Linux
 
 ## 功能介绍
 ### 卓越的跨平台能力
