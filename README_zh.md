@@ -16,41 +16,43 @@
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
-## 🔥新功能：GuiLite Previewer(设计器)
-[GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer)是一个Visual Studio Code插件，它可以直接从开发者的代码中读取“布局”信息，并直接展示在预览页面上；从而，让开发者用最熟悉的（代码）方式，进行GUI设计。
-![GuiLitePreviewer](Previewer.gif)
-
+## 🔥新功能：GuiLite Previewer(所见即所得的GuiLite开发插件)
+- [GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer)是一个Visual Studio Code插件，它可以自动提取源代码的GUI布局信息，并实时显示在“预览”页面上(所见即所得)
+- **不需要**“拖拽”控件，仅通过敲代码，就可以完成所有工作（例如：代码，UI编辑，编译，运行，调试）
+- **不需要**使用庞大的GUI编辑工具（或IDE，例如：Android Studio, Qt designer）
+- **不需要**使用可扩展标记语言（例如：xml, xaml）
+![GuiLitePreviewer](doc/Previewer.gif)
 
 ## 功能介绍
 ### 卓越的跨平台能力
 | ARM Linux | STM32 Without OS |
 | --- | --- |
-| ![ARM Linux](Linux.gif) | ![MCU](HelloParticle.gif) ![MCU](HelloWave.gif) |
+| ![ARM Linux](doc/Linux.gif) | ![MCU](doc/HelloParticle.gif) ![MCU](doc/HelloWave.gif) |
 
 | Windows Mixed Reality | Android |
 | --- | --- |
-| ![Win MR](WinMR.gif) | ![Android](Android.gif) |
+| ![Win MR](doc/WinMR.gif) | ![Android](doc/Android.gif) |
 
 | macOS | iOS |
 | --- | --- |
-| ![macOS](Mac.gif) | ![iOS](Ios.landscape.gif) |
+| ![macOS](doc/Mac.gif) | ![iOS](doc/Ios.landscape.gif) |
 ***
 ### 支持Docker容器
 我们把GuiLite demo做成了Docker映像，只需一行命令，就可以将最新的GuiLite demo升级/部署/运行在你的设备上了。
 - `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 ***
 ### 易于定制界面
-![wallpaper](wallpaper.jpg)
+![wallpaper](doc/wallpaper.jpg)
 ***
 ### 万国语(unicode)：
-![unicode](unicode.jpg)
+![unicode](doc/unicode.jpg)
 ***
 ### “换肤”功能
-![multi-theme](multi-theme.png)
+![multi-theme](doc/multi-theme.png)
 ***
 ### IoT（物联网）功能
-- 上报“编译/运行”情况至“云端”：<br>![BuildInfo](BuildInfo.png)
-- 同步“运行数据”至“云端”：<br>![DataOnCloud](data_on_cloud.png)
+- 上报“编译/运行”情况至“云端”：<br>![BuildInfo](doc/BuildInfo.png)
+- 同步“运行数据”至“云端”：<br>![DataOnCloud](doc/data_on_cloud.png)
 ***
 ## 快速上手
 GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何用GuiLite开发App，我们提供了一些实例程序给大家参考。
@@ -77,13 +79,13 @@ GuiLite是最简单，易学的GUI库。
 2. 只使用C++的基本特性（类和虚函数），不涉及复杂语法
 3. 图形绘制以描点为基础，不使用任何算法
 4. 设计简单，配有丰富的文档和实例程序；遇到问题，可以在QQ群获得帮助
-    - [软件设计说明](HowToWork-cn.md)
-    - [如何编译?](HowToBuild.md)
-    - [如何布局UI?](HowLayoutWork.md)
+    - [软件设计说明](doc/HowToWork-cn.md)
+    - [如何编译?](doc/HowToBuild.md)
+    - [如何布局UI?](doc/HowLayoutWork.md)
     - [如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
     - [如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
-    - [如何传递消息?](HowMessageWork.md)
-    - [核心UML示意图](UML.md)
+    - [如何传递消息?](doc/HowMessageWork.md)
+    - [核心UML示意图](doc/UML.md)
 
 ## 学习方法
 1. **外围** - 成功编译GuiLite库
@@ -102,5 +104,5 @@ GuiLite是最简单，易学的GUI库。
 [中国码云链接](https://gitee.com/idea4good/GuiLite)
 
 ## 致谢
-- 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>[<img src="qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
+- 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>[<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
 - 感谢来自[码云用户](https://gitee.com/idea4good/GuiLite)的捐赠，您的每一分钱都会用来帮助急需帮助的中国儿童或家庭。

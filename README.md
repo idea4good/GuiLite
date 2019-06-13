@@ -1,6 +1,6 @@
 # GuiLite - The smallest/simplest/stablest GUI library
 ![badge_build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![badge_docker](https://img.shields.io/badge/docker%20build-passing-brightgreen.svg) ![badge_platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS%20%7C%20iOS%20%7C%20Android%20%7C%20MCU-brightgreen.svg) ![badge_lincense](https://img.shields.io/badge/license-Apache%202-blue.svg) ![badge_lincense](https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg) 
-- [中文](doc/README-cn.md)
+- [中文](README_zh.md)
 - [Features](#Features)
 - [Start with Demo](#Start-with-Demo)
 - [Documents](#Documents)
@@ -17,8 +17,11 @@
 - ⚙️We hope GuiLite is small enough to help you understand how UI works.
 - 👑You should be the master of your UI and not be tied to a specific framework.
 
-## 🔥New feature：GuiLite previewer
-[GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer) is a Visual Studio Code extion, could read layout information from source code, and show it on preview page. With its help, you could design your GUI by coding(no dragging at all :)
+## 🔥New feature：GuiLite previewer(WYSIWYG extension for GuiLite)
+- [GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer) is a Visual Studio Code extension, could extract GUI information from C++ code and preview GUI at preview page(What you see is what you get)
+- No need for drag-and-drop widgets, everything (e.g. code/design/build/debug) could be done by coding
+- No need for special GUI editor(e.g. Android Studio, Qt designer)
+- No need for Extensible Markup Language(e.g. xml, xaml)
 ![GuiLitePreviewer](doc/Previewer.gif)
 
 ## Features
