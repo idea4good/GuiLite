@@ -98,7 +98,7 @@ GuiLite is the smallest and simplest GUI library.
 
 ## Videos
 - [GuiLite introduction](https://www.youtube.com/watch?v=grqXEz3bdC0)
-- [3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
+- [3D GuiLite](https://www.youtube.com/watch?v=8B95SDBwWSM)
 - [GuiLite + STM32](https://v.youku.com/v_show/id_XNDAwNzM5MTM3Ng)
 
 ## Mirror repository
