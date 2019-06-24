@@ -1,8 +1,6 @@
 #ifndef EDIT_H
 #define EDIT_H
 
-#define KEY_BOARD_STYLE    	0x00001000L
-#define NUM_BOARD_STYLE    	0x00002000L
 #define MAX_EDIT_STRLEN		32
 
 class c_edit : public c_wnd
@@ -12,6 +10,7 @@ public:
 	virtual c_wnd* clone(){return new c_edit();}
 	const char* get_text(){return m_str;}
 	void set_text(const char* str);
+	void set_keyboard_style(KEYBOARD_STYLE kb_sytle) { m_kb_style = kb_sytle; }
 	
 protected:
 	virtual void pre_create_wnd();
@@ -27,6 +26,7 @@ private:
 	void on_touch_down(int x, int y);
 	void on_touch_up(int x, int y);
 
+	KEYBOARD_STYLE m_kb_style;
 	char m_str_input[MAX_EDIT_STRLEN];
 	char m_str[MAX_EDIT_STRLEN];
 };

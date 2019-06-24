@@ -27,13 +27,13 @@ typedef enum
 class c_keyboard: public c_wnd
 {
 public:
-	virtual int connect(c_wnd *user, unsigned short resource_id);
+	virtual int connect(c_wnd *user, unsigned short resource_id, KEYBOARD_STYLE style);
 	KEYBOARD_STATUS get_cap_status(){return m_cap_status;}
-	void set_style(KEYBOARD_STYLE style) { m_style = style; }
 	char* get_str() { return m_str; }
 protected:
 	virtual void pre_create_wnd();
 	virtual c_wnd* clone(){return new c_keyboard();}
+	virtual void on_paint();
 
 	void on_char_clicked(unsigned int ctrl_id);
 	void on_del_clicked(unsigned int ctrl_id);
@@ -46,7 +46,6 @@ private:
 	char m_str[32];
 	int	 m_str_len;
 	KEYBOARD_STATUS m_cap_status;
-	KEYBOARD_STYLE	m_stlyle;
 };
 
 class c_keyboard_button : public c_button

@@ -1,4 +1,4 @@
-# GuiLite - The smallest/simplest/stablest GUI library
+# GuiLite - All donations will be used to help sick kids
 ![badge_build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![badge_docker](https://img.shields.io/badge/docker%20build-passing-brightgreen.svg) ![badge_platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS%20%7C%20iOS%20%7C%20Android%20%7C%20MCU-brightgreen.svg) ![badge_lincense](https://img.shields.io/badge/license-Apache%202-blue.svg) ![badge_lincense](https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg) 
 - [中文](README_zh.md)
 - [Features](#Features)
@@ -98,7 +98,7 @@ GuiLite is the smallest and simplest GUI library.
 
 ## Videos
 - [GuiLite introduction](https://www.youtube.com/watch?v=grqXEz3bdC0)
-- [3D GuiLite](https://www.youtube.com/watch?v=8B95SDBwWSM)
+- [3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
 - [GuiLite + STM32](https://v.youku.com/v_show/id_XNDAwNzM5MTM3Ng)
 
 ## Mirror repository
@@ -106,4 +106,4 @@ GuiLite is the smallest and simplest GUI library.
 
 ## Thanks
 - Thanks the help from QQ group, you guys make GuiLite better! And welcome new friend to join us.<br>[<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
-- Thanks the donations from [Gitee users](https://gitee.com/idea4good/GuiLite), every penny of donations will be used for needy children or family of China.
+- Thanks the donations from [Gitee users](https://gitee.com/idea4good/GuiLite), every penny of donations will be used to help sick kids.

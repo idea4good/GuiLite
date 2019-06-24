@@ -8,23 +8,23 @@
 #include "core_include/theme.h"
 #include "../widgets_include/button.h"
 #include "../widgets_include/label.h"
+#include "../widgets_include/keyboard.h"
 #include "../widgets_include/edit.h"
 #include "../widgets_include/keyboard.h"
 #include <string.h>
 
-#define IDD_ALL_KEY_BOARD		0x5012
-#define IDD_NUM_KEY_BOARD		0x5013
+#define IDD_KEY_BOARD		0x1
 
 GL_BEGIN_MESSAGE_MAP(c_edit)
-ON_KEYBORAD_UPDATE(IDD_ALL_KEY_BOARD, c_edit::on_key_board_click)
-ON_KEYBORAD_UPDATE(IDD_NUM_KEY_BOARD, c_edit::on_key_board_click)
+ON_KEYBORAD_UPDATE(IDD_KEY_BOARD, c_edit::on_key_board_click)
 GL_END_MESSAGE_MAP()
 
 static c_keyboard  s_keyboard;
 
 void c_edit::pre_create_wnd()
 {
-	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER | KEY_BOARD_STYLE;
+	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
+	m_kb_style = STYLE_ALL_BOARD;
 	m_font_type = c_theme::get_font(FONT_DEFAULT);
 	m_font_color = c_theme::get_color(COLOR_WND_FONT);
 
@@ -165,22 +165,7 @@ void c_edit::on_paint()
 
 void c_edit::show_keyboard()
 {
-	if (s_keyboard.get_id())
-	{
-		ASSERT(FALSE);
-		return;
-	}
-
-	if ((get_style()&KEY_BOARD_STYLE) == KEY_BOARD_STYLE )
-	{
-		s_keyboard.set_style(STYLE_ALL_BOARD);
-		s_keyboard.connect(this, IDD_ALL_KEY_BOARD);
-	}
-	else
-	{
-		s_keyboard.set_style(STYLE_NUM_BOARD);
-		s_keyboard.connect(this, IDD_NUM_KEY_BOARD);
-	}
+	s_keyboard.connect(this, IDD_KEY_BOARD, m_kb_style);
 
 	c_rect kb_rect;
 	s_keyboard.get_screen_rect(kb_rect);
