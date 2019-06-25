@@ -106,4 +106,4 @@ GuiLite是最简单，易学的GUI库。
 ## 致谢和慈善
 - 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>[<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
 - 感谢来自[码云用户](https://gitee.com/idea4good/GuiLite)的捐赠，每一分捐赠都会用来救助大病儿童。
-- [大病儿童帮扶记录](doc/DonationList.md)
+- [大病儿童帮扶记录](doc/CharityTracker.md)

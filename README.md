@@ -107,4 +107,4 @@ GuiLite is the smallest and simplest GUI library.
 ## Thanks and Charity
 - Thanks for the help from QQ group, you guys make GuiLite better! And welcome new friend to join us.<br>[<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
 - Thanks for the donations from [Gitee users](https://gitee.com/idea4good/GuiLite), all donations will be used to help sick kids
-- Check the charity action [here](doc/DonationList.md)
+- Check the charity action [here](doc/CharityTracker.md)
