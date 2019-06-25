@@ -5,7 +5,7 @@
 - [开发文档](#开发文档)
 - [学习方法](#学习方法)
 - [视频链接](#视频链接)
-- [致谢](#致谢)
+- [🙏致谢和❤️慈善](#致谢和慈善)
 ***
 ## GuiLite是什么鬼？
 - GuiLite是5千行代码的**全平台UI框架**，可以完美运行在: iOS，Android，Linux（ARM/x86-64），Windows（包含VR），Mac，Docker和**有(无)操作系统的MCU**上。
@@ -103,6 +103,7 @@ GuiLite是最简单，易学的GUI库。
 ## 镜像代码仓库
 [中国码云链接](https://gitee.com/idea4good/GuiLite)
 
-## 致谢
+## 致谢和慈善
 - 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>[<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
-- 感谢来自[码云用户](https://gitee.com/idea4good/GuiLite)的捐赠，您的每一分钱都会用来救助大病儿童。
+- 感谢来自[码云用户](https://gitee.com/idea4good/GuiLite)的捐赠，每一分捐赠都会用来救助大病儿童。
+- [大病儿童帮扶记录](doc/DonationList.md)

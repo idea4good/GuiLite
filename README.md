@@ -6,7 +6,7 @@
 - [Documents](#Documents)
 - [How to Learn?](#How-to-Learn)
 - [Videos](#Videos)
-- [Thanks](#Thanks)
+- [🙏Thanks & ❤️Charity](#Thanks-and-Charity)
 ***
 ## Introduction
 - GuiLite is the smallest GUI library with 5000 lines of C++ code, it runs on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS, Docker and **MCU with or without OS**).
@@ -104,6 +104,7 @@ GuiLite is the smallest and simplest GUI library.
 ## Mirror repository
 [Gitee in China](https://gitee.com/idea4good/GuiLite)
 
-## Thanks
-- Thanks the help from QQ group, you guys make GuiLite better! And welcome new friend to join us.<br>[<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
-- Thanks the donations from [Gitee users](https://gitee.com/idea4good/GuiLite), every penny of donations will be used to help sick kids.
+## Thanks and Charity
+- Thanks for the help from QQ group, you guys make GuiLite better! And welcome new friend to join us.<br>[<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
+- Thanks for the donations from [Gitee users](https://gitee.com/idea4good/GuiLite), all donations will be used to help sick kids
+- Check the charity action [here](doc/DonationList.md)
