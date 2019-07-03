@@ -46,7 +46,7 @@ inline static int get_utf8_code(const char* s, unsigned int& output_utf8_code)
 		output_utf8_code = (*us << 24) | ((*(us + 1)) << 16) | (*(us + 2) << 8) | *(us + 3);
 		break;
 	default:
-		ASSERT(FALSE);
+		ASSERT(false);
 		break;
 	}
 	return utf8_bytes;
@@ -68,7 +68,7 @@ void c_word::draw_value(c_surface* surface, int z_order, int value, int dot_posi
 
 void c_word::draw_string_in_rect(c_surface* surface, int z_order, const char *s, c_rect rect, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
-	if(NULL == s)
+	if(0 == s)
 	{
 		return;
 	}
@@ -79,7 +79,7 @@ void c_word::draw_string_in_rect(c_surface* surface, int z_order, const char *s,
 
 void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type)
 {
-	if (NULL == s)
+	if (0 == s)
 	{
 		return;
 	}
@@ -96,11 +96,6 @@ void c_word::draw_string(c_surface* surface, int z_order, const char *s, int x, 
 void c_word::value_2_string(int value, int dot_position, char* buf, int len)
 {
 	memset(buf, 0, len);
-	if (XXX == value)
-	{
-		sprintf(buf, "%s", "---");
-		return;
-	}
 	switch (dot_position)
 	{
 	case 0:
@@ -116,7 +111,7 @@ void c_word::value_2_string(int value, int dot_position, char* buf, int len)
 		sprintf(buf, "%.3f", value*1.0 / 1000);
 		break;
 	default:
-		ASSERT(FALSE);
+		ASSERT(false);
 		break;
 	}
 }
@@ -141,7 +136,7 @@ const LATTICE* c_word::get_lattice(const FONT_INFO* font, unsigned int utf8_code
 		}
 		middle = (first + last) / 2;
 	}
-	return NULL;
+	return 0;
 }
 
 int c_word::draw_single_char(c_surface* surface, int z_order, unsigned int utf8_code, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color)
@@ -217,7 +212,7 @@ void c_word::draw_lattice(c_surface* surface, int z_order, int x, int y, int wid
 
 int c_word::get_str_size(const char *s, const FONT_INFO* font, int& width, int& height)
 {
-	if(NULL == s || NULL == font)
+	if(0 == s || 0 == font)
 	{
 		width = height = 0;
 		return -1;

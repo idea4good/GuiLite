@@ -4,7 +4,7 @@
 class c_frame_layer
 {
 public:
-	c_frame_layer() { fb = NULL;}
+	c_frame_layer() { fb = 0;}
 	unsigned short*	fb;
 	c_rect 	rect;
 };
@@ -63,7 +63,7 @@ protected:
 	int						m_height;		//in pixels
 	int						m_color_bytes;	//16 bits, 32 bits only
 	void* 					m_fb;			//Top frame buffer you could see
-	c_frame_layer 			m_frame_layers[Z_ORDER_LEVEL_MAX];//Top layber fb always be NULL
+	c_frame_layer 			m_frame_layers[Z_ORDER_LEVEL_MAX];//Top layber fb always be 0
 	void*					m_usr;
 	bool					m_is_active;
 	Z_ORDER_LEVEL			m_max_zorder;

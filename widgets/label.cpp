@@ -11,9 +11,8 @@
 
 void c_label::pre_create_wnd()
 {
-	m_style = GL_ATTR_VISIBLE | ALIGN_LEFT | ALIGN_VCENTER;
-	m_font_color = GL_RGB(255,255,255);
-
+	m_attr = ATTR_VISIBLE;
+	m_font_color = c_theme::get_color(COLOR_WND_FONT);
 	m_font_type = c_theme::get_font(FONT_DEFAULT);
 }
 
@@ -25,6 +24,6 @@ void c_label::on_paint()
 	if (m_str)
 	{
 		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), m_z_order);
-		c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
+		c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, m_parent->get_bg_color(), ALIGN_LEFT | ALIGN_VCENTER);
 	}
 }

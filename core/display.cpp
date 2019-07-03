@@ -15,7 +15,7 @@ c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int disp
 	if (color_bytes != 2 && color_bytes != 4)
 	{
 		log_out("Support 16 bits, 32 bits color only!");
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 
 	m_width = display_width;
@@ -43,7 +43,7 @@ c_surface* c_display::alloc_surface(void* usr, Z_ORDER_LEVEL max_zorder)
 		if (m_surface_group[i]->m_usr == usr)
 		{
 			//repeat register
-			ASSERT(FALSE);
+			ASSERT(false);
 			return m_surface_group[i];
 		}
 		i++;
@@ -52,7 +52,7 @@ c_surface* c_display::alloc_surface(void* usr, Z_ORDER_LEVEL max_zorder)
 	i = 0;
 	while (i < m_surface_cnt)
 	{
-		if (m_surface_group[i]->m_usr == NULL)
+		if (m_surface_group[i]->m_usr == 0)
 		{	
 			m_surface_group[i]->set_surface(usr, max_zorder);
 			return m_surface_group[i];
@@ -60,8 +60,8 @@ c_surface* c_display::alloc_surface(void* usr, Z_ORDER_LEVEL max_zorder)
 		i++;
 	}
 	//no surface for use
-	ASSERT(FALSE);
-	return NULL;
+	ASSERT(false);
+	return 0;
 }
 
 int c_display::merge_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset)
@@ -72,14 +72,14 @@ int c_display::merge_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y
 	if (offset < 0 || offset > surface_width || y0 < 0 || y0 >= surface_height ||
 		y1 < 0 || y1 >= surface_height || x0 < 0 || x0 >= surface_width || x1 < 0 || x1 >= surface_width)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -1;
 	}
 
 	int width = (x1 - x0 + 1);
 	if (width < 0 || width > surface_width || width < offset)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -1;
 	}
 
@@ -154,7 +154,7 @@ void* c_display::get_updated_fb(int* width, int* height, bool force_update)
 	}
 	if (m_phy_read_index == m_phy_write_index)
 	{//No update
-		return NULL;
+		return 0;
 	}
 	m_phy_read_index = m_phy_write_index;
 	return m_phy_fb;

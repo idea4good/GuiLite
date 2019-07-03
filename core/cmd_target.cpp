@@ -49,7 +49,7 @@ void c_cmd_target::load_cmd_msg()
 			continue;
 		}
 
-		bExist = FALSE;
+		bExist = false;
 		for (int i = 0; i < ms_user_map_size; i++)
 		{
 			//repeat register, return.
@@ -60,7 +60,7 @@ void c_cmd_target::load_cmd_msg()
 				break;
 			}
 		}
-		if (TRUE == bExist)
+		if (true == bExist)
 		{
 			p_entry++;
 			continue;
@@ -73,12 +73,12 @@ void c_cmd_target::load_cmd_msg()
 			ms_user_map_size++;
 			if (USR_MSG_MAX == ms_user_map_size)
 			{
-				ASSERT(FALSE);
+				ASSERT(false);
 			}
 		}
 		else
 		{
-			ASSERT(FALSE);
+			ASSERT(false);
 			break;
 		}
 		p_entry++;

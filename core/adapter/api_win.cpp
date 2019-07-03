@@ -85,7 +85,7 @@ DWORD WINAPI timer_routine(LPVOID lpParam)
 		}
 		Sleep(TIMER_UNIT);
     }
-    return NULL;
+    return 0;
 }
 
 static int init_mul_timer()
@@ -97,7 +97,7 @@ static int init_mul_timer()
 	}
     memset(&timer_manage, 0, sizeof(struct _timer_manage));
     DWORD pid;
-	CreateThread(NULL, 0, timer_routine, NULL, 0, &pid);
+	CreateThread(0, 0, timer_routine, 0, 0, &pid);
     s_is_init = true;
     return 1;
 }
@@ -107,7 +107,7 @@ static int set_a_timer(int interval, void (* timer_proc) (void* ptmr, void* parg
 	init_mul_timer();
 
 	int i;
-    if(timer_proc == NULL || interval <= 0)
+    if(timer_proc == 0 || interval <= 0)
     {
         return (-1);
     }
@@ -128,7 +128,7 @@ static int set_a_timer(int interval, void (* timer_proc) (void* ptmr, void* parg
 
     if(i >= MAX_TIMER_CNT)
     {
-		ASSERT(FALSE);
+		ASSERT(false);
         return (-1);
     }
     return (i);
@@ -149,7 +149,7 @@ static DWORD WINAPI fire_real_timer(LPVOID lpParam)
 		}
 		else
 		{
-			ASSERT(FALSE);
+			ASSERT(false);
 		}
 	}
 	return 0;
@@ -176,7 +176,7 @@ static DWORD WINAPI trigger_real_timer(LPVOID lpParam)
 
 void start_real_timer(void (*func)(void* arg))
 {
-	if(NULL == func)
+	if(0 == func)
 	{
 		return;
 	}
@@ -187,8 +187,8 @@ void start_real_timer(void (*func)(void* arg))
 	static DWORD s_pid;
 	if(s_pid == 0)
 	{
-		CreateThread(NULL, 0, trigger_real_timer, NULL, 0, &s_pid);
-		CreateThread(NULL, 0, fire_real_timer, NULL, 0, &s_pid);
+		CreateThread(0, 0, trigger_real_timer, 0, 0, &s_pid);
+		CreateThread(0, 0, fire_real_timer, 0, 0, &s_pid);
 	}
 }
 
@@ -204,7 +204,7 @@ void register_timer(int milli_second,void func(void* ptmr, void* parg))
 
 long get_time_in_second()
 {
-	return time(NULL);
+	return time(0);
 }
 
 T_TIME get_time()
@@ -240,7 +240,7 @@ T_TIME second_to_day(long second)
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg)
 {
 	DWORD pid = 0;
-	CreateThread(NULL, 0, LPTHREAD_START_ROUTINE(start_routine), arg, 0, &pid);
+	CreateThread(0, 0, LPTHREAD_START_ROUTINE(start_routine), arg, 0, &pid);
 	*thread_id = pid;
 }
 

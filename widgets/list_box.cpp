@@ -16,7 +16,7 @@
 
 void c_list_box::pre_create_wnd()
 {
-	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
+	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 	memset(m_item_array, 0, sizeof(m_item_array));
 	m_item_total = 0;
 	m_selected_item = 0;
@@ -48,18 +48,20 @@ void c_list_box::on_paint()
 		{
 			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
-			m_style &= ~GL_ATTR_MODAL;
+			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
+		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
 		break;
 	case STATUS_FOCUSED:
 		if (m_z_order > m_parent->get_z_order())
 		{
 			m_surface->set_frame_layer(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
-			m_style &= ~GL_ATTR_MODAL;
+			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
+		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
 		break;
 	case STATUS_PUSHED:
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_PUSHED), m_z_order);
@@ -73,20 +75,12 @@ void c_list_box::on_paint()
 				m_z_order++;
 			}
 			m_surface->set_frame_layer(m_list_screen_rect, m_z_order);
-			m_style |= GL_ATTR_MODAL;
+			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL);
 			show_list();
-			return;
 		}
 		break;
 	default:
-		ASSERT(FALSE);
-		break;
-	}
-	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
-
-	if (m_item_total)
-	{
-		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
+		ASSERT(false);
 	}
 }
 
@@ -161,7 +155,6 @@ void c_list_box::update_list_size()
 
 void c_list_box::show_list()
 {
-	m_surface->fill_rect(m_list_screen_rect, GL_RGB(17, 17, 17), m_z_order);
 	//draw all items
 	c_rect tmp_rect;
 	for (int i = 0; i < m_item_total; i++)
@@ -170,24 +163,25 @@ void c_list_box::show_list()
 		tmp_rect.m_right = m_list_screen_rect.m_right;
 		tmp_rect.m_top = m_list_screen_rect.m_top + i * ITEM_HEIGHT;
 		tmp_rect.m_bottom = tmp_rect.m_top + ITEM_HEIGHT;
-		c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
-		m_surface->draw_hline(tmp_rect.m_left, tmp_rect.m_right, tmp_rect.m_bottom, GL_RGB(99, 108, 124), m_z_order);
-	}
-	//draw selected item	
-	tmp_rect.m_left = m_list_screen_rect.m_left;
-	tmp_rect.m_right = m_list_screen_rect.m_right;
-	tmp_rect.m_top = m_list_screen_rect.m_top + m_selected_item * ITEM_HEIGHT;
-	tmp_rect.m_bottom = tmp_rect.m_top + ITEM_HEIGHT;
 
-	m_surface->fill_rect(tmp_rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
-	c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], tmp_rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
+		if (m_selected_item == i)
+		{
+			m_surface->fill_rect(tmp_rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
+			c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
+		}
+		else
+		{
+			m_surface->fill_rect(tmp_rect, GL_RGB(17, 17, 17), m_z_order);
+			c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font_type, m_font_color, GL_RGB(17, 17, 17), ALIGN_HCENTER | ALIGN_VCENTER);
+		}
+	}
 }
 
 int c_list_box::add_item(char* str)
 {
 	if (m_item_total >= MAX_ITEM_NUM)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -1;
 	}
 	m_item_array[m_item_total++] = str;
@@ -206,7 +200,7 @@ void c_list_box::select_item(short index)
 {
 	if (index < 0 || index >= m_item_total)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 	m_selected_item = index;
 }

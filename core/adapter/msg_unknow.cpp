@@ -1,11 +1,10 @@
 #include "../../core_include/api.h"
 #include "../../core_include/msg.h"
 
-
 c_fifo::c_fifo()
 {
 	m_head = m_tail = 0;
-	m_read_sem = m_write_mutex = NULL;
+	m_read_sem = m_write_mutex = 0;
 }
 
 int c_fifo::read(void* buf, int len)
@@ -24,7 +23,7 @@ int c_fifo::read(void* buf, int len)
 	}
 	if(i != len)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 	return i;
 }
@@ -50,7 +49,7 @@ int c_fifo::write(void* buf, int len)
 
 	if(i != len)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 	return i;
 }

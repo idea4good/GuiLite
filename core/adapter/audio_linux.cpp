@@ -44,7 +44,7 @@ void c_audio::init()
 	}
 
 	unsigned long pid;
-	create_thread(&pid, NULL, render_thread, NULL);
+	create_thread(&pid, 0, render_thread, 0);
 	s_flag = true;
 }
 

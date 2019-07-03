@@ -129,7 +129,7 @@ static int set_a_timer(int interval, void (* timer_proc) (void* ptmr, void* parg
 
     if(i >= MAX_TIMER_CNT)
     {
-    	ASSERT(FALSE);
+    	ASSERT(false);
         return (-1);
     }
     return (i);
@@ -150,7 +150,7 @@ static void* real_timer_routine(void*)
 		}
 		else
 		{
-			ASSERT(FALSE);
+			ASSERT(false);
 		}
 	}
 	return 0;
@@ -161,7 +161,7 @@ static void expire_real_timer(int sigo)
 	char dummy = 0x33;
 	if(s_real_timer_fifo.write(&dummy, 1) <= 0)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 }
 

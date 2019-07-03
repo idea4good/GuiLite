@@ -11,7 +11,7 @@ c_fifo::c_fifo()
 	m_write_mutex = malloc(sizeof(pthread_mutex_t));
 	
 	sem_init((sem_t*)m_read_sem, 0, 0);
-	pthread_mutex_init((pthread_mutex_t*)m_write_mutex, NULL);
+	pthread_mutex_init((pthread_mutex_t*)m_write_mutex, 0);
 }
 
 int c_fifo::read(void* buf, int len)
@@ -31,7 +31,7 @@ int c_fifo::read(void* buf, int len)
 	}
 	if(i != len)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 	return i;
 }
@@ -60,7 +60,7 @@ int c_fifo::write(void* buf, int len)
 
 	if(i != len)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 	else
 	{

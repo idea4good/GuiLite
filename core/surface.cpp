@@ -18,7 +18,7 @@ c_surface::c_surface(c_display* display,  unsigned int width, unsigned int heigh
 	m_display = display;
 	m_phy_fb = display->m_phy_fb;
 	m_phy_write_index = &display->m_phy_write_index;
-	m_fb = m_usr = NULL;
+	m_fb = m_usr = 0;
 	m_top_zorder = m_max_zorder = Z_ORDER_LEVEL_0;
 	m_is_active = false;
 	m_frame_layers[Z_ORDER_LEVEL_0].rect = c_rect(0, 0, m_width, m_height);
@@ -35,9 +35,9 @@ void c_surface::set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order)
 	}
 	
 	for(int i = Z_ORDER_LEVEL_0; i < m_max_zorder; i++)
-	{//Top layber fb always be NULL
+	{//Top layber fb always be 0
 		m_frame_layers[i].fb = (unsigned short*)calloc(m_width * m_height, sizeof(unsigned short));
-		ASSERT(NULL != m_frame_layers[i].fb);
+		ASSERT(0 != m_frame_layers[i].fb);
 	}
 }
 
@@ -49,7 +49,7 @@ void c_surface::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 	}
 	if (z_order > m_max_zorder)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return;
 	}
 	rgb = GL_ROUND_RGB_32(rgb);
@@ -65,7 +65,7 @@ void c_surface::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 
 	if (0 == m_frame_layers[z_order].rect.PtInRect(x, y))
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return;
 	}
 	((unsigned short*)(m_frame_layers[z_order].fb))[x + y * m_width] = GL_RGB_32_to_16(rgb);
@@ -78,7 +78,7 @@ void c_surface::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 	bool is_covered = false;
 	for (int tmp_z_order = Z_ORDER_LEVEL_MAX - 1; tmp_z_order > z_order; tmp_z_order--)
 	{
-		if (TRUE == m_frame_layers[tmp_z_order].rect.PtInRect(x, y))
+		if (true == m_frame_layers[tmp_z_order].rect.PtInRect(x, y))
 		{
 			is_covered = true;
 			break;
@@ -150,7 +150,7 @@ void c_surface::fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb
 	if (x0 < 0 || y0 < 0 || x1 < 0 || y1 < 0 ||
 		x0 >= m_width || x1 >= m_width || y0 >= m_height || y1 >= m_height)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 	int display_width = m_display->get_width();
 	int display_height = m_display->get_height();
@@ -162,7 +162,7 @@ void c_surface::fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb
 		for (; y0 <= y1; y0++)
 		{
 			x = x0;
-			fb = m_fb ? &((unsigned int*)m_fb)[y0 * m_width + x] : NULL;
+			fb = m_fb ? &((unsigned int*)m_fb)[y0 * m_width + x] : 0;
 			phy_fb = &((unsigned int*)m_phy_fb)[y0 * display_width + x];
 			*m_phy_write_index = *m_phy_write_index + 1;
 			for (; x <= x1; x++)
@@ -186,7 +186,7 @@ void c_surface::fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb
 		for (; y0 <= y1; y0++)
 		{
 			x = x0;
-			fb = m_fb ? &((unsigned short*)m_fb)[y0 * m_width + x] : NULL;
+			fb = m_fb ? &((unsigned short*)m_fb)[y0 * m_width + x] : 0;
 			phy_fb = &((unsigned short*)m_phy_fb)[y0 * display_width + x];
 			*m_phy_write_index = *m_phy_write_index + 1;
 			for (; x <= x1; x++)
@@ -210,7 +210,7 @@ unsigned int c_surface::get_pixel(int x, int y, unsigned int z_order)
 	if (x >= m_width || y >= m_height || x < 0 || y < 0 ||
 			z_order >= Z_ORDER_LEVEL_MAX)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return 0;
 	}
 
@@ -365,17 +365,17 @@ int c_surface::set_frame_layer(c_rect& rect, unsigned int z_order)
 		rect.m_top < 0 || rect.m_top >= m_height ||
 		rect.m_bottom < 0 || rect.m_bottom >=m_height)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -1;
 	}
 	if (!(z_order > Z_ORDER_LEVEL_0 && z_order < Z_ORDER_LEVEL_MAX))
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -2;
 	}
 	if (z_order < m_top_zorder)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -3;
 	}
 	m_top_zorder = (Z_ORDER_LEVEL)z_order;
@@ -411,7 +411,7 @@ int c_surface::flush_scrren(int left, int top, int right, int bottom)
 	if(left < 0 || left >= m_width || right < 0 || right >= m_width ||
 		top < 0 || top >= m_height || bottom < 0 || bottom >= m_height)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 
 	if(!m_is_active || (0 == m_phy_fb) || (0 == m_fb))

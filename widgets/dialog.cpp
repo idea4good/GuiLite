@@ -12,7 +12,7 @@
 DIALOG_ARRAY c_dialog::ms_the_dialogs[SURFACE_CNT_MAX];
 void c_dialog::pre_create_wnd()
 {
-	m_style = 0;// no focus/visible
+	m_attr = WND_ATTRIBUTION(0);// no focus/visible
 	m_z_order = Z_ORDER_LEVEL_1;
 	m_bg_color = GL_RGB(33, 42, 53);
 }
@@ -38,14 +38,14 @@ c_dialog* c_dialog::get_the_dialog(c_surface* surface)
 			return ms_the_dialogs[i].dialog;
 		}
 	}
-	return NULL;
+	return 0;
 }
 
 int c_dialog::open_dialog(c_dialog* p_dlg, bool modal_mode)
 {
-	if (NULL == p_dlg)
+	if (0 == p_dlg)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return 0;
 	}
 	c_dialog* cur_dlg = get_the_dialog(p_dlg->get_surface());
@@ -56,14 +56,14 @@ int c_dialog::open_dialog(c_dialog* p_dlg, bool modal_mode)
 
 	if(cur_dlg)
 	{
-		cur_dlg->set_style(0);
+		cur_dlg->set_attr(WND_ATTRIBUTION(0));
 	}
 
 	c_rect rc;
 	p_dlg->get_screen_rect(rc);
 	p_dlg->get_surface()->set_frame_layer(rc, Z_ORDER_LEVEL_1);
 
-	p_dlg->set_style(modal_mode ? (GL_ATTR_VISIBLE | GL_ATTR_FOCUS | GL_ATTR_MODAL) : (GL_ATTR_VISIBLE | GL_ATTR_FOCUS));
+	p_dlg->set_attr(modal_mode ? (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL) : (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS));
 	p_dlg->show_window();
 	p_dlg->set_me_the_dialog();
 	return 1;
@@ -73,13 +73,13 @@ int c_dialog::close_dialog(c_surface* surface)
 {
 	c_dialog* dlg = get_the_dialog(surface);
 
-	if (NULL == dlg)
+	if (0 == dlg)
 	{
 		return 0;
 	}
 	c_rect rc;
 	
-	dlg->set_style(0);
+	dlg->set_attr(WND_ATTRIBUTION(0));
 	surface->set_frame_layer(rc, dlg->m_z_order);
 
 	//clear the dialog
@@ -87,11 +87,11 @@ int c_dialog::close_dialog(c_surface* surface)
 	{
 		if(ms_the_dialogs[i].surface == surface)
 		{
-			ms_the_dialogs[i].dialog = NULL;
+			ms_the_dialogs[i].dialog = 0;
 			return 1;
 		}
 	}
-	ASSERT(FALSE);
+	ASSERT(false);
 	return -1;
 }
 
@@ -109,7 +109,7 @@ int c_dialog::set_me_the_dialog()
 
 	for(int i = 0; i < SURFACE_CNT_MAX; i++)
 	{
-		if(ms_the_dialogs[i].surface == NULL)
+		if(ms_the_dialogs[i].surface == 0)
 		{
 			ms_the_dialogs[i].dialog = this;
 			if(this)
@@ -119,6 +119,6 @@ int c_dialog::set_me_the_dialog()
 			return 1;
 		}
 	}
-	ASSERT(FALSE);
+	ASSERT(false);
 	return -2;
 }

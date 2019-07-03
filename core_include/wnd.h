@@ -1,17 +1,19 @@
 #ifndef WND_H
 #define WND_H
 
-//Window attribution
-#define GL_ATTR_VISIBLE		0x80000000L
-#define GL_ATTR_DISABLED	0x40000000L
-#define GL_ATTR_FOCUS		0x20000000L
-#define GL_ATTR_MODAL		0x10000000L// Handle touch action at high priority
-
 typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;
 
 class c_wnd;
 class c_surface;
+
+typedef enum
+{
+	ATTR_VISIBLE	= 0x80000000L,
+	ATTR_DISABLED	= 0x40000000L,
+	ATTR_FOCUS		= 0x20000000L,
+	ATTR_MODAL		= 0x10000000L// Handle touch action at high priority
+}WND_ATTRIBUTION;
 
 typedef enum
 {
@@ -53,9 +55,9 @@ public:
 	c_wnd();
 	virtual ~c_wnd() {};
 	virtual int connect(c_wnd *parent, unsigned short resource_id, const char* str,
-		short x, short y, short width, short height, WND_TREE* p_child_tree = NULL);
+		short x, short y, short width, short height, WND_TREE* p_child_tree = 0);
 	virtual c_wnd* connect_clone(c_wnd *parent, unsigned short resource_id, const char* str,
-		short x, short y, short width, short height, WND_TREE* p_child_tree = NULL);
+		short x, short y, short width, short height, WND_TREE* p_child_tree = 0);
 	void disconnect();
 	virtual c_wnd* clone() = 0;
 	virtual void on_init_children() {}
@@ -65,8 +67,8 @@ public:
 	unsigned short get_id() const { return m_resource_id; }
 	int get_z_order() { return m_z_order; }
 	c_wnd* get_wnd_ptr(unsigned short id) const;
-	unsigned int get_style() const { return m_style; }
-	void set_style(unsigned int style);
+	unsigned int get_attr() const { return m_attr; }
+	void set_attr(WND_ATTRIBUTION attr);
 
 	void set_str(const char* str) { m_str = str; }
 	int is_focus_wnd() const;
@@ -114,7 +116,7 @@ protected:
 	virtual void on_kill_focus() {};
 protected:
 	WND_STATUS		m_status;
-	unsigned int	m_style;
+	WND_ATTRIBUTION	m_attr;
 	c_rect			m_wnd_rect;// position relative to parent wnd.
 	c_wnd*			m_parent;
 	c_wnd*			m_top_child;

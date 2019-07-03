@@ -1,15 +1,15 @@
+#include "../core_include/api.h"
 #include "../core_include/rect.h"
 #include "../core_include/cmd_target.h"
-#include "../core_include/api.h"
 #include "../core_include/resource.h"
 #include "../core_include/bitmap.h"
 #include "../core_include/surface.h"
 #include "../core_include/wnd.h"
 
-c_wnd::c_wnd(): m_status(STATUS_NORMAL), m_style(GL_ATTR_VISIBLE), m_parent(NULL), m_top_child(NULL), m_prev_sibling(NULL), m_next_sibling(NULL),
-m_str(0), m_font_color(0), m_bg_color(0), m_resource_id(0),	m_z_order(Z_ORDER_LEVEL_0),	m_focus_child(NULL), m_surface(NULL)
+c_wnd::c_wnd(): m_status(STATUS_NORMAL), m_attr(ATTR_VISIBLE), m_parent(0), m_top_child(0), m_prev_sibling(0), m_next_sibling(0),
+m_str(0), m_font_color(0), m_bg_color(0), m_resource_id(0),	m_z_order(Z_ORDER_LEVEL_0),	m_focus_child(0), m_surface(0)
 {
-	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS;
+	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 }
 
 int c_wnd::connect(c_wnd *parent, unsigned short resource_id, const char* str,
@@ -17,7 +17,7 @@ int c_wnd::connect(c_wnd *parent, unsigned short resource_id, const char* str,
 {
 	if(0 == resource_id)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -1;
 	}
 
@@ -31,9 +31,9 @@ int c_wnd::connect(c_wnd *parent, unsigned short resource_id, const char* str,
 		m_z_order = parent->m_z_order;
 		m_surface = parent->m_surface;
 	}
-	if(NULL == m_surface)
+	if(0 == m_surface)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -2;
 	}
 
@@ -64,7 +64,7 @@ int c_wnd::connect(c_wnd *parent, unsigned short resource_id, const char* str,
 
 int c_wnd::load_child_wnd(WND_TREE *p_child_tree)
 {
-	if (NULL == p_child_tree)
+	if (0 == p_child_tree)
 	{
 		return 0;
 	}
@@ -75,7 +75,7 @@ int c_wnd::load_child_wnd(WND_TREE *p_child_tree)
 	{
 		if (0 != p_cur->p_wnd->m_resource_id)
 		{//This wnd has been used! Do not share!
-			ASSERT(FALSE);
+			ASSERT(false);
 			return -1;
 		}
 		else
@@ -94,8 +94,8 @@ c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, const cha
 {
 	if(0 == resource_id)
 	{
-		ASSERT(FALSE);
-		return NULL;
+		ASSERT(false);
+		return 0;
 	}
 
 	c_wnd* wnd = clone();
@@ -113,10 +113,10 @@ c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, const cha
 	{
 		wnd->m_surface = m_surface;
 	}
-	if(NULL == wnd->m_surface)
+	if(0 == wnd->m_surface)
 	{
-		ASSERT(FALSE);
-		return NULL;
+		ASSERT(false);
+		return 0;
 	}
 
 	/* (cs.x = x * 1024 / 768) for 1027*768=>800*600 quickly*/
@@ -146,7 +146,7 @@ c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, const cha
 
 int c_wnd::load_clone_child_wnd(WND_TREE *p_child_tree)
 {
-	if (NULL == p_child_tree)
+	if (0 == p_child_tree)
 	{
 		return 0;
 	}
@@ -170,10 +170,10 @@ void c_wnd::disconnect()
 		return;
 	}
 
-	if (NULL != m_top_child)
+	if (0 != m_top_child)
 	{
 		c_wnd *child = m_top_child;
-		c_wnd *next_child = NULL;
+		c_wnd *next_child = 0;
 
 		while (child)
 		{
@@ -208,11 +208,11 @@ c_wnd* c_wnd::get_wnd_ptr(unsigned short id) const
 	return child;
 }
 
-void c_wnd::set_style(unsigned int style)
+void c_wnd::set_attr(WND_ATTRIBUTION attr)
 {
-	m_style = style;
+	m_attr = attr;
 
-	if ( GL_ATTR_DISABLED == (m_style & GL_ATTR_DISABLED) )
+	if ( ATTR_DISABLED == (attr & ATTR_DISABLED) )
 	{
 		m_status = STATUS_DISABLED;
 	}
@@ -227,15 +227,15 @@ void c_wnd::set_style(unsigned int style)
 
 int c_wnd::is_focus_wnd() const
 {
-	if ( (m_style & GL_ATTR_VISIBLE)
-		&& !(m_style & GL_ATTR_DISABLED)
-		&& (m_style & GL_ATTR_FOCUS))
+	if ( (m_attr & ATTR_VISIBLE)
+		&& !(m_attr & ATTR_DISABLED)
+		&& (m_attr & ATTR_FOCUS))
 	{
-		return TRUE;
+		return true;
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 }
 
@@ -266,7 +266,7 @@ void c_wnd::wnd2screen(int &x, int &y) const
 	x += m_wnd_rect.m_left;
 	y += m_wnd_rect.m_top;
 
-	while ( NULL != parent )
+	while ( 0 != parent )
 	{
 		parent->get_wnd_rect(rect);
 		x += rect.m_left;
@@ -295,7 +295,7 @@ void c_wnd::screen2wnd(short &x, short &y) const
 	x -= m_wnd_rect.m_left;
 	y -= m_wnd_rect.m_top;
 
-	while ( NULL != parent )
+	while ( 0 != parent )
 	{
 		parent->get_wnd_rect(rect);
 		x -= rect.m_left;
@@ -317,7 +317,7 @@ void c_wnd::screen2wnd(c_rect &rect) const
 
 c_wnd* c_wnd::set_child_focus(c_wnd * focus_child)
 {
-	ASSERT(NULL != focus_child);
+	ASSERT(0 != focus_child);
 	ASSERT(focus_child->m_parent == this);
 
 	c_wnd *old_focus_child = m_focus_child;
@@ -343,33 +343,33 @@ c_wnd* c_wnd::set_child_focus(c_wnd * focus_child)
 
 void c_wnd::add_child_2_tail(c_wnd *child)
 {
-	if( NULL == child )return;
+	if( 0 == child )return;
 	if(child == get_wnd_ptr(child->m_resource_id))return;
 
-	if ( NULL == m_top_child )
+	if ( 0 == m_top_child )
 	{
 		m_top_child = child;
-		child->m_prev_sibling = NULL;
-		child->m_next_sibling = NULL;
+		child->m_prev_sibling = 0;
+		child->m_next_sibling = 0;
 	}
 	else
 	{
 		c_wnd *last_child = get_last_child();
-		if (NULL == last_child)
+		if (0 == last_child)
 		{
-			ASSERT(FALSE);
+			ASSERT(false);
 		}
 		last_child->m_next_sibling = child;
 		child->m_prev_sibling = last_child;
-		child->m_next_sibling = NULL;
+		child->m_next_sibling = 0;
 	}
 }
 
 c_wnd* c_wnd::get_last_child() const
 {
-	if ( NULL == m_top_child )
+	if ( 0 == m_top_child )
 	{
-		return NULL;
+		return 0;
 	}
 
 	c_wnd *child = m_top_child;
@@ -384,29 +384,29 @@ c_wnd* c_wnd::get_last_child() const
 
 int	c_wnd::unlink_child(c_wnd *child)
 {
-	if ((NULL == child)
+	if ((0 == child)
 		|| (this != child->m_parent))
 	{
 		return -1;
 	}
 
-	if (NULL == m_top_child)
+	if (0 == m_top_child)
 	{
 		return -2;
 	}
 
-	int find = FALSE;
+	int find = false;
 
 	c_wnd *tmp_child = m_top_child;
 	if (tmp_child == child)
 	{
 		m_top_child = child->m_next_sibling;
-		if (NULL != child->m_next_sibling)
+		if (0 != child->m_next_sibling)
 		{
-			child->m_next_sibling->m_prev_sibling = NULL;
+			child->m_next_sibling->m_prev_sibling = 0;
 		}
 
-		find = TRUE;
+		find = true;
 	}
 	else
 	{
@@ -415,12 +415,12 @@ int	c_wnd::unlink_child(c_wnd *child)
 			if (child == tmp_child->m_next_sibling)
 			{
 				tmp_child->m_next_sibling = child->m_next_sibling;
-				if (NULL != child->m_next_sibling)
+				if (0 != child->m_next_sibling)
 				{
 					child->m_next_sibling->m_prev_sibling = tmp_child;
 				}
 
-				find = TRUE;
+				find = true;
 				break;
 			}
 
@@ -428,15 +428,15 @@ int	c_wnd::unlink_child(c_wnd *child)
 		}
 	}
 
-	if (TRUE == find)
+	if (true == find)
 	{
 		if (m_focus_child == child)
 		{
-			m_focus_child = NULL;
+			m_focus_child = 0;
 		}
 
-		child->m_next_sibling = NULL;
-		child->m_prev_sibling = NULL;
+		child->m_next_sibling = 0;
+		child->m_prev_sibling = 0;
 		return 1;
 	}
 	else
@@ -447,11 +447,11 @@ int	c_wnd::unlink_child(c_wnd *child)
 
 void c_wnd::show_window()
 {
-	if (GL_ATTR_VISIBLE == (m_style & GL_ATTR_VISIBLE))
+	if (ATTR_VISIBLE == (m_attr & ATTR_VISIBLE))
 	{
 		on_paint();
 		c_wnd *child = m_top_child;
-		if ( NULL != child )
+		if ( 0 != child )
 		{
 			while ( child )
 			{
@@ -469,17 +469,17 @@ bool c_wnd::on_touch(int x, int y, TOUCH_ACTION action)
 	y -= m_wnd_rect.m_top;
 	c_wnd* child = m_top_child;
 
-	c_wnd* target_wnd = NULL;
+	c_wnd* target_wnd = 0;
 	int target_z_order = Z_ORDER_LEVEL_0;
 
 	while (child)
 	{
-		if (GL_ATTR_VISIBLE == (child->m_style & GL_ATTR_VISIBLE))
+		if (ATTR_VISIBLE == (child->m_attr & ATTR_VISIBLE))
 		{
 			child->get_wnd_rect(rect);
-			if (TRUE == rect.PtInRect(x, y) || child->m_style & GL_ATTR_MODAL)
+			if (true == rect.PtInRect(x, y) || child->m_attr & ATTR_MODAL)
 			{
-				if (TRUE == child->is_focus_wnd())
+				if (true == child->is_focus_wnd())
 				{
 					if (child->m_z_order >= target_z_order)
 					{
@@ -492,7 +492,7 @@ bool c_wnd::on_touch(int x, int y, TOUCH_ACTION action)
 		child = child->m_next_sibling;
 	}
 
-	if (target_wnd == NULL)
+	if (target_wnd == 0)
 	{
 		return false;
 	}
@@ -522,12 +522,12 @@ bool c_wnd::on_key(KEY_TYPE key)
 	if (!old_focus_wnd)
 	{// No current focus wnd, new one.
 		c_wnd *child = m_top_child;
-		c_wnd *new_focus_wnd = NULL;
+		c_wnd *new_focus_wnd = 0;
 		while (child)
 		{
-			if (GL_ATTR_VISIBLE == (child->m_style & GL_ATTR_VISIBLE))
+			if (ATTR_VISIBLE == (child->m_attr & ATTR_VISIBLE))
 			{
-				if (TRUE == child->is_focus_wnd())
+				if (true == child->is_focus_wnd())
 				{
 					new_focus_wnd = child;
 					new_focus_wnd->m_parent->set_child_focus(new_focus_wnd);
@@ -568,7 +568,7 @@ void c_wnd::notify_parent(unsigned int msg_id, unsigned int ctrl_id, int param)
 		return;
 	}
 	const GL_MSG_ENTRY* entry = m_parent->FindMsgEntry(m_parent->GetMSgEntries(), MSG_TYPE_WND, msg_id, ctrl_id);
-	if (NULL == entry)
+	if (0 == entry)
 	{
 		return;
 	}
@@ -591,7 +591,7 @@ void c_wnd::notify_parent(unsigned int msg_id, unsigned int ctrl_id, int param)
 		(m_parent->*msg_funcs.func_vwl)(ctrl_id, param);
 		break;
 	default:
-		ASSERT(FALSE);
+		ASSERT(false);
 		break;
 	}
 }

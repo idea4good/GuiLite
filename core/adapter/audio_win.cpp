@@ -16,7 +16,7 @@
 #define AUDIO_BYTE_RATE         (AUDIO_SAMPLE_RATE * AUDIO_BLOCK_ALIGN)
 #define AUDIO_OUTPUT_BUF_LEN	(10000000 * 5)	//5 seconds long.
 
-#define CHECK_ERROR(ret) if(ret != 0){ASSERT(FALSE);}
+#define CHECK_ERROR(ret) if(ret != 0){ASSERT(false);}
 
 typedef struct
 {
@@ -58,7 +58,7 @@ static int register_wav_resouce(AUDIO_TYPE type, wchar_t* wav_path)
 		return 0;
 	}
   
-	void* hFile = CreateFile(wav_path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	void* hFile = CreateFile(wav_path, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 	if (INVALID_HANDLE_VALUE == hFile)
 	{
 		log_out("Open wave file failed\n");
@@ -69,16 +69,16 @@ static int register_wav_resouce(AUDIO_TYPE type, wchar_t* wav_path)
 	GetFileSizeEx(hFile, &ret);
 	int size = ret.LowPart;
 
-	if (INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0x2C, NULL, FILE_BEGIN))
+	if (INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0x2C, 0, FILE_BEGIN))
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -2;
 	}
 	size -= 0x2C;
 
 	BYTE* p_data = (BYTE*)malloc(size);
 	DWORD read_num;
-	ReadFile(hFile, p_data, size, &read_num, NULL);
+	ReadFile(hFile, p_data, size, &read_num, 0);
 
 	s_wav_resource[type].p_data = p_data;
 	s_wav_resource[type].size = size;
@@ -100,7 +100,7 @@ static int load_wav_chunk(BYTE* p_des, int des_size, BYTE* p_src, int src_size)
 
 static int play_wav(BYTE* p_data, int size)
 {
-	if (NULL == p_data || 0 >= size)
+	if (0 == p_data || 0 >= size)
 	{
 		return -1;
 	}
@@ -108,7 +108,7 @@ static int play_wav(BYTE* p_data, int size)
 	UINT32 bufferFrameCount;
 	UINT32 numFramesAvailable;
 	UINT32 numFramesPadding;
-	BYTE* p_buffer = NULL;
+	BYTE* p_buffer = 0;
 	int ret = s_audio_client->GetBufferSize(&bufferFrameCount);
 	CHECK_ERROR(ret);
 	
@@ -154,7 +154,7 @@ static void* render_thread(void* param)
 		
 		if (AUDIO_MAX <= request.type)
 		{
-			ASSERT(FALSE);
+			ASSERT(false);
 			continue;
 		}
 		play_wav(s_wav_resource[request.type].p_data, s_wav_resource[request.type].size);
@@ -171,23 +171,23 @@ static int init_audio_client()
 
 	//For desktop only, could not pass Windows Store certification.
 	/*
-	int ret = CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	int ret = CoInitializeEx(0, COINIT_MULTITHREADED);
 	CHECK_ERROR(ret);
 
 	IMMDeviceEnumerator *pEnumerator = nullptr;
-	ret = CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL,
+	ret = CoCreateInstance(__uuidof(MMDeviceEnumerator), 0,
 	CLSCTX_ALL, __uuidof(IMMDeviceEnumerator),
 	(void**)&pEnumerator);
 	CHECK_ERROR(ret);
 
 	IMMDevice* audio_output_device;
 	pEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, &audio_output_device);
-	if (NULL == audio_output_device)
+	if (0 == audio_output_device)
 	{
-	ASSERT(FALSE);
+	ASSERT(false);
 	}
 
-	ret = audio_output_device->Activate(__uuidof(IAudioClient), CLSCTX_ALL, NULL, (void**)&s_audio_client);
+	ret = audio_output_device->Activate(__uuidof(IAudioClient), CLSCTX_ALL, 0, (void**)&s_audio_client);
 	CHECK_ERROR(ret);
 	return 0;
 	*/
@@ -211,10 +211,10 @@ void c_audio::init()
 
 	int ret = s_audio_client->Initialize(AUDCLNT_SHAREMODE_SHARED,
 									AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM | AUDCLNT_STREAMFLAGS_EVENTCALLBACK,
-									AUDIO_OUTPUT_BUF_LEN * 2, 0, &s_wav_format,	NULL);
+									AUDIO_OUTPUT_BUF_LEN * 2, 0, &s_wav_format,	0);
 	CHECK_ERROR(ret);
 
-	s_audio_event = CreateEventEx(NULL, NULL, 0, EVENT_ALL_ACCESS);
+	s_audio_event = CreateEventEx(0, 0, 0, EVENT_ALL_ACCESS);
 	ret = s_audio_client->SetEventHandle(s_audio_event);
 	CHECK_ERROR(ret);
 
@@ -222,7 +222,7 @@ void c_audio::init()
 	CHECK_ERROR(ret);
 
 	unsigned long pid;
-	create_thread(&pid, NULL, render_thread, NULL);
+	create_thread(&pid, 0, render_thread, 0);
 	s_flag = true;
 }
 

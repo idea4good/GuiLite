@@ -75,7 +75,7 @@ WND_TREE g_key_board_children[] =
 	{&s_button_space,		' ',	0, ((KEY_WIDTH / 2) + POS_X(3)),	POS_Y(3), SPACE_WIDTH,	KEY_HEIGHT},
 	{&s_button_dot,			'.',	0, ((KEY_WIDTH / 2) + POS_X(6)),	POS_Y(3), DOT_WIDTH,	KEY_HEIGHT},
 	{&s_button_enter,		'\n',	0, POS_X(8),						POS_Y(3), ENTER_WIDTH,	KEY_HEIGHT},
-	{NULL,0,0,0,0,0,0}
+	{0,0,0,0,0,0,0}
 };
 
 WND_TREE g_number_board_children[] =
@@ -97,7 +97,7 @@ WND_TREE g_number_board_children[] =
 	{&s_button_esc,	0x1B,	0, POS_X(0), POS_Y(3), KEY_WIDTH, KEY_HEIGHT},
 	{&s_button_0,	'0',	0, POS_X(1), POS_Y(3), KEY_WIDTH, KEY_HEIGHT},
 	{&s_button_dot,	'.',	0, POS_X(2), POS_Y(3), KEY_WIDTH, KEY_HEIGHT},
-	{NULL,0,0,0,0,0,0}
+	{0,0,0,0,0,0,0}
 };
 
 GL_BEGIN_MESSAGE_MAP(c_keyboard)
@@ -154,22 +154,22 @@ int c_keyboard::connect(c_wnd *user, unsigned short resource_id, KEYBOARD_STYLE 
 	{//Place keyboard at the bottom of user's parent window.
 		c_rect user_parent_rect;
 		user->get_parent()->get_wnd_rect(user_parent_rect);
-		return c_wnd::connect(user, resource_id, NULL, (0 - user_rect.m_left), (user_parent_rect.Height() - user_rect.m_top - KEYBOARD_HEIGHT), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
+		return c_wnd::connect(user, resource_id, 0, (0 - user_rect.m_left), (user_parent_rect.Height() - user_rect.m_top - KEYBOARD_HEIGHT), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
 	}
 	else if(style == STYLE_NUM_BOARD)
 	{//Place keyboard below the user window.
-		return c_wnd::connect(user, resource_id, NULL, 0, user_rect.Height(), NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
+		return c_wnd::connect(user, resource_id, 0, 0, user_rect.Height(), NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
 	}
 	else
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 	return -1;
 }
 
 void c_keyboard::pre_create_wnd()
 {	
-	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS;
+	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 	m_cap_status = STATUS_UPPERCASE;
 	memset(m_str, 0, sizeof(m_str));
 	m_str_len = 0;
@@ -222,7 +222,7 @@ void c_keyboard::on_char_clicked(unsigned int ctrl_id)
 		}
 		goto InputChar;
 	}
-	ASSERT(FALSE);
+	ASSERT(false);
 InputChar:
 	m_str[m_str_len++] = ctrl_id;
 	notify_parent(KEYBORAD_CLICK, get_id(), CLICK_CHAR);
@@ -252,37 +252,37 @@ void c_keyboard_button::on_paint()
 		m_surface->draw_rect(rect, c_theme::get_color(COLOR_WND_BORDER), 2, m_z_order);
 		break;
 	default:
-		ASSERT(FALSE);
+		ASSERT(false);
 		break;
 	}
 	
 	if (m_resource_id == 0x14)
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 	else if (m_resource_id == 0x1B)
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 	else if (m_resource_id == ' ')
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 	else if (m_resource_id == '\n')
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 	else if (m_resource_id == '.')
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 	else if (m_resource_id == 0x7F)
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 	else if (m_resource_id == 0x90)
 	{
-		return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
+		return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 	
 	char letter[] = { 0, 0 };
@@ -294,5 +294,5 @@ void c_keyboard_button::on_paint()
 	{
 		letter[0] = m_resource_id;
 	}
-	c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
+	c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 }

@@ -2,18 +2,6 @@
 #define API_H
 
 #define REAL_TIME_TASK_CYCLE_MS		50
-#define XXX		-999
-#define NULL 	0
-#define TRUE 	1
-#define FALSE 	0
-
-void register_debug_function(void(*my_assert)(const char* file, int line), void(*my_log_out)(const char* log));
-void _assert(const char* file, int line);
-#define ASSERT(condition)	\
-	do{                     \
-	if(!(condition))_assert(__FILE__, __LINE__);\
-	}while(0)
-void log_out(const char* log);
 
 #define GL_ARGB(a, r, g, b) ((((unsigned int)(a)) << 24) | (((unsigned int)(r)) << 16) | (((unsigned int)(g)) << 8) | ((unsigned int)(b)))
 #define GL_ARGB_A(rgb) ((((unsigned int)(rgb)) >> 24) & 0xFF)
@@ -25,7 +13,17 @@ void log_out(const char* log);
 #define GL_RGB_32_to_16(rgb) (((((unsigned int)(rgb)) & 0xFF) >> 3) | ((((unsigned int)(rgb)) & 0xFC00) >> 5) | ((((unsigned int)(rgb)) & 0xF80000) >> 8))
 #define GL_RGB_16_to_32(rgb) ((0xFF << 24) | ((((unsigned int)(rgb)) & 0x1F) << 3) | ((((unsigned int)(rgb)) & 0x7E0) << 5) | ((((unsigned int)(rgb)) & 0xF800) << 8))
 
-typedef struct _T_TIME
+#define ALIGN_HCENTER		0x00000000L
+#define ALIGN_LEFT			0x01000000L
+#define ALIGN_RIGHT			0x02000000L
+#define ALIGN_HMASK			0x03000000L
+
+#define ALIGN_VCENTER		0x00000000L
+#define ALIGN_TOP			0x00100000L
+#define ALIGN_BOTTOM		0x00200000L
+#define ALIGN_VMASK			0x00300000L
+
+typedef struct
 {
 	unsigned short year;
 	unsigned short month;
@@ -35,6 +33,14 @@ typedef struct _T_TIME
 	unsigned short minute;
 	unsigned short second;
 }T_TIME;
+
+void register_debug_function(void(*my_assert)(const char* file, int line), void(*my_log_out)(const char* log));
+void _assert(const char* file, int line);
+#define ASSERT(condition)	\
+	do{                     \
+	if(!(condition))_assert(__FILE__, __LINE__);\
+	}while(0)
+void log_out(const char* log);
 
 long get_time_in_second();
 T_TIME second_to_day(long second);

@@ -12,7 +12,7 @@ c_slide_group::c_slide_group()
 {
 	for(int i = 0; i < MAX_PAGES; i++)
 	{
-		m_slides[i] = NULL;
+		m_slides[i] = 0;
 	}
 	m_active_slide_index = 0;
 }
@@ -31,7 +31,7 @@ int c_slide_group::set_active_slide(int index, bool is_redraw)
 
 	for(int i = 0; i < MAX_PAGES; i++)
 	{
-		if(m_slides[i] == NULL)
+		if(m_slides[i] == 0)
 		{
 			continue;
 		}
@@ -57,7 +57,7 @@ int c_slide_group::set_active_slide(int index, bool is_redraw)
 int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, short y,
 			short width, short height, WND_TREE* p_child_tree, Z_ORDER_LEVEL max_zorder)
 {
-	if(NULL == slide)
+	if(0 == slide)
 	{
 		return -1;
 	}
@@ -74,7 +74,7 @@ int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, 
 	{
 		if(m_slides[i] == slide)
 		{//slide has lived
-			ASSERT(FALSE);
+			ASSERT(false);
 			return -2;
 		}
 		i++;
@@ -84,7 +84,7 @@ int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, 
 	i = 0;
 	while(i < MAX_PAGES)
 	{
-		if(m_slides[i] == NULL)
+		if(m_slides[i] == 0)
 		{
 			m_slides[i] = slide;
 			slide->show_window();
@@ -94,14 +94,14 @@ int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, 
 	}
 
 	//no more slide can be add
-	ASSERT(FALSE);
+	ASSERT(false);
 	return -3;
 }
 
 int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, short x, short y,
 			short width, short height, WND_TREE* p_child_tree, Z_ORDER_LEVEL max_zorder)
 {
-	if(NULL == slide)
+	if(0 == slide)
 	{
 		return -1;
 	}
@@ -118,7 +118,7 @@ int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, sho
 	{
 		if(m_slides[i] == page_tmp)
 		{//slide has lived
-			ASSERT(FALSE);
+			ASSERT(false);
 			return -2;
 		}
 		i++;
@@ -128,7 +128,7 @@ int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, sho
 	i = 0;
 	while(i < MAX_PAGES)
 	{
-		if(m_slides[i] == NULL)
+		if(m_slides[i] == 0)
 		{
 			m_slides[i] = page_tmp;
 			page_tmp->show_window();
@@ -138,7 +138,7 @@ int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, sho
 	}
 
 	//no more slide can be add
-	ASSERT(FALSE);
+	ASSERT(false);
 	return -3;
 }
 

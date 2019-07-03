@@ -37,7 +37,7 @@ c_gesture::c_gesture(c_wnd* root, c_slide_group* group, c_fifo* hid_fifo)
 	m_down_x = m_down_y = m_move_x = m_move_y = 0;
 
 	unsigned long pid;
-	create_thread(&pid, NULL, task_handle_msg, this);
+	create_thread(&pid, 0, task_handle_msg, this);
 }
 
 bool c_gesture::handle_flip(MSG_INFO &msg)
@@ -75,7 +75,7 @@ bool c_gesture::handle_flip(MSG_INFO &msg)
 
 bool c_gesture::on_move(int x)
 {
-	if (m_slide_group == NULL)
+	if (m_slide_group == 0)
 	{
 		return true;
 	}
@@ -99,7 +99,7 @@ bool c_gesture::on_move(int x)
 
 bool c_gesture::on_flip(int x)
 {
-	if (m_slide_group == NULL)
+	if (m_slide_group == 0)
 	{
 		return true;
 	}
@@ -132,14 +132,14 @@ bool c_gesture::on_flip(int x)
 
 int c_gesture::flip_left()
 {
-	if (m_slide_group == NULL)
+	if (m_slide_group == 0)
 	{
 		return -1;
 	}
 	int index = m_slide_group->get_active_slide_index();
 	if((index + 1) >= MAX_PAGES ||
-		m_slide_group->get_slide(index + 1) == NULL ||
-		m_slide_group->get_slide(index) == NULL)
+		m_slide_group->get_slide(index + 1) == 0 ||
+		m_slide_group->get_slide(index) == 0)
 	{
 		return -2;
 	}
@@ -167,14 +167,14 @@ int c_gesture::flip_left()
 
 int c_gesture::flip_right()
 {
-	if (m_slide_group == NULL)
+	if (m_slide_group == 0)
 	{
 		return -1;
 	}
 	int index = m_slide_group->get_active_slide_index();
 	if(index <= 0 ||
-			m_slide_group->get_slide(index - 1) == NULL ||
-			m_slide_group->get_slide(index) == NULL)
+			m_slide_group->get_slide(index - 1) == 0 ||
+			m_slide_group->get_slide(index) == 0)
 	{
 		return -2;
 	}
@@ -204,8 +204,8 @@ void c_gesture::move_left()
 {
 	int index = m_slide_group->get_active_slide_index();
 	if((index + 1) >= MAX_PAGES ||
-			m_slide_group->get_slide(index + 1) == NULL ||
-			m_slide_group->get_slide(index) == NULL)
+			m_slide_group->get_slide(index + 1) == 0 ||
+			m_slide_group->get_slide(index) == 0)
 	{
 		return;
 	}
@@ -223,8 +223,8 @@ void c_gesture::move_right()
 {
 	int index = m_slide_group->get_active_slide_index();
 	if(index <= 0 ||
-			m_slide_group->get_slide(index - 1) == NULL ||
-			m_slide_group->get_slide(index) == NULL)
+			m_slide_group->get_slide(index - 1) == 0 ||
+			m_slide_group->get_slide(index) == 0)
 	{
 		return;
 	}

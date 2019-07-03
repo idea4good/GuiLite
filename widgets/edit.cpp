@@ -23,7 +23,7 @@ static c_keyboard  s_keyboard;
 
 void c_edit::pre_create_wnd()
 {
-	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
+	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 	m_kb_style = STYLE_ALL_BOARD;
 	m_font_type = c_theme::get_font(FONT_DEFAULT);
 	m_font_color = c_theme::get_color(COLOR_WND_FONT);
@@ -35,7 +35,7 @@ void c_edit::pre_create_wnd()
 
 void c_edit::set_text(const char* str)
 {
-	if (str != NULL && strlen(str) < sizeof(m_str))
+	if (str != 0 && strlen(str) < sizeof(m_str))
 	{
 		strcpy(m_str, str);
 	}
@@ -124,9 +124,10 @@ void c_edit::on_paint()
 			s_keyboard.disconnect();
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
-			m_style &= ~GL_ATTR_MODAL;
+			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
+		c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
 		break;
 	case STATUS_FOCUSED:
 		if (m_z_order > m_parent->get_z_order())
@@ -134,32 +135,25 @@ void c_edit::on_paint()
 			s_keyboard.disconnect();
 			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
-			m_style &= ~GL_ATTR_MODAL;
+			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
+		c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
 		break;
 	case STATUS_PUSHED:
 		if (m_z_order == m_parent->get_z_order())
 		{
 			m_z_order++;
-			m_style |= GL_ATTR_MODAL;
+			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL);
 			show_keyboard();
 		}
 		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());
 		m_surface->draw_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_BORDER), m_parent->get_z_order(), 2);
+		strlen(m_str_input) ? c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str_input, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_PUSHED), ALIGN_HCENTER | ALIGN_VCENTER) :
+			c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_PUSHED), ALIGN_HCENTER | ALIGN_VCENTER);
 		break;
 	default:
-		ASSERT(FALSE);
-		break;
-	}
-
-	if (strlen(m_str_input))
-	{
-		c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str_input, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
-	}
-	else
-	{
-		c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
+		ASSERT(false);
 	}
 }
 
@@ -195,7 +189,7 @@ void c_edit::on_key_board_click(unsigned int ctrl_id, long param)
 		on_paint();
 		break;
 	default:
-		ASSERT(FALSE);
+		ASSERT(false);
 		break;
 	}
 }

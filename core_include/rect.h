@@ -1,16 +1,6 @@
 #ifndef RECT_H
 #define RECT_H
 
-#define ALIGN_HCENTER		0x00000000L
-#define ALIGN_LEFT			0x01000000L
-#define ALIGN_RIGHT			0x02000000L
-#define ALIGN_HMASK			0x03000000L
-
-#define ALIGN_VCENTER		0x00000000L
-#define ALIGN_TOP			0x00100000L
-#define ALIGN_BOTTOM		0x00200000L
-#define ALIGN_VMASK			0x00300000L
-
 class c_rect
 {
 public:

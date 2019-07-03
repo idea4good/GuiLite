@@ -11,7 +11,7 @@
 
 void c_button::pre_create_wnd()
 {
-	m_style = GL_ATTR_VISIBLE | GL_ATTR_FOCUS | ALIGN_HCENTER | ALIGN_VCENTER;
+	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 	m_font_type = c_theme::get_font(FONT_DEFAULT);
 	m_font_color = c_theme::get_color(COLOR_WND_FONT);
 }
@@ -63,43 +63,29 @@ void c_button::on_paint()
 	switch(m_status)
 	{
 	case STATUS_NORMAL:
-		if (m_bitmap_normal)
+		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
+		if (m_str)
 		{
-			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_normal, rect, m_style);
-		}
-		else
-		{
-			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
+			c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
 		}
 		break;
 	case STATUS_FOCUSED:
-		if (m_bitmap_focus)
+		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
+		if (m_str)
 		{
-			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_focus, rect, m_style);
-		}
-		else
-		{
-			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
+			c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
 		}
 		break;
 	case STATUS_PUSHED:
-		if (m_bitmap_pushed)
+		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_PUSHED), m_z_order);
+		m_surface->draw_rect(rect, c_theme::get_color(COLOR_WND_BORDER), 2, m_z_order);
+		if (m_str)
 		{
-			c_bitmap::draw_bitmap_in_rect(m_surface, m_z_order, m_bitmap_pushed, rect, m_style);
-		}
-		else
-		{
-			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_PUSHED), m_z_order);
-			m_surface->draw_rect(rect, c_theme::get_color(COLOR_WND_BORDER), 2, m_z_order);
+			c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_PUSHED), ALIGN_HCENTER | ALIGN_VCENTER);
 		}
 		break;
 	default:
-		ASSERT(FALSE);
+		ASSERT(false);
 		break;
-	}
-
-	if (m_str)
-	{
-		c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_style);
 	}
 }

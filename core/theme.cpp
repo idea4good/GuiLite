@@ -11,7 +11,7 @@ int c_theme::add_font(FONT_TYPE index, const FONT_INFO* font)
 {
 	if (index >= FONT_MAX)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -1;
 	}
 	s_font_map[index] = font;
@@ -22,8 +22,8 @@ const FONT_INFO* c_theme::get_font(FONT_TYPE index)
 {
 	if (index >= FONT_MAX)
 	{
-		ASSERT(FALSE);
-		return NULL;
+		ASSERT(false);
+		return 0;
 	}
 	return s_font_map[index];
 }
@@ -32,7 +32,7 @@ int c_theme::add_bitmap(BITMAP_TYPE index, const BITMAP_INFO* bmp)
 {
 	if (index >= BITMAP_MAX)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -1;
 	}
 	s_bmp_map[index] = bmp;
@@ -43,8 +43,8 @@ const BITMAP_INFO* c_theme::get_bmp(BITMAP_TYPE index)
 {
 	if (index >= BITMAP_MAX)
 	{
-		ASSERT(FALSE);
-		return NULL;
+		ASSERT(false);
+		return 0;
 	}
 	return s_bmp_map[index];
 }
@@ -53,7 +53,7 @@ int c_theme::add_color(COLOR_TYPE index, const unsigned int color)
 {
 	if (index >= COLOR_MAX)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return -1;
 	}
 	s_color_map[index] = color;
@@ -64,8 +64,8 @@ const unsigned int c_theme::get_color(COLOR_TYPE index)
 {
 	if (index >= COLOR_MAX)
 	{
-		ASSERT(FALSE);
-		return NULL;
+		ASSERT(false);
+		return 0;
 	}
 	return s_color_map[index];
 }

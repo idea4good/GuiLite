@@ -21,9 +21,9 @@
 
 c_wave_ctrl::c_wave_ctrl()
 {
-	m_wave = NULL;
-	m_bg_fb = NULL;
-	m_wave_name_font  = m_wave_unit_font = NULL;
+	m_wave = 0;
+	m_bg_fb = 0;
+	m_wave_name_font  = m_wave_unit_font = 0;
 	m_wave_name = m_wave_unit = 0;
 	m_max_data = 500;
 	m_min_data = 0;
@@ -78,9 +78,9 @@ void c_wave_ctrl::set_wave_speed(unsigned int speed)
 
 void c_wave_ctrl::clear_data()
 {
-	if(m_wave == NULL)
+	if(m_wave == 0)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return;
 	}
 	m_wave->clear_data();
@@ -88,9 +88,9 @@ void c_wave_ctrl::clear_data()
 
 bool c_wave_ctrl::is_data_enough()
 {
-	if(m_wave == NULL)
+	if(m_wave == 0)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return false;
 	}
 	return (m_wave->get_cnt() - m_frame_len_map[m_frame_len_map_index] * m_wave_speed);
@@ -98,9 +98,9 @@ bool c_wave_ctrl::is_data_enough()
 
 void c_wave_ctrl::refresh_wave(unsigned char frame)
 {
-	if(m_wave == NULL)
+	if(m_wave == 0)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 		return;
 	}
 
@@ -117,7 +117,7 @@ void c_wave_ctrl::refresh_wave(unsigned char frame)
 		int y_min,y_max;
 		if(m_max_data == m_min_data)
 		{
-			ASSERT(FALSE);
+			ASSERT(false);
 		}
 		y_max = m_wave_bottom + WAVE_LINE_WIDTH - (m_wave_bottom - m_wave_top)*(min - m_min_data)/(m_max_data - m_min_data);
 		y_min = m_wave_bottom - WAVE_LINE_WIDTH - (m_wave_bottom - m_wave_top)*(max - m_min_data)/(m_max_data - m_min_data);

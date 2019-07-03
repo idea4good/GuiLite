@@ -5,11 +5,11 @@
 c_fifo::c_fifo()
 {
 	m_head = m_tail = 0;
-	m_read_sem = CreateSemaphore(NULL,	// default security attributes
+	m_read_sem = CreateSemaphore(0,	// default security attributes
 								 0,		// initial count
 								 1,		// maximum count
-								 NULL);	// unnamed semaphore
-	m_write_mutex = CreateMutex(NULL, FALSE, NULL);
+								 0);	// unnamed semaphore
+	m_write_mutex = CreateMutex(0, false, 0);
 }
 
 int c_fifo::read(void* buf, int len)
@@ -29,7 +29,7 @@ int c_fifo::read(void* buf, int len)
 	}
 	if(i != len)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 	return i;
 }
@@ -58,11 +58,11 @@ int c_fifo::write(void* buf, int len)
 
 	if(i != len)
 	{
-		ASSERT(FALSE);
+		ASSERT(false);
 	}
 	else
 	{
-		ReleaseSemaphore(m_read_sem, 1, NULL);
+		ReleaseSemaphore(m_read_sem, 1, 0);
 	}
 	return i;
 }
