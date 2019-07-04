@@ -42,7 +42,7 @@ void c_bitmap::draw_bitmap(c_surface* surface, int z_order, const BITMAP_INFO *p
 
 void c_bitmap::draw_bitmap(c_surface* surface, int z_order, const BITMAP_INFO* pBitmap, int x, int y, int src_x, int src_y, int width, int height, unsigned int mask_rgb)
 {
-	if (0 == pBitmap || (src_x + width > pBitmap->XSize) || (src_y + height > pBitmap->XSize))
+	if (0 == pBitmap || (src_x + width > pBitmap->XSize) || (src_y + height > pBitmap->YSize))
 	{
 		return;
 	}
