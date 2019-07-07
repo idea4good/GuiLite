@@ -16,12 +16,10 @@
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
-## 🔥新功能：GuiLite Previewer(所见即所得的GuiLite开发插件)
-- [GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer)是一个Visual Studio Code插件，它可以自动提取源代码的GUI布局信息，并实时显示在“预览”页面上(所见即所得)
-- **不需要**“拖拽”控件，仅通过敲代码，就可以完成所有工作（例如：代码，UI编辑，编译，运行，调试）
-- **不需要**使用庞大的GUI编辑工具（或IDE，例如：Android Studio, Qt designer）
-- **不需要**使用可扩展标记语言（例如：xml, xaml）
-![GuiLitePreviewer](doc/Previewer.gif)
+## 🔥新功能：3D
+![Hello3D](doc/Hello3D.gif)
+
+Hello 3D 仅有[100多行代码](https://gitee.com/idea4good/GuiLiteSamples/blob/master/Hello3D/UIcode/UIcode.cpp)，用于向初学者展示：如何使用GuiLite模拟3D物理过程。该实例可支持Windows，Linux及单片机平台。
 
 ## 功能介绍
 ### 卓越的跨平台能力
@@ -36,6 +34,10 @@
 | macOS | iOS |
 | --- | --- |
 | ![macOS](doc/Mac.gif) | ![iOS](doc/Ios.landscape.gif) |
+***
+### GuiLite Previewer(所见即所得的GuiLite开发插件)
+[GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer)是一个Visual Studio Code插件，它可以自动提取源代码的GUI布局信息，并实时显示在“预览”页面上(所见即所得)
+![GuiLitePreviewer](doc/Previewer.gif)
 ***
 ### 支持Docker容器
 我们把GuiLite demo做成了Docker映像，只需一行命令，就可以将最新的GuiLite demo升级/部署/运行在你的设备上了。
@@ -63,6 +65,7 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 | --- | --- | --- | --- | --- |
 | HelloParticle | Windows, Linux, STM32F103, STM32F429 | 粒子效果的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
 | HelloStar | Windows, Linux, STM32F103, STM32F429 | 星空效果的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloStar/README.md) | ★|
+| Hello3D | Windows, Linux, STM32F103 | 3D物理过程的应用 | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/Hello3D/README.md) | ★★ |
 | HelloGuiLite | Windows, Linux | 初始化GuiLite，加载资源，布局界面元素，按钮响应 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | ★★ |
 | HelloWidgets | Windows, Linux | 用于演示基本控件的使用方法 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWidgets/README.md) | ★★|
 | HelloMario | Windows, Linux, STM32F103, STM32F429 | 多图层的UI系统 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/README.md) | ★★|

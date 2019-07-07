@@ -17,12 +17,10 @@
 - ⚙️We hope GuiLite is small enough to help you understand how UI works.
 - 👑You should be the master of your UI and not be tied to a specific framework.
 
-## 🔥New feature：GuiLite previewer(WYSIWYG extension for GuiLite)
-- [GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer) is a Visual Studio Code extension, could extract GUI information from C++ code and preview GUI at preview page(What you see is what you get)
-- No need for drag-and-drop widgets, everything (e.g. code/design/build/debug) could be done by coding
-- No need for special GUI editor(e.g. Android Studio, Qt designer)
-- No need for Extensible Markup Language(e.g. xml, xaml)
-![GuiLitePreviewer](doc/Previewer.gif)
+## 🔥New feature：3D
+![Hello3D](doc/Hello3D.gif)
+
+Hello 3D has only [100+ lines code](https://github.com/idea4good/GuiLiteSamples/blob/master/Hello3D/UIcode/UIcode.cpp) for beginner, showing you how to build pseudo 3D App with GuiLite. You can run it on Windows, Linux and MCU.
 
 ## Features
 ### Cross platform
@@ -37,6 +35,10 @@
 | macOS | iOS |
 | --- | --- |
 | ![macOS](doc/Mac.gif) | ![iOS](doc/Ios.landscape.gif) |
+***
+### GuiLite previewer(WYSIWYG extension for GuiLite)
+[GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer) is a Visual Studio Code extension, could extract GUI information from C++ code and preview GUI at preview page(What you see is what you get)
+![GuiLitePreviewer](doc/Previewer.gif)
 ***
 ### Support Docker Container
 We build GuiLite demo as docker image, you can update/deploy/run the latest GuiLite demo on your device with single command below:
@@ -64,6 +66,7 @@ GuiLite is only a framework, could not create UI by itself. In order to show how
 | --- | --- | --- | --- | --- |
 | HelloParticle | Windows, Linux, STM32F103, STM32F429 | Show how to develop particle effect | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
 | HelloStar | Windows, Linux, STM32F103, STM32F429 | Show how to develop star field effect | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloStar/README.md) | ★ |
+| Hello3D | Windows, Linux, STM32F103 | Show how to build physics App with GuiLite | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/Hello3D/README.md) | ★★ |
 | HelloGuiLite | Windows, Linux | Show how to Initialize UI, load resource, layout UI | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | ★★ |
 | HelloWidgets | Windows, Linux | Show how to use GuiLite widgets | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWidgets/README.md) | ★★ |
 | HelloMario | Windows, Linux, STM32F103, STM32F429 | Show how to develop multi-layer UI system | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/README.md) | ★★ |
