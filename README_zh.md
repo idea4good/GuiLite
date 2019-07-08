@@ -17,7 +17,7 @@
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
 ## 🔥新功能：3D
-![Hello3D](doc/Hello3D.gif)
+![Hello3D-pc](doc/Hello3D-pc.gif)![Hello3D-mcu](doc/Hello3D-mcu.gif)
 
 Hello 3D 仅有[100多行代码](https://gitee.com/idea4good/GuiLiteSamples/blob/master/Hello3D/UIcode/UIcode.cpp)，用于向初学者展示：如何使用GuiLite模拟3D物理过程。该实例可支持Windows，Linux及单片机平台。
 
