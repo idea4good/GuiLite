@@ -1,12 +1,12 @@
-#ifndef GAL_H
-#define GAL_H
+#ifndef SURFACE_H
+#define SURFACE_H
 
 class c_frame_layer
 {
 public:
 	c_frame_layer() { fb = 0;}
 	unsigned short*	fb;
-	c_rect 	rect;
+	c_rect 	visible_rect;
 };
 
 typedef enum
@@ -52,7 +52,7 @@ public:
 	bool is_active() { return m_is_active; }
 	c_display* get_display() { return m_display; }
 
-	int set_frame_layer(c_rect& rect, unsigned int z_order);
+	int set_frame_layer_visible_rect(c_rect& rect, unsigned int z_order);
 	void set_active(bool flag){m_is_active = flag;}
 protected:
 	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb);

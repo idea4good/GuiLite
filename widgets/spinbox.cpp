@@ -126,7 +126,7 @@ void c_spin_box::on_paint()
 		if (m_z_order > m_parent->get_z_order())
 		{
 			hide_arrow_button();
-			m_surface->set_frame_layer(empty_rect, m_z_order);
+			m_surface->set_frame_layer_visible_rect(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
@@ -136,7 +136,7 @@ void c_spin_box::on_paint()
 		if (m_z_order > m_parent->get_z_order())
 		{
 			hide_arrow_button();
-			m_surface->set_frame_layer(empty_rect, m_z_order);
+			m_surface->set_frame_layer_visible_rect(empty_rect, m_z_order);
 			m_z_order = m_parent->get_z_order();
 		}
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
@@ -149,7 +149,7 @@ void c_spin_box::on_paint()
 		}
 		tmp_rect.m_top = m_bt_down_rect.m_top;
 		tmp_rect.m_bottom = m_bt_down_rect.m_bottom;
-		m_surface->set_frame_layer(tmp_rect, m_z_order);
+		m_surface->set_frame_layer_visible_rect(tmp_rect, m_z_order);
 		show_arrow_button();
 
 		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());

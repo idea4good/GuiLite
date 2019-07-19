@@ -61,7 +61,7 @@ int c_dialog::open_dialog(c_dialog* p_dlg, bool modal_mode)
 
 	c_rect rc;
 	p_dlg->get_screen_rect(rc);
-	p_dlg->get_surface()->set_frame_layer(rc, Z_ORDER_LEVEL_1);
+	p_dlg->get_surface()->set_frame_layer_visible_rect(rc, Z_ORDER_LEVEL_1);
 
 	p_dlg->set_attr(modal_mode ? (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL) : (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS));
 	p_dlg->show_window();
@@ -80,7 +80,7 @@ int c_dialog::close_dialog(c_surface* surface)
 	c_rect rc;
 	
 	dlg->set_attr(WND_ATTRIBUTION(0));
-	surface->set_frame_layer(rc, dlg->m_z_order);
+	surface->set_frame_layer_visible_rect(rc, dlg->m_z_order);
 
 	//clear the dialog
 	for(int i = 0; i < SURFACE_CNT_MAX; i++)

@@ -122,7 +122,7 @@ void c_edit::on_paint()
 		if (m_z_order > m_parent->get_z_order())
 		{
 			s_keyboard.disconnect();
-			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
+			m_surface->set_frame_layer_visible_rect(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
 			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 		}
@@ -133,7 +133,7 @@ void c_edit::on_paint()
 		if (m_z_order > m_parent->get_z_order())
 		{
 			s_keyboard.disconnect();
-			m_surface->set_frame_layer(empty_rect, s_keyboard.get_z_order());
+			m_surface->set_frame_layer_visible_rect(empty_rect, s_keyboard.get_z_order());
 			m_z_order = m_parent->get_z_order();
 			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 		}
@@ -163,7 +163,7 @@ void c_edit::show_keyboard()
 
 	c_rect kb_rect;
 	s_keyboard.get_screen_rect(kb_rect);
-	m_surface->set_frame_layer(kb_rect, s_keyboard.get_z_order());
+	m_surface->set_frame_layer_visible_rect(kb_rect, s_keyboard.get_z_order());
 	s_keyboard.show_window();
 }
 

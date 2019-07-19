@@ -21,7 +21,7 @@ c_surface::c_surface(c_display* display,  unsigned int width, unsigned int heigh
 	m_fb = m_usr = 0;
 	m_top_zorder = m_max_zorder = Z_ORDER_LEVEL_0;
 	m_is_active = false;
-	m_frame_layers[Z_ORDER_LEVEL_0].rect = c_rect(0, 0, m_width, m_height);
+	m_frame_layers[Z_ORDER_LEVEL_0].visible_rect = c_rect(0, 0, m_width, m_height);
 }
 
 void c_surface::set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order)
@@ -63,7 +63,7 @@ void c_surface::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 		m_top_zorder = (Z_ORDER_LEVEL)z_order;
 	}
 
-	if (0 == m_frame_layers[z_order].rect.PtInRect(x, y))
+	if (0 == m_frame_layers[z_order].visible_rect.PtInRect(x, y))
 	{
 		ASSERT(false);
 		return;
@@ -78,7 +78,7 @@ void c_surface::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 	bool is_covered = false;
 	for (int tmp_z_order = Z_ORDER_LEVEL_MAX - 1; tmp_z_order > z_order; tmp_z_order--)
 	{
-		if (true == m_frame_layers[tmp_z_order].rect.PtInRect(x, y))
+		if (true == m_frame_layers[tmp_z_order].visible_rect.PtInRect(x, y))
 		{
 			is_covered = true;
 			break;
@@ -354,9 +354,9 @@ void c_surface::draw_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsi
 	}
 }
 
-int c_surface::set_frame_layer(c_rect& rect, unsigned int z_order)
+int c_surface::set_frame_layer_visible_rect(c_rect& rect, unsigned int z_order)
 {
-	if (rect == m_frame_layers[z_order].rect)
+	if (rect == m_frame_layers[z_order].visible_rect)
 	{
 		return 0;
 	}
@@ -380,7 +380,7 @@ int c_surface::set_frame_layer(c_rect& rect, unsigned int z_order)
 	}
 	m_top_zorder = (Z_ORDER_LEVEL)z_order;
 	
-	c_rect old_rect = m_frame_layers[z_order].rect;
+	c_rect old_rect = m_frame_layers[z_order].visible_rect;
 	//Recover the lower layer
 	int src_zorder = (Z_ORDER_LEVEL)(z_order - 1);
 	int display_width = m_display->get_width();
@@ -398,7 +398,7 @@ int c_surface::set_frame_layer(c_rect& rect, unsigned int z_order)
 		}
 	}
 
-	m_frame_layers[z_order].rect = rect;
+	m_frame_layers[z_order].visible_rect = rect;
 	if (rect.IsEmpty())
 	{
 		m_top_zorder = (Z_ORDER_LEVEL)(z_order - 1);
