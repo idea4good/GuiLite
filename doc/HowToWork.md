@@ -63,7 +63,7 @@ Rendering include rendering method and graphic management.
 - For take GPU advantage, you can refactor draw_xxx() by using GPU feature
 
 ### Graphic layer
-![Graphic layer](GraphicLayer.png)
+![Graphic layer](GraphicLayer.png)![GuiLiteGraphic](GuiLiteGraphic.gif)
 - display layer：This layer for physical display device, one UI has only one display layer
 - surface layer: One display layer have many surface layers, one surface layer represent one flip page
 - frame layer: One surface layer has many frame layers, one frame layer represent one layer in Z direction

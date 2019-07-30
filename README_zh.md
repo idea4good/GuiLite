@@ -2,7 +2,7 @@
     <img src="doc/GuiLiteCube.gif" alt="Image" width="600" height="300"/>
 </p>
 
-# GuiLite（超轻量UI框架） - 最小的GUI库
+# GuiLite（超轻量UI框架）- 最小的GUI库
 ![badge_build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![badge_docker](https://img.shields.io/badge/docker%20build-passing-brightgreen.svg) ![badge_platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS%20%7C%20iOS%20%7C%20Android%20%7C%20MCU-brightgreen.svg) ![badge_lincense](https://img.shields.io/badge/license-Apache%202-blue.svg) ![badge_lincense](https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg) 
 - [功能介绍](#功能介绍)
 - [快速上手](#快速上手)
@@ -20,10 +20,11 @@
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
-## 🔥新功能：3D
-![Hello3D-pc](doc/Hello3D-pc.gif)![Hello3D-mcu](doc/Hello3D-mcu.gif)
-
-Hello 3D 仅有[100多行代码](https://gitee.com/idea4good/GuiLiteSamples/blob/master/Hello3D/UIcode/UIcode.cpp)，用于向初学者展示：如何使用GuiLite模拟3D物理过程。该实例可支持Windows，Linux及单片机平台。
+## 🔥新功能：3D教程
+![GuiLiteGraphic](doc/GuiLiteGraphic.gif)
+- 通过3D程序，解释GuiLite滑动，及多层叠加原理
+- [完整视频](https://v.youku.com/v_show/id_XNDI4ODE1ODcwOA)
+- [Source code](https://github.com/idea4good/GuiLiteWeb/blob/master/Graphic/main.js)
 
 ## 功能介绍
 ### 卓越的跨平台能力
@@ -43,22 +44,19 @@ Hello 3D 仅有[100多行代码](https://gitee.com/idea4good/GuiLiteSamples/blob
 [GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer)是一个Visual Studio Code插件，它可以自动提取源代码的GUI布局信息，并实时显示在“预览”页面上(所见即所得)
 ![GuiLitePreviewer](doc/Previewer.gif)
 ***
-### 支持Docker容器
-我们把GuiLite demo做成了Docker映像，只需一行命令，就可以将最新的GuiLite demo升级/部署/运行在你的设备上了。
-- `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
-***
-### 易于定制界面
-![wallpaper](doc/wallpaper.jpg)
+### 浮夸的UI效果
+![wallpaper](doc/wallpaper.jpg)![Hello3D-pc](doc/Hello3D-pc.gif)
 ***
 ### 万国语(unicode)：
 ![unicode](doc/unicode.jpg)
 ***
-### “换肤”功能
-![multi-theme](doc/multi-theme.png)
-***
 ### IoT（物联网）功能
 - 上报“编译/运行”情况至“云端”：<br>![BuildInfo](doc/BuildInfo.png)
 - 同步“运行数据”至“云端”：<br>![DataOnCloud](doc/data_on_cloud.png)
+***
+### 支持Docker
+我们把GuiLite demo做成了Docker映像，只需一行命令，就可以将最新的GuiLite demo升级/部署/运行在你的设备上了。
+- `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 ***
 ## 快速上手
 GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何用GuiLite开发App，我们提供了一些实例程序给大家参考。
