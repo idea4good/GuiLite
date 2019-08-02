@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="doc/GuiLiteCube.gif" alt="Image" width="600" height="300"/>
+    <img src="doc/GuiLiteCube.gif" alt="Image" width="320" height="304"/>
 </p>
 
 # GuiLite - The smallest GUI library
