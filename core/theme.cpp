@@ -1,7 +1,7 @@
-#include "core_include/api.h"
-#include "core_include/rect.h"
-#include "core_include/resource.h"
-#include "core_include/theme.h"
+#include "../core_include/api.h"
+#include "../core_include/rect.h"
+#include "../core_include/resource.h"
+#include "../core_include/theme.h"
 
 static const FONT_INFO* s_font_map[FONT_MAX];
 static const BITMAP_INFO* s_bmp_map[BITMAP_MAX];

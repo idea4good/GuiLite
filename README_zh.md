@@ -20,11 +20,10 @@
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
-## 🔥新功能：3D教程
-![GuiLiteGraphic](doc/GuiLiteGraphic.gif)
-- 通过3D程序，解释GuiLite滑动，及多层叠加原理
-- [完整视频](https://v.youku.com/v_show/id_XNDI4ODE1ODcwOA)
-- [Source code](https://github.com/idea4good/GuiLiteWeb/blob/master/Graphic/main.js)
+## 🔥新功能：GuiLite实例 - 3D版
+- ![GuiLiteGraphic](doc/GuiLite3D.gif)
+- GuiLite可以实现在Web及3D环境下的流畅运行
+- [源代码链接](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
 
 ## 功能介绍
 ### 卓越的跨平台能力
@@ -91,6 +90,10 @@ GuiLite是最简单，易学的GUI库。
     - [如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
     - [如何传递消息?](doc/HowMessageWork.md)
     - [核心UML示意图](doc/UML.md)
+    - GuiLite滑动，及多层叠加原理
+        - ![GuiLiteGraphic](doc/GuiLiteGraphic.gif)
+        - [完整视频](https://v.youku.com/v_show/id_XNDI4ODE1ODcwOA)
+        - [Source code](https://github.com/idea4good/GuiLiteWeb/blob/master/Graphic/main.js)
 
 ## 学习方法
 1. **外围** - 成功编译GuiLite库

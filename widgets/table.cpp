@@ -1,10 +1,10 @@
-#include "core_include/api.h"
-#include "core_include/resource.h"
-#include "core_include/rect.h"
-#include "core_include/word.h"
-#include "core_include/surface.h"
-#include "core_include/cmd_target.h"
-#include "core_include/wnd.h"
+#include "../core_include/api.h"
+#include "../core_include/resource.h"
+#include "../core_include/rect.h"
+#include "../core_include/word.h"
+#include "../core_include/surface.h"
+#include "../core_include/cmd_target.h"
+#include "../core_include/wnd.h"
 #include "../widgets_include/table.h"
 
 void c_table::set_item(int row, int col, char* str, unsigned int color)

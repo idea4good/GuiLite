@@ -21,11 +21,10 @@
 - ⚙️We hope GuiLite is small enough to help you understand how UI works.
 - 👑You should be the master of your UI and not be tied to a specific framework.
 
-## 🔥New feature：3D tutorial
-![GuiLiteGraphic](doc/GuiLiteGraphic.gif)
-- This a 3D programm which used to show how GuiLite multi-layers work.
-- [Full video](https://www.youtube.com/watch?v=QzZJnU5KmDQ)
-- [Source code](https://github.com/idea4good/GuiLiteWeb/blob/master/Graphic/main.js)
+## 🔥New feature：Run GuiLite Samples on 3D
+- ![GuiLiteGraphic](doc/GuiLite3D.gif)
+- Run GuiLite Samples on Web and 3D scenario
+- [Source code](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
 
 ## Features
 ### Cross platform
@@ -92,6 +91,10 @@ GuiLite is the smallest and simplest GUI library.
     - [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
     - [How to dispatch messages?](doc/HowMessageWork.md)
     - [UML chart of GuiLite core](doc/UML.md)
+    - How GuiLite multi-layers work?
+        - ![GuiLiteGraphic](doc/GuiLiteGraphic.gif)
+        - [Full video](https://www.youtube.com/watch?v=QzZJnU5KmDQ)
+        - [Tutorial Source code](https://github.com/idea4good/GuiLiteWeb/blob/master/Graphic/main.js)
 
 ## How to learn?
 1. Build/Run GuiLite library
