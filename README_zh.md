@@ -22,7 +22,7 @@
 
 ## 🔥新功能：3D化GuiLite实例
 - ![GuiLiteGraphic](doc/GuiLite3D.gif)
-- GuiLite实例[(HelloParticle, HelloWave)](https://gitee.com/idea4good/GuiLiteSamples#mcu-demos-hello-star--hello-particle--hello-wave--hello-notouch--hello-mario--hello-3d)运行在Web及3D环境
+- GuiLite实例[(HelloParticle, HelloWave)](https://github.com/idea4good/GuiLiteSamples#mcu-demos-hello-star--hello-particle--hello-wave--hello-notouch--hello-mario--hello-3d)运行在Web及3D环境
 - [源代码链接](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
 
 ## 功能介绍
