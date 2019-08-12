@@ -20,9 +20,9 @@
 - ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
 - 👑任何UI框架都不为你我而生，你才是自己真正的主人
 
-## 🔥新功能：GuiLite实例 - 3D版
+## 🔥新功能：3D化GuiLite实例
 - ![GuiLiteGraphic](doc/GuiLite3D.gif)
-- GuiLite可以实现在Web及3D环境下的流畅运行
+- GuiLite实例[(HelloParticle, HelloWave)](https://gitee.com/idea4good/GuiLiteSamples#mcu-demos-hello-star--hello-particle--hello-wave--hello-notouch--hello-mario--hello-3d)运行在Web及3D环境
 - [源代码链接](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
 
 ## 功能介绍
