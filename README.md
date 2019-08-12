@@ -13,13 +13,10 @@
 - [🙏Thanks & ❤️Charity](#Thanks-and-Charity)
 ***
 ## Introduction
-- GuiLite is the smallest GUI library with 5000 lines of C++ code, it runs on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS, Docker and **MCU with or without OS**).
-- GuiLite is embeddable, it runs inside other UI frameworks(e.g, Qt, MFC, Winform, Cocoa). You could use GuiLite features and host UI features simultaneously.
-- GuiLite render UI by itself, independent of OS & Graphic library.
-- GuiLite could work with many languages(e.g. Swift, Java, C#, Golang).
-- 🔧We want people to customize GuiLite.
-- ⚙️We hope GuiLite is small enough to help you understand how UI works.
-- 👑You should be the master of your UI and not be tied to a specific framework.
+GuiLite is the smallest GUI library with 5000 lines of C++ code, could run on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS, Docker and MCU without OS), and work with **many languages**(e.g. Swift, Java, Javascript, C#, Golang).
+- ✂️Small: Only 5 KLOC, independent of any OS and any third party library - Easy to build adn run
+- ⚡Fast: Render GUI within one invoking -  Make GUI runs quickly and smoothly
+- 🧷Embeddable: Could runs inside Qt/MFC/Winform/Cocoa/Web - Keep Qt/MFC code reusable, and speed it up by local GuiLite-optimization
 
 ## 🔥New feature：Upgrade GuiLite Samples to 3D level
 - ![GuiLiteGraphic](doc/GuiLite3D.gif)

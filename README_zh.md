@@ -12,13 +12,10 @@
 - [🙏致谢和❤️慈善](#致谢和慈善)
 ***
 ## GuiLite是什么鬼？
-- GuiLite是5千行代码的**全平台UI框架**，可以完美运行在: iOS，Android，Linux（ARM/x86-64），Windows（包含VR），Mac，Docker和**有(无)操作系统的MCU**上。
-- GuiLite可以嵌入在iOS、Android、MFC、QT等其他UI系统中，让你的界面集百家之长，又不失个性。
-- GuiLite与操作系统及第三方图形库无关，甚至也可以运行在无OS的单片机环境。
-- GuiLite鼓励混合编程，开发者可以用GuiLite接管UI部分，用Swift，Java，Golang，C#，Python开发业务部分。
-- 🔧不鼓励大家全盘接受GuiLite，更愿意大家自主定制GuiLite
-- ⚙️希望GuiLite小到足够帮助大家掌握UI工作原理，从而摆脱UI框架的束缚，构建自己独一无二的UI
-- 👑任何UI框架都不为你我而生，你才是自己真正的主人
+GuiLite是5千行的C++图形界面库，可以运行在**所有平台**（例如：iOS，Android，Linux（ARM/x86-64），Windows（包含VR），Mac，Docker和MCU）上；也可以与**多种语言**（例如： Swift, Java, Javascript, C#, Golang）协同工作。
+- ✂️轻量: 只有5千行代码，与操作系统及第三方库无关 - 轻松编译/运行
+- ⚡超快: 一次调用就可以完成图形渲染 - 程序更快速，UI更流畅
+- 🧷可嵌入: 可嵌入在Qt/MFC/Winform/Cocoa/Web程序中运行 - 充分利用现有Qt/MFC代码，局部GuiLite优化，亦可显著提升效率
 
 ## 🔥新功能：3D化GuiLite实例
 - ![GuiLiteGraphic](doc/GuiLite3D.gif)
