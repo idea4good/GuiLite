@@ -1,5 +1,5 @@
-#ifndef TABLE_H
-#define TABLE_H
+#ifndef GUILITE_WIDGETS_INCLUDE_TABLE_H
+#define GUILITE_WIDGETS_INCLUDE_TABLE_H
 
 #define  MAX_COL_NUM  30
 #define  MAX_ROW_NUM  30

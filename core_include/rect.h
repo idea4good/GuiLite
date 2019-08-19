@@ -1,5 +1,5 @@
-#ifndef RECT_H
-#define RECT_H
+#ifndef GUILITE_CORE_INCLUDE_RECT_H
+#define GUILITE_CORE_INCLUDE_RECT_H
 
 class c_rect
 {

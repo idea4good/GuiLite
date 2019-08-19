@@ -30,7 +30,7 @@ void _assert(const char* file, int line)
 		memset(s_buf, 0, sizeof(s_buf));
 		sprintf_s(s_buf, sizeof(s_buf), "vvvvvvvvvvvvvvvvvvvvvvvvvvvv\n\nAssert@ file = %s, line = %d\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n", file, line);
 		OutputDebugStringA(s_buf);
-		printf(s_buf);
+		printf("%s", s_buf);
 		fflush(stdout);
 		assert(false);
 	}
@@ -44,7 +44,7 @@ void log_out(const char* log)
 	}
 	else
 	{
-		printf(log);
+		printf("%s", log);
 		fflush(stdout);
 		OutputDebugStringA(log);
 	}

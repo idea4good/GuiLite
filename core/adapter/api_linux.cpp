@@ -46,7 +46,7 @@ void log_out(const char* log)
 	}
 	else
 	{
-		printf(log);
+		printf("%s", log);
 		fflush(stdout);
 	}
 }

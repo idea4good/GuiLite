@@ -1,5 +1,5 @@
-#ifndef BUTTON_H
-#define BUTTON_H
+#ifndef GUILITE_WIDGETS_INCLUDE_BUTTON_H
+#define GUILITE_WIDGETS_INCLUDE_BUTTON_H
 
 #define GL_BN_CLICKED							0x1111
 #define ON_GL_BN_CLICKED(ctrlId, func)                                       \

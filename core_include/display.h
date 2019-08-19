@@ -1,5 +1,5 @@
-#ifndef DISPLAY_H
-#define DISPLAY_H
+#ifndef GUILITE_CORE_INCLUDE_DISPLAY_H
+#define GUILITE_CORE_INCLUDE_DISPLAY_H
 
 #define SURFACE_CNT_MAX	6//root + pages
 

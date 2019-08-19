@@ -1,5 +1,5 @@
-#ifndef DIALOG_H
-#define DIALOG_H
+#ifndef GUILITE_WIDGETS_INCLUDE_DIALOG_H
+#define GUILITE_WIDGETS_INCLUDE_DIALOG_H
 
 class c_surface;
 class c_dialog;

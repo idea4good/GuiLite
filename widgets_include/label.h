@@ -1,5 +1,5 @@
-#ifndef LABEL_H
-#define LABEL_H
+#ifndef GUILITE_WIDGETS_INCLUDE_LABEL_H
+#define GUILITE_WIDGETS_INCLUDE_LABEL_H
 
 class c_label : public c_wnd
 {

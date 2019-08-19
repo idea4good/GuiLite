@@ -1,5 +1,5 @@
-#ifndef WAVE_CTRL_H
-#define WAVE_CTRL_H
+#ifndef GUILITE_WIDGETS_INCLUDE_WAVE_CTRL_H
+#define GUILITE_WIDGETS_INCLUDE_WAVE_CTRL_H
 
 typedef enum
 {

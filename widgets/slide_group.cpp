@@ -43,7 +43,7 @@ int c_slide_group::set_active_slide(int index, bool is_redraw)
 			{
 				c_rect rc;
 				get_screen_rect(rc);
-				m_slides[i]->get_surface()->flush_scrren(rc.m_left, rc.m_top, rc.m_right, rc.m_bottom);
+				m_slides[i]->get_surface()->flush_screen(rc.m_left, rc.m_top, rc.m_right, rc.m_bottom);
 			}
 		}
 		else

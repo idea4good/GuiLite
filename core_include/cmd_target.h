@@ -1,5 +1,5 @@
-#ifndef CMD_TARGET_H
-#define CMD_TARGET_H
+#ifndef GUILITE_CORE_INCLUDE_CMD_TARGET_H
+#define GUILITE_CORE_INCLUDE_CMD_TARGET_H
 
 class c_cmd_target;
 

@@ -1,5 +1,5 @@
-#ifndef  RESOURCE_H
-#define  RESOURCE_H
+#ifndef  GUILITE_CORE_INCLUDE_RESOURCE_H
+#define  GUILITE_CORE_INCLUDE_RESOURCE_H
 
 //BITMAP
 typedef struct struct_bitmap_info

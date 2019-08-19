@@ -1,5 +1,5 @@
-#ifndef WORD_UNIT_H
-#define WORD_UNIT_H
+#ifndef GUILITE_CORE_INCLUDE_WORD_H
+#define GUILITE_CORE_INCLUDE_WORD_H
 
 class c_surface;
 class c_word

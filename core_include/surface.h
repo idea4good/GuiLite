@@ -1,5 +1,5 @@
-#ifndef SURFACE_H
-#define SURFACE_H
+#ifndef GUILITE_CORE_INCLUDE_SURFACE_H
+#define GUILITE_CORE_INCLUDE_SURFACE_H
 
 class c_frame_layer
 {
@@ -47,7 +47,7 @@ public:
 		fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, rgb, z_order);
 	}
 
-	int flush_scrren(int left, int top, int right, int bottom);
+	int flush_screen(int left, int top, int right, int bottom);
 	bool is_valid(c_rect rect);
 	bool is_active() { return m_is_active; }
 	c_display* get_display() { return m_display; }

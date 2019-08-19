@@ -406,7 +406,7 @@ int c_surface::set_frame_layer_visible_rect(c_rect& rect, unsigned int z_order)
 	return 0;
 }
 
-int c_surface::flush_scrren(int left, int top, int right, int bottom)
+int c_surface::flush_screen(int left, int top, int right, int bottom)
 {
 	if(left < 0 || left >= m_width || right < 0 || right >= m_width ||
 		top < 0 || top >= m_height || bottom < 0 || bottom >= m_height)

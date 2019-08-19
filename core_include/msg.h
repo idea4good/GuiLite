@@ -1,5 +1,5 @@
-#ifndef MSG_H
-#define MSG_H
+#ifndef GUILITE_CORE_INCLUDE_MSG_H
+#define GUILITE_CORE_INCLUDE_MSG_H
 
 typedef struct
 {

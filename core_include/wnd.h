@@ -1,5 +1,5 @@
-#ifndef WND_H
-#define WND_H
+#ifndef GUILITE_CORE_INCLUDE_WND_H
+#define GUILITE_CORE_INCLUDE_WND_H
 
 typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;

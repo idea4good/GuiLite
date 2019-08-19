@@ -1,5 +1,5 @@
-#ifndef MY_RESOURCE_H
-#define MY_RESOURCE_H
+#ifndef GUILITE_CORE_INCLUDE_THEME_H
+#define GUILITE_CORE_INCLUDE_THEME_H
 
 typedef struct struct_font_info		FONT_INFO;
 typedef struct struct_color_rect	COLOR_RECT;
