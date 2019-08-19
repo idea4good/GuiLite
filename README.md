@@ -14,9 +14,14 @@
 ***
 ## Introduction
 GuiLite is the smallest GUI library with 5000 lines of C++ code, could run on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS, Docker and MCU without OS), and work with **many languages**(e.g. Swift, Java, Javascript, C#, Golang).
-- ✂️Small: Only 5 KLOC, independent of any OS and any third party library - Easy to build adn run
-- ⚡Fast: Render GUI within one invoking -  Make GUI runs quickly and smoothly
+- ✂️Small: Only 5 KLOC, independent of any OS and any third party library - Easy to build and run
+- ⚡Fast: Render GUI within one invoking -  Make GUI run quickly and smoothly
 - 🧷Embeddable: Could runs inside Qt/MFC/Winform/Cocoa/Web - Keep Qt/MFC code reusable, and speed it up by local GuiLite-optimization
+- ⚙️️Hardware Minimum Requirment:
+
+| Processor | Disk/ROM space | Memory |
+| --- | --- | --- |
+| 24 MHZ | 29 KB | 9 KB |
 
 ## 🔥New feature：Upgrade GuiLite Samples to 3D level
 - ![GuiLiteGraphic](doc/GuiLite3D.gif)
@@ -88,6 +93,7 @@ GuiLite is the smallest and simplest GUI library.
     - [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
     - [How to dispatch messages?](doc/HowMessageWork.md)
     - [UML chart of GuiLite core](doc/UML.md)
+    - Extremly portable: Execute `1h-1cpp.sh` to merge the whole source code into: 1 header(GuiLite.h) & 1 source(GuiLite.cpp)
     - How GuiLite multi-layers work?
         - ![GuiLiteGraphic](doc/GuiLiteGraphic.gif)
         - [Full video](https://www.youtube.com/watch?v=QzZJnU5KmDQ)

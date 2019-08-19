@@ -16,6 +16,11 @@ GuiLite是5千行的C++图形界面库，可以运行在**所有平台**（例�
 - ✂️轻量: 只有5千行代码，与操作系统及第三方库无关 - 轻松编译/运行
 - ⚡超快: 一次调用就可以完成图形渲染 - 程序更快速，UI更流畅
 - 🧷可嵌入: 可嵌入在Qt/MFC/Winform/Cocoa/Web程序中运行 - 充分利用现有Qt/MFC代码，局部GuiLite优化，亦可显著提升效率
+- ⚙️️最低硬件要求:
+
+| Processor | Disk/ROM space | Memory |
+| --- | --- | --- |
+| 24 MHZ | 29 KB | 9 KB |
 
 ## 🔥新功能：3D化GuiLite实例
 - ![GuiLiteGraphic](doc/GuiLite3D.gif)
@@ -87,6 +92,7 @@ GuiLite是最简单，易学的GUI库。
     - [如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
     - [如何传递消息?](doc/HowMessageWork.md)
     - [核心UML示意图](doc/UML.md)
+    - 快速移植: 执行 `1h-1cpp.sh` 可以将所有GuiLite代码合成为：1个头文件(GuiLite.h)和1个实现文件(GuiLite.cpp)
     - GuiLite滑动，及多层叠加原理
         - ![GuiLiteGraphic](doc/GuiLiteGraphic.gif)
         - [完整视频](https://v.youku.com/v_show/id_XNDI4ODE1ODcwOA)
