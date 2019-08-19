@@ -31,17 +31,17 @@ do
   case $input in
     1)
       echo "Choose 1"
-      cat *linux*.cpp > adapter_linux.cpp
+      cat *linux*.cpp > adapter.cpp
       break
       ;;
     2)
       echo "Choose 2"
-      cat *win*.cpp > adapter_linux.cpp
+      cat *win*.cpp > adapter.cpp
       break
       ;;
     3)
       echo "Choose 3"
-      cat *unknow*.cpp > adapter_linux.cpp
+      cat *unknow*.cpp > adapter.cpp
       break
       ;;
     *)
@@ -51,15 +51,15 @@ do
     esac
 done
 
-mv adapter_linux.cpp ../../
+mv adapter.cpp ../../
 
 cd ../../widgets
 cat *.cpp > widgets.cpp
 mv widgets.cpp ../
 
 cd ..
-cat core.cpp adapter_linux.cpp widgets.cpp > GuiLiteRaw.cpp
-rm core.cpp adapter_linux.cpp widgets.cpp
+cat core.cpp adapter.cpp widgets.cpp > GuiLiteRaw.cpp
+rm core.cpp adapter.cpp widgets.cpp
 
 # remove include core_include widgets_include from GuiLite.cpp
 sed '/^#include.*core_include\|widgets_include.*/d' GuiLiteRaw.cpp > GuiLiteNoInclude.cpp
