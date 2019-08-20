@@ -87,13 +87,12 @@ GuiLite is the smallest and simplest GUI library.
 3. All rendering base on draw_pixel, no algorithm
 4. Full documents and small live demos for reference
     - [Design specification](doc/HowToWork.md)
-    - [How to build?](doc/HowToBuild.md)
+    - [How to build & port?](doc/HowToBuild.md)
     - [How to Layout widgets?](doc/HowLayoutWork.md)
     - [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
     - [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
     - [How to dispatch messages?](doc/HowMessageWork.md)
     - [UML chart of GuiLite core](doc/UML.md)
-    - Extremly portable: Execute `1h-1cpp.sh` to merge the whole source code into: 1 header(GuiLite.h) & 1 source(GuiLite.cpp)
     - How GuiLite multi-layers work?
         - ![GuiLiteGraphic](doc/GuiLiteGraphic.gif)
         - [Full video](https://www.youtube.com/watch?v=QzZJnU5KmDQ)

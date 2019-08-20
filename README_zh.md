@@ -86,13 +86,12 @@ GuiLite是最简单，易学的GUI库。
 3. 图形绘制以描点为基础，不使用任何算法
 4. 设计简单，配有丰富的文档和实例程序；遇到问题，可以在QQ群获得帮助
     - [软件设计说明](doc/HowToWork-cn.md)
-    - [如何编译?](doc/HowToBuild.md)
+    - [如何编译和移植?](doc/HowToBuild.md)
     - [如何布局UI?](doc/HowLayoutWork.md)
     - [如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
     - [如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
     - [如何传递消息?](doc/HowMessageWork.md)
     - [核心UML示意图](doc/UML.md)
-    - 快速移植: 执行 `1h-1cpp.sh` 可以将所有GuiLite代码合成为：1个头文件(GuiLite.h)和1个实现文件(GuiLite.cpp)
     - GuiLite滑动，及多层叠加原理
         - ![GuiLiteGraphic](doc/GuiLiteGraphic.gif)
         - [完整视频](https://v.youku.com/v_show/id_XNDI4ODE1ODcwOA)
