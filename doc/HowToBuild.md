@@ -1,9 +1,13 @@
 # How to build & port GuiLite?
 ## How to build GuiLite libary for Windows?
-Prerequisite: Windows 10, visul stdio 2015/2017
-- Open "GuiLite.sln" by Visual studio 2017
+Prerequisite: Windows & Visul Studio 2013/2015/2017/2019
+- Open "GuiLite.sln" by Visual Studio
 - Click `Build Solution`
 - Output here: \GuiLite\Debug(Release)\GuiLite.lib
+
+FAQ: Error when open GuiLite project with Visual Studio, reconfigure the project to match your computer like this:
+
+![vs-configure](vs-configure.jpg)
 
 ## How to build GuiLite libary for iOS/Mac and Linux(amd64) & raspberry pi?
 - `cd GuiLite`

@@ -12,9 +12,9 @@
 - [🙏致谢和❤️慈善](#致谢和慈善)
 ***
 ## GuiLite是什么鬼？
-GuiLite是5千行的C++图形界面库，可以运行在**所有平台**（例如：iOS，Android，Linux（ARM/x86-64），Windows（包含VR），Mac，Docker和MCU）上；也可以与**多种语言**（例如： Swift, Java, Javascript, C#, Golang）协同工作。
-- ✂️轻量: 只有5千行代码，与操作系统及第三方库无关 - 轻松编译/运行
-- ⚡超快: 一次调用就可以完成图形渲染 - 程序更快速，UI更流畅
+GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如：iOS，Android，Linux（ARM/x86-64），Windows（包含VR），Mac，Docker和MCU）上；也可以与**多种语言**（例如： Swift, Java, Javascript, C#, Golang）协同工作。
+- ✂️轻量: 5千行C++代码，可合并在：1个头文件(GuiLite.h)，1个实现文件(GuiLite.cpp)中 - 轻松[编译/移植](doc/HowToBuild.md)
+- ⚡超快: 一次调用就可以完成图形渲染，与操作系统及第三方库无关 - 程序更快速，UI更流畅
 - 🧷可嵌入: 可嵌入在Qt/MFC/Winform/Cocoa/Web程序中运行 - 充分利用现有Qt/MFC代码，局部GuiLite优化，亦可显著提升效率
 - ⚙️️最低硬件要求:
 
