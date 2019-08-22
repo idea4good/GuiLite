@@ -14,16 +14,16 @@
 ***
 ## Introduction
 GuiLite is the smallest GUI library with 5000 lines of code, could run on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS, Docker and MCU without OS), and work with **many languages**(e.g. Swift, Java, Javascript, C#, Golang).
-- ✂️Small: 5,000 lines of C++ code, could merge into 1 header & 1 source file(GuiLite.h/GuiLite.cpp) - Easy to [build & port](doc/HowToBuild.md)
+- ✂️Small: 5,000 lines of C++ code, could be merged into 1 header & 1 source file(GuiLite.h/GuiLite.cpp) - Easy to [build & port](doc/HowToBuild.md)
 - ⚡Fast: Render GUI within one invoking, independent of any OS and any third party library -  Make GUI run quickly and smoothly
-- 🧷Embeddable: Could runs inside Qt/MFC/Winform/Cocoa/Web - Keep Qt/MFC code reusable, and speed it up by local GuiLite-optimization
+- 💉Inject: Run inside Qt/MFC/Winform/Cocoa/Web - Keep Qt/MFC code reusable, and speed it up by local GuiLite-optimization
 - ⚙️️Hardware Minimum Requirment:
 
 | Processor | Disk/ROM space | Memory |
 | --- | --- | --- |
 | 24 MHZ | 29 KB | 9 KB |
 
-## 🔥New feature：Upgrade GuiLite Samples to 3D level
+## 🔥New feature：Inject GuiLite Samples to 3D Web
 - ![GuiLiteGraphic](doc/GuiLite3D.gif)
 - Run GuiLite Samples[(HelloParticle, HelloWave)](https://github.com/idea4good/GuiLiteSamples#mcu-demos-hello-star--hello-particle--hello-wave--hello-notouch--hello-mario--hello-3d) on Web and 3D scenario
 - [Source code](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
