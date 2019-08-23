@@ -51,7 +51,7 @@ static WAVEFORMATEX s_wav_format = {
 	0
 };
 
-static int register_wav_resouce(AUDIO_TYPE type, wchar_t* wav_path)
+static int register_wav_resouce(AUDIO_TYPE type, const wchar_t* wav_path)
 {
 	if (s_wav_resource[type].p_data)
 	{
