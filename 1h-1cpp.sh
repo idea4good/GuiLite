@@ -1,3 +1,5 @@
+./.sync.sh 1h1cpp
+
 echo "Merge GuiLite source code into: 1 hearder & 1 source file"
 echo ""
 echo "Choose 1: Build for Linux"
