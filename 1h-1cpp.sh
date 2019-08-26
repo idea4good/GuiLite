@@ -22,7 +22,8 @@ cd ..
 cat core.h widgets.h > GuiLiteRaw.h
 rm core.h widgets.h
 
-# build GuiLite.cpp
+# build GuiLite-xxx.cpp
+cppFileName="GuiLite-win.cpp"
 cd core
 cat *.cpp > core.cpp
 mv core.cpp ../
@@ -34,6 +35,7 @@ do
     1)
       echo "Choose 1"
       cat *linux*.cpp > adapter.cpp
+      cppFileName="GuiLite-linux.cpp"
       break
       ;;
     2)
@@ -44,6 +46,7 @@ do
     3)
       echo "Choose 3"
       cat *unknow*.cpp > adapter.cpp
+      cppFileName="GuiLite-unknow.cpp"
       break
       ;;
     *)
@@ -63,21 +66,21 @@ cd ..
 cat core.cpp adapter.cpp widgets.cpp > GuiLiteRaw.cpp
 rm core.cpp adapter.cpp widgets.cpp
 
-# remove include core_include widgets_include from GuiLite.cpp
+# remove include core_include widgets_include from GuiLiteRaw.cpp
 sed '/^#include.*core_include\|widgets_include.*/d' GuiLiteRaw.cpp > GuiLiteNoInclude.cpp
 
-# include GuiLite.h to GuiLite.cpp
+# include GuiLite.h to GuiLiteNoInclude.cpp
 sed -i '1s/^/#include "GuiLite.h" /' GuiLiteNoInclude.cpp
 
 # Delete empty lines or blank lines
 sed '/^$/d' GuiLiteRaw.h > GuiLite.h
-sed '/^$/d' GuiLiteNoInclude.cpp > GuiLite.cpp
+sed '/^$/d' GuiLiteNoInclude.cpp > $cppFileName
 
 # Verify
-gcc -c GuiLite.cpp
+gcc -c $cppFileName
 
 # clean
 rm GuiLiteRaw.h GuiLiteRaw.cpp GuiLiteNoInclude.cpp
 
 echo "Done!"
-echo "You could find GuiLite.h/GuiLite.cpp in this folder"
+echo "You could find GuiLite.h/$cppFileName in this folder"
