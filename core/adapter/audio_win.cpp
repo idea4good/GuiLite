@@ -214,7 +214,8 @@ void c_audio::init()
 									AUDIO_OUTPUT_BUF_LEN * 2, 0, &s_wav_format,	0);
 	CHECK_ERROR(ret);
 
-	s_audio_event = CreateEventEx(0, 0, 0, EVENT_ALL_ACCESS);
+	//s_audio_event = CreateEventEx(0, 0, 0, EVENT_ALL_ACCESS);
+	s_audio_event = CreateEvent(0, 0, 0, 0);
 	ret = s_audio_client->SetEventHandle(s_audio_event);
 	CHECK_ERROR(ret);
 
