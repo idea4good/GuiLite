@@ -98,9 +98,9 @@ void c_spin_box::on_kill_focus()
 
 void c_spin_box::show_arrow_button()
 {
-	m_bt_up.connect(this, ID_BT_ARROW_UP, "\xe2\x96\xb2"/*▲*/, 0, m_wnd_rect.Height(), m_bt_up_rect.Width(),m_bt_up_rect.Height());
+	m_bt_up.connect(this, ID_BT_ARROW_UP, "\xe2\x96\xb2"/*unicode of up arrow*/, 0, m_wnd_rect.Height(), m_bt_up_rect.Width(),m_bt_up_rect.Height());
 	m_bt_up.show_window();
-	m_bt_down.connect(this, ID_BT_ARROW_DOWN, "\xe2\x96\xbc"/*▼*/, m_bt_up_rect.Width(), m_wnd_rect.Height(), m_bt_down_rect.Width(),m_bt_down_rect.Height());
+	m_bt_down.connect(this, ID_BT_ARROW_DOWN, "\xe2\x96\xbc"/*unicode of down arrow*/, m_bt_up_rect.Width(), m_wnd_rect.Height(), m_bt_down_rect.Width(),m_bt_down_rect.Height());
 	m_bt_down.show_window();
 
 	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL);
