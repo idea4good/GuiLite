@@ -23,7 +23,7 @@ GuiLite is the smallest GUI library with 5000 lines of code, could run on **all 
 | --- | --- | --- |
 | 24 MHZ | 29 KB | 9 KB |
 
-## 🔥New feature：Inject GuiLite Samples to 3D Web
+## 🔥New feature：Inject GuiLite Samples into 3D Web
 - ![GuiLiteGraphic](doc/GuiLite3D.gif)
 - Run GuiLite Samples[(HelloParticle, HelloWave)](https://github.com/idea4good/GuiLiteSamples#mcu-demos-hello-star--hello-particle--hello-wave--hello-notouch--hello-mario--hello-3d) on Web and 3D scenario
 - [Source code](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
