@@ -125,6 +125,27 @@ widgets:
 | set_frame_layer_visible_rect | 设置指定图层的可视区域（矩形），可视区域会根据图层优先级，自动进行上下叠加。rect：可视矩形的位置信息；z_order：图层的z坐标（图层坐标） |
 | flush_screen | 将当前surface的指定矩形区域一次性刷在显示屏上。left：surface指定区域的左边界坐标；top：surface指定区域的上边界坐标；right：surface指定区域的右边界坐标；bottom：surface指定区域的下边界坐标 |
 | is_valid | 判断给定位置的矩形，是否合理（是否在surface的范围内）。rect：矩形区域的坐标信息 |
+***
+| 函数名称 | wnd.cpp 函数接口注释 |
+| --- | --- |
+| c_wnd | c_wnd构造函数，进行基本初始化 |
+| connect | 把自己（this）、自己的子窗口系列及父窗口连接起来，形成完整的UI窗口链条；连接完成后，自己就可以响应用户输入及各种UI消息。parent：父窗口；resour_id：窗口ID；str：自己的窗口标题字符串；x：自己相对父窗口的坐标x；y：自己相对父窗口的坐标y；width：窗口宽度；height：窗口高度；p_child_tree：子窗口系列 |
+| load_child_wnd | 把一系列子窗口连接起来，形成完整的UI窗口链条；连接完成后，所有子窗口都可以响应用户输入及各种UI消息。p_child_tree：子窗口系列 |
+| disconnect | 把自己（this）跟父窗口、子窗口脱离连接，切断自己与UI的联系，不在响应用户输入及各种UI消息。 |
+| get_wnd_ptr | 获得指定窗口ID的窗口指针。id：窗口ID |
+| set_attr | 设置窗口属性，包括：普通、失效、可见。attr：属性值 |
+| is_focus_wnd | 判断自己（this）是否可以获得焦点 |
+| set_wnd_pos | 设置自己（this）相对于父窗口的窗口位置。x：窗口左上角坐标x；y：窗口左上角坐标y；width：窗口宽度；height：窗口高度 |
+| get_wnd_rect | 获取自己（this）相对于父窗口的位置信息。rect：用于输出位置信息 |
+| get_screen_rect | 获取自己（this）相对于UI系统的绝对位置信息。rect：用于输出位置信息 |
+| set_child_focus | 将自己（this）的一个子窗口设置为获得讲点状态。 focus_child：获得焦点的子窗口|
+| add_child_2_tail | 把一个子窗口添加到自己（this）的子窗口链表的尾部。child：被添加的子窗口 |
+| get_last_child | 获得自己（this）子窗口链表尾部的子窗口指针。 |
+| unlink_child | 将自己（this）的子窗口从子窗口链表中脱离出来。child：被脱链的子窗口 |
+| show_window | 渲染自己（this）及自己的子窗口 |
+| on_touch | 响应用户的触控消息。x：用户触控点的坐标x；y：用户触控点的坐标y；action：用户的触控类型，包括：按下，释放 |
+| on_key | 响应用户的按键消息。key：用户点击的按键键值。 |
+| notify_parent | 传递UI消息给自己（this）的父窗口，并调用父窗口对应的响应函数。msg_id：消息ID；ctrl_id：自己的资源ID，param：消息的参数 |
 
 ## 速成路线图
 1. 精读源文件wnd.cpp中的connect, on_touch, on_key函数，理解界面元素的串联办法；理解响应触控操作的基本原理；理解响应硬按键的基本原理
