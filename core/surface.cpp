@@ -202,7 +202,6 @@ void c_surface::fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb
 			}
 		}
 	}
-	
 }
 
 unsigned int c_surface::get_pixel(int x, int y, unsigned int z_order)

@@ -103,11 +103,28 @@ widgets:
 ## 函数注释
 | 函数名称 | display.cpp 函数接口注释 |
 | --- | --- |
-| c_display | c_display构造函数，初始化显示参数。输入：物理framebuffer指针，物理显示器宽度，物理显示器高度，surface宽度，surface高度，颜色深度，surface个数/滑动页面的个数 |
-| create_surface | 创建surface/滑动页面。输入： 用户ID，图层的个数|
-| merge_surface | 横向组合surface，多用于滑动surface。输入：待组合的surface源1，待组合的surface源2，surface源1的起始点x坐标，surface源2的起始点x坐标，surface源1的起始点y坐标，surface源2的起始点y坐标，横向组合的偏移距离；输出：可能改变当前显示内容 |
-| get_updated_fb | 获取该display的物理framebuffer指针 |
-| snap_shot | 生成当前显示的快照，并输出到bmp文件 |
+| c_display | c_display构造函数。phy_fb：物理framebuffer指针；display_width：物理显示器宽度；display_height：物理显示器高度；surface_width：surface宽度；surface_height：surface高度；color_bytes：颜色深度；surface_cnt：surface个数/滑动页面的个数；gfx_op：外部绘制接口，用以适配非framebuffer的渲染方式，如果该值不为空，surface在作底层渲染的时候，会调用该接口 |
+| alloc_surface | 分配surface/滑动页面。usr： 用户ID；max_zorder：该surface所拥有的图层数量|
+| merge_surface | 横向组合两个surface，多用于滑动surface。s0：源surface 0；s1：源surface 1，x0：源surface 0的起始点x坐标；x1：源surface 1的起始点x坐标；y0：源surface 0的起始点y坐标；y1：源surface 1的起始点y坐标；offset：横向组合的偏移距离 |
+| get_updated_fb | 获取该display的framebuffer指针，常用来将GUI显示在任意需要的地方。widght：用来获取framebuffer的宽度；height：用来获取framebuffer的高度；force_update：是否需要强制更新framebuffer的内容，如果不需要强制更新，且framebuffer没法发生变化，将返回NULL |
+| snap_shot | 生成当前显示的快照，并输出到bitmap文件。file_name：快照文件的名称 |
+***
+| 函数名称 | surface.cpp 函数接口注释 |
+| --- | --- |
+| c_surface | c_surface构造函数。 display：surface所属于的display；width：surface的宽度；height：surface的高度；color_bytes：颜色深度|
+| set_surface | 设置surface。wnd_root：使用者者ID，通常为root window，其子窗口自动获得该surface的使用权。 max_z_order：该surface拥有的图层数量 |
+| draw_pixel | 渲染一个像素点。x：像素点坐标x；y：像素点坐标y；rgb：像素颜色；z_order：像素所在的图层 |
+| draw_pixel_on_fb | 渲染一个像素点 - 底层渲染。x：像素点坐标x；y：像素点坐标y；rgb：像素颜色 |
+| fill_rect | 填充一个矩形。 x0：矩形左上角的坐标x；y0：矩形左上角的坐标y；x1：矩形右下角的坐标x；y1：矩形右下角的坐标y；rgb：矩形的颜色；z_order：矩形所在的图层|
+| fill_rect_on_fb | 填充一个矩形 - 底层渲染。 x0：矩形左上角的坐标x；y0：矩形左上角的坐标y；x1：矩形右下角的坐标x；y1：矩形右下角的坐标y；rgb：矩形的颜色 |
+| get_pixel | 获取指定位置的像素点的颜色值。x：位置坐标x；y：位置坐标y；z_order：位置坐标z（图层坐标） |
+| draw_hline | 渲染一条横线。x0：横线的左边起始坐标x；x1：横线的右边结尾坐标x；y：横线的纵向坐标y |
+| draw_vline | 渲染一条竖线。x：竖线的横向坐标：x；y0：竖线的上起始坐标y；y1：竖线的下结尾坐标y |
+| draw_line | 渲染普通直线。x1：直线左端点的坐标x；y1：直线左端点的坐标y；x2：直线右端点坐标x；y2：直线右端点坐标y |
+| draw_rect | 渲染矩形。x0：矩形左上角的坐标x；y0：矩形左上角的坐标y；x1：矩形右下角的坐标x；y1：矩形右下角的坐标y |
+| set_frame_layer_visible_rect | 设置指定图层的可视区域（矩形），可视区域会根据图层优先级，自动进行上下叠加。rect：可视矩形的位置信息；z_order：图层的z坐标（图层坐标） |
+| flush_screen | 将当前surface的指定矩形区域一次性刷在显示屏上。left：surface指定区域的左边界坐标；top：surface指定区域的上边界坐标；right：surface指定区域的右边界坐标；bottom：surface指定区域的下边界坐标 |
+| is_valid | 判断给定位置的矩形，是否合理（是否在surface的范围内）。rect：矩形区域的坐标信息 |
 
 ## 速成路线图
 1. 精读源文件wnd.cpp中的connect, on_touch, on_key函数，理解界面元素的串联办法；理解响应触控操作的基本原理；理解响应硬按键的基本原理
