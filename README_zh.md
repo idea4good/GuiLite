@@ -22,7 +22,7 @@ GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如�
 | --- | --- | --- |
 | 24 MHZ | 29 KB | 9 KB |
 
-## 🔥新功能：超轻量（单片机级别）3D引擎 - [Hello 3D](https://gitee.com/idea4good/GuiLiteSamples#hello-3d)
+## 🔥新功能：超轻量（单片机级别）3D引擎 - [Hello 3D](https://github.com/idea4good/GuiLiteSamples#hello-3d)
 - ![Hello3D](doc/Hello3D.gif)
 - 可以运行资源十分有限的硬件上
 - 可以快速建立3D模型，并流畅的运行在各种平台上（例如：Windows, Linux, MCU, Qt）
