@@ -22,10 +22,11 @@ GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如�
 | --- | --- | --- |
 | 24 MHZ | 29 KB | 9 KB |
 
-## 🔥新功能：把GuiLite实例注入到：3D Web
-- ![GuiLiteGraphic](doc/GuiLite3D.gif)
-- GuiLite实例[(HelloParticle, HelloWave)](https://github.com/idea4good/GuiLiteSamples#mcu-demos-hello-star--hello-particle--hello-wave--hello-notouch--hello-mario--hello-3d)运行在Web及3D环境
-- [源代码链接](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
+## 🔥新功能：超轻量（单片机级别）3D引擎 - [Hello 3D](https://gitee.com/idea4good/GuiLiteSamples#hello-3d)
+- ![Hello3D](doc/Hello3D.gif)
+- 可以运行资源十分有限的硬件上
+- 可以快速建立3D模型，并流畅的运行在各种平台上（例如：Windows, Linux, MCU, Qt）
+- 少许3D效果，可以有效提升UI体验
 
 ## 功能介绍
 ### 卓越的跨平台能力
@@ -46,7 +47,7 @@ GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如�
 ![GuiLitePreviewer](doc/Previewer.gif)
 ***
 ### 浮夸的UI效果
-![wallpaper](doc/wallpaper.jpg)![Hello3D-pc](doc/Hello3D-pc.gif)
+![wallpaper](doc/wallpaper.jpg)![HelloNets-pc](doc/HelloNets-pc.gif)
 ***
 ### 万国语(unicode)：
 ![unicode](doc/unicode.jpg)
@@ -59,6 +60,11 @@ GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如�
 我们把GuiLite demo做成了Docker映像，只需一行命令，就可以将最新的GuiLite demo升级/部署/运行在你的设备上了。
 - `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 ***
+## 支持GuiLite实例注入到：3D Web
+- ![GuiLiteGraphic](doc/GuiLite3D.gif)
+- GuiLite实例[(HelloParticle, HelloWave)](https://github.com/idea4good/GuiLiteSamples)运行在Web及3D环境
+- [源代码链接](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
+***
 ## 快速上手
 GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何用GuiLite开发App，我们提供了一些实例程序给大家参考。
 - 实例程序的代码在[这里](https://github.com/idea4good/GuiLiteSamples)。
@@ -68,7 +74,8 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 | --- | --- | --- | --- | --- |
 | HelloParticle | Windows, Linux, STM32F103, STM32F429 | 粒子效果的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloParticle/README.md) | ★ |
 | HelloStar | Windows, Linux, STM32F103, STM32F429 | 星空效果的应用 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloStar/README.md) | ★|
-| Hello3D | Windows, Linux, STM32F103 | 3D物理过程的应用 | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/Hello3D/README.md) | ★★ |
+| Hello3D | Windows, Linux, STM32F103 | 基于GuiLite的超轻量（单片机级别）3D引擎 | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/Hello3D/README.md) | ★★ |
+| HelloNets | Windows, Linux, STM32F103 | 3D物理过程的应用 | [Build](https://github.com/idea4good/GuiLiteSamples/blob/master/Hello3D/README.md) | ★★ |
 | HelloGuiLite | Windows, Linux | 初始化GuiLite，加载资源，布局界面元素，按钮响应 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloGuiLite/README.md) | ★★ |
 | HelloWidgets | Windows, Linux | 用于演示基本控件的使用方法 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWidgets/README.md) | ★★|
 | HelloMario | Windows, Linux, STM32F103, STM32F429 | 多图层的UI系统 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloMario/README.md) | ★★|
