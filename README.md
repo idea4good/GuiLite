@@ -23,10 +23,11 @@ GuiLite is the smallest GUI library with 5000 lines of code, could run on **all 
 | --- | --- | --- |
 | 24 MHZ | 29 KB | 9 KB |
 
-## 🔥New feature：Lightweight(MCU level) 3D engine - [Hello 3D](https://github.com/idea4good/GuiLiteSamples#hello-3d)
+## 🔥New feature：3D engine - [Hello 3D](https://github.com/idea4good/GuiLiteSamples#hello-3d)
 - ![Hello3D](doc/Hello3D.gif)
-- Could run on limited resource hardware
-- Could build 3D object quickly, and run it on different platform(e.g, Windows, Linux, MCU, Qt)
+- Hardware requirment: 16K RAM, 36 MHZ
+- Cross platform(e.g, Windows, Linux, MCU, Qt, MFC)
+- Easy to build 3D object
 - Could upgrade your UI experience
 
 ## Features
