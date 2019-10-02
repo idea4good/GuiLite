@@ -287,34 +287,6 @@ void c_wnd::wnd2screen(c_rect &rect) const
 	rect.SetRect(l, t, r, b);
 }
 
-void c_wnd::screen2wnd(short &x, short &y) const
-{
-	c_wnd *parent = m_parent;
-	c_rect rect;
-
-	x -= m_wnd_rect.m_left;
-	y -= m_wnd_rect.m_top;
-
-	while ( 0 != parent )
-	{
-		parent->get_wnd_rect(rect);
-		x -= rect.m_left;
-		y -= rect.m_top;
-		parent = parent->m_parent;
-	}
-}
-
-void c_wnd::screen2wnd(c_rect &rect) const
-{
-	short l = rect.m_left;
-	short t = rect.m_top;
-	screen2wnd(l, t);
-
-	short r = l + rect.Width() - 1;
-	short b = t + rect.Height() - 1;
-	rect.SetRect(l, t, r, b);
-}
-
 c_wnd* c_wnd::set_child_focus(c_wnd * focus_child)
 {
 	ASSERT(0 != focus_child);
@@ -561,13 +533,13 @@ bool c_wnd::on_key(KEY_TYPE key)
 	return true;
 }
 
-void c_wnd::notify_parent(unsigned int msg_id, unsigned int ctrl_id, int param)
+void c_wnd::notify_parent(unsigned int msg_id, int param)
 {
 	if (!m_parent)
 	{
 		return;
 	}
-	const GL_MSG_ENTRY* entry = m_parent->FindMsgEntry(m_parent->GetMSgEntries(), MSG_TYPE_WND, msg_id, ctrl_id);
+	const GL_MSG_ENTRY* entry = m_parent->FindMsgEntry(m_parent->GetMSgEntries(), MSG_TYPE_WND, msg_id, m_resource_id);
 	if (0 == entry)
 	{
 		return;
@@ -585,10 +557,10 @@ void c_wnd::notify_parent(unsigned int msg_id, unsigned int ctrl_id, int param)
 		(m_parent->*msg_funcs.func_vvl)(param);
 		break;
 	case MSG_CALLBACK_VWV:
-		(m_parent->*msg_funcs.func_vwv)(ctrl_id);
+		(m_parent->*msg_funcs.func_vwv)(m_resource_id);
 		break;
 	case MSG_CALLBACK_VWL:
-		(m_parent->*msg_funcs.func_vwl)(ctrl_id, param);
+		(m_parent->*msg_funcs.func_vwl)(m_resource_id, param);
 		break;
 	default:
 		ASSERT(false);

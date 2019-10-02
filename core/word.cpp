@@ -147,7 +147,7 @@ int c_word::draw_single_char(c_surface* surface, int z_order, unsigned int utf8_
 		const LATTICE* p_lattice = get_lattice(font, utf8_code);
 		if (p_lattice)
 		{
-			draw_lattice(surface, z_order, x, y, p_lattice->width, font->height, p_lattice->p_data, font_color, bg_color);
+			draw_lattice(surface, z_order, x, y, p_lattice->width, font->height, p_lattice->pixel_gray_array, font_color, bg_color);
 			return p_lattice->width;
 		}
 	}

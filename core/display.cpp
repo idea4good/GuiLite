@@ -24,6 +24,7 @@ c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int disp
 	m_phy_fb = phy_fb;
 	m_phy_read_index = m_phy_write_index = 0;
 	memset(m_surface_group, 0, sizeof(m_surface_group));
+	m_surface_index = 0;
 	m_surface_cnt = surface_cnt;
 	ASSERT(m_surface_cnt <= SURFACE_CNT_MAX);
 	
@@ -33,35 +34,16 @@ c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int disp
 	}
 }
 
-c_surface* c_display::alloc_surface(void* usr, Z_ORDER_LEVEL max_zorder)
+c_surface* c_display::alloc_surface(Z_ORDER_LEVEL max_zorder)
 {
-	int i = 0;
-	ASSERT(max_zorder < Z_ORDER_LEVEL_MAX);
-
-	while (i < m_surface_cnt)
+	if(max_zorder >= Z_ORDER_LEVEL_MAX || m_surface_index >= m_surface_cnt)
 	{
-		if (m_surface_group[i]->m_usr == usr)
-		{
-			//repeat register
-			ASSERT(false);
-			return m_surface_group[i];
-		}
-		i++;
+		ASSERT(false);
+		return 0;
 	}
-
-	i = 0;
-	while (i < m_surface_cnt)
-	{
-		if (m_surface_group[i]->m_usr == 0)
-		{	
-			m_surface_group[i]->set_surface(usr, max_zorder);
-			return m_surface_group[i];
-		}
-		i++;
-	}
-	//no surface for use
-	ASSERT(false);
-	return 0;
+	int i = m_surface_index++;
+	m_surface_group[i]->set_surface(max_zorder);
+	return m_surface_group[i];
 }
 
 int c_display::merge_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset)

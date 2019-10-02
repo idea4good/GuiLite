@@ -1,4 +1,4 @@
-﻿#include "../core_include/api.h"
+#include "../core_include/api.h"
 #include "../core_include/rect.h"
 #include "../core_include/cmd_target.h"
 #include "../core_include/wnd.h"
@@ -79,7 +79,7 @@ void c_spin_box::on_touch_up(int x, int y)
 		m_value = m_cur_value;
 		m_status = STATUS_FOCUSED;
 		on_paint();
-		notify_parent(GL_SPIN_CONFIRM, get_id(), m_value);
+		notify_parent(GL_SPIN_CONFIRM, m_value);
 	}
 }
 
@@ -168,7 +168,7 @@ void c_spin_box::on_arrow_up_bt_click(unsigned int ctr_id)
 		return;
 	}
 	m_cur_value += m_step;
-	notify_parent(GL_SPIN_CHANGE, get_id(), m_cur_value);
+	notify_parent(GL_SPIN_CHANGE, m_cur_value);
 	on_paint();
 }
 
@@ -179,6 +179,6 @@ void c_spin_box::on_arrow_down_bt_click(unsigned int ctr_id)
 		return;
 	}
 	m_cur_value -= m_step;
-	notify_parent(GL_SPIN_CHANGE, get_id(), m_cur_value);
+	notify_parent(GL_SPIN_CHANGE, m_cur_value);
 	on_paint();
 }

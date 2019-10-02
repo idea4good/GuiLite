@@ -92,7 +92,7 @@ public:
 	c_wnd* get_prev_sibling() const { return m_prev_sibling; }
 	c_wnd* get_next_sibling() const { return m_next_sibling; }
 
-	void notify_parent(unsigned int msg_id, unsigned int ctrl_id, int param);
+	void notify_parent(unsigned int msg_id, int param);
 
 	virtual bool on_touch(int x, int y, TOUCH_ACTION action);// return true: handled; false: not be handled.
 	virtual bool on_key(KEY_TYPE key);// return false: skip handling by parent;
@@ -105,8 +105,6 @@ protected:
 
 	void wnd2screen(int &x, int &y) const;
 	void wnd2screen(c_rect &rect) const;
-	void screen2wnd(short &x, short &y) const;
-	void screen2wnd(c_rect &rect) const;
 
 	int load_child_wnd(WND_TREE *p_child_tree);
 	int load_clone_child_wnd(WND_TREE *p_child_tree);

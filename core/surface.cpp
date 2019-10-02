@@ -18,15 +18,14 @@ c_surface::c_surface(c_display* display,  unsigned int width, unsigned int heigh
 	m_display = display;
 	m_phy_fb = display->m_phy_fb;
 	m_phy_write_index = &display->m_phy_write_index;
-	m_fb = m_usr = 0;
+	m_fb = 0;
 	m_top_zorder = m_max_zorder = Z_ORDER_LEVEL_0;
 	m_is_active = false;
 	m_frame_layers[Z_ORDER_LEVEL_0].visible_rect = c_rect(0, 0, m_width, m_height);
 }
 
-void c_surface::set_surface(void* wnd_root, Z_ORDER_LEVEL max_z_order)
+void c_surface::set_surface(Z_ORDER_LEVEL max_z_order)
 {
-	m_usr = wnd_root;
 	m_max_zorder = max_z_order;
 
 	if (m_display->m_surface_cnt > 1)
@@ -116,6 +115,11 @@ void c_surface::draw_pixel_on_fb(int x, int y, unsigned int rgb)
 
 void c_surface::fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsigned int z_order)
 {
+	x0 = (x0 < 0) ? 0 : x0;
+	y0 = (y0 < 0) ? 0 : y0;
+	x1 = (x1 > (m_width - 1)) ? (m_width - 1) : x1;
+	y1 = (y1 > (m_height - 1)) ? (m_height - 1) : y1;
+
 	rgb = GL_ROUND_RGB_32(rgb);
 	if (z_order == m_max_zorder)
 	{
@@ -147,11 +151,6 @@ void c_surface::fill_rect(int x0, int y0, int x1, int y1, unsigned int rgb, unsi
 
 void c_surface::fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb)
 {
-	if (x0 < 0 || y0 < 0 || x1 < 0 || y1 < 0 ||
-		x0 >= m_width || x1 >= m_width || y0 >= m_height || y1 >= m_height)
-	{
-		ASSERT(false);
-	}
 	int display_width = m_display->get_width();
 	int display_height = m_display->get_height();
 

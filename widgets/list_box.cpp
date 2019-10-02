@@ -109,7 +109,7 @@ void c_list_box::on_touch_down(int x, int y)
 		{
 			m_status = STATUS_FOCUSED;
 			on_paint();
-			notify_parent(GL_LIST_CONFIRM, get_id(), m_selected_item);
+			notify_parent(GL_LIST_CONFIRM, m_selected_item);
 		}        
 	}
 }
@@ -133,7 +133,7 @@ void c_list_box::on_touch_up(int x, int y)
 			m_status = STATUS_FOCUSED;
 			select_item((y - m_list_wnd_rect.m_top) / ITEM_HEIGHT);
 			on_paint();
-			notify_parent(GL_LIST_CONFIRM, get_id(), m_selected_item);
+			notify_parent(GL_LIST_CONFIRM, m_selected_item);
 		}
 		else
 		{

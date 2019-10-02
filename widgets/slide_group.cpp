@@ -63,7 +63,7 @@ int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, 
 	}
 
 	c_surface* old_surface = get_surface();
-	c_surface* new_surface = old_surface->get_display()->alloc_surface(slide,max_zorder);
+	c_surface* new_surface = old_surface->get_display()->alloc_surface(max_zorder);
 	new_surface->set_active(false);
 	set_surface(new_surface);
 	slide->connect(this, resource_id ,0 , x, y, width, height, p_child_tree);
@@ -107,7 +107,7 @@ int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, sho
 	}
 
 	c_surface* old_surface = get_surface();
-	c_surface* new_surface = old_surface->get_display()->alloc_surface(slide,max_zorder);
+	c_surface* new_surface = old_surface->get_display()->alloc_surface(max_zorder);
 	new_surface->set_active(false);
 	set_surface(new_surface);
 	c_wnd* page_tmp = slide->connect_clone(this,resource_id,0,x,y,width,height,p_child_tree);

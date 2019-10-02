@@ -17,9 +17,9 @@ void c_bitmap::draw_bitmap(c_surface* surface, int z_order, const BITMAP_INFO *p
 		lower_fb = surface->m_frame_layers[z_order - 1].fb;
 	}
 	unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
-	int xsize = pBitmap->XSize;
-	int ysize = pBitmap->YSize;
-	const unsigned short* pData = (const unsigned short*)pBitmap->pData;
+	int xsize = pBitmap->width;
+	int ysize = pBitmap->height;
+	const unsigned short* pData = (const unsigned short*)pBitmap->pixel_color_array;
 	for (int j = 0; j < ysize; j++)
 	{
 		for (int i = 0; i < xsize; i++)
@@ -42,7 +42,7 @@ void c_bitmap::draw_bitmap(c_surface* surface, int z_order, const BITMAP_INFO *p
 
 void c_bitmap::draw_bitmap(c_surface* surface, int z_order, const BITMAP_INFO* pBitmap, int x, int y, int src_x, int src_y, int width, int height, unsigned int mask_rgb)
 {
-	if (0 == pBitmap || (src_x + width > pBitmap->XSize) || (src_y + height > pBitmap->YSize))
+	if (0 == pBitmap || (src_x + width > pBitmap->width) || (src_y + height > pBitmap->height))
 	{
 		return;
 	}
@@ -54,10 +54,10 @@ void c_bitmap::draw_bitmap(c_surface* surface, int z_order, const BITMAP_INFO* p
 		lower_fb = surface->m_frame_layers[z_order - 1].fb;
 	}
 	unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
-	const unsigned short* pData = (const unsigned short*)pBitmap->pData;
+	const unsigned short* pData = (const unsigned short*)pBitmap->pixel_color_array;
 	for (int j = 0; j < height; j++)
 	{
-		const unsigned short* p = &pData[src_x + (src_y + j) * pBitmap->XSize];
+		const unsigned short* p = &pData[src_x + (src_y + j) * pBitmap->width];
 		for (int i = 0; i < width; i++)
 		{
 			unsigned int rgb = *p++;
