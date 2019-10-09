@@ -22,7 +22,7 @@ public:
 	unsigned int get_col_num(){ return m_col_num;}
 	c_rect get_item_rect(int row, int col);
 protected:
-	void draw_item(int col, int row, const char* str, unsigned int color);
+	void draw_item(int row, int col, const char* str, unsigned int color);
 
 	unsigned int m_align_type;	
 	unsigned int m_row_num;
