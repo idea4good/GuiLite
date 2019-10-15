@@ -57,6 +57,7 @@ GuiLite is the smallest GUI library with 5000 lines of code, could run on **all 
 ### IoT Solution & Code Telemetry
 - Report build activities to cloud:<br>![BuildInfo](doc/BuildInfo.png)
 - Sync running data to cloud:<br>![DataOnCloud](doc/data_on_cloud.png)
+- ⚠️To stop telemetry, remove script files(e,g: sync_build.bat .sync.sh .sync_build.sh)
 ***
 ### Support Docker
 We build GuiLite demo as docker image, you can update/deploy/run the latest GuiLite demo on your device with single command below:
