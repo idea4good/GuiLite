@@ -125,5 +125,5 @@ GuiLite is the smallest and simplest GUI library.
 
 ## Community Channel
 Thanks for the help from community, you guys make GuiLite better! And welcome new friend to join us.
-- [**@Twitter**](https://twitter.com/0JQKA)
+- [**@Twitter**](https://twitter.com/idea4good)
 - QQ code: [<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
