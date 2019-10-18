@@ -5,7 +5,7 @@
 # GuiLite（超轻量UI框架）- 最小的GUI库
 ![badge_build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![badge_docker](https://img.shields.io/badge/docker%20build-passing-brightgreen.svg) ![badge_platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS%20%7C%20iOS%20%7C%20Android%20%7C%20MCU-brightgreen.svg) ![badge_lincense](https://img.shields.io/badge/license-Apache%202-blue.svg) ![badge_lincense](https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg) 
 - [✨功能介绍](#功能介绍)
-- [🔨快速上手](#快速上手)
+- [🚀快速上手](#快速上手)
 - [📚开发文档](#开发文档)
 - [📈学习方法](#学习方法)
 - [📀视频链接](#视频链接)
@@ -30,7 +30,7 @@ GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如�
 - 少许3D效果，可以有效提升UI体验
 
 ## ✨功能介绍
-### 卓越的跨平台能力
+### ⚔️卓越的跨平台能力
 | ARM Linux | STM32 Without OS |
 | --- | --- |
 | ![ARM Linux](doc/Linux.gif) | ![MCU](doc/HelloParticle.gif) ![MCU](doc/HelloWave.gif) |
@@ -43,30 +43,30 @@ GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如�
 | --- | --- |
 | ![macOS](doc/Mac.gif) | ![iOS](doc/Ios.landscape.gif) |
 ***
-### GuiLite Previewer(所见即所得的GuiLite开发插件)
+### 🔍GuiLite Previewer(所见即所得的GuiLite开发插件)
 [GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer)是一个Visual Studio Code插件，它可以自动提取源代码的GUI布局信息，并实时显示在“预览”页面上(所见即所得)
 ![GuiLitePreviewer](doc/Previewer.gif)
 ***
-### 浮夸的UI效果
+### 😎浮夸的UI效果
 ![wallpaper](doc/wallpaper.jpg)![HelloNets-pc](doc/HelloNets-pc.gif)
 ***
-### 万国语(unicode)：
+### 🔣万国语(unicode)：
 ![unicode](doc/unicode.jpg)
 ***
-### IoT（物联网）功能
+### 🌐IoT（物联网）和📊数据分析
 - 上报“编译/运行”情况至“云端”：<br>![BuildInfo](doc/BuildInfo.png)
 - 同步“运行数据”至“云端”：<br>![DataOnCloud](doc/data_on_cloud.png)
 ***
-### 支持Docker
+### 🐋支持Docker
 我们把GuiLite demo做成了Docker映像，只需一行命令，就可以将最新的GuiLite demo升级/部署/运行在你的设备上了。
 - `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 ***
-## 支持GuiLite实例注入到：3D Web
+## 📦支持GuiLite实例注入到：3D Web
 - ![GuiLiteGraphic](doc/GuiLite3D.gif)
 - GuiLite实例[(HelloParticle, HelloWave)](https://github.com/idea4good/GuiLiteSamples)运行在Web及3D环境
 - [源代码链接](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
 ***
-## 🔨快速上手
+## 🚀快速上手
 GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何用GuiLite开发App，我们提供了一些实例程序给大家参考。
 - 实例程序的代码在[这里](https://github.com/idea4good/GuiLiteSamples)。
 - 实例程序的功能说明：
