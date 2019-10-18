@@ -5,12 +5,12 @@
 # GuiLite - The smallest GUI library
 ![badge_build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![badge_docker](https://img.shields.io/badge/docker%20build-passing-brightgreen.svg) ![badge_platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS%20%7C%20iOS%20%7C%20Android%20%7C%20MCU-brightgreen.svg) ![badge_lincense](https://img.shields.io/badge/license-Apache%202-blue.svg) ![badge_lincense](https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg) 
 - [中文](README_zh.md)
-- [Features](#Features)
-- [Start with Demo](#Start-with-Demo)
-- [Documents](#Documents)
-- [How to Learn?](#How-to-Learn)
-- [Videos](#Videos)
-- [Community Channel](#Community-Channel)
+- [✨Features](#Features)
+- [🔨Start with Demo](#Start-with-Demo)
+- [📚Documents](#Documents)
+- [📈How to Learn?](#How-to-Learn)
+- [📀Videos](#Videos)
+- [📞Community Channel](#Community-Channel)
 ***
 ## Introduction
 GuiLite is the smallest GUI library with 5000 lines of code, could run on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS, Docker and MCU without OS), and work with **many languages**(e.g. Swift, Java, Javascript, C#, Golang).
@@ -51,7 +51,7 @@ GuiLite is the smallest GUI library with 5000 lines of code, could run on **all 
 ### Gorgeous UI
 ![wallpaper](doc/wallpaper.jpg)![HelloNets-pc](doc/HelloNets-pc.gif)
 ***
-### Multi-language:
+### 🔣Multi-language:
 ![unicode](doc/unicode.jpg)
 ***
 ### IoT Solution & Code Telemetry
