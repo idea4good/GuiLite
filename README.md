@@ -6,11 +6,11 @@
 ![badge_build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![badge_docker](https://img.shields.io/badge/docker%20build-passing-brightgreen.svg) ![badge_platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS%20%7C%20iOS%20%7C%20Android%20%7C%20MCU-brightgreen.svg) ![badge_lincense](https://img.shields.io/badge/license-Apache%202-blue.svg) ![badge_lincense](https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg) 
 - [中文](README_zh.md)
 - [✨Features](#features)
-- [🔨Start with Demo](#start-with-Demo)
+- [🔨Start with Demo](#start-with-demo)
 - [📚Documents](#documents)
-- [📈How to Learn?](#how-to-Learn)
+- [📈How to Learn?](#how-to-learn)
 - [📀Videos](#videos)
-- [📞Community Channel](#community-Channel)
+- [📞Community Channel](#community-channel)
 ***
 ## Introduction
 GuiLite is the smallest GUI library with 5000 lines of code, could run on **all platforms**(e.g, iOS, Android, Linux, Windows, macOS, Docker and MCU without OS), and work with **many languages**(e.g. Swift, Java, Javascript, C#, Golang).
