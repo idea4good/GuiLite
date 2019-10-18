@@ -4,12 +4,12 @@
 
 # GuiLite（超轻量UI框架）- 最小的GUI库
 ![badge_build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![badge_docker](https://img.shields.io/badge/docker%20build-passing-brightgreen.svg) ![badge_platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS%20%7C%20iOS%20%7C%20Android%20%7C%20MCU-brightgreen.svg) ![badge_lincense](https://img.shields.io/badge/license-Apache%202-blue.svg) ![badge_lincense](https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg) 
-- [功能介绍](#功能介绍)
-- [快速上手](#快速上手)
-- [开发文档](#开发文档)
-- [学习方法](#学习方法)
-- [视频链接](#视频链接)
-- [🙏致谢和❤️慈善](#致谢和慈善)
+- [✨功能介绍](#功能介绍)
+- [🔨快速上手](#快速上手)
+- [📚开发文档](#开发文档)
+- [📈学习方法](#学习方法)
+- [📀视频链接](#视频链接)
+- [📞社区交流](#社区交流)
 ***
 ## GuiLite是什么鬼？
 GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如：iOS，Android，Linux（ARM/x86-64），Windows（包含VR），Mac，Docker和MCU）上；也可以与**多种语言**（例如： Swift, Java, Javascript, C#, Golang）协同工作。
@@ -29,7 +29,7 @@ GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如�
 - 易于快速建立3D模型
 - 少许3D效果，可以有效提升UI体验
 
-## 功能介绍
+## ✨功能介绍
 ### 卓越的跨平台能力
 | ARM Linux | STM32 Without OS |
 | --- | --- |
@@ -66,7 +66,7 @@ GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如�
 - GuiLite实例[(HelloParticle, HelloWave)](https://github.com/idea4good/GuiLiteSamples)运行在Web及3D环境
 - [源代码链接](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
 ***
-## 快速上手
+## 🔨快速上手
 GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何用GuiLite开发App，我们提供了一些实例程序给大家参考。
 - 实例程序的代码在[这里](https://github.com/idea4good/GuiLiteSamples)。
 - 实例程序的功能说明：
@@ -87,7 +87,7 @@ GuiLite只是一个框架，本身并不能生成UI。为了能够展示如何�
 | HelloWave | Windows, Linux, STM32F103, STM32F429 | 波形控件的应用，及单片机移植办法 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloWave/README.md) | ★★★ |
 | HostMonitor | iOS, Mac, Android, Windows, Linux | 创建复杂界面，扩展自定义控件，适配全平台 | [编译/运行](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/README.md) | ★★★★ |
 
-## 开发文档
+## 📚开发文档
 GuiLite是最简单，易学的GUI库。
 1. 只有5千行C++代码
 2. 只使用C++的基本特性（类和虚函数），不涉及复杂语法
@@ -105,7 +105,7 @@ GuiLite是最简单，易学的GUI库。
         - [完整视频](https://v.youku.com/v_show/id_XNDI4ODE1ODcwOA)
         - [Source code](https://github.com/idea4good/GuiLiteWeb/blob/master/Graphic/main.js)
 
-## 学习方法
+## 📈学习方法
 1. **外围** - 成功编译GuiLite库
 2. **前戏** - 成功运行HelloXXX实例程序
 3. **交流** - 研读/修改100+行的`HelloXXX/UIcode/UIcode.cpp`源代码
@@ -113,7 +113,7 @@ GuiLite是最简单，易学的GUI库。
 5. **攻核** - 研读`core`目录下的代码
 6. **分家** - 丰富，扩展自己的UI功能
 
-## 视频链接:
+## 📀视频链接:
 - [GuiLite简介](https://v.youku.com/v_show/id_XMzA5NTMzMTYyOA)
 - [3D GuiLite](https://v.youku.com/v_show/id_XMzYxNTE3MTI0MA)
 - [GuiLite + 单片机](https://v.youku.com/v_show/id_XNDAwNzM5MTM3Ng)
@@ -121,6 +121,5 @@ GuiLite是最简单，易学的GUI库。
 ## 镜像代码仓库
 [中国码云链接](https://gitee.com/idea4good/GuiLite)
 
-## 致谢和慈善
+## 📞社区交流
 - 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>[<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
-- [赞助 & 救助大病儿童](https://idea4good.github.io)
