@@ -48,7 +48,7 @@ GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如�
 ![GuiLitePreviewer](doc/Previewer.gif)
 ***
 ### 😎浮夸的UI效果
-![wallpaper](doc/wallpaper.jpg)![HelloNets-pc](doc/HelloNets-pc.gif)
+![HostMonitor](doc/HostMonitor.gif)![HelloNets-pc](doc/HelloNets-pc.gif)
 ***
 ### 🔣万国语(unicode)：
 ![unicode](doc/unicode.jpg)

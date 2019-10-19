@@ -49,7 +49,7 @@ GuiLite is the smallest GUI library with 5000 lines of code, could run on **all 
 ![GuiLitePreviewer](doc/Previewer.gif)
 ***
 ### 😎Gorgeous UI
-![wallpaper](doc/wallpaper.jpg)![HelloNets-pc](doc/HelloNets-pc.gif)
+![HostMonitor](doc/HostMonitor.gif)![HelloNets-pc](doc/HelloNets-pc.gif)
 ***
 ### 🔣Multi-language:
 ![unicode](doc/unicode.jpg)
