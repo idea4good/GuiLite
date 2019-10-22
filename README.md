@@ -42,7 +42,7 @@ GuiLite is the smallest GUI library with 5000 lines of code, could run on **all 
 
 | macOS | iOS |
 | --- | --- |
-| ![macOS](doc/Mac.gif) | ![iOS](doc/Ios.landscape.gif) |
+| ![macOS](doc/Mac.gif) | ![iOS](doc/iOS.gif) |
 ***
 ### 🔍GuiLite previewer(WYSIWYG extension for GuiLite)
 [GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer) is a Visual Studio Code extension, could extract GUI information from C++ code and preview GUI at preview page(What you see is what you get)
