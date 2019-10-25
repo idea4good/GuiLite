@@ -9,8 +9,7 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR})
 # core
 FILE(GLOB CORE_SRC      core/*.cpp)
 FILE(GLOB CORE_ADAPTER  core/adapter/api_linux.cpp
-                        core/adapter/audio_linux.cpp
-                        core/adapter/msg_linux.cpp)
+                        core/adapter/audio_linux.cpp)
 # gui
 FILE(GLOB WIDGETS_SRC       widgets/*.cpp)
 

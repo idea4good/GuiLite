@@ -67,9 +67,6 @@
     <ClCompile Include="core\adapter\audio_win.cpp">
       <Filter>core\adapter</Filter>
     </ClCompile>
-    <ClCompile Include="core\adapter\msg_win.cpp">
-      <Filter>core\adapter</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="core">

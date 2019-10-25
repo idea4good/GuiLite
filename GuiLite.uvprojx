@@ -427,11 +427,6 @@
               <FileType>8</FileType>
               <FilePath>.\core\adapter\api_unknow.cpp</FilePath>
             </File>
-            <File>
-              <FileName>msg_unknow.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\adapter\msg_unknow.cpp</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

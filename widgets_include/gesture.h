@@ -4,35 +4,27 @@
 typedef enum{
 	TOUCH_MOVE,
 	TOUCH_IDLE
-}ACTION;
+}TOUCH_STATE;
 
 class c_slide_group;
 class c_gesture{
 public:
-	c_gesture(c_wnd* root, c_slide_group* group, c_fifo* hid_fifo);
-	void set_page_group(c_slide_group* group){m_slide_group = group;}
-protected:
-	bool handle_flip(MSG_INFO &msg);
-	bool on_move(int x);
-	bool on_flip(int x);
+	c_gesture(c_slide_group* group);
+	bool handle_swipe(int x, int y, TOUCH_ACTION action);
 private:
-	int flip_left();
-	int flip_right();
+	bool on_move(int x);
+	bool on_swipe(int x);
+	int swipe_left();
+	int swipe_right();
 	void move_left();
 	void move_right();
-	void handle_hid_msg(MSG_INFO &msg);
 
 	int m_down_x;
 	int m_down_y;
 	int m_move_x;
 	int m_move_y;
-	ACTION m_action;
-
+	TOUCH_STATE m_state;
 	c_slide_group* 	m_slide_group;
-	c_wnd*			m_root;
-	c_fifo*			m_hid_fifo;
-
-	static void* task_handle_msg(void* param);
 };
 
 #endif

@@ -2,7 +2,7 @@
 #define GUILITE_WIDGETS_INCLUDE_SLIDE_GROUP_H
 
 #define MAX_PAGES	5
-
+class c_gesture;
 class c_slide_group : public c_wnd {
 public:
 	c_slide_group();
@@ -23,6 +23,7 @@ protected:
 	virtual c_wnd* clone(){return new c_slide_group();}
 	c_wnd* m_slides[MAX_PAGES];
 	int m_active_slide_index;
+	c_gesture* m_gesture;
 };
 
 #endif

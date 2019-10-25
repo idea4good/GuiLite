@@ -3,7 +3,6 @@
 #include <mmdeviceapi.h>
 
 #include "../../core_include/api.h"
-#include "../../core_include/msg.h"
 #include "../../core_include/audio.h"
 
 #ifndef AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM

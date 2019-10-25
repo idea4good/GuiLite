@@ -53,4 +53,19 @@ unsigned int get_cur_thread_id();
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg);
 void thread_sleep(unsigned int milli_seconds);
 int build_bmp(const char *filename, unsigned int width, unsigned int height, unsigned char *data);
+
+#define FIFO_BUFFER_LEN		1024
+class c_fifo
+{
+public:
+	c_fifo();
+	int read(void* buf, int len);
+	int write(void* buf, int len);
+private:
+	unsigned char 	m_buf[FIFO_BUFFER_LEN];
+	int		m_head;
+	int		m_tail;
+	void* m_read_sem;
+	void* m_write_mutex;
+};
 #endif

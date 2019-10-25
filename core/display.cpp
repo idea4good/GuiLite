@@ -1,7 +1,6 @@
 #include "../core_include/api.h"
 #include "../core_include/rect.h"
 #include "../core_include/cmd_target.h"
-#include "../core_include/msg.h"
 #include "../core_include/surface.h"
 #include "../core_include/display.h"
 
@@ -46,7 +45,7 @@ c_surface* c_display::alloc_surface(Z_ORDER_LEVEL max_zorder)
 	return m_surface_group[i];
 }
 
-int c_display::merge_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset)
+int c_display::swipe_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset)
 {
 	int surface_width = s0->get_width();
 	int surface_height = s0->get_height();
