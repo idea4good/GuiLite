@@ -41,7 +41,7 @@ GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如�
 
 | macOS | iOS |
 | --- | --- |
-| ![macOS](doc/Mac.gif) | ![iOS](doc/iOS.gif) |
+| ![macOS](doc/Mac.gif) | ![iOS.hostMonitor](doc/iOS.gif)  ![iOS.particle](doc/iOS.particle.gif) |
 ***
 ### 🔍GuiLite Previewer(所见即所得的GuiLite开发插件)
 [GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer)是一个Visual Studio Code插件，它可以自动提取源代码的GUI布局信息，并实时显示在“预览”页面上(所见即所得)
