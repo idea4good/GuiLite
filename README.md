@@ -25,6 +25,7 @@ GuiLite is the smallest GUI library with 5000 lines of code, could run on **all 
 
 ## 🔥New feature：Apple Watch
 Run GuiLite both on MCU and Apple Watch:
+
 | MCU | Apple Watch |
 | --- | --- |
 | ![Hello3D](doc/Hello3D.gif) | ![iWatch.hello3D](doc/iWatch.hello3D.gif) |
