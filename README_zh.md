@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="doc/GuiLiteCube.gif" alt="Image" width="320" height="304"/>
+    <img src="documents/GuiLiteCube.gif" alt="Image" width="320" height="304"/>
 </p>
 
 # GuiLite（超轻量UI框架）- 最小的GUI库
@@ -13,7 +13,7 @@
 ***
 ## GuiLite是什么鬼？
 GuiLite是5千行的图形界面库，可以运行在**所有平台**（例如：iOS/macOS/WathOS，Android，Linux（ARM/x86-64），Windows（包含VR），Docker和MCU）上；也可以与**多种语言**（例如： Swift, Java, Javascript, C#, Golang）协同工作。
-- ✂️轻量: 5千行C++代码，可合并在：1个头文件(GuiLite.h)，1个实现文件(GuiLite.cpp)中 - 轻松[编译/移植](doc/HowToBuild.md)
+- ✂️轻量: 5千行C++代码，可合并在：1个头文件(GuiLite.h)，1个实现文件(GuiLite.cpp)中 - 轻松[编译/移植](documents/HowToBuild.md)
 - ⚡超快: 一次调用就可以完成图形渲染，与操作系统及第三方库无关 - 程序更快速，UI更流畅
 - 💉可注入: 可注入在Qt/MFC/Winform/Cocoa/Web程序中运行 - 充分利用现有Qt/MFC代码，局部GuiLite优化，亦可显著提升效率
 - ⚙️️最低硬件要求:
@@ -27,43 +27,43 @@ GuiLite程序，可以同时运行在单片机和苹果“手表”上：
 
 | MCU | Apple Watch |
 | --- | --- |
-| ![Hello3D](doc/Hello3D.gif) | ![iWatch.hello3D](doc/iWatch.hello3D.gif) |
-| ![MCU](doc/HelloWave.gif) | ![iWatch.helloWave](doc/iWatch.helloWave.gif) |
+| ![Hello3D](documents/Hello3D.gif) | ![iWatch.hello3D](documents/iWatch.hello3D.gif) |
+| ![MCU](documents/HelloWave.gif) | ![iWatch.helloWave](documents/iWatch.helloWave.gif) |
 
 ## ✨功能介绍
 ### ⚔️卓越的跨平台能力
 | ARM Linux | STM32 Without OS |
 | --- | --- |
-| ![ARM Linux](doc/Linux.gif) | ![MCU](doc/HelloParticle.gif) ![MCU](doc/HelloWave.gif) |
+| ![ARM Linux](documents/Linux.gif) | ![MCU](documents/HelloParticle.gif) ![MCU](documents/HelloWave.gif) |
 
 | Windows Mixed Reality | Android |
 | --- | --- |
-| ![Win MR](doc/WinMR.gif) | ![Android](doc/Android.gif) |
+| ![Win MR](documents/WinMR.gif) | ![Android](documents/Android.gif) |
 
 | macOS | iOS & Apple Watch |
 | --- | --- |
-| ![macOS](doc/Mac.gif) | ![iOS.hostMonitor](doc/iOS.gif) ![iOS.particle](doc/iOS.particle.gif) ![iWatch.helloWave](doc/iWatch.helloWave.gif) |
+| ![macOS](documents/Mac.gif) | ![iOS.hostMonitor](documents/iOS.gif) ![iOS.particle](documents/iOS.particle.gif) ![iWatch.helloWave](documents/iWatch.helloWave.gif) |
 ***
 ### 🔍GuiLite Previewer(所见即所得的GuiLite开发插件)
 [GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer)是一个Visual Studio Code插件，它可以自动提取源代码的GUI布局信息，并实时显示在“预览”页面上(所见即所得)
-![GuiLitePreviewer](doc/Previewer.gif)
+![GuiLitePreviewer](documents/Previewer.gif)
 ***
 ### 😎浮夸的UI效果
-![HostMonitor](doc/HostMonitor.gif)![HelloNets-pc](doc/HelloNets-pc.gif)
+![HostMonitor](documents/HostMonitor.gif)![HelloNets-pc](documents/HelloNets-pc.gif)
 ***
 ### 🔣万国语(unicode)：
-![unicode](doc/unicode.jpg)
+![unicode](documents/unicode.jpg)
 ***
 ### 🌐IoT（物联网）和📊数据分析
-- 上报“编译/运行”情况至“云端”：<br>![BuildInfo](doc/BuildInfo.png)
-- 同步“运行数据”至“云端”：<br>![DataOnCloud](doc/data_on_cloud.png)
+- 上报“编译/运行”情况至“云端”：<br>![BuildInfo](documents/BuildInfo.png)
+- 同步“运行数据”至“云端”：<br>![DataOnCloud](documents/data_on_cloud.png)
 ***
 ### 🐋支持Docker
 我们把GuiLite demo做成了Docker映像，只需一行命令，就可以将最新的GuiLite demo升级/部署/运行在你的设备上了。
 - `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 ***
 ## 📦3D
-- ![GuiLiteGraphic](doc/GuiLite3D.gif) ![Hello3D](doc/Hello3D.gif)
+- ![GuiLiteGraphic](documents/GuiLite3D.gif) ![Hello3D](documents/Hello3D.gif)
 - GuiLite实例[(HelloParticle, HelloWave)](https://github.com/idea4good/GuiLiteSamples)运行在Web及3D环境，[代码在这里](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
 - 在单片机上也能运行3D效果（具体参看GuiLiteSamples:Hello3D）
 ***
@@ -94,15 +94,15 @@ GuiLite是最简单，易学的GUI库。
 2. 只使用C++的基本特性（类和虚函数），不涉及复杂语法
 3. 图形绘制以描点为基础，不使用任何算法
 4. 设计简单，配有丰富的文档和实例程序；遇到问题，可以在QQ群获得帮助
-    - [软件设计说明](doc/HowToWork-cn.md)
-    - [如何编译和移植?](doc/HowToBuild.md)
-    - [如何布局UI?](doc/HowLayoutWork.md)
+    - [软件设计说明](documents/HowToWork-cn.md)
+    - [如何编译和移植?](documents/HowToBuild.md)
+    - [如何布局UI?](documents/HowLayoutWork.md)
     - [如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
     - [如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
-    - [如何传递消息?](doc/HowMessageWork.md)
-    - [核心UML示意图](doc/UML.md)
+    - [如何传递消息?](documents/HowMessageWork.md)
+    - [核心UML示意图](documents/UML.md)
     - GuiLite滑动，及多层叠加原理
-        - ![GuiLiteGraphic](doc/GuiLiteGraphic.gif)
+        - ![GuiLiteGraphic](documents/GuiLiteGraphic.gif)
         - [完整视频](https://v.youku.com/v_show/id_XNDI4ODE1ODcwOA)
         - [Source code](https://github.com/idea4good/GuiLiteWeb/blob/master/Graphic/main.js)
 
@@ -123,4 +123,4 @@ GuiLite是最简单，易学的GUI库。
 [中国码云链接](https://gitee.com/idea4good/GuiLite)
 
 ## 📞社区交流
-- 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>[<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
+- 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>[<img src="documents/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)

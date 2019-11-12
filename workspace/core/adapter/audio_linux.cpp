@@ -1,3 +1,5 @@
+#if (defined __linux__) || (defined __APPLE__)
+
 #include "../../core_include/api.h"
 #include "../../core_include/audio.h"
 #include <unistd.h>
@@ -61,3 +63,5 @@ int c_audio::play(AUDIO_TYPE type)
 	s_request_fifo.write(&request, sizeof(request));
 	return 0;
 }
+
+#endif

@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="doc/GuiLiteCube.gif" alt="Image" width="320" height="304"/>
+    <img src="documents/GuiLiteCube.gif" alt="Image" width="320" height="304"/>
 </p>
 
 # GuiLite - The smallest GUI library
@@ -14,7 +14,7 @@
 ***
 ## Introduction
 GuiLite is the smallest GUI library with 5000 lines of code, could run on **all platforms**(e.g, iOS/macOS/WathOS, Android, Linux, Windows, Docker and MCU without OS), and work with **many languages**(e.g. Swift, Java, Javascript, C#, Golang).
-- ✂️Small: 5,000 lines of C++ code, could be merged into 1 header & 1 source file(GuiLite.h/GuiLite.cpp) - Easy to [build & port](doc/HowToBuild.md)
+- ✂️Small: 5,000 lines of C++ code, could be merged into 1 header & 1 source file(GuiLite.h/GuiLite.cpp) - Easy to [build & port](documents/HowToBuild.md)
 - ⚡Fast: Render GUI within one invoking, independent of any OS and any third party library -  Make GUI run quickly and smoothly
 - 💉Inject: Run inside Qt/MFC/Winform/Cocoa/Web - Keep Qt/MFC code reusable, and speed it up by local GuiLite-optimization
 - ⚙️️Hardware Minimum Requirment:
@@ -28,36 +28,36 @@ Run GuiLite both on MCU and Apple Watch:
 
 | MCU | Apple Watch |
 | --- | --- |
-| ![Hello3D](doc/Hello3D.gif) | ![iWatch.hello3D](doc/iWatch.hello3D.gif) |
-| ![MCU](doc/HelloWave.gif) | ![iWatch.helloWave](doc/iWatch.helloWave.gif) |
+| ![Hello3D](documents/Hello3D.gif) | ![iWatch.hello3D](documents/iWatch.hello3D.gif) |
+| ![MCU](documents/HelloWave.gif) | ![iWatch.helloWave](documents/iWatch.helloWave.gif) |
 
 ## ✨Features
 ### ⚔️Cross platform
 | ARM Linux | STM32 Without OS |
 | --- | --- |
-| ![ARM Linux](doc/Linux.gif) | ![MCU](doc/HelloParticle.gif) ![MCU](doc/HelloWave.gif) |
+| ![ARM Linux](documents/Linux.gif) | ![MCU](documents/HelloParticle.gif) ![MCU](documents/HelloWave.gif) |
 
 | Windows Mixed Reality | Android |
 | --- | --- |
-| ![Win MR](doc/WinMR.gif) | ![Android](doc/Android.gif) |
+| ![Win MR](documents/WinMR.gif) | ![Android](documents/Android.gif) |
 
 | macOS | iOS & Aplle Watch |
 | --- | --- |
-| ![macOS](doc/Mac.gif) | ![iOS.hostMonitor](doc/iOS.gif) ![iOS.particle](doc/iOS.particle.gif) ![iWatch.helloWave](doc/iWatch.helloWave.gif) |
+| ![macOS](documents/Mac.gif) | ![iOS.hostMonitor](documents/iOS.gif) ![iOS.particle](documents/iOS.particle.gif) ![iWatch.helloWave](documents/iWatch.helloWave.gif) |
 ***
 ### 🔍GuiLite previewer(WYSIWYG extension for GuiLite)
 [GuiLite Previewer](https://github.com/idea4good/GuiLitePreviewer) is a Visual Studio Code extension, could extract GUI information from C++ code and preview GUI at preview page(What you see is what you get)
-![GuiLitePreviewer](doc/Previewer.gif)
+![GuiLitePreviewer](documents/Previewer.gif)
 ***
 ### 😎Gorgeous UI
-![HostMonitor](doc/HostMonitor.gif)![HelloNets-pc](doc/HelloNets-pc.gif)
+![HostMonitor](documents/HostMonitor.gif)![HelloNets-pc](documents/HelloNets-pc.gif)
 ***
 ### 🔣Multi-language:
-![unicode](doc/unicode.jpg)
+![unicode](documents/unicode.jpg)
 ***
 ### 🌐IoT Solution & 📊Code Telemetry
-- Report build activities to cloud:<br>![BuildInfo](doc/BuildInfo.png)
-- Sync running data to cloud:<br>![DataOnCloud](doc/data_on_cloud.png)
+- Report build activities to cloud:<br>![BuildInfo](documents/BuildInfo.png)
+- Sync running data to cloud:<br>![DataOnCloud](documents/data_on_cloud.png)
 - ⚠️To stop telemetry, remove script files(e,g: sync_build.bat .sync.sh .sync_build.sh)
 ***
 ### 🐋Support Docker
@@ -65,7 +65,7 @@ We build GuiLite demo as docker image, you can update/deploy/run the latest GuiL
 - `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 ***
 ## 📦3D
-- ![GuiLiteGraphic](doc/GuiLite3D.gif) ![Hello3D](doc/Hello3D.gif)
+- ![GuiLiteGraphic](documents/GuiLite3D.gif) ![Hello3D](documents/Hello3D.gif)
 - Run GuiLite Samples[(HelloParticle, HelloWave)](https://github.com/idea4good/GuiLiteSamples) on Web and 3D scenario, [source code here](https://github.com/idea4good/GuiLiteWeb/blob/master/CubeEx/main.js)
 - Run GuiLite-Sample-Hello3D on MCU and Windows/Linux/Qt platform
 ***
@@ -96,15 +96,15 @@ GuiLite is the smallest and simplest GUI library.
 2. Only use basic C++ feature(class, virtual function), no complex syntax
 3. All rendering base on draw_pixel, no algorithm
 4. Full documents and small live demos for reference
-    - [Design specification](doc/HowToWork.md)
-    - [How to build & port?](doc/HowToBuild.md)
-    - [How to Layout widgets?](doc/HowLayoutWork.md)
+    - [Design specification](documents/HowToWork.md)
+    - [How to build & port?](documents/HowToBuild.md)
+    - [How to Layout widgets?](documents/HowLayoutWork.md)
     - [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
     - [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
-    - [How to dispatch messages?](doc/HowMessageWork.md)
-    - [UML chart of GuiLite core](doc/UML.md)
+    - [How to dispatch messages?](documents/HowMessageWork.md)
+    - [UML chart of GuiLite core](documents/UML.md)
     - How GuiLite multi-layers work?
-        - ![GuiLiteGraphic](doc/GuiLiteGraphic.gif)
+        - ![GuiLiteGraphic](documents/GuiLiteGraphic.gif)
         - [Full video](https://www.youtube.com/watch?v=QzZJnU5KmDQ)
         - [Tutorial Source code](https://github.com/idea4good/GuiLiteWeb/blob/master/Graphic/main.js)
 
@@ -127,4 +127,4 @@ GuiLite is the smallest and simplest GUI library.
 ## 📞Community Channel
 Thanks for the help from community, you guys make GuiLite better! And welcome new friend to join us.
 - [**@Twitter**](https://twitter.com/idea4good)
-- QQ code: [<img src="doc/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
+- QQ code: [<img src="documents/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)

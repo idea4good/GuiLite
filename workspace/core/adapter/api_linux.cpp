@@ -1,10 +1,21 @@
+#if (defined __linux__) || (defined __APPLE__)
+
 #include "../../core_include/api.h"
+#include <unistd.h>
+#include <pthread.h>
+#include <string.h>
+#include <time.h>
+#include <sys/time.h>
+#include <signal.h>
+#include <sys/times.h>
+#include <fcntl.h>
+#include <termios.h>
+#include <sys/stat.h>
+#include <semaphore.h>
+#include <errno.h>
 #include <string.h>
 #include <stdio.h>
-#include <time.h>
-#include <conio.h>
-#include <windows.h>
-#include <assert.h>
+#include <stdlib.h>
 
 #define MAX_TIMER_CNT 10
 #define TIMER_UNIT 50//ms
@@ -19,20 +30,14 @@ void register_debug_function(void(*my_assert)(const char* file, int line), void(
 
 void _assert(const char* file, int line)
 {
-	static char s_buf[192];
-	if (do_assert) 
+	if(do_assert)
 	{
 		do_assert(file, line);
 	}
 	else
 	{
-		memset(s_buf, 0, sizeof(s_buf));
-		sprintf_s(s_buf, sizeof(s_buf), "vvvvvvvvvvvvvvvvvvvvvvvvvvvv\n\nAssert@ file = %s, line = %d\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n", file, line);
-		OutputDebugStringA(s_buf);
-		printf("%s", s_buf);
-		fflush(stdout);
-		assert(false);
-	}
+		printf("assert@ file:%s, line:%d, error no: %d\n", file, line, errno);
+	} 
 }
 
 void log_out(const char* log)
@@ -45,7 +50,6 @@ void log_out(const char* log)
 	{
 		printf("%s", log);
 		fflush(stdout);
-		OutputDebugStringA(log);
 	}
 }
 
@@ -64,7 +68,7 @@ typedef struct _timer_manage
 }_timer_manage_t;
 static struct _timer_manage timer_manage;
 
-DWORD WINAPI timer_routine(LPVOID lpParam)
+static void* timer_routine(void*)
 {
     int i;
     while(true)
@@ -82,9 +86,9 @@ DWORD WINAPI timer_routine(LPVOID lpParam)
 				timer_manage.timer_info[i].timer_proc(0, 0);
 			}
 		}
-		Sleep(TIMER_UNIT);
+    	usleep(1000 * TIMER_UNIT);
     }
-    return 0;
+    return NULL;
 }
 
 static int init_mul_timer()
@@ -95,8 +99,8 @@ static int init_mul_timer()
 		return 0;
 	}
     memset(&timer_manage, 0, sizeof(struct _timer_manage));
-    DWORD pid;
-	CreateThread(0, 0, timer_routine, 0, 0, &pid);
+    pthread_t pid;
+    pthread_create(&pid, NULL, timer_routine, NULL);
     s_is_init = true;
     return 1;
 }
@@ -106,7 +110,7 @@ static int set_a_timer(int interval, void (* timer_proc) (void* ptmr, void* parg
 	init_mul_timer();
 
 	int i;
-    if(timer_proc == 0 || interval <= 0)
+    if(timer_proc == NULL || interval <= 0)
     {
         return (-1);
     }
@@ -127,7 +131,7 @@ static int set_a_timer(int interval, void (* timer_proc) (void* ptmr, void* parg
 
     if(i >= MAX_TIMER_CNT)
     {
-		ASSERT(false);
+    	ASSERT(false);
         return (-1);
     }
     return (i);
@@ -137,7 +141,7 @@ typedef void (*EXPIRE_ROUTINE)(void* arg);
 EXPIRE_ROUTINE s_expire_function;
 static c_fifo s_real_timer_fifo;
 
-static DWORD WINAPI fire_real_timer(LPVOID lpParam)
+static void* real_timer_routine(void*)
 {
 	char dummy;
 	while(1)
@@ -154,46 +158,41 @@ static DWORD WINAPI fire_real_timer(LPVOID lpParam)
 	return 0;
 }
 
-/*Win32 desktop only
-static void CALLBACK trigger_real_timer(UINT, UINT, DWORD_PTR, DWORD_PTR, DWORD_PTR)
+static void expire_real_timer(int sigo)
 {
 	char dummy = 0x33;
-	s_real_timer_fifo.write(&dummy, 1);
-}
-*/
-
-static DWORD WINAPI trigger_real_timer(LPVOID lpParam)
-{
-	char dummy = 0x33;
-	while (1)
+	if(s_real_timer_fifo.write(&dummy, 1) <= 0)
 	{
-		s_real_timer_fifo.write(&dummy, 1);
-		Sleep(REAL_TIME_TASK_CYCLE_MS);
+		ASSERT(false);
 	}
-	return 0;
 }
 
 void start_real_timer(void (*func)(void* arg))
 {
-	if(0 == func)
+	if(NULL == func)
 	{
 		return;
 	}
 
 	s_expire_function = func;
-	//timeSetEvent(REAL_TIME_TASK_CYCLE_MS, 0, trigger_real_timer, 0, TIME_PERIODIC);//Win32 desktop only
+	signal(SIGALRM, expire_real_timer);
+	struct itimerval value, ovalue;
+	value.it_value.tv_sec = 0;
+	value.it_value.tv_usec = REAL_TIME_TASK_CYCLE_MS * 1000;
+	value.it_interval.tv_sec = 0;
+	value.it_interval.tv_usec = REAL_TIME_TASK_CYCLE_MS * 1000;
+	setitimer(ITIMER_REAL, &value, &ovalue);
 
-	static DWORD s_pid;
+	static pthread_t s_pid;
 	if(s_pid == 0)
 	{
-		CreateThread(0, 0, trigger_real_timer, 0, 0, &s_pid);
-		CreateThread(0, 0, fire_real_timer, 0, 0, &s_pid);
+		pthread_create(&s_pid, NULL, real_timer_routine, NULL);
 	}
 }
 
 unsigned int get_cur_thread_id()
 {
-	return GetCurrentThreadId();
+	return (unsigned long)pthread_self();
 }
 
 void register_timer(int milli_second,void func(void* ptmr, void* parg))
@@ -203,61 +202,59 @@ void register_timer(int milli_second,void func(void* ptmr, void* parg))
 
 long get_time_in_second()
 {
-	return time(0);
+	return time(NULL);         /* + 8*60*60*/
 }
 
 T_TIME get_time()
 {
 	T_TIME ret = {0};
-	
-	SYSTEMTIME time;
-	GetLocalTime(&time);
-	ret.year = time.wYear;
-	ret.month = time.wMonth;
-	ret.day = time.wDay;
-	ret.hour = time.wHour;
-	ret.minute = time.wMinute;
-	ret.second = time.wSecond;
+	struct tm *fmt;
+	time_t timer;
+
+	timer = get_time_in_second();
+	fmt = localtime(&timer);
+	ret.year   = fmt->tm_year + 1900;
+	ret.month  = fmt->tm_mon + 1;
+	ret.day    = fmt->tm_mday;
+	ret.hour   = fmt->tm_hour;
+	ret.minute = fmt->tm_min;
+	ret.second = fmt->tm_sec;
 	return ret;
 }
 
 T_TIME second_to_day(long second)
 {
-	T_TIME ret;
-	ret.year = 1999;
-	ret.month = 10;
-	ret.date = 1;
-
-	ret.second = second % 60;
-	second /= 60;
-	ret.minute = second % 60;
-	second /= 60;
-	ret.hour = (second + 8) % 24;//China time zone.
+	T_TIME ret = {0};
+	struct tm *fmt;
+	fmt = localtime(&second);
+	ret.year   = fmt->tm_year + 1900;
+	ret.month  = fmt->tm_mon + 1;
+	ret.day    = fmt->tm_mday;
+	ret.hour   = fmt->tm_hour;
+	ret.minute = fmt->tm_min;
+	ret.second = fmt->tm_sec;
 	return ret;
 }
 
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg)
 {
-	DWORD pid = 0;
-	CreateThread(0, 0, LPTHREAD_START_ROUTINE(start_routine), arg, 0, &pid);
-	*thread_id = pid;
+    pthread_create((pthread_t*)thread_id, (pthread_attr_t const*)attr, start_routine, arg);
 }
 
 void thread_sleep(unsigned int milli_seconds)
 {
-	Sleep(milli_seconds);
+	usleep(milli_seconds * 1000);
 }
 
-#pragma pack(push,1)
 typedef struct {
 	unsigned short	bfType;
 	unsigned int   	bfSize;
 	unsigned short  bfReserved1;
 	unsigned short  bfReserved2;
 	unsigned int   	bfOffBits;
-}FileHead;
+}__attribute__((packed))FileHead;
 
-typedef struct {
+typedef struct{
 	unsigned int  	biSize;
 	int 			biWidth;
 	int       		biHeight;
@@ -272,8 +269,7 @@ typedef struct {
 	unsigned int 	biRedMask;
 	unsigned int 	biGreenMask;
 	unsigned int 	biBlueMask;
-}Infohead;
-#pragma pack(pop)
+}__attribute__((packed))Infohead;
 
 int build_bmp(const char *filename, unsigned int width, unsigned int height, unsigned char *data)
 {
@@ -307,20 +303,20 @@ int build_bmp(const char *filename, unsigned int width, unsigned int height, uns
 
 	//copy the data
 	FILE *fp;
-	if (!(fp = fopen(filename, "wb")))
+	if(!(fp=fopen(filename,"wb")))
 	{
 		return -1;
 	}
 
-	fwrite(&bmp_head, 1, sizeof(FileHead), fp);
-	fwrite(&bmp_info, 1, sizeof(Infohead), fp);
+	fwrite(&bmp_head, 1, sizeof(FileHead),fp);
+	fwrite(&bmp_info, 1, sizeof(Infohead),fp);
 
 	//fwrite(data, 1, size, fp);//top <-> bottom
 	for (int i = (height - 1); i >= 0; --i)
 	{
 		fwrite(&data[i * width * 2], 1, width * 2, fp);
 	}
-
+	
 	fclose(fp);
 	return 0;
 }
@@ -328,29 +324,29 @@ int build_bmp(const char *filename, unsigned int width, unsigned int height, uns
 c_fifo::c_fifo()
 {
 	m_head = m_tail = 0;
-	m_read_sem = CreateSemaphore(0,	// default security attributes
-		0,		// initial count
-		1,		// maximum count
-		0);	// unnamed semaphore
-	m_write_mutex = CreateMutex(0, false, 0);
+	m_read_sem = malloc(sizeof(sem_t));
+	m_write_mutex = malloc(sizeof(pthread_mutex_t));
+	
+	sem_init((sem_t*)m_read_sem, 0, 0);
+	pthread_mutex_init((pthread_mutex_t*)m_write_mutex, 0);
 }
 
 int c_fifo::read(void* buf, int len)
 {
 	unsigned char* pbuf = (unsigned char*)buf;
 	int i = 0;
-	while (i < len)
+	while(i < len)
 	{
 		if (m_tail == m_head)
 		{//empty
-			WaitForSingleObject(m_read_sem, INFINITE);
+			sem_wait((sem_t*)m_read_sem);
 			continue;
 		}
 		*pbuf++ = m_buf[m_head];
 		m_head = (m_head + 1) % FIFO_BUFFER_LEN;
 		i++;
 	}
-	if (i != len)
+	if(i != len)
 	{
 		ASSERT(false);
 	}
@@ -363,29 +359,31 @@ int c_fifo::write(void* buf, int len)
 	int i = 0;
 	int tail = m_tail;
 
-	WaitForSingleObject(m_write_mutex, INFINITE);
-	while (i < len)
+	pthread_mutex_lock((pthread_mutex_t*)m_write_mutex);
+	while(i < len)
 	{
 		if ((m_tail + 1) % FIFO_BUFFER_LEN == m_head)
 		{//full, clear data has been written;
 			m_tail = tail;
 			log_out("Warning: fifo full\n");
-			ReleaseMutex(m_write_mutex);
+			pthread_mutex_unlock((pthread_mutex_t*)m_write_mutex);
 			return 0;
 		}
 		m_buf[m_tail] = *pbuf++;
 		m_tail = (m_tail + 1) % FIFO_BUFFER_LEN;
 		i++;
 	}
-	ReleaseMutex(m_write_mutex);
+	pthread_mutex_unlock((pthread_mutex_t*)m_write_mutex);
 
-	if (i != len)
+	if(i != len)
 	{
 		ASSERT(false);
 	}
 	else
 	{
-		ReleaseSemaphore(m_read_sem, 1, 0);
+		sem_post((sem_t*)m_read_sem);
 	}
 	return i;
 }
+
+#endif

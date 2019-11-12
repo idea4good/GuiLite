@@ -112,10 +112,7 @@ int c_dialog::set_me_the_dialog()
 		if(ms_the_dialogs[i].surface == 0)
 		{
 			ms_the_dialogs[i].dialog = this;
-			if(this)
-			{
-				ms_the_dialogs[i].surface = surface;
-			}
+			ms_the_dialogs[i].surface = surface;
 			return 1;
 		}
 	}

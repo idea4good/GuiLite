@@ -381,9 +381,6 @@ int c_surface::set_frame_layer_visible_rect(c_rect& rect, unsigned int z_order)
 	c_rect old_rect = m_frame_layers[z_order].visible_rect;
 	//Recover the lower layer
 	int src_zorder = (Z_ORDER_LEVEL)(z_order - 1);
-	int display_width = m_display->get_width();
-	int display_height = m_display->get_height();
-
 	for (int y = old_rect.m_top; y <= old_rect.m_bottom; y++)
 	{
 		for (int x = old_rect.m_left; x <= old_rect.m_right; x++)
