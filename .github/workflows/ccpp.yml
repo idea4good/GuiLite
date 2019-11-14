@@ -9,9 +9,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: workspace
-      run: cd workspace
     - name: cmake
-      run: cmake .
+      run: cd workspace && cmake .
     - name: make
       run: make
