@@ -12,4 +12,4 @@ jobs:
     - name: cmake
       run: cd workspace && cmake .
     - name: make
-      run: make
+      run: cd workspace && make
