@@ -3,7 +3,7 @@
 Prerequisite: Windows & Visul Studio 2013/2015/2017/2019
 - Open "GuiLite.sln" by Visual Studio
 - Click `Build Solution`
-- Output here: \GuiLite\Debug(Release)\GuiLite.lib
+- Output here: \GuiLite\workspace\Debug(Release)\GuiLite.lib
 
 FAQ: Error when open GuiLite project with Visual Studio, reconfigure the project to match your computer like this:
 
@@ -13,7 +13,7 @@ FAQ: Error when open GuiLite project with Visual Studio, reconfigure the project
 - `cd GuiLite`
 - `cmake .`
 - `make`
-- Output here: /GuiLite/libGuiLite.a
+- Output here: /GuiLite/workspace/libGuiLite.a
 
 ## How to build GuiLite libary for ARM Linux?
 ### Prerequisite: Install cross compiler:
@@ -24,7 +24,7 @@ FAQ: Error when open GuiLite project with Visual Studio, reconfigure the project
 - For ARM32: `cmake -D CMAKE_C_COMPILER="/usr/bin/arm-linux-gnueabi-gcc" -D CMAKE_CXX_COMPILER="/usr/bin/arm-linux-gnueabi-g++" .`
 - For ARM64: `cmake -D CMAKE_C_COMPILER="/usr/bin/aarch64-linux-gnu-gcc" -D CMAKE_CXX_COMPILER="/usr/bin/aarch64-linux-gnu-g++" .`
 - `make`
-- Output here: /GuiLite/libGuiLite.a
+- Output here: /GuiLite/workspace/libGuiLite.a
 
 ## How to build GuiLite libary for Android?
 ### Prerequisite: Install cross compiler:
@@ -33,7 +33,7 @@ FAQ: Error when open GuiLite project with Visual Studio, reconfigure the project
 - `cd GuiLite`
 - `cmake -D CMAKE_C_COMPILER="/usr/bin/arm-linux-androideabi-gcc" -D CMAKE_CXX_COMPILER="/usr/bin/arm-linux-androideabi-g++" .`
 - `make`
-- Output here: /GuiLite/libGuiLite.a
+- Output here: /GuiLite/workspace/libGuiLite.a
 
 ## How to build GuiLite libary for any MCU?
 ### Prerequisite: Install Keil uvsion 5.6 or above.
@@ -42,7 +42,7 @@ FAQ: Error when open GuiLite project with Visual Studio, reconfigure the project
 - Implement function(e.g, thread_sleep) in `core\src\adapter\api_unknow.cpp` to meet your need.
 - Choose your Device type(Default: STM32F103ZE) from option for target.
 - Build GuiLite.
-- Output here: /GuiLite/Objects/GuiLite.lib
+- Output here: /GuiLite/workspace/Objects/GuiLite.lib
 
 ## How to port?
 Here are 2 options for porting. 
