@@ -26,7 +26,9 @@
     | 24 MHZ | 29 KB | 9 KB |
 
 ## Cross platforms
-Application base on GuiLite could run on **all platforms**(e.g, iOS/macOS/WathOS, Android, Linux, Windows, Docker and MCU without OS), and work with **many languages**(e.g. Swift, Java, Javascript, C#, Golang).
+- Support OS: iOS/macOS/WathOS, Android, Linux, Windows, RTOS... or **MCU without OS**
+- Support language: Swift, Java, Javascript, C#, Golang...
+- Support 3rd party library: Qt, MFC, Winforms, CoCoa...
 
 ## Useful features
 - 🔣Multi-language, support UTF-8

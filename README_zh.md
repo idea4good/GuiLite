@@ -24,7 +24,9 @@
   | 24 MHZ | 29 KB | 9 KB |
 
 ## 跨平台
-基于GuiLite的应用程序，可以运行在**所有平台**（例如：iOS/macOS/WathOS，Android，Linux（ARM/x86-64），Windows（包含VR），Docker和MCU）上；也可以与**多种语言**（例如： Swift, Java, Javascript, C#, Golang）协同工作。
+- 支持的操作系统：iOS/macOS/WathOS，Android，Linux（ARM/x86-64），Windows（包含VR），RTOS... 甚至**无操作系统的单片机**
+- 支持的开发语言： Swift, Java, Javascript, C#, Golang...
+- 支持的第3方库：Qt, MFC, Winforms, CoCoa...
 
 ## 实用的功能
 - 🔣支持多语言,采用 UTF-8 编码
