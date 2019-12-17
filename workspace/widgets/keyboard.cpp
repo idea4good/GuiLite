@@ -101,49 +101,7 @@ WND_TREE g_number_board_children[] =
 };
 
 GL_BEGIN_MESSAGE_MAP(c_keyboard)
-ON_GL_BN_CLICKED('A', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('B', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('C', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('D', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('E', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('F', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('G', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('H', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('I', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('J', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('K', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('L', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('M', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('N', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('O', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('P', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('Q', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('R', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('S', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('T', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('U', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('V', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('W', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('X', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('Y', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('Z', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('0', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('1', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('2', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('3', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('4', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('5', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('6', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('7', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('8', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('9', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED(' ', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('.', c_keyboard::on_char_clicked)
-
-ON_GL_BN_CLICKED(0x7F, c_keyboard::on_del_clicked)
-ON_GL_BN_CLICKED(0x14, c_keyboard::on_caps_clicked)
-ON_GL_BN_CLICKED('\n', c_keyboard::on_enter_clicked)
-ON_GL_BN_CLICKED(0x1B, c_keyboard::on_esc_clicked)
+ON_GL_BN_CLICKED(c_keyboard::on_key_clicked)
 GL_END_MESSAGE_MAP()
 
 int c_keyboard::connect(c_wnd *user, unsigned short resource_id, KEYBOARD_STYLE style)
@@ -175,25 +133,47 @@ void c_keyboard::pre_create_wnd()
 	m_str_len = 0;
 }
 
-void c_keyboard::on_caps_clicked(unsigned int ctrl_id)
+void c_keyboard::on_key_clicked(int id, int param)
+{
+	switch (id)
+	{
+	case 0x14:
+		on_caps_clicked(id, param);
+		break;
+	case '\n':
+		on_enter_clicked(id, param);
+		break;
+	case 0x1B:
+		on_esc_clicked(id, param);
+		break;
+	case 0x7F:
+		on_del_clicked(id, param);
+		break;
+	default:
+		on_char_clicked(id, param);
+		break;
+	}
+}
+
+void c_keyboard::on_caps_clicked(int id, int parm)
 {
 	m_cap_status = (m_cap_status == STATUS_LOWERCASE) ? STATUS_UPPERCASE : STATUS_LOWERCASE;
 	show_window();
 }
 
-void c_keyboard::on_enter_clicked(unsigned int ctrl_id)
+void c_keyboard::on_enter_clicked(int id, int param)
 {
 	memset(m_str, 0, sizeof(m_str));
-    notify_parent(KEYBORAD_CLICK, CLICK_ENTER);
+    return notify_parent(KEYBORAD_CLICK, CLICK_ENTER);
 }
 
-void c_keyboard::on_esc_clicked(unsigned int ctrl_id)
+void c_keyboard::on_esc_clicked(int id, int param)
 {
 	memset(m_str, 0, sizeof(m_str));
 	notify_parent(KEYBORAD_CLICK, CLICK_ESC);
 }
 
-void c_keyboard::on_del_clicked(unsigned int ctrl_id)
+void c_keyboard::on_del_clicked(int id, int param)
 {
 	if (m_str_len <= 0)
 	{
@@ -203,28 +183,28 @@ void c_keyboard::on_del_clicked(unsigned int ctrl_id)
 	notify_parent(KEYBORAD_CLICK, CLICK_CHAR);
 }
 
-void c_keyboard::on_char_clicked(unsigned int ctrl_id)
-{//ctrl_id = char ascii code.
+void c_keyboard::on_char_clicked(int id, int param)
+{//id = char ascii code.
 	if (m_str_len >= sizeof(m_str))
 	{
 		return;
 	}
-	if ((ctrl_id >= '0' && ctrl_id <= '9') || ctrl_id == ' ' || ctrl_id == '.')
+	if ((id >= '0' && id <= '9') || id == ' ' || id == '.')
 	{
 		goto InputChar;
 	}
 
-	if (ctrl_id >= 'A' && ctrl_id <= 'Z')
+	if (id >= 'A' && id <= 'Z')
 	{
 		if (STATUS_LOWERCASE == m_cap_status)
 		{
-			ctrl_id += 0x20;
+			id += 0x20;
 		}
 		goto InputChar;
 	}
 	ASSERT(false);
 InputChar:
-	m_str[m_str_len++] = ctrl_id;
+	m_str[m_str_len++] = id;
 	notify_parent(KEYBORAD_CLICK, CLICK_CHAR);
 }
 
@@ -256,43 +236,43 @@ void c_keyboard_button::on_paint()
 		break;
 	}
 	
-	if (m_resource_id == 0x14)
+	if (m_id == 0x14)
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == 0x1B)
+	else if (m_id == 0x1B)
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == ' ')
+	else if (m_id == ' ')
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == '\n')
+	else if (m_id == '\n')
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == '.')
+	else if (m_id == '.')
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == 0x7F)
+	else if (m_id == 0x7F)
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == 0x90)
+	else if (m_id == 0x90)
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 	
 	char letter[] = { 0, 0 };
-	if (m_resource_id >= 'A' && m_resource_id <= 'Z')
+	if (m_id >= 'A' && m_id <= 'Z')
 	{
-		letter[0] = (((c_keyboard*)m_parent)->get_cap_status() == STATUS_UPPERCASE) ? m_resource_id : (m_resource_id + 0x20);
+		letter[0] = (((c_keyboard*)m_parent)->get_cap_status() == STATUS_UPPERCASE) ? m_id : (m_id + 0x20);
 	}
-	else if (m_resource_id >= '0' && m_resource_id <= '9')
+	else if (m_id >= '0' && m_id <= '9')
 	{
-		letter[0] = m_resource_id;
+		letter[0] = (char)m_id;
 	}
 	c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 }

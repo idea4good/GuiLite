@@ -46,7 +46,7 @@ void c_surface::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 	{
 		return;
 	}
-	if (z_order > m_max_zorder)
+	if (z_order > (unsigned int)m_max_zorder)
 	{
 		ASSERT(false);
 		return;
@@ -57,7 +57,7 @@ void c_surface::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 		return draw_pixel_on_fb(x, y, rgb);
 	}
 
-	if (z_order > m_top_zorder)
+	if (z_order > (unsigned int)m_top_zorder)
 	{
 		m_top_zorder = (Z_ORDER_LEVEL)z_order;
 	}
@@ -75,7 +75,7 @@ void c_surface::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 	}
 
 	bool is_covered = false;
-	for (int tmp_z_order = Z_ORDER_LEVEL_MAX - 1; tmp_z_order > z_order; tmp_z_order--)
+	for (unsigned int tmp_z_order = Z_ORDER_LEVEL_MAX - 1; tmp_z_order > z_order; tmp_z_order--)
 	{
 		if (true == m_frame_layers[tmp_z_order].visible_rect.PtInRect(x, y))
 		{
@@ -371,7 +371,7 @@ int c_surface::set_frame_layer_visible_rect(c_rect& rect, unsigned int z_order)
 		ASSERT(false);
 		return -2;
 	}
-	if (z_order < m_top_zorder)
+	if (z_order < (unsigned int)m_top_zorder)
 	{
 		ASSERT(false);
 		return -3;

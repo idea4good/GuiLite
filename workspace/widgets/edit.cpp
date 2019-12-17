@@ -16,7 +16,7 @@
 #define IDD_KEY_BOARD		0x1
 
 GL_BEGIN_MESSAGE_MAP(c_edit)
-ON_KEYBORAD_UPDATE(IDD_KEY_BOARD, c_edit::on_key_board_click)
+ON_KEYBORAD_UPDATE(c_edit::on_key_board_click)
 GL_END_MESSAGE_MAP()
 
 static c_keyboard  s_keyboard;
@@ -167,7 +167,7 @@ void c_edit::show_keyboard()
 	s_keyboard.show_window();
 }
 
-void c_edit::on_key_board_click(unsigned int ctrl_id, long param)
+void c_edit::on_key_board_click(int id, int param)
 {
 	switch (param)
 	{

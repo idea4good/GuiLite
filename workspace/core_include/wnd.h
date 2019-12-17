@@ -64,14 +64,14 @@ public:
 	virtual void on_paint() {}
 	virtual void show_window();
 
-	unsigned short get_id() const { return m_resource_id; }
+	unsigned short get_id() const { return m_id; }
 	int get_z_order() { return m_z_order; }
 	c_wnd* get_wnd_ptr(unsigned short id) const;
 	unsigned int get_attr() const { return m_attr; }
 	void set_attr(WND_ATTRIBUTION attr);
 
 	void set_str(const char* str) { m_str = str; }
-	int is_focus_wnd() const;
+	bool is_focus_wnd() const;
 
 	void set_font_color(unsigned int color) { m_font_color = color; }
 	unsigned int get_font_color() { return m_font_color; }
@@ -92,7 +92,7 @@ public:
 	c_wnd* get_prev_sibling() const { return m_prev_sibling; }
 	c_wnd* get_next_sibling() const { return m_next_sibling; }
 
-	void notify_parent(unsigned int msg_id, int param);
+	void notify_parent(int msg_id, int param);
 
 	virtual bool on_touch(int x, int y, TOUCH_ACTION action);// return true: handled; false: not be handled.
 	virtual bool on_key(KEY_TYPE key);// return false: skip handling by parent;
@@ -126,7 +126,7 @@ protected:
 	unsigned int		m_font_color;
 	unsigned int		m_bg_color;
 
-	unsigned short		m_resource_id;
+	unsigned short		m_id;
 
 	int					m_z_order;
 	c_wnd*				m_focus_child;//current focused wnd

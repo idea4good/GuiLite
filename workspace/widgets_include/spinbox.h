@@ -4,11 +4,11 @@
 #define GL_SPIN_CONFIRM				0x2222
 #define	GL_SPIN_CHANGE				0x3333
 
-#define ON_SPIN_CONFIRM(ctrlId, func) \
-{MSG_TYPE_WND, GL_SPIN_CONFIRM, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, int)>(&func))},
+#define ON_SPIN_CONFIRM(func) \
+{MSG_TYPE_WND, GL_SPIN_CONFIRM, 0, msgCallback(&func)},
 
-#define ON_SPIN_CHANGE(ctrlId, func) \
-{MSG_TYPE_WND, GL_SPIN_CHANGE, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, int)>(&func))},
+#define ON_SPIN_CHANGE(func) \
+{MSG_TYPE_WND, GL_SPIN_CHANGE, 0, msgCallback(&func)},
 
 class c_spin_box : public c_wnd
 {
@@ -34,8 +34,9 @@ protected:
 	virtual void pre_create_wnd();
 	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
 
-	void on_arrow_up_bt_click(unsigned int ctr_id);
-	void on_arrow_down_bt_click(unsigned int ctr_id);
+	void on_arrow_bt_click(int ctr_id, int param);
+	void on_arrow_up_bt_click(int ctr_id, int param);
+	void on_arrow_down_bt_click(int ctr_id, int param);
 
 	GL_DECLARE_MESSAGE_MAP()
 

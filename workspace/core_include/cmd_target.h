@@ -8,70 +8,43 @@ class c_cmd_target;
 #define MSG_TYPE_USR		0x0002
 #define USR_MSG_MAX			32
 
-typedef void (c_cmd_target::*MsgFuncVV)();
-
-enum MSG_CALLBACK_TYPE
-{
-	MSG_CALLBACK_NULL = 0,
-	MSG_CALLBACK_VV,
-	MSG_CALLBACK_IWL,
-	MSG_CALLBACK_IWV,
-	MSG_CALLBACK_VWV,
-	MSG_CALLBACK_VVL,
-	MSG_CALLBACK_VWL,
-	MSG_CALLBACK_IVV
-};
-
-typedef union
-{
-	void (c_cmd_target::*func)();
-	void (c_cmd_target::*func_vwv)(unsigned int w_param);
-	int (c_cmd_target::*func_iwl)(unsigned int w_param, long l_param);
-	int (c_cmd_target::*func_iwv)(unsigned int w_param);
-	void (c_cmd_target::*func_vvl)(long l_param);
-	void (c_cmd_target::*func_vwl)(unsigned int w_param, long l_param);
-	int (c_cmd_target::*func_ivv)();
-}MSGFUNCS;
+typedef void (c_cmd_target::*msgCallback)(int, int);
 
 struct GL_MSG_ENTRY
 {
 	unsigned int		msgType;
 	unsigned int		msgId;
-	c_cmd_target*		pObject;
-	MSG_CALLBACK_TYPE	callbackType;
-	MsgFuncVV			func;
+	c_cmd_target*		object;
+	msgCallback			callBack;
 };
 
 #define ON_GL_USER_MSG(msgId, func)                    \
-{MSG_TYPE_USR, msgId, 0, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, unsigned int)>(&func))},
+{MSG_TYPE_USR, msgId, 0, msgCallback(&func)},
 
 #define GL_DECLARE_MESSAGE_MAP()						\
 protected:												\
-virtual const GL_MSG_ENTRY* GetMSgEntries() const; 	\
+	virtual const GL_MSG_ENTRY* get_msg_entries() const;\
 private:                                                \
-static const GL_MSG_ENTRY mMsgEntries[];
+	static const GL_MSG_ENTRY m_msg_entries[];
 
 #define GL_BEGIN_MESSAGE_MAP(theClass)					\
-const GL_MSG_ENTRY* theClass::GetMSgEntries() const	\
+const GL_MSG_ENTRY* theClass::get_msg_entries() const	\
 {														\
-	return theClass::mMsgEntries;						\
+	return theClass::m_msg_entries;						\
 }														\
-const GL_MSG_ENTRY theClass::mMsgEntries[] =     		\
+const GL_MSG_ENTRY theClass::m_msg_entries[] =     		\
 {
 
 #define GL_END_MESSAGE_MAP()                           \
-{MSG_TYPE_INVALID, 0, (c_cmd_target*)0, MSG_CALLBACK_NULL, (MsgFuncVV)0}};
+{MSG_TYPE_INVALID, 0, 0, 0}};
 
 class c_cmd_target
 {
 public:
-	c_cmd_target();
-	virtual ~c_cmd_target();
-	static int handle_usr_msg(unsigned int msgId, unsigned int wParam, unsigned int lParam);
+	static int handle_usr_msg(int msg_id, int resource_id, int param);
 protected:
 	void load_cmd_msg();
-	const GL_MSG_ENTRY* FindMsgEntry(const GL_MSG_ENTRY *pEntry, 
-		unsigned int msgType, unsigned short msgId, unsigned short ctrlId);
+	const GL_MSG_ENTRY* find_msg_entry(const GL_MSG_ENTRY *pEntry, int msgType, int msgId);
 private:
 	static GL_MSG_ENTRY ms_usr_map_entries[USR_MSG_MAX];
 	static unsigned short ms_user_map_size;

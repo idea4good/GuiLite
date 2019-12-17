@@ -53,7 +53,7 @@ int c_rect::IsEmpty() const
 	return m_top == m_bottom || m_left == m_right;
 }
 
-int c_rect::PtInRect(int x, int y) const 
+bool c_rect::PtInRect(int x, int y) const 
 {
 	return x >= m_left && x <= m_right && y >= m_top && y <= m_bottom;
 }

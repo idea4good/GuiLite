@@ -7,26 +7,16 @@ unsigned short c_cmd_target::ms_user_map_size;
 GL_BEGIN_MESSAGE_MAP(c_cmd_target)
 GL_END_MESSAGE_MAP()
 
-c_cmd_target::c_cmd_target()
-{
-}
-
-c_cmd_target::~c_cmd_target()
-{
-}
-
-int c_cmd_target::handle_usr_msg(unsigned int msgId, unsigned int wParam, unsigned int lParam)
+int c_cmd_target::handle_usr_msg(int msgId, int resource_id, int param)
 {
 	int i;
 	c_cmd_target* p_wnd = 0;
-	MSGFUNCS msg_funcs;
 	for (i = 0; i < ms_user_map_size; i++)
 	{
 		if (msgId == ms_usr_map_entries[i].msgId)
 		{
-			p_wnd = (c_cmd_target*)ms_usr_map_entries[i].pObject;
-			msg_funcs.func = ms_usr_map_entries[i].func;
-			(p_wnd->*msg_funcs.func_vwl)(wParam , lParam);
+			p_wnd = (c_cmd_target*)ms_usr_map_entries[i].object;
+			(p_wnd->*ms_usr_map_entries[i].callBack)(resource_id, param);
 		}
 	}
 	return 1;
@@ -34,7 +24,7 @@ int c_cmd_target::handle_usr_msg(unsigned int msgId, unsigned int wParam, unsign
 
 void c_cmd_target::load_cmd_msg()
 {
-	const GL_MSG_ENTRY* p_entry = GetMSgEntries();
+	const GL_MSG_ENTRY* p_entry = get_msg_entries();
 	if (0 == p_entry)
 	{
 		return;
@@ -54,7 +44,7 @@ void c_cmd_target::load_cmd_msg()
 		{
 			//repeat register, return.
 			if (p_entry->msgId == ms_usr_map_entries[i].msgId
-				&& ms_usr_map_entries[i].pObject == this)
+				&& ms_usr_map_entries[i].object == this)
 			{
 				bExist = true;
 				break;
@@ -69,7 +59,7 @@ void c_cmd_target::load_cmd_msg()
 		if (MSG_TYPE_USR == p_entry->msgType)
 		{
 			ms_usr_map_entries[ms_user_map_size] = *p_entry;
-			ms_usr_map_entries[ms_user_map_size].pObject = this;
+			ms_usr_map_entries[ms_user_map_size].object = this;
 			ms_user_map_size++;
 			if (USR_MSG_MAX == ms_user_map_size)
 			{
@@ -85,17 +75,16 @@ void c_cmd_target::load_cmd_msg()
 	}
 }
 
-const GL_MSG_ENTRY* c_cmd_target::FindMsgEntry(const GL_MSG_ENTRY *pEntry, 
-	unsigned int msgType, unsigned short msgId, unsigned short ctrlId)
+const GL_MSG_ENTRY* c_cmd_target::find_msg_entry(const GL_MSG_ENTRY *pEntry, int msgType, int msgId)
 {
 	if ( MSG_TYPE_INVALID == msgType)
 	{
 		return 0;
 	}
 
-	while (MSG_CALLBACK_NULL != pEntry->callbackType)
+	while (MSG_TYPE_INVALID != pEntry->msgType)
 	{
-		if ( (msgType == pEntry->msgType) && (msgId == pEntry->msgId) && (void*)(unsigned long)ctrlId == pEntry->pObject)
+		if ( (msgType == pEntry->msgType) && (msgId == pEntry->msgId))
 		{
 			return pEntry;
 		}

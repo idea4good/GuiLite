@@ -4,8 +4,8 @@
 #define MAX_ITEM_NUM			4
 #define GL_LIST_CONFIRM			0x1
 
-#define ON_LIST_CONFIRM(ctrlId, func) \
-{MSG_TYPE_WND, GL_LIST_CONFIRM, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, int)>(&func))},
+#define ON_LIST_CONFIRM(func) \
+{MSG_TYPE_WND, GL_LIST_CONFIRM, 0, msgCallback(&func)},
 
 class c_list_box : public c_wnd
 {

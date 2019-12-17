@@ -19,7 +19,7 @@ protected:
 	virtual void on_kill_focus();
 	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
 	
-	void on_key_board_click(unsigned int ctrl_id, long param);
+	void on_key_board_click(int id, int param);
 	GL_DECLARE_MESSAGE_MAP()
 private:
 	void show_keyboard();

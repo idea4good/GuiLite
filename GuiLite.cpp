@@ -72,31 +72,23 @@ GL_MSG_ENTRY c_cmd_target::ms_usr_map_entries[USR_MSG_MAX];
 unsigned short c_cmd_target::ms_user_map_size;
 GL_BEGIN_MESSAGE_MAP(c_cmd_target)
 GL_END_MESSAGE_MAP()
-c_cmd_target::c_cmd_target()
-{
-}
-c_cmd_target::~c_cmd_target()
-{
-}
-int c_cmd_target::handle_usr_msg(unsigned int msgId, unsigned int wParam, unsigned int lParam)
+int c_cmd_target::handle_usr_msg(int msgId, int resource_id, int param)
 {
 	int i;
 	c_cmd_target* p_wnd = 0;
-	MSGFUNCS msg_funcs;
 	for (i = 0; i < ms_user_map_size; i++)
 	{
 		if (msgId == ms_usr_map_entries[i].msgId)
 		{
-			p_wnd = (c_cmd_target*)ms_usr_map_entries[i].pObject;
-			msg_funcs.func = ms_usr_map_entries[i].func;
-			(p_wnd->*msg_funcs.func_vwl)(wParam , lParam);
+			p_wnd = (c_cmd_target*)ms_usr_map_entries[i].object;
+			(p_wnd->*ms_usr_map_entries[i].callBack)(resource_id, param);
 		}
 	}
 	return 1;
 }
 void c_cmd_target::load_cmd_msg()
 {
-	const GL_MSG_ENTRY* p_entry = GetMSgEntries();
+	const GL_MSG_ENTRY* p_entry = get_msg_entries();
 	if (0 == p_entry)
 	{
 		return;
@@ -114,7 +106,7 @@ void c_cmd_target::load_cmd_msg()
 		{
 			//repeat register, return.
 			if (p_entry->msgId == ms_usr_map_entries[i].msgId
-				&& ms_usr_map_entries[i].pObject == this)
+				&& ms_usr_map_entries[i].object == this)
 			{
 				bExist = true;
 				break;
@@ -128,7 +120,7 @@ void c_cmd_target::load_cmd_msg()
 		if (MSG_TYPE_USR == p_entry->msgType)
 		{
 			ms_usr_map_entries[ms_user_map_size] = *p_entry;
-			ms_usr_map_entries[ms_user_map_size].pObject = this;
+			ms_usr_map_entries[ms_user_map_size].object = this;
 			ms_user_map_size++;
 			if (USR_MSG_MAX == ms_user_map_size)
 			{
@@ -143,16 +135,15 @@ void c_cmd_target::load_cmd_msg()
 		p_entry++;
 	}
 }
-const GL_MSG_ENTRY* c_cmd_target::FindMsgEntry(const GL_MSG_ENTRY *pEntry, 
-	unsigned int msgType, unsigned short msgId, unsigned short ctrlId)
+const GL_MSG_ENTRY* c_cmd_target::find_msg_entry(const GL_MSG_ENTRY *pEntry, int msgType, int msgId)
 {
 	if ( MSG_TYPE_INVALID == msgType)
 	{
 		return 0;
 	}
-	while (MSG_CALLBACK_NULL != pEntry->callbackType)
+	while (MSG_TYPE_INVALID != pEntry->msgType)
 	{
-		if ( (msgType == pEntry->msgType) && (msgId == pEntry->msgId) && (void*)(unsigned long)ctrlId == pEntry->pObject)
+		if ( (msgType == pEntry->msgType) && (msgId == pEntry->msgId))
 		{
 			return pEntry;
 		}
@@ -162,9 +153,7 @@ const GL_MSG_ENTRY* c_cmd_target::FindMsgEntry(const GL_MSG_ENTRY *pEntry,
 }
 #include <string.h>
 #include <stdio.h>
-c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int display_height,
-						unsigned int surface_width, unsigned int surface_height,
-						unsigned int color_bytes, unsigned int surface_cnt, EXTERNAL_GFX_OP* gfx_op)
+c_display::c_display(void* phy_fb, int display_width, int display_height, int surface_width, int surface_height, unsigned int color_bytes, int surface_cnt, EXTERNAL_GFX_OP* gfx_op)
 {
 	if (color_bytes != 2 && color_bytes != 4)
 	{
@@ -293,8 +282,8 @@ int c_display::snap_shot(const char* file_name)
 	{
 		return -1;
 	}
-	unsigned int width = get_width();
-	unsigned int height = get_height();
+	int width = get_width();
+	int height = get_height();
 	//16 bits framebuffer
 	if (m_color_bytes == 2)
 	{
@@ -356,7 +345,7 @@ int c_rect::IsEmpty() const
 {
 	return m_top == m_bottom || m_left == m_right;
 }
-int c_rect::PtInRect(int x, int y) const 
+bool c_rect::PtInRect(int x, int y) const 
 {
 	return x >= m_left && x <= m_right && y >= m_top && y <= m_bottom;
 }
@@ -401,7 +390,7 @@ void c_surface::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 	{
 		return;
 	}
-	if (z_order > m_max_zorder)
+	if (z_order > (unsigned int)m_max_zorder)
 	{
 		ASSERT(false);
 		return;
@@ -411,7 +400,7 @@ void c_surface::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 	{
 		return draw_pixel_on_fb(x, y, rgb);
 	}
-	if (z_order > m_top_zorder)
+	if (z_order > (unsigned int)m_top_zorder)
 	{
 		m_top_zorder = (Z_ORDER_LEVEL)z_order;
 	}
@@ -426,7 +415,7 @@ void c_surface::draw_pixel(int x, int y, unsigned int rgb, unsigned int z_order)
 		return draw_pixel_on_fb(x, y, rgb);
 	}
 	bool is_covered = false;
-	for (int tmp_z_order = Z_ORDER_LEVEL_MAX - 1; tmp_z_order > z_order; tmp_z_order--)
+	for (unsigned int tmp_z_order = Z_ORDER_LEVEL_MAX - 1; tmp_z_order > z_order; tmp_z_order--)
 	{
 		if (true == m_frame_layers[tmp_z_order].visible_rect.PtInRect(x, y))
 		{
@@ -702,7 +691,7 @@ int c_surface::set_frame_layer_visible_rect(c_rect& rect, unsigned int z_order)
 		ASSERT(false);
 		return -2;
 	}
-	if (z_order < m_top_zorder)
+	if (z_order < (unsigned int)m_top_zorder)
 	{
 		ASSERT(false);
 		return -3;
@@ -712,8 +701,6 @@ int c_surface::set_frame_layer_visible_rect(c_rect& rect, unsigned int z_order)
 	c_rect old_rect = m_frame_layers[z_order].visible_rect;
 	//Recover the lower layer
 	int src_zorder = (Z_ORDER_LEVEL)(z_order - 1);
-	int display_width = m_display->get_width();
-	int display_height = m_display->get_height();
 	for (int y = old_rect.m_top; y <= old_rect.m_bottom; y++)
 	{
 		for (int x = old_rect.m_left; x <= old_rect.m_right; x++)
@@ -902,7 +889,7 @@ const unsigned int c_theme::get_color(COLOR_TYPE index)
 	return s_color_map[index];
 }
 c_wnd::c_wnd(): m_status(STATUS_NORMAL), m_attr(ATTR_VISIBLE), m_parent(0), m_top_child(0), m_prev_sibling(0), m_next_sibling(0),
-m_str(0), m_font_color(0), m_bg_color(0), m_resource_id(0),	m_z_order(Z_ORDER_LEVEL_0),	m_focus_child(0), m_surface(0)
+m_str(0), m_font_color(0), m_bg_color(0), m_id(0),	m_z_order(Z_ORDER_LEVEL_0),	m_focus_child(0), m_surface(0)
 {
 	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 }
@@ -914,7 +901,7 @@ int c_wnd::connect(c_wnd *parent, unsigned short resource_id, const char* str,
 		ASSERT(false);
 		return -1;
 	}
-	m_resource_id = resource_id;
+	m_id = resource_id;
 	set_str(str);
 	m_parent  = parent;
 	m_status = STATUS_NORMAL;
@@ -958,7 +945,7 @@ int c_wnd::load_child_wnd(WND_TREE *p_child_tree)
 	WND_TREE* p_cur = p_child_tree;
 	while(p_cur->p_wnd)
 	{
-		if (0 != p_cur->p_wnd->m_resource_id)
+		if (0 != p_cur->p_wnd->m_id)
 		{//This wnd has been used! Do not share!
 			ASSERT(false);
 			return -1;
@@ -982,7 +969,7 @@ c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, const cha
 		return 0;
 	}
 	c_wnd* wnd = clone();
-	wnd->m_resource_id = resource_id;
+	wnd->m_id = resource_id;
 	wnd->set_str(str);
 	wnd->m_parent  = parent;
 	wnd->m_status = STATUS_NORMAL;
@@ -1040,7 +1027,7 @@ int c_wnd::load_clone_child_wnd(WND_TREE *p_child_tree)
 }
 void c_wnd::disconnect()
 {
-	if (0 == m_resource_id)
+	if (0 == m_id)
 	{
 		return;
 	}
@@ -1060,7 +1047,7 @@ void c_wnd::disconnect()
 		m_parent->unlink_child(this);
 	}
 	m_focus_child = 0;
-	m_resource_id = 0;
+	m_id = 0;
 }
 c_wnd* c_wnd::get_wnd_ptr(unsigned short id) const
 {
@@ -1090,7 +1077,7 @@ void c_wnd::set_attr(WND_ATTRIBUTION attr)
 		}
 	}
 }
-int c_wnd::is_focus_wnd() const
+bool c_wnd::is_focus_wnd() const
 {
 	if ( (m_attr & ATTR_VISIBLE)
 		&& !(m_attr & ATTR_DISABLED)
@@ -1168,7 +1155,7 @@ c_wnd* c_wnd::set_child_focus(c_wnd * focus_child)
 void c_wnd::add_child_2_tail(c_wnd *child)
 {
 	if( 0 == child )return;
-	if(child == get_wnd_ptr(child->m_resource_id))return;
+	if(child == get_wnd_ptr(child->m_id))return;
 	if ( 0 == m_top_child )
 	{
 		m_top_child = child;
@@ -1211,7 +1198,7 @@ int	c_wnd::unlink_child(c_wnd *child)
 	{
 		return -2;
 	}
-	int find = false;
+	bool find = false;
 	c_wnd *tmp_child = m_top_child;
 	if (tmp_child == child)
 	{
@@ -1361,37 +1348,18 @@ bool c_wnd::on_key(KEY_TYPE key)
 	}
 	return true;
 }
-void c_wnd::notify_parent(unsigned int msg_id, int param)
+void c_wnd::notify_parent(int msg_id, int param)
 {
 	if (!m_parent)
 	{
 		return;
 	}
-	const GL_MSG_ENTRY* entry = m_parent->FindMsgEntry(m_parent->GetMSgEntries(), MSG_TYPE_WND, msg_id, m_resource_id);
+	const GL_MSG_ENTRY* entry = m_parent->find_msg_entry(m_parent->get_msg_entries(), MSG_TYPE_WND, msg_id);
 	if (0 == entry)
 	{
 		return;
 	}
-	MSGFUNCS msg_funcs;
-	msg_funcs.func = entry->func;
-	switch (entry->callbackType)
-	{
-	case MSG_CALLBACK_VV:
-		(m_parent->*msg_funcs.func)();
-		break;
-	case MSG_CALLBACK_VVL:
-		(m_parent->*msg_funcs.func_vvl)(param);
-		break;
-	case MSG_CALLBACK_VWV:
-		(m_parent->*msg_funcs.func_vwv)(m_resource_id);
-		break;
-	case MSG_CALLBACK_VWL:
-		(m_parent->*msg_funcs.func_vwl)(m_resource_id, param);
-		break;
-	default:
-		ASSERT(false);
-		break;
-	}
+	(m_parent->*(entry->callBack))(m_id, param);
 }
 #include <string.h>
 #include <stdio.h>
@@ -2324,7 +2292,7 @@ void register_timer(int milli_second,void func(void* ptmr, void* parg))
 }
 long get_time_in_second()
 {
-	return time(0);
+	return (long)time(0);
 }
 T_TIME get_time()
 {
@@ -2920,10 +2888,7 @@ int c_dialog::set_me_the_dialog()
 		if(ms_the_dialogs[i].surface == 0)
 		{
 			ms_the_dialogs[i].dialog = this;
-			if(this)
-			{
-				ms_the_dialogs[i].surface = surface;
-			}
+			ms_the_dialogs[i].surface = surface;
 			return 1;
 		}
 	}
@@ -2933,7 +2898,7 @@ int c_dialog::set_me_the_dialog()
 #include <string.h>
 #define IDD_KEY_BOARD		0x1
 GL_BEGIN_MESSAGE_MAP(c_edit)
-ON_KEYBORAD_UPDATE(IDD_KEY_BOARD, c_edit::on_key_board_click)
+ON_KEYBORAD_UPDATE(c_edit::on_key_board_click)
 GL_END_MESSAGE_MAP()
 static c_keyboard  s_keyboard;
 void c_edit::pre_create_wnd()
@@ -3070,7 +3035,7 @@ void c_edit::show_keyboard()
 	m_surface->set_frame_layer_visible_rect(kb_rect, s_keyboard.get_z_order());
 	s_keyboard.show_window();
 }
-void c_edit::on_key_board_click(unsigned int ctrl_id, long param)
+void c_edit::on_key_board_click(int id, int param)
 {
 	switch (param)
 	{
@@ -3373,48 +3338,7 @@ WND_TREE g_number_board_children[] =
 	{0,0,0,0,0,0,0}
 };
 GL_BEGIN_MESSAGE_MAP(c_keyboard)
-ON_GL_BN_CLICKED('A', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('B', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('C', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('D', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('E', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('F', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('G', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('H', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('I', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('J', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('K', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('L', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('M', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('N', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('O', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('P', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('Q', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('R', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('S', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('T', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('U', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('V', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('W', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('X', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('Y', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('Z', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('0', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('1', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('2', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('3', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('4', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('5', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('6', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('7', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('8', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('9', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED(' ', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED('.', c_keyboard::on_char_clicked)
-ON_GL_BN_CLICKED(0x7F, c_keyboard::on_del_clicked)
-ON_GL_BN_CLICKED(0x14, c_keyboard::on_caps_clicked)
-ON_GL_BN_CLICKED('\n', c_keyboard::on_enter_clicked)
-ON_GL_BN_CLICKED(0x1B, c_keyboard::on_esc_clicked)
+ON_GL_BN_CLICKED(c_keyboard::on_key_clicked)
 GL_END_MESSAGE_MAP()
 int c_keyboard::connect(c_wnd *user, unsigned short resource_id, KEYBOARD_STYLE style)
 {
@@ -3443,22 +3367,43 @@ void c_keyboard::pre_create_wnd()
 	memset(m_str, 0, sizeof(m_str));
 	m_str_len = 0;
 }
-void c_keyboard::on_caps_clicked(unsigned int ctrl_id)
+void c_keyboard::on_key_clicked(int id, int param)
+{
+	switch (id)
+	{
+	case 0x14:
+		on_caps_clicked(id, param);
+		break;
+	case '\n':
+		on_enter_clicked(id, param);
+		break;
+	case 0x1B:
+		on_esc_clicked(id, param);
+		break;
+	case 0x7F:
+		on_del_clicked(id, param);
+		break;
+	default:
+		on_char_clicked(id, param);
+		break;
+	}
+}
+void c_keyboard::on_caps_clicked(int id, int parm)
 {
 	m_cap_status = (m_cap_status == STATUS_LOWERCASE) ? STATUS_UPPERCASE : STATUS_LOWERCASE;
 	show_window();
 }
-void c_keyboard::on_enter_clicked(unsigned int ctrl_id)
+void c_keyboard::on_enter_clicked(int id, int param)
 {
 	memset(m_str, 0, sizeof(m_str));
-    notify_parent(KEYBORAD_CLICK, CLICK_ENTER);
+    return notify_parent(KEYBORAD_CLICK, CLICK_ENTER);
 }
-void c_keyboard::on_esc_clicked(unsigned int ctrl_id)
+void c_keyboard::on_esc_clicked(int id, int param)
 {
 	memset(m_str, 0, sizeof(m_str));
 	notify_parent(KEYBORAD_CLICK, CLICK_ESC);
 }
-void c_keyboard::on_del_clicked(unsigned int ctrl_id)
+void c_keyboard::on_del_clicked(int id, int param)
 {
 	if (m_str_len <= 0)
 	{
@@ -3467,27 +3412,27 @@ void c_keyboard::on_del_clicked(unsigned int ctrl_id)
 	m_str[--m_str_len] = 0;
 	notify_parent(KEYBORAD_CLICK, CLICK_CHAR);
 }
-void c_keyboard::on_char_clicked(unsigned int ctrl_id)
-{//ctrl_id = char ascii code.
+void c_keyboard::on_char_clicked(int id, int param)
+{//id = char ascii code.
 	if (m_str_len >= sizeof(m_str))
 	{
 		return;
 	}
-	if ((ctrl_id >= '0' && ctrl_id <= '9') || ctrl_id == ' ' || ctrl_id == '.')
+	if ((id >= '0' && id <= '9') || id == ' ' || id == '.')
 	{
 		goto InputChar;
 	}
-	if (ctrl_id >= 'A' && ctrl_id <= 'Z')
+	if (id >= 'A' && id <= 'Z')
 	{
 		if (STATUS_LOWERCASE == m_cap_status)
 		{
-			ctrl_id += 0x20;
+			id += 0x20;
 		}
 		goto InputChar;
 	}
 	ASSERT(false);
 InputChar:
-	m_str[m_str_len++] = ctrl_id;
+	m_str[m_str_len++] = id;
 	notify_parent(KEYBORAD_CLICK, CLICK_CHAR);
 }
 void c_keyboard::on_paint()
@@ -3517,43 +3462,43 @@ void c_keyboard_button::on_paint()
 		break;
 	}
 	
-	if (m_resource_id == 0x14)
+	if (m_id == 0x14)
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == 0x1B)
+	else if (m_id == 0x1B)
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == ' ')
+	else if (m_id == ' ')
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == '\n')
+	else if (m_id == '\n')
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == '.')
+	else if (m_id == '.')
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == 0x7F)
+	else if (m_id == 0x7F)
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
-	else if (m_resource_id == 0x90)
+	else if (m_id == 0x90)
 	{
 		return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 	
 	char letter[] = { 0, 0 };
-	if (m_resource_id >= 'A' && m_resource_id <= 'Z')
+	if (m_id >= 'A' && m_id <= 'Z')
 	{
-		letter[0] = (((c_keyboard*)m_parent)->get_cap_status() == STATUS_UPPERCASE) ? m_resource_id : (m_resource_id + 0x20);
+		letter[0] = (((c_keyboard*)m_parent)->get_cap_status() == STATUS_UPPERCASE) ? m_id : (m_id + 0x20);
 	}
-	else if (m_resource_id >= '0' && m_resource_id <= '9')
+	else if (m_id >= '0' && m_id <= '9')
 	{
-		letter[0] = m_resource_id;
+		letter[0] = (char)m_id;
 	}
 	c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 }
@@ -3908,8 +3853,7 @@ bool c_slide_group::on_key(KEY_TYPE key)
 #define ID_BT_ARROW_UP      1
 #define ID_BT_ARROW_DOWN    2
 GL_BEGIN_MESSAGE_MAP(c_spin_box)
-ON_GL_BN_CLICKED(ID_BT_ARROW_UP, c_spin_box::on_arrow_up_bt_click)
-ON_GL_BN_CLICKED(ID_BT_ARROW_DOWN, c_spin_box::on_arrow_down_bt_click)
+ON_GL_BN_CLICKED(c_spin_box::on_arrow_bt_click)
 GL_END_MESSAGE_MAP()
 void c_spin_box::pre_create_wnd()
 {
@@ -4037,7 +3981,22 @@ void c_spin_box::on_paint()
 		ASSERT(false);
 	}
 }
-void c_spin_box::on_arrow_up_bt_click(unsigned int ctr_id)
+void c_spin_box::on_arrow_bt_click(int ctr_id, int param)
+{
+	switch (ctr_id)
+	{
+	case ID_BT_ARROW_UP:
+		on_arrow_up_bt_click(ctr_id, param);
+		break;
+	case ID_BT_ARROW_DOWN:
+		on_arrow_down_bt_click(ctr_id, param);
+		break;
+	default:
+		ASSERT(false);
+		break;
+	}
+}
+void c_spin_box::on_arrow_up_bt_click(int ctr_id, int param)
 {
 	if (m_cur_value + m_step > m_max)
 	{
@@ -4047,7 +4006,7 @@ void c_spin_box::on_arrow_up_bt_click(unsigned int ctr_id)
 	notify_parent(GL_SPIN_CHANGE, m_cur_value);
 	on_paint();
 }
-void c_spin_box::on_arrow_down_bt_click(unsigned int ctr_id)
+void c_spin_box::on_arrow_down_bt_click(int ctr_id, int param)
 {
 	if (m_cur_value - m_step < m_min)
 	{

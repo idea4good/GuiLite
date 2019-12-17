@@ -7,7 +7,7 @@
 #include "../core_include/wnd.h"
 
 c_wnd::c_wnd(): m_status(STATUS_NORMAL), m_attr(ATTR_VISIBLE), m_parent(0), m_top_child(0), m_prev_sibling(0), m_next_sibling(0),
-m_str(0), m_font_color(0), m_bg_color(0), m_resource_id(0),	m_z_order(Z_ORDER_LEVEL_0),	m_focus_child(0), m_surface(0)
+m_str(0), m_font_color(0), m_bg_color(0), m_id(0),	m_z_order(Z_ORDER_LEVEL_0),	m_focus_child(0), m_surface(0)
 {
 	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 }
@@ -21,7 +21,7 @@ int c_wnd::connect(c_wnd *parent, unsigned short resource_id, const char* str,
 		return -1;
 	}
 
-	m_resource_id = resource_id;
+	m_id = resource_id;
 	set_str(str);
 	m_parent  = parent;
 	m_status = STATUS_NORMAL;
@@ -73,7 +73,7 @@ int c_wnd::load_child_wnd(WND_TREE *p_child_tree)
 	WND_TREE* p_cur = p_child_tree;
 	while(p_cur->p_wnd)
 	{
-		if (0 != p_cur->p_wnd->m_resource_id)
+		if (0 != p_cur->p_wnd->m_id)
 		{//This wnd has been used! Do not share!
 			ASSERT(false);
 			return -1;
@@ -99,7 +99,7 @@ c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, const cha
 	}
 
 	c_wnd* wnd = clone();
-	wnd->m_resource_id = resource_id;
+	wnd->m_id = resource_id;
 	wnd->set_str(str);
 	wnd->m_parent  = parent;
 	wnd->m_status = STATUS_NORMAL;
@@ -165,7 +165,7 @@ int c_wnd::load_clone_child_wnd(WND_TREE *p_child_tree)
 
 void c_wnd::disconnect()
 {
-	if (0 == m_resource_id)
+	if (0 == m_id)
 	{
 		return;
 	}
@@ -188,7 +188,7 @@ void c_wnd::disconnect()
 		m_parent->unlink_child(this);
 	}
 	m_focus_child = 0;
-	m_resource_id = 0;
+	m_id = 0;
 }
 
 c_wnd* c_wnd::get_wnd_ptr(unsigned short id) const
@@ -225,7 +225,7 @@ void c_wnd::set_attr(WND_ATTRIBUTION attr)
 	}
 }
 
-int c_wnd::is_focus_wnd() const
+bool c_wnd::is_focus_wnd() const
 {
 	if ( (m_attr & ATTR_VISIBLE)
 		&& !(m_attr & ATTR_DISABLED)
@@ -316,7 +316,7 @@ c_wnd* c_wnd::set_child_focus(c_wnd * focus_child)
 void c_wnd::add_child_2_tail(c_wnd *child)
 {
 	if( 0 == child )return;
-	if(child == get_wnd_ptr(child->m_resource_id))return;
+	if(child == get_wnd_ptr(child->m_id))return;
 
 	if ( 0 == m_top_child )
 	{
@@ -367,7 +367,7 @@ int	c_wnd::unlink_child(c_wnd *child)
 		return -2;
 	}
 
-	int find = false;
+	bool find = false;
 
 	c_wnd *tmp_child = m_top_child;
 	if (tmp_child == child)
@@ -533,37 +533,16 @@ bool c_wnd::on_key(KEY_TYPE key)
 	return true;
 }
 
-void c_wnd::notify_parent(unsigned int msg_id, int param)
+void c_wnd::notify_parent(int msg_id, int param)
 {
 	if (!m_parent)
 	{
 		return;
 	}
-	const GL_MSG_ENTRY* entry = m_parent->FindMsgEntry(m_parent->GetMSgEntries(), MSG_TYPE_WND, msg_id, m_resource_id);
+	const GL_MSG_ENTRY* entry = m_parent->find_msg_entry(m_parent->get_msg_entries(), MSG_TYPE_WND, msg_id);
 	if (0 == entry)
 	{
 		return;
 	}
-
-	MSGFUNCS msg_funcs;
-	msg_funcs.func = entry->func;
-
-	switch (entry->callbackType)
-	{
-	case MSG_CALLBACK_VV:
-		(m_parent->*msg_funcs.func)();
-		break;
-	case MSG_CALLBACK_VVL:
-		(m_parent->*msg_funcs.func_vvl)(param);
-		break;
-	case MSG_CALLBACK_VWV:
-		(m_parent->*msg_funcs.func_vwv)(m_resource_id);
-		break;
-	case MSG_CALLBACK_VWL:
-		(m_parent->*msg_funcs.func_vwl)(m_resource_id, param);
-		break;
-	default:
-		ASSERT(false);
-		break;
-	}
+	(m_parent->*(entry->callBack))(m_id, param);
 }

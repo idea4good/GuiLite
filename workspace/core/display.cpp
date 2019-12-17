@@ -7,9 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 
-c_display::c_display(void* phy_fb, unsigned int display_width, unsigned int display_height,
-						unsigned int surface_width, unsigned int surface_height,
-						unsigned int color_bytes, unsigned int surface_cnt, EXTERNAL_GFX_OP* gfx_op)
+c_display::c_display(void* phy_fb, int display_width, int display_height, int surface_width, int surface_height, unsigned int color_bytes, int surface_cnt, EXTERNAL_GFX_OP* gfx_op)
 {
 	if (color_bytes != 2 && color_bytes != 4)
 	{
@@ -148,8 +146,8 @@ int c_display::snap_shot(const char* file_name)
 		return -1;
 	}
 
-	unsigned int width = get_width();
-	unsigned int height = get_height();
+	int width = get_width();
+	int height = get_height();
 
 	//16 bits framebuffer
 	if (m_color_bytes == 2)

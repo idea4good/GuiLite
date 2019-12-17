@@ -59,17 +59,17 @@ protected:
 	virtual void draw_pixel_on_fb(int x, int y, unsigned int rgb);
 	void set_surface(Z_ORDER_LEVEL max_z_order);
 	c_surface(c_display* display, unsigned int width, unsigned int height, unsigned int color_bytes);
-	int						m_width;		//in pixels
-	int						m_height;		//in pixels
-	int						m_color_bytes;	//16 bits, 32 bits only
-	void* 					m_fb;			//Top frame buffer you could see
-	c_frame_layer 			m_frame_layers[Z_ORDER_LEVEL_MAX];//Top layber fb always be 0
-	bool					m_is_active;
-	Z_ORDER_LEVEL			m_max_zorder;
-	Z_ORDER_LEVEL			m_top_zorder;
-	void*					m_phy_fb;
-	int*					m_phy_write_index;
-	c_display*				m_display;
+	int				m_width;		//in pixels
+	int				m_height;		//in pixels
+	int				m_color_bytes;	//16 bits, 32 bits only
+	void* 			m_fb;			//Top frame buffer you could see
+	c_frame_layer 	m_frame_layers[Z_ORDER_LEVEL_MAX];//Top layber fb always be 0
+	bool			m_is_active;
+	Z_ORDER_LEVEL	m_max_zorder;
+	Z_ORDER_LEVEL	m_top_zorder;
+	void*			m_phy_fb;
+	int*			m_phy_write_index;
+	c_display*		m_display;
 };
 
 class c_surface_no_fb : public c_surface {//No physical framebuffer, memory fb is 32 bits

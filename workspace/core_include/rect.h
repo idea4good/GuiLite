@@ -12,7 +12,7 @@ public:
 	void Empty();
 	void Offset(int x, int y);
 	int IsEmpty() const ;
-	int PtInRect(int x, int y) const ;
+	bool PtInRect(int x, int y) const ;
 	int operator==(const c_rect& ) const;
 	c_rect  operator&(const c_rect& aRect) const;
 	int Width() const   {return m_right - m_left + 1;}

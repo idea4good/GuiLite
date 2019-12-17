@@ -205,7 +205,7 @@ void register_timer(int milli_second,void func(void* ptmr, void* parg))
 
 long get_time_in_second()
 {
-	return time(0);
+	return (long)time(0);
 }
 
 T_TIME get_time()

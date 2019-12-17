@@ -14,8 +14,7 @@
 #define ID_BT_ARROW_DOWN    2
 
 GL_BEGIN_MESSAGE_MAP(c_spin_box)
-ON_GL_BN_CLICKED(ID_BT_ARROW_UP, c_spin_box::on_arrow_up_bt_click)
-ON_GL_BN_CLICKED(ID_BT_ARROW_DOWN, c_spin_box::on_arrow_down_bt_click)
+ON_GL_BN_CLICKED(c_spin_box::on_arrow_bt_click)
 GL_END_MESSAGE_MAP()
 
 void c_spin_box::pre_create_wnd()
@@ -161,7 +160,23 @@ void c_spin_box::on_paint()
 	}
 }
 
-void c_spin_box::on_arrow_up_bt_click(unsigned int ctr_id)
+void c_spin_box::on_arrow_bt_click(int ctr_id, int param)
+{
+	switch (ctr_id)
+	{
+	case ID_BT_ARROW_UP:
+		on_arrow_up_bt_click(ctr_id, param);
+		break;
+	case ID_BT_ARROW_DOWN:
+		on_arrow_down_bt_click(ctr_id, param);
+		break;
+	default:
+		ASSERT(false);
+		break;
+	}
+}
+
+void c_spin_box::on_arrow_up_bt_click(int ctr_id, int param)
 {
 	if (m_cur_value + m_step > m_max)
 	{
@@ -172,7 +187,7 @@ void c_spin_box::on_arrow_up_bt_click(unsigned int ctr_id)
 	on_paint();
 }
 
-void c_spin_box::on_arrow_down_bt_click(unsigned int ctr_id)
+void c_spin_box::on_arrow_down_bt_click(int ctr_id, int param)
 {
 	if (m_cur_value - m_step < m_min)
 	{

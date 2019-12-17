@@ -76,62 +76,37 @@ class c_cmd_target;
 #define MSG_TYPE_WND		0x0001
 #define MSG_TYPE_USR		0x0002
 #define USR_MSG_MAX			32
-typedef void (c_cmd_target::*MsgFuncVV)();
-enum MSG_CALLBACK_TYPE
-{
-	MSG_CALLBACK_NULL = 0,
-	MSG_CALLBACK_VV,
-	MSG_CALLBACK_IWL,
-	MSG_CALLBACK_IWV,
-	MSG_CALLBACK_VWV,
-	MSG_CALLBACK_VVL,
-	MSG_CALLBACK_VWL,
-	MSG_CALLBACK_IVV
-};
-typedef union
-{
-	void (c_cmd_target::*func)();
-	void (c_cmd_target::*func_vwv)(unsigned int w_param);
-	int (c_cmd_target::*func_iwl)(unsigned int w_param, long l_param);
-	int (c_cmd_target::*func_iwv)(unsigned int w_param);
-	void (c_cmd_target::*func_vvl)(long l_param);
-	void (c_cmd_target::*func_vwl)(unsigned int w_param, long l_param);
-	int (c_cmd_target::*func_ivv)();
-}MSGFUNCS;
+typedef void (c_cmd_target::*msgCallback)(int, int);
 struct GL_MSG_ENTRY
 {
 	unsigned int		msgType;
 	unsigned int		msgId;
-	c_cmd_target*		pObject;
-	MSG_CALLBACK_TYPE	callbackType;
-	MsgFuncVV			func;
+	c_cmd_target*		object;
+	msgCallback			callBack;
 };
 #define ON_GL_USER_MSG(msgId, func)                    \
-{MSG_TYPE_USR, msgId, 0, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, unsigned int)>(&func))},
+{MSG_TYPE_USR, msgId, 0, msgCallback(&func)},
 #define GL_DECLARE_MESSAGE_MAP()						\
 protected:												\
-virtual const GL_MSG_ENTRY* GetMSgEntries() const; 	\
+	virtual const GL_MSG_ENTRY* get_msg_entries() const;\
 private:                                                \
-static const GL_MSG_ENTRY mMsgEntries[];
+	static const GL_MSG_ENTRY m_msg_entries[];
 #define GL_BEGIN_MESSAGE_MAP(theClass)					\
-const GL_MSG_ENTRY* theClass::GetMSgEntries() const	\
+const GL_MSG_ENTRY* theClass::get_msg_entries() const	\
 {														\
-	return theClass::mMsgEntries;						\
+	return theClass::m_msg_entries;						\
 }														\
-const GL_MSG_ENTRY theClass::mMsgEntries[] =     		\
+const GL_MSG_ENTRY theClass::m_msg_entries[] =     		\
 {
 #define GL_END_MESSAGE_MAP()                           \
-{MSG_TYPE_INVALID, 0, (c_cmd_target*)0, MSG_CALLBACK_NULL, (MsgFuncVV)0}};
+{MSG_TYPE_INVALID, 0, 0, 0}};
 class c_cmd_target
 {
 public:
-	c_cmd_target();
-	virtual ~c_cmd_target();
-	static int handle_usr_msg(unsigned int msgId, unsigned int wParam, unsigned int lParam);
+	static int handle_usr_msg(int msg_id, int resource_id, int param);
 protected:
 	void load_cmd_msg();
-	const GL_MSG_ENTRY* FindMsgEntry(const GL_MSG_ENTRY *pEntry, 
-		unsigned int msgType, unsigned short msgId, unsigned short ctrlId);
+	const GL_MSG_ENTRY* find_msg_entry(const GL_MSG_ENTRY *pEntry, int msgType, int msgId);
 private:
 	static GL_MSG_ENTRY ms_usr_map_entries[USR_MSG_MAX];
 	static unsigned short ms_user_map_size;
@@ -151,7 +126,7 @@ public:
 	void Empty();
 	void Offset(int x, int y);
 	int IsEmpty() const ;
-	int PtInRect(int x, int y) const ;
+	bool PtInRect(int x, int y) const ;
 	int operator==(const c_rect& ) const;
 	c_rect  operator&(const c_rect& aRect) const;
 	int Width() const   {return m_right - m_left + 1;}
@@ -293,17 +268,17 @@ protected:
 	virtual void draw_pixel_on_fb(int x, int y, unsigned int rgb);
 	void set_surface(Z_ORDER_LEVEL max_z_order);
 	c_surface(c_display* display, unsigned int width, unsigned int height, unsigned int color_bytes);
-	int						m_width;		//in pixels
-	int						m_height;		//in pixels
-	int						m_color_bytes;	//16 bits, 32 bits only
-	void* 					m_fb;			//Top frame buffer you could see
-	c_frame_layer 			m_frame_layers[Z_ORDER_LEVEL_MAX];//Top layber fb always be 0
-	bool					m_is_active;
-	Z_ORDER_LEVEL			m_max_zorder;
-	Z_ORDER_LEVEL			m_top_zorder;
-	void*					m_phy_fb;
-	int*					m_phy_write_index;
-	c_display*				m_display;
+	int				m_width;		//in pixels
+	int				m_height;		//in pixels
+	int				m_color_bytes;	//16 bits, 32 bits only
+	void* 			m_fb;			//Top frame buffer you could see
+	c_frame_layer 	m_frame_layers[Z_ORDER_LEVEL_MAX];//Top layber fb always be 0
+	bool			m_is_active;
+	Z_ORDER_LEVEL	m_max_zorder;
+	Z_ORDER_LEVEL	m_top_zorder;
+	void*			m_phy_fb;
+	int*			m_phy_write_index;
+	c_display*		m_display;
 };
 class c_surface_no_fb : public c_surface {//No physical framebuffer, memory fb is 32 bits
 	friend class c_display;
@@ -323,25 +298,23 @@ class c_surface;
 class c_display {
 	friend class c_surface;
 public:
-	c_display(void* phy_fb, unsigned int display_width, unsigned int display_height,
-					unsigned int surface_width, unsigned int surface_height,
-					unsigned int color_bytes, unsigned int surface_cnt, EXTERNAL_GFX_OP* gfx_op = 0);
+	c_display(void* phy_fb, int display_width, int display_height, int surface_width, int surface_height, unsigned int color_bytes, int surface_cnt, EXTERNAL_GFX_OP* gfx_op = 0);
 	c_surface* alloc_surface(Z_ORDER_LEVEL max_zorder);
 	int swipe_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y2, int offset);
-	unsigned int get_width() { return m_width; }
-	unsigned int get_height() { return m_height; }
+	int get_width() { return m_width; }
+	int get_height() { return m_height; }
 	void* get_updated_fb(int* width, int* height, bool force_update = false);
 	int snap_shot(const char* file_name);
 private:
-	unsigned int	m_width;		//in pixels
-	unsigned int	m_height;		//in pixels
-	unsigned int	m_color_bytes;	//16 bits, 32 bits only
+	int				m_width;		//in pixels
+	int				m_height;		//in pixels
+	int				m_color_bytes;	//16 bits, 32 bits only
 	void*			m_phy_fb;
 	int				m_phy_read_index;
 	int				m_phy_write_index;
 	c_surface* 		m_surface_group[SURFACE_CNT_MAX];
-	unsigned int	m_surface_cnt;
-	unsigned int	m_surface_index;
+	int				m_surface_cnt;
+	int				m_surface_index;
 };
 #endif
 #ifndef GUILITE_CORE_INCLUDE_WORD_H
@@ -432,13 +405,13 @@ public:
 	virtual void on_init_children() {}
 	virtual void on_paint() {}
 	virtual void show_window();
-	unsigned short get_id() const { return m_resource_id; }
+	unsigned short get_id() const { return m_id; }
 	int get_z_order() { return m_z_order; }
 	c_wnd* get_wnd_ptr(unsigned short id) const;
 	unsigned int get_attr() const { return m_attr; }
 	void set_attr(WND_ATTRIBUTION attr);
 	void set_str(const char* str) { m_str = str; }
-	int is_focus_wnd() const;
+	bool is_focus_wnd() const;
 	void set_font_color(unsigned int color) { m_font_color = color; }
 	unsigned int get_font_color() { return m_font_color; }
 	void set_bg_color(unsigned int color) { m_bg_color = color; }
@@ -454,7 +427,7 @@ public:
 	int	unlink_child(c_wnd *child);
 	c_wnd* get_prev_sibling() const { return m_prev_sibling; }
 	c_wnd* get_next_sibling() const { return m_next_sibling; }
-	void notify_parent(unsigned int msg_id, int param);
+	void notify_parent(int msg_id, int param);
 	virtual bool on_touch(int x, int y, TOUCH_ACTION action);// return true: handled; false: not be handled.
 	virtual bool on_key(KEY_TYPE key);// return false: skip handling by parent;
 	c_surface* get_surface() { return m_surface; }
@@ -481,7 +454,7 @@ protected:
 	const FONT_INFO*	m_font_type;
 	unsigned int		m_font_color;
 	unsigned int		m_bg_color;
-	unsigned short		m_resource_id;
+	unsigned short		m_id;
 	int					m_z_order;
 	c_wnd*				m_focus_child;//current focused wnd
 	c_surface*			m_surface;
@@ -509,8 +482,8 @@ private:
 #ifndef GUILITE_WIDGETS_INCLUDE_BUTTON_H
 #define GUILITE_WIDGETS_INCLUDE_BUTTON_H
 #define GL_BN_CLICKED							0x1111
-#define ON_GL_BN_CLICKED(ctrlId, func)                                       \
-{MSG_TYPE_WND, GL_BN_CLICKED, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWV, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int)>(&func))},
+#define ON_GL_BN_CLICKED(func)                                       \
+{MSG_TYPE_WND, GL_BN_CLICKED, 0, msgCallback(&func)},
 typedef struct struct_bitmap_info BITMAP_INFO;
 class c_button : public c_wnd
 {
@@ -552,8 +525,8 @@ private:
 #ifndef GUILITE_WIDGETS_INCLUDE_KEYBOARD_H
 #define GUILITE_WIDGETS_INCLUDE_KEYBOARD_H
 #define KEYBORAD_CLICK			0x5014
-#define ON_KEYBORAD_UPDATE(ctrlId, func)  \
-{MSG_TYPE_WND, KEYBORAD_CLICK, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, long)>(&func))},
+#define ON_KEYBORAD_UPDATE(func)  \
+{MSG_TYPE_WND, KEYBORAD_CLICK, 0,  msgCallback(&func)},
 typedef enum
 {
 	STATUS_UPPERCASE,
@@ -580,11 +553,12 @@ protected:
 	virtual void pre_create_wnd();
 	virtual c_wnd* clone(){return new c_keyboard();}
 	virtual void on_paint();
-	void on_char_clicked(unsigned int ctrl_id);
-	void on_del_clicked(unsigned int ctrl_id);
-	void on_caps_clicked(unsigned int ctrl_id);
-	void on_enter_clicked(unsigned int ctrl_id);
-	void on_esc_clicked(unsigned int ctrl_id);
+	void on_key_clicked(int id, int param);
+	void on_char_clicked(int id, int param);
+	void on_del_clicked(int id, int param);
+	void on_caps_clicked(int id, int param);
+	void on_enter_clicked(int id, int param);
+	void on_esc_clicked(int id, int param);
 	GL_DECLARE_MESSAGE_MAP()
 private:
 	char m_str[32];
@@ -617,7 +591,7 @@ protected:
 	virtual void on_kill_focus();
 	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
 	
-	void on_key_board_click(unsigned int ctrl_id, long param);
+	void on_key_board_click(int id, int param);
 	GL_DECLARE_MESSAGE_MAP()
 private:
 	void show_keyboard();
@@ -670,8 +644,8 @@ private:
 #define GUILITE_WIDGETS_INCLUDE_LIST_BOX_H
 #define MAX_ITEM_NUM			4
 #define GL_LIST_CONFIRM			0x1
-#define ON_LIST_CONFIRM(ctrlId, func) \
-{MSG_TYPE_WND, GL_LIST_CONFIRM, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, int)>(&func))},
+#define ON_LIST_CONFIRM(func) \
+{MSG_TYPE_WND, GL_LIST_CONFIRM, 0, msgCallback(&func)},
 class c_list_box : public c_wnd
 {
 public:
@@ -731,10 +705,10 @@ protected:
 #define GUILITE_WIDGETS_INCLUDE_SPINBOX_H
 #define GL_SPIN_CONFIRM				0x2222
 #define	GL_SPIN_CHANGE				0x3333
-#define ON_SPIN_CONFIRM(ctrlId, func) \
-{MSG_TYPE_WND, GL_SPIN_CONFIRM, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, int)>(&func))},
-#define ON_SPIN_CHANGE(ctrlId, func) \
-{MSG_TYPE_WND, GL_SPIN_CHANGE, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, int)>(&func))},
+#define ON_SPIN_CONFIRM(func) \
+{MSG_TYPE_WND, GL_SPIN_CONFIRM, 0, msgCallback(&func)},
+#define ON_SPIN_CHANGE(func) \
+{MSG_TYPE_WND, GL_SPIN_CHANGE, 0, msgCallback(&func)},
 class c_spin_box : public c_wnd
 {
 public:
@@ -755,8 +729,9 @@ protected:
 	virtual void on_kill_focus();
 	virtual void pre_create_wnd();
 	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
-	void on_arrow_up_bt_click(unsigned int ctr_id);
-	void on_arrow_down_bt_click(unsigned int ctr_id);
+	void on_arrow_bt_click(int ctr_id, int param);
+	void on_arrow_up_bt_click(int ctr_id, int param);
+	void on_arrow_down_bt_click(int ctr_id, int param);
 	GL_DECLARE_MESSAGE_MAP()
 private:
 	void show_arrow_button();

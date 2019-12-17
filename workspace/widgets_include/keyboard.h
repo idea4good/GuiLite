@@ -2,8 +2,8 @@
 #define GUILITE_WIDGETS_INCLUDE_KEYBOARD_H
 
 #define KEYBORAD_CLICK			0x5014
-#define ON_KEYBORAD_UPDATE(ctrlId, func)  \
-{MSG_TYPE_WND, KEYBORAD_CLICK, (c_cmd_target*)ctrlId, MSG_CALLBACK_VWL, (MsgFuncVV)(static_cast<void (c_cmd_target::*)(unsigned int, long)>(&func))},
+#define ON_KEYBORAD_UPDATE(func)  \
+{MSG_TYPE_WND, KEYBORAD_CLICK, 0,  msgCallback(&func)},
 
 typedef enum
 {
@@ -35,11 +35,12 @@ protected:
 	virtual c_wnd* clone(){return new c_keyboard();}
 	virtual void on_paint();
 
-	void on_char_clicked(unsigned int ctrl_id);
-	void on_del_clicked(unsigned int ctrl_id);
-	void on_caps_clicked(unsigned int ctrl_id);
-	void on_enter_clicked(unsigned int ctrl_id);
-	void on_esc_clicked(unsigned int ctrl_id);
+	void on_key_clicked(int id, int param);
+	void on_char_clicked(int id, int param);
+	void on_del_clicked(int id, int param);
+	void on_caps_clicked(int id, int param);
+	void on_enter_clicked(int id, int param);
+	void on_esc_clicked(int id, int param);
 
 	GL_DECLARE_MESSAGE_MAP()
 private:
