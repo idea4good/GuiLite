@@ -3,9 +3,17 @@
 #include "../core_include/rect.h"
 #include "../core_include/word.h"
 #include "../core_include/surface.h"
+#include "../core_include/theme.h"
 #include "../core_include/cmd_target.h"
 #include "../core_include/wnd.h"
 #include "../widgets_include/table.h"
+
+void c_table::pre_create_wnd()
+{
+	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE);
+	m_font_type = c_theme::get_font(FONT_DEFAULT);
+	m_font_color = c_theme::get_color(COLOR_WND_FONT);
+}
 
 void c_table::set_item(int row, int col, char* str, unsigned int color)
 {

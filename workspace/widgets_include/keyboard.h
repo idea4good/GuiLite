@@ -32,7 +32,6 @@ public:
 	char* get_str() { return m_str; }
 protected:
 	virtual void pre_create_wnd();
-	virtual c_wnd* clone(){return new c_keyboard();}
 	virtual void on_paint();
 
 	void on_key_clicked(int id, int param);
@@ -52,7 +51,6 @@ private:
 class c_keyboard_button : public c_button
 {
 protected:
-	virtual c_wnd* clone(){return new c_keyboard_button();}
 	virtual void on_paint();
 };
 

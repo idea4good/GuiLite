@@ -63,7 +63,7 @@ int c_dialog::open_dialog(c_dialog* p_dlg, bool modal_mode)
 	p_dlg->get_screen_rect(rc);
 	p_dlg->get_surface()->set_frame_layer_visible_rect(rc, Z_ORDER_LEVEL_1);
 
-	p_dlg->set_attr(modal_mode ? (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL) : (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS));
+	p_dlg->set_attr(modal_mode ? (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY) : (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS));
 	p_dlg->show_window();
 	p_dlg->set_me_the_dialog();
 	return 1;

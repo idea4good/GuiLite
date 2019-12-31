@@ -16,12 +16,12 @@ public:
 	void  select_item(short index);
 	
 protected:
-	virtual c_wnd* clone(){return new c_list_box();}
 	virtual void pre_create_wnd();
 	virtual void on_paint();
 	virtual void on_focus();
 	virtual void on_kill_focus();
-	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
+	virtual void on_key(KEY_TYPE key);
+	virtual void on_touch(int x, int y, TOUCH_ACTION action);
 	
 private:
 	void update_list_size();

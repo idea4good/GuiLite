@@ -960,71 +960,6 @@ int c_wnd::load_child_wnd(WND_TREE *p_child_tree)
 	}
 	return sum;
 }
-c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, const char* str,
-		   short x, short y, short width, short height, WND_TREE* p_child_tree )
-{
-	if(0 == resource_id)
-	{
-		ASSERT(false);
-		return 0;
-	}
-	c_wnd* wnd = clone();
-	wnd->m_id = resource_id;
-	wnd->set_str(str);
-	wnd->m_parent  = parent;
-	wnd->m_status = STATUS_NORMAL;
-	if (parent)
-	{
-		wnd->m_z_order =  parent->m_z_order;
-		wnd->m_surface = parent->m_surface;
-	}
-	else
-	{
-		wnd->m_surface = m_surface;
-	}
-	if(0 == wnd->m_surface)
-	{
-		ASSERT(false);
-		return 0;
-	}
-	/* (cs.x = x * 1024 / 768) for 1027*768=>800*600 quickly*/
-	wnd->m_wnd_rect.m_left   = x;
-	wnd->m_wnd_rect.m_top    = y;
-	wnd->m_wnd_rect.m_right  = (x + width - 1);
-	wnd->m_wnd_rect.m_bottom = (y + height - 1);
-	c_rect rect;
-	wnd->get_screen_rect(rect);
-	ASSERT(wnd->m_surface->is_valid(rect));
-	wnd->pre_create_wnd();
-	
-	if ( 0 != parent )
-	{
-		parent->add_child_2_tail(wnd);
-	}
-	if (wnd->load_clone_child_wnd(p_child_tree) >= 0)
-	{
-		wnd->load_cmd_msg();
-		wnd->on_init_children();
-	}
-	return wnd;
-}
-int c_wnd::load_clone_child_wnd(WND_TREE *p_child_tree)
-{
-	if (0 == p_child_tree)
-	{
-		return 0;
-	}
-	int sum = 0;
-	WND_TREE* p_cur = p_child_tree;
-	while(p_cur->p_wnd)
-	{
-		p_cur->p_wnd->connect_clone(this, p_cur->resource_id, p_cur->str,
-									p_cur->x, p_cur->y, p_cur->width, p_cur->height,p_cur->p_child_tree);
-		p_cur++;
-		sum++;
-	}
-	return sum;
-}
 void c_wnd::disconnect()
 {
 	if (0 == m_id)
@@ -1062,33 +997,9 @@ c_wnd* c_wnd::get_wnd_ptr(unsigned short id) const
 	}
 	return child;
 }
-void c_wnd::set_attr(WND_ATTRIBUTION attr)
-{
-	m_attr = attr;
-	if ( ATTR_DISABLED == (attr & ATTR_DISABLED) )
-	{
-		m_status = STATUS_DISABLED;
-	}
-	else
-	{
-		if (m_status == STATUS_DISABLED)
-		{
-			m_status = STATUS_NORMAL;
-		}
-	}
-}
 bool c_wnd::is_focus_wnd() const
 {
-	if ( (m_attr & ATTR_VISIBLE)
-		&& !(m_attr & ATTR_DISABLED)
-		&& (m_attr & ATTR_FOCUS))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return ((m_attr & ATTR_VISIBLE) && (m_attr & ATTR_FOCUS)) ? true : false;
 }
 void c_wnd::set_wnd_pos(short x, short y, short width, short height)
 {
@@ -1143,10 +1054,6 @@ c_wnd* c_wnd::set_child_focus(c_wnd * focus_child)
 				old_focus_child->on_kill_focus();
 			}
 			m_focus_child = focus_child;
-			if (m_parent)
-			{
-				m_parent->set_child_focus(this);
-			}
 			m_focus_child->on_focus();
 		}
 	}
@@ -1257,76 +1164,88 @@ void c_wnd::show_window()
 		}
 	}
 }
-bool c_wnd::on_touch(int x, int y, TOUCH_ACTION action)
+void c_wnd::on_touch(int x, int y, TOUCH_ACTION action)
 {
-	c_rect rect;
+	c_wnd* model_wnd = 0;
+	c_wnd* tmp_child = m_top_child;
+	while (tmp_child)
+	{
+		if ((tmp_child->m_attr & ATTR_PRIORITY) && (tmp_child->m_attr & ATTR_VISIBLE))
+		{
+			model_wnd = tmp_child;
+			break;
+		}
+		tmp_child = tmp_child->m_next_sibling;
+	}
+	if (model_wnd)
+	{
+		return model_wnd->on_touch(x, y, action);
+	}
 	x -= m_wnd_rect.m_left;
 	y -= m_wnd_rect.m_top;
 	c_wnd* child = m_top_child;
-	c_wnd* target_wnd = 0;
-	int target_z_order = Z_ORDER_LEVEL_0;
 	while (child)
 	{
-		if (ATTR_VISIBLE == (child->m_attr & ATTR_VISIBLE))
+		if (child->is_focus_wnd())
 		{
+			c_rect rect;
 			child->get_wnd_rect(rect);
-			if (true == rect.PtInRect(x, y) || child->m_attr & ATTR_MODAL)
+			if (true == rect.PtInRect(x, y))
 			{
-				if (true == child->is_focus_wnd())
-				{
-					if (child->m_z_order >= target_z_order)
-					{
-						target_wnd = child;
-						target_z_order = child->m_z_order;
-					}
-				}
+				return child->on_touch(x, y, action);
 			}
 		}
 		child = child->m_next_sibling;
 	}
-	if (target_wnd == 0)
-	{
-		return false;
-	}
-	return target_wnd->on_touch(x, y, action);
 }
-bool c_wnd::on_key(KEY_TYPE key)
+void c_wnd::on_key(KEY_TYPE key)
 {
-	ASSERT(key == KEY_FORWARD || key == KEY_BACKWARD || key == KEY_ENTER);
-	// Find current focus wnd.
+	c_wnd* model_wnd = 0;
+	c_wnd* tmp_child = m_top_child;
+	while (tmp_child)
+	{
+		if ((tmp_child->m_attr & ATTR_PRIORITY) && (tmp_child->m_attr & ATTR_VISIBLE))
+		{
+			model_wnd = tmp_child;
+			break;
+		}
+		tmp_child = tmp_child->m_next_sibling;
+	}
+	if (model_wnd)
+	{
+		return model_wnd->on_key(key);
+	}
+	if (!is_focus_wnd())
+	{
+		return;
+	}
+	if (key != KEY_BACKWARD && key != KEY_FORWARD)
+	{
+		if (m_focus_child)
+		{
+			m_focus_child->on_key(key);
+		}
+		return;
+	}
+	// Move focus
 	c_wnd* old_focus_wnd = m_focus_child;
-	while (m_focus_child && m_focus_child->m_focus_child)
-	{
-		old_focus_wnd = m_focus_child->m_focus_child;
-	}
-	if (old_focus_wnd && !old_focus_wnd->on_key(key))
-	{
-		return true;
-	}
-	// Default moving focus(Default handle KEY_FOWARD/KEY_BACKWARD)
-	if (key == KEY_ENTER)
-	{
-		return true;
-	}
+	// No current focus wnd, new one.
 	if (!old_focus_wnd)
-	{// No current focus wnd, new one.
-		c_wnd *child = m_top_child;
-		c_wnd *new_focus_wnd = 0;
+	{
+		c_wnd* child = m_top_child;
+		c_wnd* new_focus_wnd = 0;
 		while (child)
 		{
-			if (ATTR_VISIBLE == (child->m_attr & ATTR_VISIBLE))
+			if (child->is_focus_wnd())
 			{
-				if (true == child->is_focus_wnd())
-				{
-					new_focus_wnd = child;
-					new_focus_wnd->m_parent->set_child_focus(new_focus_wnd);
-					child = child->m_top_child;
-					continue;
-				}
+				new_focus_wnd = child;
+				new_focus_wnd->m_parent->set_child_focus(new_focus_wnd);
+				child = child->m_top_child;
+				continue;
 			}
 			child = child->m_next_sibling;
 		}
-		return true;
+		return;
 	}
 	// Move focus from old wnd to next wnd
 	c_wnd* next_focus_wnd = (key == KEY_FORWARD) ? old_focus_wnd->m_next_sibling : old_focus_wnd->m_prev_sibling;
@@ -1346,7 +1265,6 @@ bool c_wnd::on_key(KEY_TYPE key)
 	{
 		next_focus_wnd->m_parent->set_child_focus(next_focus_wnd);
 	}
-	return true;
 }
 void c_wnd::notify_parent(int msg_id, int param)
 {
@@ -2739,7 +2657,7 @@ void c_button::on_kill_focus()
 	m_status = STATUS_NORMAL;
 	on_paint();
 }
-bool c_button::on_touch(int x, int y, TOUCH_ACTION action)
+void c_button::on_touch(int x, int y, TOUCH_ACTION action)
 {
 	if (action == TOUCH_DOWN)
 	{
@@ -2753,16 +2671,20 @@ bool c_button::on_touch(int x, int y, TOUCH_ACTION action)
 		on_paint();
 		notify_parent(GL_BN_CLICKED, 0);
 	}
-	return true;
 }
-bool c_button::on_key(KEY_TYPE key)
+void c_button::on_key(KEY_TYPE key)
 {
-	if (key == KEY_ENTER)
+	switch (key)
 	{
-		notify_parent(GL_BN_CLICKED, 0);
-		return false;// Do not handle KEY_ENTER by other wnd.
+	case KEY_ENTER:
+		on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN);
+		on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP);
+		break;
+	case KEY_FORWARD:
+	case KEY_BACKWARD:
+		break;
 	}
-	return true;// Handle KEY_FOWARD/KEY_BACKWARD by parent wnd.
+	return c_wnd::on_key(key);
 }
 void c_button::on_paint()
 {
@@ -2844,7 +2766,7 @@ int c_dialog::open_dialog(c_dialog* p_dlg, bool modal_mode)
 	c_rect rc;
 	p_dlg->get_screen_rect(rc);
 	p_dlg->get_surface()->set_frame_layer_visible_rect(rc, Z_ORDER_LEVEL_1);
-	p_dlg->set_attr(modal_mode ? (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL) : (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS));
+	p_dlg->set_attr(modal_mode ? (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY) : (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS));
 	p_dlg->show_window();
 	p_dlg->set_me_the_dialog();
 	return 1;
@@ -2918,10 +2840,21 @@ void c_edit::set_text(const char* str)
 		strcpy(m_str, str);
 	}
 }
-bool c_edit::on_touch(int x, int y, TOUCH_ACTION action)
+void c_edit::on_key(KEY_TYPE key)
+{
+	switch (key)
+	{
+	case KEY_ENTER:
+		(m_status == STATUS_PUSHED) ? s_keyboard.on_key(key) : (on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN), on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP));
+		return;
+	case KEY_BACKWARD:
+	case KEY_FORWARD:
+		return (m_status == STATUS_PUSHED) ? s_keyboard.on_key(key) : c_wnd::on_key(key);
+	}
+}
+void c_edit::on_touch(int x, int y, TOUCH_ACTION action)
 {
 	(action == TOUCH_DOWN) ? on_touch_down(x, y) : on_touch_up(x, y);
-	return true;
 }
 void c_edit::on_touch_down(int x, int y)
 {
@@ -3015,7 +2948,7 @@ void c_edit::on_paint()
 		if (m_z_order == m_parent->get_z_order())
 		{
 			m_z_order++;
-			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL);
+			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 			show_keyboard();
 		}
 		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());
@@ -3577,7 +3510,7 @@ void c_list_box::on_paint()
 				m_z_order++;
 			}
 			m_surface->set_frame_layer_visible_rect(m_list_screen_rect, m_z_order);
-			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL);
+			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 			show_list();
 		}
 		break;
@@ -3585,10 +3518,33 @@ void c_list_box::on_paint()
 		ASSERT(false);
 	}
 }
-bool c_list_box::on_touch(int x, int y, TOUCH_ACTION action)
+void c_list_box::on_key(KEY_TYPE key)
+{
+	switch (key)
+	{
+	case KEY_ENTER:
+		on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN);
+		on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP);
+		return;
+	case KEY_BACKWARD:
+		if (m_status != STATUS_PUSHED)
+		{
+			return c_wnd::on_key(key);
+		}
+		m_selected_item = (m_selected_item > 0) ? (m_selected_item - 1) : m_selected_item;
+		return show_list();
+	case KEY_FORWARD:
+		if (m_status != STATUS_PUSHED)
+		{
+			return c_wnd::on_key(key);
+		}
+		m_selected_item = (m_selected_item < (m_item_total - 1)) ? (m_selected_item + 1) : m_selected_item;
+		return show_list();
+	}
+}
+void c_list_box::on_touch(int x, int y, TOUCH_ACTION action)
 {
 	(action == TOUCH_DOWN) ? on_touch_down(x, y) : on_touch_up(x, y);
-	return true;
 }
 void c_list_box::on_touch_down(int x, int y)
 {
@@ -3779,45 +3735,6 @@ int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, 
 	ASSERT(false);
 	return -3;
 }
-int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, short x, short y,
-			short width, short height, WND_TREE* p_child_tree, Z_ORDER_LEVEL max_zorder)
-{
-	if(0 == slide)
-	{
-		return -1;
-	}
-	c_surface* old_surface = get_surface();
-	c_surface* new_surface = old_surface->get_display()->alloc_surface(max_zorder);
-	new_surface->set_active(false);
-	set_surface(new_surface);
-	c_wnd* page_tmp = slide->connect_clone(this,resource_id,0,x,y,width,height,p_child_tree);
-	set_surface(old_surface);
-	int i = 0;
-	while(i < MAX_PAGES)
-	{
-		if(m_slides[i] == page_tmp)
-		{//slide has lived
-			ASSERT(false);
-			return -2;
-		}
-		i++;
-	}
-	//new slide
-	i = 0;
-	while(i < MAX_PAGES)
-	{
-		if(m_slides[i] == 0)
-		{
-			m_slides[i] = page_tmp;
-			page_tmp->show_window();
-			return 0;
-		}
-		i++;
-	}
-	//no more slide can be add
-	ASSERT(false);
-	return -3;
-}
 void c_slide_group::disabel_all_slide()
 {
 	for(int i = 0; i < MAX_PAGES; i++)
@@ -3828,7 +3745,7 @@ void c_slide_group::disabel_all_slide()
 		}
 	}
 }
-bool c_slide_group::on_touch(int x, int y, TOUCH_ACTION action)
+void c_slide_group::on_touch(int x, int y, TOUCH_ACTION action)
 {
 	x -= m_wnd_rect.m_left;
 	y -= m_wnd_rect.m_top;
@@ -3839,164 +3756,49 @@ bool c_slide_group::on_touch(int x, int y, TOUCH_ACTION action)
 			m_slides[m_active_slide_index]->on_touch(x, y, action);
 		}
 	}
-	return true;
 }
-bool c_slide_group::on_key(KEY_TYPE key)
+void c_slide_group::on_key(KEY_TYPE key)
 {
 	if (m_slides[m_active_slide_index])
 	{
 		m_slides[m_active_slide_index]->on_key(key);
 	}
-	return true;
 }
-#define ARROW_BT_HEIGHT		55
-#define ID_BT_ARROW_UP      1
-#define ID_BT_ARROW_DOWN    2
-GL_BEGIN_MESSAGE_MAP(c_spin_box)
-ON_GL_BN_CLICKED(c_spin_box::on_arrow_bt_click)
-GL_END_MESSAGE_MAP()
+#define ARROW_BT_WIDTH		55
+#define ID_BT_ARROW_UP      0x1111
+#define ID_BT_ARROW_DOWN    0x2222
+void c_spin_button::on_touch(int x, int y, TOUCH_ACTION action)
+{
+	if (action == TOUCH_UP)
+	{
+		(m_id == ID_BT_ARROW_UP) ? m_spin_box->on_arrow_up_bt_click() : m_spin_box->on_arrow_down_bt_click();
+	}
+	c_button::on_touch(x, y, action);
+}
 void c_spin_box::pre_create_wnd()
 {
-	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
+	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE);
 	m_font_type = c_theme::get_font(FONT_DEFAULT);
 	m_font_color = c_theme::get_color(COLOR_WND_FONT);
 	m_max = 6;
 	m_min = 1;
 	m_digit = 0;
 	m_step = 1;
-	//set arrow button position.
+	//link arrow button position.
 	c_rect rect;
 	get_screen_rect(rect);
-	m_bt_up_rect.m_left = rect.m_left;
-	m_bt_up_rect.m_right = rect.m_left + rect.Width() / 2 - 1;
-	m_bt_up_rect.m_top = rect.m_bottom + 1;
-	m_bt_up_rect.m_bottom = m_bt_up_rect.m_top + ARROW_BT_HEIGHT;
-	m_bt_down_rect.m_left = rect.m_left + rect.Width() / 2;
-	m_bt_down_rect.m_right = rect.m_right;
-	m_bt_down_rect.m_top = rect.m_bottom + 1;
-	m_bt_down_rect.m_bottom = m_bt_down_rect.m_top + ARROW_BT_HEIGHT;
-}
-bool c_spin_box::on_touch(int x, int y, TOUCH_ACTION action)
-{
-	(action == TOUCH_DOWN) ? on_touch_down(x, y) : on_touch_up(x, y);
-	return c_wnd::on_touch(x, y, action);
-}
-void c_spin_box::on_touch_down(int x, int y)
-{
-	if (false == m_wnd_rect.PtInRect(x, y))
-	{//maybe click on up/down arrow button
-		return;
-	}
-	if (STATUS_NORMAL == m_status)
-	{
-		m_parent->set_child_focus(this);
-	}
-}
-void c_spin_box::on_touch_up(int x, int y)
-{
-	if (false == m_wnd_rect.PtInRect(x, y))
-	{//maybe click on up/down arrow button
-		return;
-	}
-	if (STATUS_FOCUSED == m_status)
-	{
-		m_status = STATUS_PUSHED;
-		on_paint();
-	}
-	else if (STATUS_PUSHED == m_status)
-	{
-		m_value = m_cur_value;
-		m_status = STATUS_FOCUSED;
-		on_paint();
-		notify_parent(GL_SPIN_CONFIRM, m_value);
-	}
-}
-void c_spin_box::on_focus()
-{
-	m_status = STATUS_FOCUSED;
-	on_paint();
-}
-void c_spin_box::on_kill_focus()
-{
-	m_cur_value = m_value;
-	m_status = STATUS_NORMAL;
-	on_paint();
-}
-void c_spin_box::show_arrow_button()
-{
-	m_bt_up.connect(this, ID_BT_ARROW_UP, "\xe2\x96\xb2"/*unicode of up arrow*/, 0, m_wnd_rect.Height(), m_bt_up_rect.Width(),m_bt_up_rect.Height());
-	m_bt_up.show_window();
-	m_bt_down.connect(this, ID_BT_ARROW_DOWN, "\xe2\x96\xbc"/*unicode of down arrow*/, m_bt_up_rect.Width(), m_wnd_rect.Height(), m_bt_down_rect.Width(),m_bt_down_rect.Height());
-	m_bt_down.show_window();
-	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL);
-}
-void c_spin_box::hide_arrow_button()
-{
-	m_bt_up.disconnect();
-	m_bt_down.disconnect();
-	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
+	m_bt_down.m_spin_box = m_bt_up.m_spin_box = this;
+	m_bt_down.connect(m_parent, ID_BT_ARROW_DOWN, "-", rect.m_left - ARROW_BT_WIDTH, rect.m_top, ARROW_BT_WIDTH, rect.Height());
+	m_bt_up.connect(m_parent, ID_BT_ARROW_UP, "+", rect.m_right, rect.m_top, ARROW_BT_WIDTH, rect.Height());
 }
 void c_spin_box::on_paint()
 {
-	c_rect rect, tmp_rect, empty_rect;
+	c_rect rect;
 	get_screen_rect(rect);
-	tmp_rect.m_left = rect.m_left;
-	tmp_rect.m_right = rect.m_right;
-	switch(m_status)
-	{
-	case STATUS_NORMAL:
-		if (m_z_order > m_parent->get_z_order())
-		{
-			hide_arrow_button();
-			m_surface->set_frame_layer_visible_rect(empty_rect, m_z_order);
-			m_z_order = m_parent->get_z_order();
-		}
-		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
-		c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
-		break;
-	case STATUS_FOCUSED:
-		if (m_z_order > m_parent->get_z_order())
-		{
-			hide_arrow_button();
-			m_surface->set_frame_layer_visible_rect(empty_rect, m_z_order);
-			m_z_order = m_parent->get_z_order();
-		}
-		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
-		c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
-		break;
-	case STATUS_PUSHED:
-		if (m_z_order == m_parent->get_z_order())
-		{
-			m_z_order++;
-		}
-		tmp_rect.m_top = m_bt_down_rect.m_top;
-		tmp_rect.m_bottom = m_bt_down_rect.m_bottom;
-		m_surface->set_frame_layer_visible_rect(tmp_rect, m_z_order);
-		show_arrow_button();
-		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());
-		m_surface->draw_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_BORDER), m_parent->get_z_order(), 2);
-		c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_PUSHED), ALIGN_HCENTER | ALIGN_VCENTER);
-		break;
-	default:
-		ASSERT(false);
-	}
+	m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
+	c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
 }
-void c_spin_box::on_arrow_bt_click(int ctr_id, int param)
-{
-	switch (ctr_id)
-	{
-	case ID_BT_ARROW_UP:
-		on_arrow_up_bt_click(ctr_id, param);
-		break;
-	case ID_BT_ARROW_DOWN:
-		on_arrow_down_bt_click(ctr_id, param);
-		break;
-	default:
-		ASSERT(false);
-		break;
-	}
-}
-void c_spin_box::on_arrow_up_bt_click(int ctr_id, int param)
+void c_spin_box::on_arrow_up_bt_click()
 {
 	if (m_cur_value + m_step > m_max)
 	{
@@ -4006,7 +3808,7 @@ void c_spin_box::on_arrow_up_bt_click(int ctr_id, int param)
 	notify_parent(GL_SPIN_CHANGE, m_cur_value);
 	on_paint();
 }
-void c_spin_box::on_arrow_down_bt_click(int ctr_id, int param)
+void c_spin_box::on_arrow_down_bt_click()
 {
 	if (m_cur_value - m_step < m_min)
 	{
@@ -4015,6 +3817,12 @@ void c_spin_box::on_arrow_down_bt_click(int ctr_id, int param)
 	m_cur_value -= m_step;
 	notify_parent(GL_SPIN_CHANGE, m_cur_value);
 	on_paint();
+}
+void c_table::pre_create_wnd()
+{
+	m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE);
+	m_font_type = c_theme::get_font(FONT_DEFAULT);
+	m_font_color = c_theme::get_color(COLOR_WND_FONT);
 }
 void c_table::set_item(int row, int col, char* str, unsigned int color)
 {

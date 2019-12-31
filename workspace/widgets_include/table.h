@@ -7,7 +7,6 @@
 class c_table: public c_wnd
 {
 public:
-	virtual c_wnd* clone(){return new c_table();}
 	void set_sheet_align(unsigned int align_type){ m_align_type = align_type;}
 	void set_row_num(unsigned int row_num){ m_row_num = row_num;}
 	void set_col_num(unsigned int col_num){ m_col_num = col_num;}
@@ -22,6 +21,7 @@ public:
 	unsigned int get_col_num(){ return m_col_num;}
 	c_rect get_item_rect(int row, int col);
 protected:
+	virtual void pre_create_wnd();
 	void draw_item(int row, int col, const char* str, unsigned int color);
 
 	unsigned int m_align_type;	

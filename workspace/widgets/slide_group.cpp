@@ -100,50 +100,6 @@ int c_slide_group::add_slide(c_wnd* slide, unsigned short resource_id, short x, 
 	return -3;
 }
 
-int c_slide_group::add_clone_silde(c_wnd* slide, unsigned short resource_id, short x, short y,
-			short width, short height, WND_TREE* p_child_tree, Z_ORDER_LEVEL max_zorder)
-{
-	if(0 == slide)
-	{
-		return -1;
-	}
-
-	c_surface* old_surface = get_surface();
-	c_surface* new_surface = old_surface->get_display()->alloc_surface(max_zorder);
-	new_surface->set_active(false);
-	set_surface(new_surface);
-	c_wnd* page_tmp = slide->connect_clone(this,resource_id,0,x,y,width,height,p_child_tree);
-	set_surface(old_surface);
-
-	int i = 0;
-	while(i < MAX_PAGES)
-	{
-		if(m_slides[i] == page_tmp)
-		{//slide has lived
-			ASSERT(false);
-			return -2;
-		}
-		i++;
-	}
-
-	//new slide
-	i = 0;
-	while(i < MAX_PAGES)
-	{
-		if(m_slides[i] == 0)
-		{
-			m_slides[i] = page_tmp;
-			page_tmp->show_window();
-			return 0;
-		}
-		i++;
-	}
-
-	//no more slide can be add
-	ASSERT(false);
-	return -3;
-}
-
 void c_slide_group::disabel_all_slide()
 {
 	for(int i = 0; i < MAX_PAGES; i++)
@@ -155,7 +111,7 @@ void c_slide_group::disabel_all_slide()
 	}
 }
 
-bool c_slide_group::on_touch(int x, int y, TOUCH_ACTION action)
+void c_slide_group::on_touch(int x, int y, TOUCH_ACTION action)
 {
 	x -= m_wnd_rect.m_left;
 	y -= m_wnd_rect.m_top;
@@ -167,14 +123,12 @@ bool c_slide_group::on_touch(int x, int y, TOUCH_ACTION action)
 			m_slides[m_active_slide_index]->on_touch(x, y, action);
 		}
 	}
-	return true;
 }
 
-bool c_slide_group::on_key(KEY_TYPE key)
+void c_slide_group::on_key(KEY_TYPE key)
 {
 	if (m_slides[m_active_slide_index])
 	{
 		m_slides[m_active_slide_index]->on_key(key);
 	}
-	return true;
 }

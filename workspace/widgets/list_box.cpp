@@ -75,7 +75,7 @@ void c_list_box::on_paint()
 				m_z_order++;
 			}
 			m_surface->set_frame_layer_visible_rect(m_list_screen_rect, m_z_order);
-			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL);
+			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 			show_list();
 		}
 		break;
@@ -84,10 +84,34 @@ void c_list_box::on_paint()
 	}
 }
 
-bool c_list_box::on_touch(int x, int y, TOUCH_ACTION action)
+void c_list_box::on_key(KEY_TYPE key)
+{
+	switch (key)
+	{
+	case KEY_ENTER:
+		on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN);
+		on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP);
+		return;
+	case KEY_BACKWARD:
+		if (m_status != STATUS_PUSHED)
+		{
+			return c_wnd::on_key(key);
+		}
+		m_selected_item = (m_selected_item > 0) ? (m_selected_item - 1) : m_selected_item;
+		return show_list();
+	case KEY_FORWARD:
+		if (m_status != STATUS_PUSHED)
+		{
+			return c_wnd::on_key(key);
+		}
+		m_selected_item = (m_selected_item < (m_item_total - 1)) ? (m_selected_item + 1) : m_selected_item;
+		return show_list();
+	}
+}
+
+void c_list_box::on_touch(int x, int y, TOUCH_ACTION action)
 {
 	(action == TOUCH_DOWN) ? on_touch_down(x, y) : on_touch_up(x, y);
-	return true;
 }
 
 void c_list_box::on_touch_down(int x, int y)

@@ -356,10 +356,9 @@ class c_wnd;
 class c_surface;
 typedef enum
 {
-	ATTR_VISIBLE	= 0x80000000L,
-	ATTR_DISABLED	= 0x40000000L,
+	ATTR_VISIBLE	= 0x40000000L,
 	ATTR_FOCUS		= 0x20000000L,
-	ATTR_MODAL		= 0x10000000L// Handle touch action at high priority
+	ATTR_PRIORITY	= 0x10000000L// Handle touch action at high priority
 }WND_ATTRIBUTION;
 typedef enum
 {
@@ -398,10 +397,7 @@ public:
 	virtual ~c_wnd() {};
 	virtual int connect(c_wnd *parent, unsigned short resource_id, const char* str,
 		short x, short y, short width, short height, WND_TREE* p_child_tree = 0);
-	virtual c_wnd* connect_clone(c_wnd *parent, unsigned short resource_id, const char* str,
-		short x, short y, short width, short height, WND_TREE* p_child_tree = 0);
 	void disconnect();
-	virtual c_wnd* clone() = 0;
 	virtual void on_init_children() {}
 	virtual void on_paint() {}
 	virtual void show_window();
@@ -409,8 +405,8 @@ public:
 	int get_z_order() { return m_z_order; }
 	c_wnd* get_wnd_ptr(unsigned short id) const;
 	unsigned int get_attr() const { return m_attr; }
-	void set_attr(WND_ATTRIBUTION attr);
 	void set_str(const char* str) { m_str = str; }
+	void set_attr(WND_ATTRIBUTION attr) { m_attr = attr; }
 	bool is_focus_wnd() const;
 	void set_font_color(unsigned int color) { m_font_color = color; }
 	unsigned int get_font_color() { return m_font_color; }
@@ -428,8 +424,8 @@ public:
 	c_wnd* get_prev_sibling() const { return m_prev_sibling; }
 	c_wnd* get_next_sibling() const { return m_next_sibling; }
 	void notify_parent(int msg_id, int param);
-	virtual bool on_touch(int x, int y, TOUCH_ACTION action);// return true: handled; false: not be handled.
-	virtual bool on_key(KEY_TYPE key);// return false: skip handling by parent;
+	virtual void on_touch(int x, int y, TOUCH_ACTION action);
+	virtual void on_key(KEY_TYPE key);
 	c_surface* get_surface() { return m_surface; }
 	void set_surface(c_surface* surface) { m_surface = surface; }
 protected:
@@ -438,7 +434,6 @@ protected:
 	void wnd2screen(int &x, int &y) const;
 	void wnd2screen(c_rect &rect) const;
 	int load_child_wnd(WND_TREE *p_child_tree);
-	int load_clone_child_wnd(WND_TREE *p_child_tree);
 	void set_active_child(c_wnd* child) { m_focus_child = child; }
 	virtual void on_focus() {};
 	virtual void on_kill_focus() {};
@@ -487,15 +482,13 @@ private:
 typedef struct struct_bitmap_info BITMAP_INFO;
 class c_button : public c_wnd
 {
-public:
-	virtual c_wnd* clone(){return new c_button();}
 protected:
 	virtual void on_paint();
 	virtual void on_focus();
 	virtual void on_kill_focus();
 	virtual void pre_create_wnd();
-	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
-	virtual bool on_key(KEY_TYPE key);
+	virtual void on_touch(int x, int y, TOUCH_ACTION action);
+	virtual void on_key(KEY_TYPE key);
 };
 #endif
 #ifndef GUILITE_WIDGETS_INCLUDE_DIALOG_H
@@ -551,7 +544,6 @@ public:
 	char* get_str() { return m_str; }
 protected:
 	virtual void pre_create_wnd();
-	virtual c_wnd* clone(){return new c_keyboard();}
 	virtual void on_paint();
 	void on_key_clicked(int id, int param);
 	void on_char_clicked(int id, int param);
@@ -568,7 +560,6 @@ private:
 class c_keyboard_button : public c_button
 {
 protected:
-	virtual c_wnd* clone(){return new c_keyboard_button();}
 	virtual void on_paint();
 };
 #endif /* KEYBOARD_H_ */
@@ -579,7 +570,6 @@ class c_edit : public c_wnd
 {
 	friend class c_keyboard;
 public:
-	virtual c_wnd* clone(){return new c_edit();}
 	const char* get_text(){return m_str;}
 	void set_text(const char* str);
 	void set_keyboard_style(KEYBOARD_STYLE kb_sytle) { m_kb_style = kb_sytle; }
@@ -589,7 +579,8 @@ protected:
 	virtual void on_paint();
 	virtual void on_focus();
 	virtual void on_kill_focus();
-	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
+	virtual void on_key(KEY_TYPE key);
+	virtual void on_touch(int x, int y, TOUCH_ACTION action);
 	
 	void on_key_board_click(int id, int param);
 	GL_DECLARE_MESSAGE_MAP()
@@ -633,11 +624,9 @@ private:
 class c_label : public c_wnd
 {
 public:
-	virtual c_wnd* clone(){return new c_label();}
 	virtual void on_paint();
 protected:
 	virtual void pre_create_wnd();
-private:
 };
 #endif
 #ifndef GUILITE_WIDGETS_INCLUDE_LIST_BOX_H
@@ -655,12 +644,12 @@ public:
 	void  select_item(short index);
 	
 protected:
-	virtual c_wnd* clone(){return new c_list_box();}
 	virtual void pre_create_wnd();
 	virtual void on_paint();
 	virtual void on_focus();
 	virtual void on_kill_focus();
-	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
+	virtual void on_key(KEY_TYPE key);
+	virtual void on_touch(int x, int y, TOUCH_ACTION action);
 	
 private:
 	void update_list_size();
@@ -688,14 +677,10 @@ public:
 	int add_slide(c_wnd* slide, unsigned short resource_id, short x, short y,
 			short width, short height, WND_TREE* p_child_tree = 0,
 			Z_ORDER_LEVEL max_zorder =  Z_ORDER_LEVEL_0);
-	int add_clone_silde(c_wnd* slide, unsigned short resource_id, short x, short y,
-				short width, short height, WND_TREE* p_child_tree = 0,
-				Z_ORDER_LEVEL max_zorder =  Z_ORDER_LEVEL_0);
 	void disabel_all_slide();
-	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
-	virtual bool on_key(KEY_TYPE key);
+	virtual void on_touch(int x, int y, TOUCH_ACTION action);
+	virtual void on_key(KEY_TYPE key);
 protected:
-	virtual c_wnd* clone(){return new c_slide_group();}
 	c_wnd* m_slides[MAX_PAGES];
 	int m_active_slide_index;
 	c_gesture* m_gesture;
@@ -703,52 +688,42 @@ protected:
 #endif
 #ifndef GUILITE_WIDGETS_INCLUDE_SPINBOX_H
 #define GUILITE_WIDGETS_INCLUDE_SPINBOX_H
-#define GL_SPIN_CONFIRM				0x2222
 #define	GL_SPIN_CHANGE				0x3333
-#define ON_SPIN_CONFIRM(func) \
-{MSG_TYPE_WND, GL_SPIN_CONFIRM, 0, msgCallback(&func)},
 #define ON_SPIN_CHANGE(func) \
 {MSG_TYPE_WND, GL_SPIN_CHANGE, 0, msgCallback(&func)},
+class c_spin_box;
+class c_spin_button : public c_button
+{
+	friend class c_spin_box;
+	virtual void on_touch(int x, int y, TOUCH_ACTION action);
+	c_spin_box* m_spin_box;
+};
 class c_spin_box : public c_wnd
 {
+	friend class c_spin_button;
 public:
-	short get_value(){return m_value;}
-	void set_value(unsigned short value){m_value = m_cur_value = value;}
-	void set_max_min(short max, short min){m_max = max; m_min = min;}
-	void set_step(short step){m_step = step;}
-	short get_min(){return m_min;}
-	short get_max(){return m_max;}
-	short get_step(){return m_step;}
-	void set_value_digit(short digit){m_digit = digit;}
-	short get_value_digit(){return m_digit;}
-	
+	short get_value() { return m_value; }
+	void set_value(unsigned short value) { m_value = m_cur_value = value; }
+	void set_max_min(short max, short min) { m_max = max; m_min = min; }
+	void set_step(short step) { m_step = step; }
+	short get_min() { return m_min; }
+	short get_max() { return m_max; }
+	short get_step() { return m_step; }
+	void set_value_digit(short digit) { m_digit = digit; }
+	short get_value_digit() { return m_digit; }
 protected:
-	virtual c_wnd* clone(){return new c_spin_box();}
 	virtual void on_paint();
-	virtual void on_focus();
-	virtual void on_kill_focus();
 	virtual void pre_create_wnd();
-	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
-	void on_arrow_bt_click(int ctr_id, int param);
-	void on_arrow_up_bt_click(int ctr_id, int param);
-	void on_arrow_down_bt_click(int ctr_id, int param);
-	GL_DECLARE_MESSAGE_MAP()
-private:
-	void show_arrow_button();
-	void hide_arrow_button();
-	void on_touch_down(int x, int y);
-	void on_touch_up(int x, int y);
-protected:
+	void on_arrow_up_bt_click();
+	void on_arrow_down_bt_click();
 	short			m_cur_value;
 	short			m_value;
 	short			m_step;
 	short			m_max;
 	short			m_min;
 	short			m_digit;
-	c_button  		m_bt_up;
-	c_button  		m_bt_down;
-	c_rect			m_bt_up_rect;
-	c_rect			m_bt_down_rect;
+	c_spin_button  	m_bt_up;
+	c_spin_button  	m_bt_down;
 };
 #endif
 #ifndef GUILITE_WIDGETS_INCLUDE_TABLE_H
@@ -758,7 +733,6 @@ protected:
 class c_table: public c_wnd
 {
 public:
-	virtual c_wnd* clone(){return new c_table();}
 	void set_sheet_align(unsigned int align_type){ m_align_type = align_type;}
 	void set_row_num(unsigned int row_num){ m_row_num = row_num;}
 	void set_col_num(unsigned int col_num){ m_col_num = col_num;}
@@ -771,6 +745,7 @@ public:
 	unsigned int get_col_num(){ return m_col_num;}
 	c_rect get_item_rect(int row, int col);
 protected:
+	virtual void pre_create_wnd();
 	void draw_item(int row, int col, const char* str, unsigned int color);
 	unsigned int m_align_type;	
 	unsigned int m_row_num;
@@ -823,7 +798,6 @@ class c_wave_ctrl : public c_wnd
 {
 public:
 	c_wave_ctrl();
-	virtual c_wnd* clone(){return new c_wave_ctrl();}
 	virtual void on_init_children();
 	virtual void on_paint();
 	void set_wave_name(char* wave_name){ m_wave_name = wave_name;}

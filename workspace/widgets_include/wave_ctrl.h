@@ -12,7 +12,6 @@ class c_wave_ctrl : public c_wnd
 {
 public:
 	c_wave_ctrl();
-	virtual c_wnd* clone(){return new c_wave_ctrl();}
 	virtual void on_init_children();
 	virtual void on_paint();
 

@@ -41,10 +41,22 @@ void c_edit::set_text(const char* str)
 	}
 }
 
-bool c_edit::on_touch(int x, int y, TOUCH_ACTION action)
+void c_edit::on_key(KEY_TYPE key)
+{
+	switch (key)
+	{
+	case KEY_ENTER:
+		(m_status == STATUS_PUSHED) ? s_keyboard.on_key(key) : (on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN), on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP));
+		return;
+	case KEY_BACKWARD:
+	case KEY_FORWARD:
+		return (m_status == STATUS_PUSHED) ? s_keyboard.on_key(key) : c_wnd::on_key(key);
+	}
+}
+
+void c_edit::on_touch(int x, int y, TOUCH_ACTION action)
 {
 	(action == TOUCH_DOWN) ? on_touch_down(x, y) : on_touch_up(x, y);
-	return true;
 }
 
 void c_edit::on_touch_down(int x, int y)
@@ -144,7 +156,7 @@ void c_edit::on_paint()
 		if (m_z_order == m_parent->get_z_order())
 		{
 			m_z_order++;
-			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_MODAL);
+			m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 			show_keyboard();
 		}
 		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());

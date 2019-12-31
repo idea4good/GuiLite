@@ -28,7 +28,7 @@ void c_button::on_kill_focus()
 	on_paint();
 }
 
-bool c_button::on_touch(int x, int y, TOUCH_ACTION action)
+void c_button::on_touch(int x, int y, TOUCH_ACTION action)
 {
 	if (action == TOUCH_DOWN)
 	{
@@ -42,17 +42,21 @@ bool c_button::on_touch(int x, int y, TOUCH_ACTION action)
 		on_paint();
 		notify_parent(GL_BN_CLICKED, 0);
 	}
-	return true;
 }
 
-bool c_button::on_key(KEY_TYPE key)
+void c_button::on_key(KEY_TYPE key)
 {
-	if (key == KEY_ENTER)
+	switch (key)
 	{
-		notify_parent(GL_BN_CLICKED, 0);
-		return false;// Do not handle KEY_ENTER by other wnd.
+	case KEY_ENTER:
+		on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN);
+		on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP);
+		break;
+	case KEY_FORWARD:
+	case KEY_BACKWARD:
+		break;
 	}
-	return true;// Handle KEY_FOWARD/KEY_BACKWARD by parent wnd.
+	return c_wnd::on_key(key);
 }
 
 void c_button::on_paint()

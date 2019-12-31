@@ -9,10 +9,9 @@ class c_surface;
 
 typedef enum
 {
-	ATTR_VISIBLE	= 0x80000000L,
-	ATTR_DISABLED	= 0x40000000L,
+	ATTR_VISIBLE	= 0x40000000L,
 	ATTR_FOCUS		= 0x20000000L,
-	ATTR_MODAL		= 0x10000000L// Handle touch action at high priority
+	ATTR_PRIORITY	= 0x10000000L// Handle touch action at high priority
 }WND_ATTRIBUTION;
 
 typedef enum
@@ -56,10 +55,7 @@ public:
 	virtual ~c_wnd() {};
 	virtual int connect(c_wnd *parent, unsigned short resource_id, const char* str,
 		short x, short y, short width, short height, WND_TREE* p_child_tree = 0);
-	virtual c_wnd* connect_clone(c_wnd *parent, unsigned short resource_id, const char* str,
-		short x, short y, short width, short height, WND_TREE* p_child_tree = 0);
 	void disconnect();
-	virtual c_wnd* clone() = 0;
 	virtual void on_init_children() {}
 	virtual void on_paint() {}
 	virtual void show_window();
@@ -68,9 +64,9 @@ public:
 	int get_z_order() { return m_z_order; }
 	c_wnd* get_wnd_ptr(unsigned short id) const;
 	unsigned int get_attr() const { return m_attr; }
-	void set_attr(WND_ATTRIBUTION attr);
 
 	void set_str(const char* str) { m_str = str; }
+	void set_attr(WND_ATTRIBUTION attr) { m_attr = attr; }
 	bool is_focus_wnd() const;
 
 	void set_font_color(unsigned int color) { m_font_color = color; }
@@ -94,8 +90,8 @@ public:
 
 	void notify_parent(int msg_id, int param);
 
-	virtual bool on_touch(int x, int y, TOUCH_ACTION action);// return true: handled; false: not be handled.
-	virtual bool on_key(KEY_TYPE key);// return false: skip handling by parent;
+	virtual void on_touch(int x, int y, TOUCH_ACTION action);
+	virtual void on_key(KEY_TYPE key);
 
 	c_surface* get_surface() { return m_surface; }
 	void set_surface(c_surface* surface) { m_surface = surface; }
@@ -107,7 +103,6 @@ protected:
 	void wnd2screen(c_rect &rect) const;
 
 	int load_child_wnd(WND_TREE *p_child_tree);
-	int load_clone_child_wnd(WND_TREE *p_child_tree);
 	void set_active_child(c_wnd* child) { m_focus_child = child; }
 
 	virtual void on_focus() {};

@@ -1,6 +1,6 @@
 ./.sync.sh 1h1cpp
 
-echo "Flatten source code into: GuiLite.h/GuiLite.cpp"
+echo "Merging all source code into: GuiLite.h/GuiLite.cpp"
 
 # build GuiLiteRaw.h
 cd core_include
@@ -47,6 +47,7 @@ gcc -c GuiLite.cpp
 
 # clean
 rm GuiLiteRaw.h GuiLiteRaw.cpp GuiLiteNoInclude.cpp
+mv GuiLite.h GuiLite.cpp ../
 
 echo "Done!"
-echo "You could find GuiLite.h/GuiLite.cpp in this folder"
+echo "You could find GuiLite.h/GuiLite.cpp in root folder"

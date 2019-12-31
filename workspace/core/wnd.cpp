@@ -89,80 +89,6 @@ int c_wnd::load_child_wnd(WND_TREE *p_child_tree)
 	return sum;
 }
 
-c_wnd* c_wnd::connect_clone(c_wnd *parent, unsigned short resource_id, const char* str,
-		   short x, short y, short width, short height, WND_TREE* p_child_tree )
-{
-	if(0 == resource_id)
-	{
-		ASSERT(false);
-		return 0;
-	}
-
-	c_wnd* wnd = clone();
-	wnd->m_id = resource_id;
-	wnd->set_str(str);
-	wnd->m_parent  = parent;
-	wnd->m_status = STATUS_NORMAL;
-
-	if (parent)
-	{
-		wnd->m_z_order =  parent->m_z_order;
-		wnd->m_surface = parent->m_surface;
-	}
-	else
-	{
-		wnd->m_surface = m_surface;
-	}
-	if(0 == wnd->m_surface)
-	{
-		ASSERT(false);
-		return 0;
-	}
-
-	/* (cs.x = x * 1024 / 768) for 1027*768=>800*600 quickly*/
-	wnd->m_wnd_rect.m_left   = x;
-	wnd->m_wnd_rect.m_top    = y;
-	wnd->m_wnd_rect.m_right  = (x + width - 1);
-	wnd->m_wnd_rect.m_bottom = (y + height - 1);
-
-	c_rect rect;
-	wnd->get_screen_rect(rect);
-	ASSERT(wnd->m_surface->is_valid(rect));
-
-	wnd->pre_create_wnd();
-	
-	if ( 0 != parent )
-	{
-		parent->add_child_2_tail(wnd);
-	}
-
-	if (wnd->load_clone_child_wnd(p_child_tree) >= 0)
-	{
-		wnd->load_cmd_msg();
-		wnd->on_init_children();
-	}
-	return wnd;
-}
-
-int c_wnd::load_clone_child_wnd(WND_TREE *p_child_tree)
-{
-	if (0 == p_child_tree)
-	{
-		return 0;
-	}
-	int sum = 0;
-
-	WND_TREE* p_cur = p_child_tree;
-	while(p_cur->p_wnd)
-	{
-		p_cur->p_wnd->connect_clone(this, p_cur->resource_id, p_cur->str,
-									p_cur->x, p_cur->y, p_cur->width, p_cur->height,p_cur->p_child_tree);
-		p_cur++;
-		sum++;
-	}
-	return sum;
-}
-
 void c_wnd::disconnect()
 {
 	if (0 == m_id)
@@ -208,35 +134,9 @@ c_wnd* c_wnd::get_wnd_ptr(unsigned short id) const
 	return child;
 }
 
-void c_wnd::set_attr(WND_ATTRIBUTION attr)
-{
-	m_attr = attr;
-
-	if ( ATTR_DISABLED == (attr & ATTR_DISABLED) )
-	{
-		m_status = STATUS_DISABLED;
-	}
-	else
-	{
-		if (m_status == STATUS_DISABLED)
-		{
-			m_status = STATUS_NORMAL;
-		}
-	}
-}
-
 bool c_wnd::is_focus_wnd() const
 {
-	if ( (m_attr & ATTR_VISIBLE)
-		&& !(m_attr & ATTR_DISABLED)
-		&& (m_attr & ATTR_FOCUS))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return ((m_attr & ATTR_VISIBLE) && (m_attr & ATTR_FOCUS)) ? true : false;
 }
 
 void c_wnd::set_wnd_pos(short x, short y, short width, short height)
@@ -302,11 +202,6 @@ c_wnd* c_wnd::set_child_focus(c_wnd * focus_child)
 				old_focus_child->on_kill_focus();
 			}
 			m_focus_child = focus_child;
-
-			if (m_parent)
-			{
-				m_parent->set_child_focus(this);
-			}
 			m_focus_child->on_focus();
 		}
 	}
@@ -434,84 +329,93 @@ void c_wnd::show_window()
 	}
 }
 
-bool c_wnd::on_touch(int x, int y, TOUCH_ACTION action)
+void c_wnd::on_touch(int x, int y, TOUCH_ACTION action)
 {
-	c_rect rect;
+	c_wnd* model_wnd = 0;
+	c_wnd* tmp_child = m_top_child;
+	while (tmp_child)
+	{
+		if ((tmp_child->m_attr & ATTR_PRIORITY) && (tmp_child->m_attr & ATTR_VISIBLE))
+		{
+			model_wnd = tmp_child;
+			break;
+		}
+		tmp_child = tmp_child->m_next_sibling;
+	}
+	if (model_wnd)
+	{
+		return model_wnd->on_touch(x, y, action);
+	}
+
 	x -= m_wnd_rect.m_left;
 	y -= m_wnd_rect.m_top;
 	c_wnd* child = m_top_child;
-
-	c_wnd* target_wnd = 0;
-	int target_z_order = Z_ORDER_LEVEL_0;
-
 	while (child)
 	{
-		if (ATTR_VISIBLE == (child->m_attr & ATTR_VISIBLE))
+		if (child->is_focus_wnd())
 		{
+			c_rect rect;
 			child->get_wnd_rect(rect);
-			if (true == rect.PtInRect(x, y) || child->m_attr & ATTR_MODAL)
+			if (true == rect.PtInRect(x, y))
 			{
-				if (true == child->is_focus_wnd())
-				{
-					if (child->m_z_order >= target_z_order)
-					{
-						target_wnd = child;
-						target_z_order = child->m_z_order;
-					}
-				}
+				return child->on_touch(x, y, action);
 			}
 		}
 		child = child->m_next_sibling;
 	}
-
-	if (target_wnd == 0)
-	{
-		return false;
-	}
-	return target_wnd->on_touch(x, y, action);
 }
 
-bool c_wnd::on_key(KEY_TYPE key)
+void c_wnd::on_key(KEY_TYPE key)
 {
-	ASSERT(key == KEY_FORWARD || key == KEY_BACKWARD || key == KEY_ENTER);
+	c_wnd* model_wnd = 0;
+	c_wnd* tmp_child = m_top_child;
+	while (tmp_child)
+	{
+		if ((tmp_child->m_attr & ATTR_PRIORITY) && (tmp_child->m_attr & ATTR_VISIBLE))
+		{
+			model_wnd = tmp_child;
+			break;
+		}
+		tmp_child = tmp_child->m_next_sibling;
+	}
+	if (model_wnd)
+	{
+		return model_wnd->on_key(key);
+	}
 
-	// Find current focus wnd.
+	if (!is_focus_wnd())
+	{
+		return;
+	}
+	if (key != KEY_BACKWARD && key != KEY_FORWARD)
+	{
+		if (m_focus_child)
+		{
+			m_focus_child->on_key(key);
+		}
+		return;
+	}
+
+	// Move focus
 	c_wnd* old_focus_wnd = m_focus_child;
-	while (m_focus_child && m_focus_child->m_focus_child)
-	{
-		old_focus_wnd = m_focus_child->m_focus_child;
-	}
-	if (old_focus_wnd && !old_focus_wnd->on_key(key))
-	{
-		return true;
-	}
-
-	// Default moving focus(Default handle KEY_FOWARD/KEY_BACKWARD)
-	if (key == KEY_ENTER)
-	{
-		return true;
-	}
+	// No current focus wnd, new one.
 	if (!old_focus_wnd)
-	{// No current focus wnd, new one.
-		c_wnd *child = m_top_child;
-		c_wnd *new_focus_wnd = 0;
+	{
+		c_wnd* child = m_top_child;
+		c_wnd* new_focus_wnd = 0;
 		while (child)
 		{
-			if (ATTR_VISIBLE == (child->m_attr & ATTR_VISIBLE))
+			if (child->is_focus_wnd())
 			{
-				if (true == child->is_focus_wnd())
-				{
-					new_focus_wnd = child;
-					new_focus_wnd->m_parent->set_child_focus(new_focus_wnd);
-					child = child->m_top_child;
-					continue;
-				}
+				new_focus_wnd = child;
+				new_focus_wnd->m_parent->set_child_focus(new_focus_wnd);
+				child = child->m_top_child;
+				continue;
 			}
 			child = child->m_next_sibling;
 		}
-		return true;
+		return;
 	}
-
 	// Move focus from old wnd to next wnd
 	c_wnd* next_focus_wnd = (key == KEY_FORWARD) ? old_focus_wnd->m_next_sibling : old_focus_wnd->m_prev_sibling;
 	while (next_focus_wnd && (!next_focus_wnd->is_focus_wnd()))
@@ -530,7 +434,6 @@ bool c_wnd::on_key(KEY_TYPE key)
 	{
 		next_focus_wnd->m_parent->set_child_focus(next_focus_wnd);
 	}
-	return true;
 }
 
 void c_wnd::notify_parent(int msg_id, int param)

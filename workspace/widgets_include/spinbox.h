@@ -1,63 +1,47 @@
 #ifndef GUILITE_WIDGETS_INCLUDE_SPINBOX_H
 #define GUILITE_WIDGETS_INCLUDE_SPINBOX_H
 
-#define GL_SPIN_CONFIRM				0x2222
 #define	GL_SPIN_CHANGE				0x3333
-
-#define ON_SPIN_CONFIRM(func) \
-{MSG_TYPE_WND, GL_SPIN_CONFIRM, 0, msgCallback(&func)},
 
 #define ON_SPIN_CHANGE(func) \
 {MSG_TYPE_WND, GL_SPIN_CHANGE, 0, msgCallback(&func)},
 
+class c_spin_box;
+class c_spin_button : public c_button
+{
+	friend class c_spin_box;
+	virtual void on_touch(int x, int y, TOUCH_ACTION action);
+	c_spin_box* m_spin_box;
+};
+
 class c_spin_box : public c_wnd
 {
+	friend class c_spin_button;
 public:
-	short get_value(){return m_value;}
-	void set_value(unsigned short value){m_value = m_cur_value = value;}
+	short get_value() { return m_value; }
+	void set_value(unsigned short value) { m_value = m_cur_value = value; }
+	void set_max_min(short max, short min) { m_max = max; m_min = min; }
+	void set_step(short step) { m_step = step; }
+	short get_min() { return m_min; }
+	short get_max() { return m_max; }
+	short get_step() { return m_step; }
+	void set_value_digit(short digit) { m_digit = digit; }
+	short get_value_digit() { return m_digit; }
 
-	void set_max_min(short max, short min){m_max = max; m_min = min;}
-	void set_step(short step){m_step = step;}
-
-	short get_min(){return m_min;}
-	short get_max(){return m_max;}
-	short get_step(){return m_step;}
-
-	void set_value_digit(short digit){m_digit = digit;}
-	short get_value_digit(){return m_digit;}
-	
 protected:
-	virtual c_wnd* clone(){return new c_spin_box();}
 	virtual void on_paint();
-	virtual void on_focus();
-	virtual void on_kill_focus();
 	virtual void pre_create_wnd();
-	virtual bool on_touch(int x, int y, TOUCH_ACTION action);
+	void on_arrow_up_bt_click();
+	void on_arrow_down_bt_click();
 
-	void on_arrow_bt_click(int ctr_id, int param);
-	void on_arrow_up_bt_click(int ctr_id, int param);
-	void on_arrow_down_bt_click(int ctr_id, int param);
-
-	GL_DECLARE_MESSAGE_MAP()
-
-private:
-	void show_arrow_button();
-	void hide_arrow_button();
-	void on_touch_down(int x, int y);
-	void on_touch_up(int x, int y);
-
-protected:
 	short			m_cur_value;
 	short			m_value;
 	short			m_step;
 	short			m_max;
 	short			m_min;
 	short			m_digit;
-
-	c_button  		m_bt_up;
-	c_button  		m_bt_down;
-	c_rect			m_bt_up_rect;
-	c_rect			m_bt_down_rect;
+	c_spin_button  	m_bt_up;
+	c_spin_button  	m_bt_down;
 };
 
 #endif
