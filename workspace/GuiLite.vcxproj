@@ -163,7 +163,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GUILITE_ON;_CRT_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
@@ -394,14 +394,12 @@
     <ClCompile Include="core\cmd_target.cpp" />
     <ClCompile Include="core\display.cpp" />
     <ClCompile Include="core\rect.cpp" />
-    <ClCompile Include="core\surface.cpp" />
     <ClCompile Include="core\theme.cpp" />
     <ClCompile Include="core\wnd.cpp" />
     <ClCompile Include="core\word.cpp" />
     <ClCompile Include="widgets\button.cpp" />
     <ClCompile Include="widgets\dialog.cpp" />
     <ClCompile Include="widgets\edit.cpp" />
-    <ClCompile Include="widgets\gesture.cpp" />
     <ClCompile Include="widgets\keyboard.cpp" />
     <ClCompile Include="widgets\label.cpp" />
     <ClCompile Include="widgets\list_box.cpp" />

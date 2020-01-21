@@ -1,3 +1,4 @@
+#ifdef GUILITE_ON
 #if (defined __linux__) || (defined __APPLE__)
 
 #include "../../core_include/api.h"
@@ -386,4 +387,5 @@ int c_fifo::write(void* buf, int len)
 	return i;
 }
 
+#endif
 #endif

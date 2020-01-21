@@ -8,13 +8,13 @@
   <img src="https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg">
 </p>
-<p align="center"> 大道至简 - 5千行/全平台GUI库 </p>
+<p align="center"> 大道至简 - 5千行/仅头文件/全平台GUI库 </p>
 <p align="center">
     <img src="documents/WhyGuiLite-cn.png" alt="Why GuiLite"/>
 </p>
 
 ## 轻-快-灵
-- ✂️轻量: 5千行C++代码，2个文件：GuiLite.h，GuiLite.cpp
+- ✂️轻量: 5千行C++代码，单一头文件库：GuiLite.h
 - ⚡超快: 一次调用就可以完成图形渲染，与操作系统及第三方库无关
 - 💉灵活: 可注入在Qt/MFC/Winform/Cocoa/Web程序中运行 - 重用现有Qt/MFC代码
 - ⚙️️最低硬件要求:
@@ -40,8 +40,8 @@
 ## 易学习和全面的技术支持
 即使是C语言的初学者，也可以很快掌握GuiLite；代码只使用C++的基本特性（类和虚函数），选择C++语言，能让代码体积更小，更易阅读。
 - 📚开发文档
+    - [如何使用GuiLite?](documents/HowToUse.md)
     - [软件设计说明](documents/HowToWork-cn.md)
-    - [如何编译和移植?](documents/HowToBuild.md)
     - [如何布局UI?](documents/HowLayoutWork.md)
     - [如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
     - [如何“换肤”？](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
@@ -58,6 +58,7 @@
 - 🌐[GitHub链接](https://github.com/idea4good/GuiLite)
 
 ## Demo展示墙
+点击你喜欢的实例，并运行在你的硬件上面
 <table>
   <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/Hello3D"><img src="documents/Hello3D.gif" width="200px;"/><br /><sub><b>3D on STM32</b></sub></a>

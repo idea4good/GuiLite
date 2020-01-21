@@ -1,3 +1,4 @@
+#ifdef GUILITE_ON
 #if (defined _WIN32) || (defined WIN32) || (defined _WIN64) || (defined WIN64)
 
 #include "../../core_include/api.h"
@@ -392,4 +393,5 @@ int c_fifo::write(void* buf, int len)
 	return i;
 }
 
+#endif
 #endif

@@ -10,9 +10,6 @@
     <ClCompile Include="widgets\edit.cpp">
       <Filter>widgets</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\gesture.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\keyboard.cpp">
       <Filter>widgets</Filter>
     </ClCompile>
@@ -47,9 +44,6 @@
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="core\rect.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\surface.cpp">
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="core\theme.cpp">

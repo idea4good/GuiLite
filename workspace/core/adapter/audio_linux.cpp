@@ -1,3 +1,4 @@
+#ifdef GUILITE_ON
 #if (defined __linux__) || (defined __APPLE__)
 
 #include "../../core_include/api.h"
@@ -64,4 +65,5 @@ int c_audio::play(AUDIO_TYPE type)
 	return 0;
 }
 
+#endif
 #endif

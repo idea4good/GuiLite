@@ -1,3 +1,4 @@
+#ifdef GUILITE_ON
 #if (defined _WIN32) || (defined WIN32) || (defined _WIN64) || (defined WIN64)
 
 #include <windows.h>
@@ -247,4 +248,5 @@ int c_audio::play(AUDIO_TYPE type)
 	return 0;
 }
 
+#endif
 #endif

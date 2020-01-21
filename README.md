@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg">
 </p>
-<p align="center">Small-Fast-Embeddable GUI library(5 KLOC) for all platforms</p>
+<p align="center">The smallest header-only GUI library(5 KLOC) for all platforms</p>
 <p align="center">
     <img src="documents/WhyGuiLite.png" alt="Why GuiLite"/>
 </p>
@@ -16,9 +16,9 @@
 - [中文](README_zh.md)
 
 ## Lightweight
-- ✂️Small: 5,000 lines of C++ code; 2 files: GuiLite.h, GuiLite.cpp
+- ✂️Small: 5,000- lines of C++ code & header-only: GuiLite.h
 - ⚡Fast: Render GUI within one invoking, independent of any OS & 3rd party library
-- 💉Inject: Run inside Qt/MFC/Winform/Cocoa/Web - Keep legacy Qt/MFC code reusable
+- 💉Embeddable: Run inside Qt/MFC/Winform/Cocoa/Web - Keep legacy Qt/MFC code reusable
 - ⚙️️Hardware Minimum Requirment:
 
     | Processor | Disk/ROM space | Memory |
@@ -42,8 +42,8 @@
 ## Easy to learn & Full support
 Even C beginner, could master GuiLite quickly. The source code only use basic C++ feature(e,g: class, virtual function). We choose C++ for it could make the code size small significantly, and easy to read.
 - 📚Documents
+    - [How to use GuiLite?](documents/HowToUse.md)
     - [Design specification](documents/HowToWork.md)
-    - [How to build & port?](documents/HowToBuild.md)
     - [How to Layout widgets?](documents/HowLayoutWork.md)
     - [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
     - [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
@@ -60,6 +60,7 @@ Even C beginner, could master GuiLite quickly. The source code only use basic C+
 - 🀄️[Mirror repository in China](https://gitee.com/idea4good/GuiLite)
 
 ## Demo wall
+Click the image you like, and run it on your hardware
 <table>
   <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/Hello3D"><img src="documents/Hello3D.gif" width="200px;"/><br /><sub><b>3D on STM32</b></sub></a>
