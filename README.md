@@ -75,14 +75,15 @@ Click the image you like, and run it on your hardware
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloCircle"><img src="documents/HelloCircle.gif" width="200px;"/><br /><sub><b>3D circle on STM32</b></sub></a>
   </tr>
   <tr>
+  <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloTimer"><img src="documents/HelloTimer.gif" width="200px;"/><br /><sub><b>Timer</b></sub></a>
+  <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloSlide"><img src="documents/HelloSlide.gif" width="200px;"/><br /><sub><b>Swipe view</b></sub></a>
+  <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloAnimation"><img src="documents/HelloAnimation.gif" width="200px;"/><br /><sub><b>Animation</b></sub></a>
+  </tr>
+  <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/Hello3D"><img src="documents/iWatch.hello3D.gif" width="200px;"/><br /><sub><b>3D on Apple Watch</b></sub></a>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloWave"><img src="documents/iWatch.helloWave.gif" width="200px;"/><br /><sub><b>Wave on Apple Watch</b></sub></a>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloParticle"><img src="documents/iOS.particle.gif" width="200px;"/><br /><sub><b>Particle on iPhone</b></sub></a>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor"><img src="documents/iOS.gif" width="200px;"/><br /><sub><b>HostMonitor on iPhone</b></sub></a>
-  </tr>
-  <tr>
-  <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloAnimation"><img src="documents/HelloAnimation.gif" width="200px;"/><br /><sub><b>Animation</b></sub></a>
-  <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloSlide"><img src="documents/HelloSlide.gif" width="200px;"/><br /><sub><b>Swipe view</b></sub></a>
   </tr>
 </table>
 

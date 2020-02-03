@@ -884,11 +884,9 @@ protected:
 };
 class c_surface_no_fb : public c_surface {//No physical framebuffer
 	friend class c_display;
-	c_surface_no_fb(c_display* display, unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op) :
-		c_surface(display, width, height, color_bytes) {
-		m_gfx_op = gfx_op;
-	}
 protected:
+	c_surface_no_fb(c_display* display, unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op) :
+		c_surface(display, width, height, color_bytes), m_gfx_op(gfx_op) {}
 	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb)
 	{
 		if (!m_gfx_op)
@@ -953,37 +951,35 @@ protected:
 		}
 	}
 	struct EXTERNAL_GFX_OP* m_gfx_op;//Rendering by external method
-	static c_surface_no_fb mcu_surface;//Reserve one for avoiding new operation, new operation maybe crash program on Keil platform sometimes.
 };
-inline c_display::c_display(void* phy_fb, int display_width, int display_height, int surface_width, int surface_height, unsigned int color_bytes, int surface_cnt, EXTERNAL_GFX_OP* gfx_op)
+inline c_display::c_display(void* phy_fb, int display_width, int display_height, int surface_width, int surface_height, unsigned int color_bytes, int surface_cnt, EXTERNAL_GFX_OP* gfx_op) : m_width(display_width), m_height(display_height), m_color_bytes(color_bytes), m_phy_fb(phy_fb), m_phy_read_index(0), m_phy_write_index(0), m_surface_cnt(surface_cnt), m_surface_index(0)
 {
 	if (color_bytes != 2 && color_bytes != 4)
 	{
 		log_out("Support 16 bits, 32 bits color only!");
 		ASSERT(false);
 	}
-	m_width = display_width;
-	m_height = display_height;
-	m_color_bytes = color_bytes;
-	m_phy_fb = phy_fb;
-	m_phy_read_index = m_phy_write_index = 0;
-	memset(m_surface_group, 0, sizeof(m_surface_group));
-	m_surface_index = 0;
-	m_surface_cnt = surface_cnt;
 	ASSERT(m_surface_cnt <= SURFACE_CNT_MAX);
-	if ((m_surface_cnt == 1) && (gfx_op))
-	{// Avoid new operation for MCU, new operation maybe crash program on Keil platform sometimes.
-		c_surface_no_fb::mcu_surface.m_display = this;
-		c_surface_no_fb::mcu_surface.m_width = surface_width;
-		c_surface_no_fb::mcu_surface.m_height = surface_height;
-		c_surface_no_fb::mcu_surface.m_color_bytes = color_bytes;
-		c_surface_no_fb::mcu_surface.m_gfx_op = gfx_op;
-		m_surface_group[0] = &c_surface_no_fb::mcu_surface;
-		return;
-	}
+	memset(m_surface_group, 0, sizeof(m_surface_group));
+	
 	for (int i = 0; i < m_surface_cnt; i++)
-	{
-		m_surface_group[i] = phy_fb ? new c_surface(this, surface_width, surface_height, color_bytes) : new c_surface_no_fb(this, surface_width, surface_height, color_bytes, gfx_op);
+	{// Avoid new operation, new operation maybe crash program on Keil platform sometimes.
+		if (phy_fb)
+		{
+			c_surface tmp(this, surface_width, surface_height, color_bytes);
+			c_surface* surface = (c_surface*)malloc(sizeof(c_surface));
+			ASSERT(surface);
+			memcpy(surface, &tmp, sizeof(tmp));
+			m_surface_group[i] = surface;
+		}
+		else
+		{
+			c_surface_no_fb tmp(this, surface_width, surface_height, color_bytes, gfx_op);
+			c_surface_no_fb* surface = (c_surface_no_fb*)malloc(sizeof(c_surface_no_fb));
+			ASSERT(surface);
+			memcpy(surface, &tmp, sizeof(tmp));
+			m_surface_group[i] = surface;
+		}
 	}
 }
 inline c_surface* c_display::alloc_surface(Z_ORDER_LEVEL max_zorder)
@@ -3663,9 +3659,6 @@ GL_MSG_ENTRY c_cmd_target::ms_usr_map_entries[USR_MSG_MAX];
 unsigned short c_cmd_target::ms_user_map_size;
 GL_BEGIN_MESSAGE_MAP(c_cmd_target)
 GL_END_MESSAGE_MAP()
-#endif
-#ifdef GUILITE_ON
-c_surface_no_fb c_surface_no_fb::mcu_surface(0, 240, 320, 16, 0);
 #endif
 
 #ifdef GUILITE_ON
