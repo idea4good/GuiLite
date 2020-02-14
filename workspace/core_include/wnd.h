@@ -92,10 +92,6 @@ public:
 		m_wnd_rect.m_right = (x + width - 1);
 		m_wnd_rect.m_bottom = (y + height - 1);
 
-		c_rect rect;
-		get_screen_rect(rect);
-		ASSERT(m_surface->is_valid(rect));
-
 		pre_create_wnd();
 
 		if (0 != parent)
