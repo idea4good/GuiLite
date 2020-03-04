@@ -403,11 +403,6 @@
               <FilePath>.\core\rect.cpp</FilePath>
             </File>
             <File>
-              <FileName>surface.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\surface.cpp</FilePath>
-            </File>
-            <File>
               <FileName>theme.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\core\theme.cpp</FilePath>
