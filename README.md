@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg">
 </p>
-<p align="center">The smallest header-only GUI library(5 KLOC) for all platforms</p>
+<p align="center">The smallest header-only GUI library (5 KLOC) for all platforms.</p>
 <p align="center">
     <img src="documents/WhyGuiLite.png" alt="Why GuiLite"/>
 </p>
@@ -16,32 +16,32 @@
 - [中文](README_zh.md)
 
 ## Lightweight
-- ✂️Small: 5,000- lines of C++ code & header-only: GuiLite.h
-- ⚡Fast: Render GUI within one invoking, independent of any OS & 3rd party library
-- 💉Embeddable: Run inside Qt/MFC/Winform/Cocoa/Web - Keep legacy Qt/MFC code reusable
-- ⚙️️Hardware Minimum Requirment:
+- ✂️Small: Just under 5,000 lines of C++ and header-only: GuiLite.h
+- ⚡Fast: Render a GUI within one invocation, independent of any OS or 3rd party library
+- 💉Embeddable: Runs inside Qt/MFC/Winform/Cocoa/Web - Keep legacy Qt/MFC code reusable
+- ⚙️️Hardware Minimum Requirements:
 
     | Processor | Disk/ROM space | Memory |
     | --- | --- | --- |
     | 24 MHZ | 29 KB | 9 KB |
 
-## Cross platforms
-- Support OS: iOS/macOS/WathOS, Android, Linux, Windows, RTOS... or **MCU without OS**
-- Support language: C/C++, Swift, Java, Javascript, C#, Golang...
-- Support 3rd party library: Qt, MFC, Winforms, CoCoa...
+## Cross platform
+- Supported OSes: iOS/macOS/WathOS, Android, Linux, Windows, RTOS... or **MCU without OS**
+- Supported languages: C/C++, Swift, Java, Javascript, C#, Golang...
+- Supported 3rd party libraries: Qt, MFC, Winforms, CoCoa...
 
 ## Useful features
-- 🔣Multi-language, support UTF-8
-- 🔨[Toolkit](https://github.com/idea4good/GuiLiteToolkit) for building font/image resource
+- 🔣Multi-language, supports UTF-8
+- 🔨[Toolkit](https://github.com/idea4good/GuiLiteToolkit) for building font/image resources
 - 📐[Layout GUI WYSIWYG](https://github.com/idea4good/GuiLitePreviewer)
 - ☁️Cloud + IoT Solution
-- 📊Code Telemetry & Analysis in real time
-- 📦Support 3D & [Web](https://github.com/idea4good/GuiLiteWeb)
-- 🐋Run docker with single command: `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
+- 📊Code Telemetry and Analysis in real time
+- 📦Supports 3D and [Web](https://github.com/idea4good/GuiLiteWeb)
+- 🐋Run in docker with a single command: `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 
-## Easy to learn & Full support
-Even C beginner, could master GuiLite quickly. The source code only use basic C++ feature(e,g: class, virtual function). We choose C++ for it could make the code size small significantly, and easy to read.
-- 📚Documents
+## Easy to learn and support
+Even a C beginner could master GuiLite quickly. The source code only uses basic C++ features (class, virtual function). We chose C++ as it could make the code size significantly smaller and easier to read.
+- 📚Documentation
     - [How to use GuiLite?](documents/HowToUse.md)
     - [Design specification](documents/HowToWork.md)
     - [How to Layout widgets?](documents/HowLayoutWork.md)
@@ -56,7 +56,7 @@ Even C beginner, could master GuiLite quickly. The source code only use basic C+
     4. Read/Modify `gui` code
     5. Read/Modify `core` code
     6. Build your UI framework
-- 📞[Reach out us](#community-channel) if you have any question, and welcome to our devloper family.
+- 📞[Reach out us](#community-channel) if you have any questions you are welcomed to our developer family.
 - 🀄️[Mirror repository in China](https://gitee.com/idea4good/GuiLite)
 
 ## Demo wall
@@ -95,7 +95,7 @@ Click the image you like, and run it on your hardware
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloFont"><img src="documents/HelloFont.gif" width="600px;"/><br /><sub><b>Multi-language</b></sub></a>
-    <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor"><img src="documents/BuildInfo.png" width="600px;"/><br /><sub><b>Code Telemetry & Analysis in real time</b></sub></a>
+    <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor"><img src="documents/BuildInfo.png" width="600px;"/><br /><sub><b>Code Telemetry and Analysis in real time</b></sub></a>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloScroll"><img src="documents/HelloScroll.gif" width="600px;"/><br /><sub><b>Scroll widget</b></sub></a>
@@ -126,6 +126,6 @@ Click the image you like, and run it on your hardware
 </table>
 
 ## 📞Community Channel
-Thanks for the help from community, you guys make GuiLite better! And welcome new friend to join us.
+Thanks for the help from the community, you all make GuiLite better! And welcome to any new friend to join us.
 - [**@Twitter**](https://twitter.com/idea4good)
 - QQ code: [<img src="documents/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5EO8D9i)
