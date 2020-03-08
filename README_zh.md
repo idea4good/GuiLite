@@ -55,7 +55,7 @@
     5. **攻核** - 研读`core`目录下的代码
     6. **分家** - 丰富，扩展自己的UI功能
 - 📞遇到任何问题，都可以[联系我们](#社区交流)，也欢迎加入我们的开发者大家庭
-- 🌐[GitHub链接](https://github.com/idea4good/GuiLite)
+- 🌐[码云Gitee快速链接](https://gitee.com/idea4good/GuiLite)
 
 ## Demo展示墙
 点击你喜欢的实例，并运行在你的硬件上面
