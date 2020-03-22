@@ -1,5 +1,3 @@
-./.sync.sh GuiLite-header
-
 echo "Build header-only library: GuiLite.h"
 
 # build GuiLiteRaw.h
@@ -55,3 +53,4 @@ mv GuiLite.h ../
 
 echo "Done!"
 echo "You could find GuiLite.h in root folder"
+./.sync.sh GuiLite-header

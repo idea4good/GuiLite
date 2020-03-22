@@ -11,7 +11,6 @@
 #include "../core_include/theme.h"
 #include "../widgets_include/button.h"
 
-#define ARROW_BT_WIDTH		55
 #define ID_BT_ARROW_UP      0x1111
 #define ID_BT_ARROW_DOWN    0x2222
 #define	GL_SPIN_CHANGE		0x3333
@@ -46,6 +45,7 @@ protected:
 	{
 		c_rect rect;
 		get_screen_rect(rect);
+		rect.m_right = rect.m_left + (rect.Width() * 2 / 3);
 
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 		c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
@@ -62,10 +62,10 @@ protected:
 
 		//link arrow button position.
 		c_rect rect;
-		get_screen_rect(rect);
+		get_wnd_rect(rect);
 		m_bt_down.m_spin_box = m_bt_up.m_spin_box = this;
-		m_bt_down.connect(m_parent, ID_BT_ARROW_DOWN, "-", rect.m_left - ARROW_BT_WIDTH, rect.m_top, ARROW_BT_WIDTH, rect.Height());
-		m_bt_up.connect(m_parent, ID_BT_ARROW_UP, "+", rect.m_right, rect.m_top, ARROW_BT_WIDTH, rect.Height());
+		m_bt_up.connect(m_parent, ID_BT_ARROW_UP, "+", (rect.m_left + rect.Width() * 2 / 3), rect.m_top, (rect.Width() / 3), (rect.Height() / 2));
+		m_bt_down.connect(m_parent, ID_BT_ARROW_DOWN, "-", (rect.m_left + rect.Width() * 2 / 3), (rect.m_top + rect.Height() / 2), (rect.Width() / 3), (rect.Height() / 2));
 	}
 	void on_arrow_up_bt_click()
 	{

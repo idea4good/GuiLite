@@ -17,16 +17,19 @@ public:
 		{
 			return;
 		}
-		unsigned short* lower_fb = 0;
+		unsigned short* lower_fb_16 = 0;
+		unsigned int* lower_fb_32 = 0;
 		int lower_fb_width = surface->m_width;
 		if (z_order >= Z_ORDER_LEVEL_1)
 		{
-			lower_fb = surface->m_frame_layers[z_order - 1].fb;
+			lower_fb_16 = (unsigned short*)surface->m_frame_layers[z_order - 1].fb;
+			lower_fb_32 = (unsigned int*)surface->m_frame_layers[z_order - 1].fb;
 		}
 		unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
 		int xsize = pBitmap->width;
 		int ysize = pBitmap->height;
 		const unsigned short* pData = (const unsigned short*)pBitmap->pixel_color_array;
+		int color_bytes = surface->m_color_bytes;
 		for (int j = 0; j < ysize; j++)
 		{
 			for (int i = 0; i < xsize; i++)
@@ -34,9 +37,9 @@ public:
 				unsigned int rgb = *pData++;
 				if (mask_rgb_16 == rgb)
 				{
-					if (lower_fb)
+					if (lower_fb_16)
 					{//restore lower layer
-						surface->draw_pixel(x + i, y + j, GL_RGB_16_to_32(lower_fb[(y + j) * lower_fb_width + x + i]), z_order);
+						surface->draw_pixel(x + i, y + j, (color_bytes == 4) ? lower_fb_32[(y + j) * lower_fb_width + x + i] : GL_RGB_16_to_32(lower_fb_16[(y + j) * lower_fb_width + x + i]), z_order);
 					}
 				}
 				else
@@ -46,6 +49,7 @@ public:
 			}
 		}
 	}
+
 	static void draw_bitmap(c_surface* surface, int z_order, const BITMAP_INFO* pBitmap, int x, int y, int src_x, int src_y, int width, int height, unsigned int mask_rgb = DEFAULT_MASK_COLOR)
 	{
 		if (0 == pBitmap || (src_x + width > pBitmap->width) || (src_y + height > pBitmap->height))
@@ -53,14 +57,17 @@ public:
 			return;
 		}
 
-		unsigned short* lower_fb = 0;
+		unsigned short* lower_fb_16 = 0;
+		unsigned int* lower_fb_32 = 0;
 		int lower_fb_width = surface->m_width;
 		if (z_order >= Z_ORDER_LEVEL_1)
 		{
-			lower_fb = surface->m_frame_layers[z_order - 1].fb;
+			lower_fb_16 = (unsigned short*)surface->m_frame_layers[z_order - 1].fb;
+			lower_fb_32 = (unsigned int*)surface->m_frame_layers[z_order - 1].fb;
 		}
 		unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
 		const unsigned short* pData = (const unsigned short*)pBitmap->pixel_color_array;
+		int color_bytes = surface->m_color_bytes;
 		for (int j = 0; j < height; j++)
 		{
 			const unsigned short* p = &pData[src_x + (src_y + j) * pBitmap->width];
@@ -69,9 +76,9 @@ public:
 				unsigned int rgb = *p++;
 				if (mask_rgb_16 == rgb)
 				{
-					if (lower_fb)
+					if (lower_fb_16)
 					{//restore lower layer
-						surface->draw_pixel(x + i, y + j, GL_RGB_16_to_32(lower_fb[(y + j) * lower_fb_width + x + i]), z_order);
+						surface->draw_pixel(x + i, y + j, (color_bytes == 4) ? lower_fb_32[(y + j) * lower_fb_width + x + i] : GL_RGB_16_to_32(lower_fb_16[(y + j) * lower_fb_width + x + i]), z_order);
 					}
 				}
 				else

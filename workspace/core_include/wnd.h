@@ -319,24 +319,25 @@ public:
 
 	virtual void on_touch(int x, int y, TOUCH_ACTION action)
 	{
-		c_wnd* model_wnd = 0;
+		x -= m_wnd_rect.m_left;
+		y -= m_wnd_rect.m_top;
+
+		c_wnd* priority_wnd = 0;
 		c_wnd* tmp_child = m_top_child;
 		while (tmp_child)
 		{
 			if ((tmp_child->m_attr & ATTR_PRIORITY) && (tmp_child->m_attr & ATTR_VISIBLE))
 			{
-				model_wnd = tmp_child;
+				priority_wnd = tmp_child;
 				break;
 			}
 			tmp_child = tmp_child->m_next_sibling;
 		}
-		if (model_wnd)
+		if (priority_wnd)
 		{
-			return model_wnd->on_touch(x, y, action);
+			return priority_wnd->on_touch(x, y, action);
 		}
 
-		x -= m_wnd_rect.m_left;
-		y -= m_wnd_rect.m_top;
 		c_wnd* child = m_top_child;
 		while (child)
 		{
@@ -354,20 +355,20 @@ public:
 	}
 	virtual void on_key(KEY_TYPE key)
 	{
-		c_wnd* model_wnd = 0;
+		c_wnd* priority_wnd = 0;
 		c_wnd* tmp_child = m_top_child;
 		while (tmp_child)
 		{
 			if ((tmp_child->m_attr & ATTR_PRIORITY) && (tmp_child->m_attr & ATTR_VISIBLE))
 			{
-				model_wnd = tmp_child;
+				priority_wnd = tmp_child;
 				break;
 			}
 			tmp_child = tmp_child->m_next_sibling;
 		}
-		if (model_wnd)
+		if (priority_wnd)
 		{
-			return model_wnd->on_key(key);
+			return priority_wnd->on_key(key);
 		}
 
 		if (!is_focus_wnd())
@@ -468,6 +469,7 @@ protected:
 			parent = parent->m_parent;
 		}
 	}
+
 	void wnd2screen(c_rect &rect) const
 	{
 		int l = rect.m_left;
