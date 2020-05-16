@@ -131,4 +131,4 @@ Most of the demos have about 100 lines of UI code, more details [here.](https://
 ## 📞Community Channel
 Thanks for the help from the community, you all make GuiLite better! And welcome to any new friend to join us.
 - [**@Twitter**](https://twitter.com/idea4good)
-- QQ code: [<img src="documents/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5hc3qwj)
+- QQ code:<br>[<img src="documents/qq.group-1.jpg">](https://jq.qq.com/?_wv=1027&k=qfvGGAa7) [<img src="documents/qq.group-2.jpg">](https://jq.qq.com/?_wv=1027&k=yKnUJj1B) [<img src="documents/qq.group-3.jpg">](https://jq.qq.com/?_wv=1027&k=5hc3qwj)

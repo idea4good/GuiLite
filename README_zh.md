@@ -127,4 +127,4 @@
 大部分demo的UI代码只有100行左右，更多信息点[这里。](https://github.com/idea4good/GuiLiteSamples)
 
 ## 📞社区交流
-- 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>[<img src="documents/qq.group.jpg">](https://jq.qq.com/?_wv=1027&k=5hc3qwj)
+- 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>[<img src="documents/qq.group-1.jpg">](https://jq.qq.com/?_wv=1027&k=qfvGGAa7) [<img src="documents/qq.group-2.jpg">](https://jq.qq.com/?_wv=1027&k=yKnUJj1B) [<img src="documents/qq.group-3.jpg">](https://jq.qq.com/?_wv=1027&k=5hc3qwj)
