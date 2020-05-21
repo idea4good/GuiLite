@@ -905,23 +905,8 @@ inline c_display::c_display(void* phy_fb, int display_width, int display_height,
 	memset(m_surface_group, 0, sizeof(m_surface_group));
 	
 	for (int i = 0; i < m_surface_cnt; i++)
-	{// Avoid new operation, new operation maybe crash program on Keil platform sometimes.
-		if (phy_fb)
-		{
-			c_surface tmp(surface_width, surface_height, color_bytes);
-			c_surface* surface = (c_surface*)malloc(sizeof(c_surface));
-			ASSERT(surface);
-			memcpy(surface, &tmp, sizeof(tmp));
-			m_surface_group[i] = surface;
-		}
-		else
-		{
-			c_surface_no_fb tmp(surface_width, surface_height, color_bytes, gfx_op);
-			c_surface_no_fb* surface = (c_surface_no_fb*)malloc(sizeof(c_surface_no_fb));
-			ASSERT(surface);
-			memcpy(surface, &tmp, sizeof(tmp));
-			m_surface_group[i] = surface;
-		}
+	{
+		m_surface_group[i] = (phy_fb) ? new c_surface(surface_width, surface_height, color_bytes) : new c_surface_no_fb(surface_width, surface_height, color_bytes, gfx_op);
 		m_surface_group[i]->attach_display(this);
 	}
 }
