@@ -415,7 +415,7 @@ public:
 	}
 	int snap_shot(const char* file_name)
 	{
-		if (!m_phy_fb)
+		if (!m_phy_fb || (m_color_bytes !=2 && m_color_bytes != 4))
 		{
 			return -1;
 		}
@@ -912,6 +912,7 @@ inline c_display::c_display(void* phy_fb, int display_width, int display_height,
 }
 inline c_display::c_display(void* phy_fb, int display_width, int display_height, c_surface* surface) : m_width(display_width), m_height(display_height), m_phy_fb(phy_fb), m_phy_read_index(0), m_phy_write_index(0), m_surface_cnt(1), m_surface_index(0)
 {
+	m_color_bytes = surface->m_color_bytes;
 	surface->m_is_active = true;
 	(m_surface_group[0] = surface)->attach_display(this);
 }

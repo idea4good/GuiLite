@@ -127,4 +127,12 @@
 大部分demo的UI代码只有100行左右，更多信息点[这里。](https://github.com/idea4good/GuiLiteSamples)
 
 ## 📞社区交流
-- 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。<br>[<img src="documents/qq.group-1.jpg">](https://jq.qq.com/?_wv=1027&k=qfvGGAa7) [<img src="documents/qq.group-2.jpg">](https://jq.qq.com/?_wv=1027&k=yKnUJj1B) [<img src="documents/qq.group-3.jpg">](https://jq.qq.com/?_wv=1027&k=5hc3qwj)
+- 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。
+- GuiLite开发者QQ群：
+<table>
+  <tr>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>大群：资源丰富</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=yKnUJj1B"><img src="documents/qq.group-2.jpg" width="240px;"/><br /><sub><b>中群：经验交流</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>小群：入门学习</b></sub></a>
+  </tr>
+</table>
