@@ -98,16 +98,16 @@ protected:
 		m_status = STATUS_NORMAL;
 		on_paint();
 	}
-	virtual void on_key(KEY_TYPE key)
+	virtual void on_navigate(NAVIGATION_KEY key)
 	{
 		switch (key)
 		{
-		case KEY_ENTER:
-			(m_status == STATUS_PUSHED) ? s_keyboard.on_key(key) : (on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN), on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP));
+		case NAV_ENTER:
+			(m_status == STATUS_PUSHED) ? s_keyboard.on_navigate(key) : (on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN), on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP));
 			return;
-		case KEY_BACKWARD:
-		case KEY_FORWARD:
-			return (m_status == STATUS_PUSHED) ? s_keyboard.on_key(key) : c_wnd::on_key(key);
+		case NAV_BACKWARD:
+		case NAV_FORWARD:
+			return (m_status == STATUS_PUSHED) ? s_keyboard.on_navigate(key) : c_wnd::on_navigate(key);
 		}
 	}
 	virtual void on_touch(int x, int y, TOUCH_ACTION action)

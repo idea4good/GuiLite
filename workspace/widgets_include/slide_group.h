@@ -107,11 +107,11 @@ public:
 		}
 	}
 	inline virtual void on_touch(int x, int y, TOUCH_ACTION action);
-	virtual void on_key(KEY_TYPE key)
+	virtual void on_navigate(NAVIGATION_KEY key)
 	{
 		if (m_slides[m_active_slide_index])
 		{
-			m_slides[m_active_slide_index]->on_key(key);
+			m_slides[m_active_slide_index]->on_navigate(key);
 		}
 	}
 protected:

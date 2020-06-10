@@ -85,19 +85,19 @@ protected:
 			notify_parent(GL_BN_CLICKED, 0);
 		}
 	}
-	virtual void on_key(KEY_TYPE key)
+	virtual void on_navigate(NAVIGATION_KEY key)
 	{
 		switch (key)
 		{
-		case KEY_ENTER:
+		case NAV_ENTER:
 			on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN);
 			on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP);
 			break;
-		case KEY_FORWARD:
-		case KEY_BACKWARD:
+		case NAV_FORWARD:
+		case NAV_BACKWARD:
 			break;
 		}
-		return c_wnd::on_key(key);
+		return c_wnd::on_navigate(key);
 	}
 };
 

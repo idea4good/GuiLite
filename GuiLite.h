@@ -1376,10 +1376,10 @@ typedef enum
 }WND_STATUS;
 typedef enum
 {
-	KEY_FORWARD,
-	KEY_BACKWARD,
-	KEY_ENTER
-}KEY_TYPE;
+	NAV_FORWARD,
+	NAV_BACKWARD,
+	NAV_ENTER
+}NAVIGATION_KEY;
 typedef enum
 {
 	TOUCH_DOWN,
@@ -1661,7 +1661,7 @@ public:
 			child = child->m_next_sibling;
 		}
 	}
-	virtual void on_key(KEY_TYPE key)
+	virtual void on_navigate(NAVIGATION_KEY key)
 	{
 		c_wnd* priority_wnd = 0;
 		c_wnd* tmp_child = m_top_child;
@@ -1676,17 +1676,17 @@ public:
 		}
 		if (priority_wnd)
 		{
-			return priority_wnd->on_key(key);
+			return priority_wnd->on_navigate(key);
 		}
 		if (!is_focus_wnd())
 		{
 			return;
 		}
-		if (key != KEY_BACKWARD && key != KEY_FORWARD)
+		if (key != NAV_BACKWARD && key != NAV_FORWARD)
 		{
 			if (m_focus_child)
 			{
-				m_focus_child->on_key(key);
+				m_focus_child->on_navigate(key);
 			}
 			return;
 		}
@@ -1711,17 +1711,17 @@ public:
 			return;
 		}
 		// Move focus from old wnd to next wnd
-		c_wnd* next_focus_wnd = (key == KEY_FORWARD) ? old_focus_wnd->m_next_sibling : old_focus_wnd->m_prev_sibling;
+		c_wnd* next_focus_wnd = (key == NAV_FORWARD) ? old_focus_wnd->m_next_sibling : old_focus_wnd->m_prev_sibling;
 		while (next_focus_wnd && (!next_focus_wnd->is_focus_wnd()))
 		{// Search neighbor of old focus wnd
-			next_focus_wnd = (key == KEY_FORWARD) ? next_focus_wnd->m_next_sibling : next_focus_wnd->m_prev_sibling;
+			next_focus_wnd = (key == NAV_FORWARD) ? next_focus_wnd->m_next_sibling : next_focus_wnd->m_prev_sibling;
 		}
 		if (!next_focus_wnd)
 		{// Search whole brother wnd
-			next_focus_wnd = (key == KEY_FORWARD) ? old_focus_wnd->m_parent->m_top_child : old_focus_wnd->m_parent->get_last_child();
+			next_focus_wnd = (key == NAV_FORWARD) ? old_focus_wnd->m_parent->m_top_child : old_focus_wnd->m_parent->get_last_child();
 			while (next_focus_wnd && (!next_focus_wnd->is_focus_wnd()))
 			{
-				next_focus_wnd = (key == KEY_FORWARD) ? next_focus_wnd->m_next_sibling : next_focus_wnd->m_prev_sibling;
+				next_focus_wnd = (key == NAV_FORWARD) ? next_focus_wnd->m_next_sibling : next_focus_wnd->m_prev_sibling;
 			}
 		}
 		if (next_focus_wnd)
@@ -1916,19 +1916,19 @@ protected:
 			notify_parent(GL_BN_CLICKED, 0);
 		}
 	}
-	virtual void on_key(KEY_TYPE key)
+	virtual void on_navigate(NAVIGATION_KEY key)
 	{
 		switch (key)
 		{
-		case KEY_ENTER:
+		case NAV_ENTER:
 			on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN);
 			on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP);
 			break;
-		case KEY_FORWARD:
-		case KEY_BACKWARD:
+		case NAV_FORWARD:
+		case NAV_BACKWARD:
 			break;
 		}
-		return c_wnd::on_key(key);
+		return c_wnd::on_navigate(key);
 	}
 };
 #endif
@@ -2348,16 +2348,16 @@ protected:
 		m_status = STATUS_NORMAL;
 		on_paint();
 	}
-	virtual void on_key(KEY_TYPE key)
+	virtual void on_navigate(NAVIGATION_KEY key)
 	{
 		switch (key)
 		{
-		case KEY_ENTER:
-			(m_status == STATUS_PUSHED) ? s_keyboard.on_key(key) : (on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN), on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP));
+		case NAV_ENTER:
+			(m_status == STATUS_PUSHED) ? s_keyboard.on_navigate(key) : (on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN), on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP));
 			return;
-		case KEY_BACKWARD:
-		case KEY_FORWARD:
-			return (m_status == STATUS_PUSHED) ? s_keyboard.on_key(key) : c_wnd::on_key(key);
+		case NAV_BACKWARD:
+		case NAV_FORWARD:
+			return (m_status == STATUS_PUSHED) ? s_keyboard.on_navigate(key) : c_wnd::on_navigate(key);
 		}
 	}
 	virtual void on_touch(int x, int y, TOUCH_ACTION action)
@@ -2582,25 +2582,25 @@ protected:
 		m_status = STATUS_NORMAL;
 		on_paint();
 	}
-	virtual void on_key(KEY_TYPE key)
+	virtual void on_navigate(NAVIGATION_KEY key)
 	{
 		switch (key)
 		{
-		case KEY_ENTER:
+		case NAV_ENTER:
 			on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN);
 			on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP);
 			return;
-		case KEY_BACKWARD:
+		case NAV_BACKWARD:
 			if (m_status != STATUS_PUSHED)
 			{
-				return c_wnd::on_key(key);
+				return c_wnd::on_navigate(key);
 			}
 			m_selected_item = (m_selected_item > 0) ? (m_selected_item - 1) : m_selected_item;
 			return show_list();
-		case KEY_FORWARD:
+		case NAV_FORWARD:
 			if (m_status != STATUS_PUSHED)
 			{
-				return c_wnd::on_key(key);
+				return c_wnd::on_navigate(key);
 			}
 			m_selected_item = (m_selected_item < (m_item_total - 1)) ? (m_selected_item + 1) : m_selected_item;
 			return show_list();
@@ -2795,11 +2795,11 @@ public:
 		}
 	}
 	inline virtual void on_touch(int x, int y, TOUCH_ACTION action);
-	virtual void on_key(KEY_TYPE key)
+	virtual void on_navigate(NAVIGATION_KEY key)
 	{
 		if (m_slides[m_active_slide_index])
 		{
-			m_slides[m_active_slide_index]->on_key(key);
+			m_slides[m_active_slide_index]->on_navigate(key);
 		}
 	}
 protected:

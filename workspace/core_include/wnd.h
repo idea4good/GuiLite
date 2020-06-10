@@ -31,10 +31,10 @@ typedef enum
 
 typedef enum
 {
-	KEY_FORWARD,
-	KEY_BACKWARD,
-	KEY_ENTER
-}KEY_TYPE;
+	NAV_FORWARD,
+	NAV_BACKWARD,
+	NAV_ENTER
+}NAVIGATION_KEY;
 
 typedef enum
 {
@@ -353,7 +353,7 @@ public:
 			child = child->m_next_sibling;
 		}
 	}
-	virtual void on_key(KEY_TYPE key)
+	virtual void on_navigate(NAVIGATION_KEY key)
 	{
 		c_wnd* priority_wnd = 0;
 		c_wnd* tmp_child = m_top_child;
@@ -368,18 +368,18 @@ public:
 		}
 		if (priority_wnd)
 		{
-			return priority_wnd->on_key(key);
+			return priority_wnd->on_navigate(key);
 		}
 
 		if (!is_focus_wnd())
 		{
 			return;
 		}
-		if (key != KEY_BACKWARD && key != KEY_FORWARD)
+		if (key != NAV_BACKWARD && key != NAV_FORWARD)
 		{
 			if (m_focus_child)
 			{
-				m_focus_child->on_key(key);
+				m_focus_child->on_navigate(key);
 			}
 			return;
 		}
@@ -405,17 +405,17 @@ public:
 			return;
 		}
 		// Move focus from old wnd to next wnd
-		c_wnd* next_focus_wnd = (key == KEY_FORWARD) ? old_focus_wnd->m_next_sibling : old_focus_wnd->m_prev_sibling;
+		c_wnd* next_focus_wnd = (key == NAV_FORWARD) ? old_focus_wnd->m_next_sibling : old_focus_wnd->m_prev_sibling;
 		while (next_focus_wnd && (!next_focus_wnd->is_focus_wnd()))
 		{// Search neighbor of old focus wnd
-			next_focus_wnd = (key == KEY_FORWARD) ? next_focus_wnd->m_next_sibling : next_focus_wnd->m_prev_sibling;
+			next_focus_wnd = (key == NAV_FORWARD) ? next_focus_wnd->m_next_sibling : next_focus_wnd->m_prev_sibling;
 		}
 		if (!next_focus_wnd)
 		{// Search whole brother wnd
-			next_focus_wnd = (key == KEY_FORWARD) ? old_focus_wnd->m_parent->m_top_child : old_focus_wnd->m_parent->get_last_child();
+			next_focus_wnd = (key == NAV_FORWARD) ? old_focus_wnd->m_parent->m_top_child : old_focus_wnd->m_parent->get_last_child();
 			while (next_focus_wnd && (!next_focus_wnd->is_focus_wnd()))
 			{
-				next_focus_wnd = (key == KEY_FORWARD) ? next_focus_wnd->m_next_sibling : next_focus_wnd->m_prev_sibling;
+				next_focus_wnd = (key == NAV_FORWARD) ? next_focus_wnd->m_next_sibling : next_focus_wnd->m_prev_sibling;
 			}
 		}
 		if (next_focus_wnd)
