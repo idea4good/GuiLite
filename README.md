@@ -51,11 +51,11 @@ Even a C beginner could master GuiLite quickly. The source code only uses basic 
     - [UML chart of GuiLite core](documents/UML.md)
 - 📈Learning steps
     1. Build GuiLite library
-    2. Build/Run HelloXXX demos
+    2. Build/Debug HelloXXX demos
     3. Read/Modify `HelloXXX/UIcode/UIcode.cpp` code
-    4. Read/Modify `gui` code
+    4. Read/Modify `widgets` code
     5. Read/Modify `core` code
-    6. Build your UI framework
+    6. Build your GUI framework
 - 📞[Reach out us](#community-channel) if you have any questions you are welcomed to our developer family.
 - 🀄️[Mirror repository in China](https://gitee.com/idea4good/GuiLite)
 

@@ -48,12 +48,12 @@
     - [如何传递消息?](documents/HowMessageWork.md)
     - [核心UML示意图](documents/UML.md)
 - 📈学习方法
-    1. **外围** - 成功编译GuiLite库
-    2. **前戏** - 成功运行HelloXXX实例程序
-    3. **交流** - 研读/修改100+行的`HelloXXX/UIcode/UIcode.cpp`源代码
-    4. **深交** - 研读`gui`目录下的代码
-    5. **攻核** - 研读`core`目录下的代码
-    6. **分家** - 丰富，扩展自己的UI功能
+    1. 编译GuiLite库
+    2. 编译、调试：HelloXXX实例程序
+    3. 研读、修改100+行的`HelloXXX/UIcode/UIcode.cpp`源代码
+    4. 研读`widgets`目录下的代码
+    5. 研读`core`目录下的代码
+    6. 扩展/开发自己的GUI库
 - 📞遇到任何问题，都可以[联系我们](#社区交流)，也欢迎加入我们的开发者大家庭
 - 🌐[码云Gitee快速链接](https://gitee.com/idea4good/GuiLite)
 
