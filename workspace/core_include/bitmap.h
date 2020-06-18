@@ -22,8 +22,8 @@ public:
 		int lower_fb_width = surface->m_width;
 		if (z_order >= Z_ORDER_LEVEL_1)
 		{
-			lower_fb_16 = (unsigned short*)surface->m_frame_layers[z_order - 1].fb;
-			lower_fb_32 = (unsigned int*)surface->m_frame_layers[z_order - 1].fb;
+			lower_fb_16 = (unsigned short*)surface->m_overlap_zones[z_order - 1].fb;
+			lower_fb_32 = (unsigned int*)surface->m_overlap_zones[z_order - 1].fb;
 		}
 		unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
 		int xsize = pBitmap->width;
@@ -62,8 +62,8 @@ public:
 		int lower_fb_width = surface->m_width;
 		if (z_order >= Z_ORDER_LEVEL_1)
 		{
-			lower_fb_16 = (unsigned short*)surface->m_frame_layers[z_order - 1].fb;
-			lower_fb_32 = (unsigned int*)surface->m_frame_layers[z_order - 1].fb;
+			lower_fb_16 = (unsigned short*)surface->m_overlap_zones[z_order - 1].fb;
+			lower_fb_32 = (unsigned int*)surface->m_overlap_zones[z_order - 1].fb;
 		}
 		unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
 		const unsigned short* pData = (const unsigned short*)pBitmap->pixel_color_array;

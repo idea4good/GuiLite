@@ -182,7 +182,8 @@
       <AdditionalOptions>%(AdditionalOptions) /machine:X64</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
-      <Command>call "$(SolutionDir)sync_build.bat" "GuiLite"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

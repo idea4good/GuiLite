@@ -122,7 +122,7 @@ widgets:
 | draw_vline | 渲染一条竖线。x：竖线的横向坐标：x；y0：竖线的上起始坐标y；y1：竖线的下结尾坐标y |
 | draw_line | 渲染普通直线。x1：直线左端点的坐标x；y1：直线左端点的坐标y；x2：直线右端点坐标x；y2：直线右端点坐标y |
 | draw_rect | 渲染矩形。x0：矩形左上角的坐标x；y0：矩形左上角的坐标y；x1：矩形右下角的坐标x；y1：矩形右下角的坐标y |
-| set_frame_layer_visible_rect | 设置指定图层的可视区域（矩形），可视区域会根据图层优先级，自动进行上下叠加。rect：可视矩形的位置信息；z_order：图层的z坐标（图层坐标） |
+| set_overlap_zone | 设置指定图层的可视区域（矩形），可视区域会根据图层优先级，自动进行上下叠加。rect：可视矩形的位置信息；z_order：图层的z坐标（图层坐标） |
 | flush_screen | 将当前surface的指定矩形区域一次性刷在显示屏上。left：surface指定区域的左边界坐标；top：surface指定区域的上边界坐标；right：surface指定区域的右边界坐标；bottom：surface指定区域的下边界坐标 |
 | is_valid | 判断给定位置的矩形，是否合理（是否在surface的范围内）。rect：矩形区域的坐标信息 |
 ***

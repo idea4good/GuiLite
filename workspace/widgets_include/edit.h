@@ -54,7 +54,7 @@ protected:
 			if (m_z_order > m_parent->get_z_order())
 			{
 				s_keyboard.disconnect();
-				m_surface->set_frame_layer_visible_rect(empty_rect, s_keyboard.get_z_order());
+				m_surface->set_overlap_zone(empty_rect, s_keyboard.get_z_order());
 				m_z_order = m_parent->get_z_order();
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
@@ -65,7 +65,7 @@ protected:
 			if (m_z_order > m_parent->get_z_order())
 			{
 				s_keyboard.disconnect();
-				m_surface->set_frame_layer_visible_rect(empty_rect, s_keyboard.get_z_order());
+				m_surface->set_overlap_zone(empty_rect, s_keyboard.get_z_order());
 				m_z_order = m_parent->get_z_order();
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
@@ -148,7 +148,7 @@ private:
 
 		c_rect kb_rect;
 		s_keyboard.get_screen_rect(kb_rect);
-		m_surface->set_frame_layer_visible_rect(kb_rect, s_keyboard.get_z_order());
+		m_surface->set_overlap_zone(kb_rect, s_keyboard.get_z_order());
 		s_keyboard.show_window();
 	}
 	void on_touch_down(int x, int y)

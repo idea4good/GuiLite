@@ -70,7 +70,7 @@ protected:
 		case STATUS_NORMAL:
 			if (m_z_order > m_parent->get_z_order())
 			{
-				m_surface->set_frame_layer_visible_rect(empty_rect, m_z_order);
+				m_surface->set_overlap_zone(empty_rect, m_z_order);
 				m_z_order = m_parent->get_z_order();
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
@@ -80,7 +80,7 @@ protected:
 		case STATUS_FOCUSED:
 			if (m_z_order > m_parent->get_z_order())
 			{
-				m_surface->set_frame_layer_visible_rect(empty_rect, m_z_order);
+				m_surface->set_overlap_zone(empty_rect, m_z_order);
 				m_z_order = m_parent->get_z_order();
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
@@ -98,7 +98,7 @@ protected:
 				{
 					m_z_order++;
 				}
-				m_surface->set_frame_layer_visible_rect(m_list_screen_rect, m_z_order);
+				m_surface->set_overlap_zone(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 				show_list();
 			}
