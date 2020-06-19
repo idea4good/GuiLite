@@ -1925,9 +1925,6 @@ public:
 		{
 			cur_dlg->set_attr(WND_ATTRIBUTION(0));
 		}
-		c_rect rc;
-		p_dlg->get_screen_rect(rc);
-		p_dlg->get_surface()->show_overlapped_rect(rc, Z_ORDER_LEVEL_1);
 		p_dlg->set_attr(modal_mode ? (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY) : (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS));
 		p_dlg->show_window();
 		p_dlg->set_me_the_dialog();
@@ -1941,8 +1938,9 @@ public:
 			return 0;
 		}
 		c_rect rc;
+		dlg->get_screen_rect(rc);
 		dlg->set_attr(WND_ATTRIBUTION(0));
-		surface->show_overlapped_rect(rc, dlg->m_z_order);
+		surface->show_overlapped_rect(rc, dlg->m_z_order -  1);
 		//clear the dialog
 		for (int i = 0; i < SURFACE_CNT_MAX; i++)
 		{
@@ -2259,18 +2257,17 @@ protected:
 	}
 	virtual void on_paint()
 	{
-		c_rect rect;
+		c_rect rect, kb_rect;
 		get_screen_rect(rect);
-		c_rect empty_rect;
-		empty_rect.Empty();
+		s_keyboard.get_screen_rect(kb_rect);
 		switch (m_status)
 		{
 		case STATUS_NORMAL:
 			if (m_z_order > m_parent->get_z_order())
 			{
 				s_keyboard.disconnect();
-				m_surface->show_overlapped_rect(empty_rect, s_keyboard.get_z_order());
 				m_z_order = m_parent->get_z_order();
+				m_surface->show_overlapped_rect(kb_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
@@ -2280,8 +2277,8 @@ protected:
 			if (m_z_order > m_parent->get_z_order())
 			{
 				s_keyboard.disconnect();
-				m_surface->show_overlapped_rect(empty_rect, s_keyboard.get_z_order());
 				m_z_order = m_parent->get_z_order();
+				m_surface->show_overlapped_rect(kb_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
@@ -2360,9 +2357,6 @@ private:
 	void show_keyboard()
 	{
 		s_keyboard.connect(this, IDD_KEY_BOARD, m_kb_style);
-		c_rect kb_rect;
-		s_keyboard.get_screen_rect(kb_rect);
-		m_surface->show_overlapped_rect(kb_rect, s_keyboard.get_z_order());
 		s_keyboard.show_window();
 	}
 	void on_touch_down(int x, int y)
@@ -2493,15 +2487,15 @@ protected:
 	}
 	virtual void on_paint()
 	{
-		c_rect rect, empty_rect;
+		c_rect rect;
 		get_screen_rect(rect);
 		switch (m_status)
 		{
 		case STATUS_NORMAL:
 			if (m_z_order > m_parent->get_z_order())
 			{
-				m_surface->show_overlapped_rect(empty_rect, m_z_order);
 				m_z_order = m_parent->get_z_order();
+				m_surface->show_overlapped_rect(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
@@ -2510,8 +2504,8 @@ protected:
 		case STATUS_FOCUSED:
 			if (m_z_order > m_parent->get_z_order())
 			{
-				m_surface->show_overlapped_rect(empty_rect, m_z_order);
 				m_z_order = m_parent->get_z_order();
+				m_surface->show_overlapped_rect(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
@@ -2528,7 +2522,6 @@ protected:
 				{
 					m_z_order++;
 				}
-				m_surface->show_overlapped_rect(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 				show_list();
 			}
