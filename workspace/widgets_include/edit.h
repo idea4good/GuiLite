@@ -44,18 +44,17 @@ protected:
 	}
 	virtual void on_paint()
 	{
-		c_rect rect;
+		c_rect rect, kb_rect;
 		get_screen_rect(rect);
-		c_rect empty_rect;
-		empty_rect.Empty();
+		s_keyboard.get_screen_rect(kb_rect);
 		switch (m_status)
 		{
 		case STATUS_NORMAL:
 			if (m_z_order > m_parent->get_z_order())
 			{
 				s_keyboard.disconnect();
-				m_surface->set_frame_layer_visible_rect(empty_rect, s_keyboard.get_z_order());
 				m_z_order = m_parent->get_z_order();
+				m_surface->show_overlapped_rect(kb_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
@@ -65,8 +64,8 @@ protected:
 			if (m_z_order > m_parent->get_z_order())
 			{
 				s_keyboard.disconnect();
-				m_surface->set_frame_layer_visible_rect(empty_rect, s_keyboard.get_z_order());
 				m_z_order = m_parent->get_z_order();
+				m_surface->show_overlapped_rect(kb_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
@@ -145,10 +144,6 @@ private:
 	void show_keyboard()
 	{
 		s_keyboard.connect(this, IDD_KEY_BOARD, m_kb_style);
-
-		c_rect kb_rect;
-		s_keyboard.get_screen_rect(kb_rect);
-		m_surface->set_frame_layer_visible_rect(kb_rect, s_keyboard.get_z_order());
 		s_keyboard.show_window();
 	}
 	void on_touch_down(int x, int y)

@@ -22,7 +22,7 @@ public:
 	}
 	void Empty()
 	{
-		m_left = m_top = m_right = m_bottom = 0;
+		m_left = m_top = m_right = m_bottom = -1;
 	}
 	int IsEmpty() const
 	{

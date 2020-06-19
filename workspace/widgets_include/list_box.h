@@ -62,7 +62,7 @@ protected:
 
 	virtual void on_paint()
 	{
-		c_rect rect, empty_rect;
+		c_rect rect;
 		get_screen_rect(rect);
 
 		switch (m_status)
@@ -70,8 +70,8 @@ protected:
 		case STATUS_NORMAL:
 			if (m_z_order > m_parent->get_z_order())
 			{
-				m_surface->set_frame_layer_visible_rect(empty_rect, m_z_order);
 				m_z_order = m_parent->get_z_order();
+				m_surface->show_overlapped_rect(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
@@ -80,8 +80,8 @@ protected:
 		case STATUS_FOCUSED:
 			if (m_z_order > m_parent->get_z_order())
 			{
-				m_surface->set_frame_layer_visible_rect(empty_rect, m_z_order);
 				m_z_order = m_parent->get_z_order();
+				m_surface->show_overlapped_rect(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
@@ -98,7 +98,6 @@ protected:
 				{
 					m_z_order++;
 				}
-				m_surface->set_frame_layer_visible_rect(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 				show_list();
 			}

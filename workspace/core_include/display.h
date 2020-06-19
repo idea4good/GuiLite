@@ -30,7 +30,7 @@ class c_display {
 public:
 	inline c_display(void* phy_fb, int display_width, int display_height, int surface_width, int surface_height, unsigned int color_bytes, int surface_cnt, EXTERNAL_GFX_OP* gfx_op = 0);//multiple surface or surface_no_fb
 	inline c_display(void* phy_fb, int display_width, int display_height, c_surface* surface);//single custom surface
-	inline c_surface* alloc_surface(Z_ORDER_LEVEL max_zorder);//for multiple surfaces
+	inline c_surface* alloc_surface(Z_ORDER_LEVEL max_zorder, c_rect overlap_rect = c_rect(0, 0, -1, -1));//for multiple surfaces
 	inline int swipe_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset);
 	int get_width() { return m_width; }
 	int get_height() { return m_height; }
@@ -97,22 +97,20 @@ private:
 	int				m_surface_index;
 };
 
-class c_frame_layer
+class c_overlap_zone
 {
 public:
-	c_frame_layer() { fb = 0; }
+	c_overlap_zone() { fb = 0; }
 	void* fb;
-	c_rect 	visible_rect;
+	c_rect 	rect;
 };
 
 class c_surface {
 	friend class c_display; friend class c_bitmap;
 public:
-	c_surface(unsigned int width, unsigned int height, unsigned int color_bytes, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0) : m_width(width), m_height(height), m_color_bytes(color_bytes), m_fb(0), m_is_active(false), m_top_zorder(Z_ORDER_LEVEL_0), m_phy_fb(0), m_phy_write_index(0), m_display(0)
+	c_surface(unsigned int width, unsigned int height, unsigned int color_bytes, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect(0, 0, -1, -1)) : m_width(width), m_height(height), m_color_bytes(color_bytes), m_fb(0), m_is_active(false), m_top_zorder(Z_ORDER_LEVEL_0), m_phy_fb(0), m_phy_write_index(0), m_display(0)
 	{
-		memset(m_frame_layers, 0, sizeof(m_frame_layers));
-		m_frame_layers[Z_ORDER_LEVEL_0].visible_rect = c_rect(0, 0, m_width, m_height);
-		set_surface(max_zorder);
+		(overlpa_rect == c_rect(0, 0, -1, -1)) ? set_surface(max_zorder, c_rect(0, 0, width - 1, height - 1)) : set_surface(max_zorder, overlpa_rect);
 	}
 
 	int get_width() { return m_width; }
@@ -125,9 +123,9 @@ public:
 			ASSERT(false);
 			return 0;
 		}
-		if (m_frame_layers[z_order].fb)
+		if (m_overlap_zones[z_order].fb)
 		{
-			return (m_color_bytes == 4) ? ((unsigned int*)(m_frame_layers[z_order].fb))[y * m_width + x] : GL_RGB_16_to_32(((unsigned short*)(m_frame_layers[z_order].fb))[y * m_width + x]);
+			return (m_color_bytes == 4) ? ((unsigned int*)(m_overlap_zones[z_order].fb))[y * m_width + x] : GL_RGB_16_to_32(((unsigned short*)(m_overlap_zones[z_order].fb))[y * m_width + x]);
 		}
 		else if (m_fb)
 		{
@@ -151,11 +149,6 @@ public:
 			ASSERT(false);
 			return;
 		}
-		if (0 == m_frame_layers[z_order].visible_rect.PtInRect(x, y))
-		{
-			ASSERT(false);
-			return;
-		}
 
 		if (z_order == m_max_zorder)
 		{
@@ -167,31 +160,35 @@ public:
 			m_top_zorder = (Z_ORDER_LEVEL)z_order;
 		}
 
-		if (m_color_bytes == 4)
+		if (m_overlap_zones[z_order].rect.PtInRect(x, y))
 		{
-			((unsigned int*)(m_frame_layers[z_order].fb))[x + y * m_width] = rgb;
+			c_rect overlap_rect = m_overlap_zones[z_order].rect;
+			if (m_color_bytes == 4)
+			{
+				((unsigned int*)(m_overlap_zones[z_order].fb))[(x - overlap_rect.m_left) + (y - overlap_rect.m_top) * overlap_rect.Width()] = rgb;
+			}
+			else
+			{
+				((unsigned short*)(m_overlap_zones[z_order].fb))[(x - overlap_rect.m_left) + (y - overlap_rect.m_top) * overlap_rect.Width()] = GL_RGB_32_to_16(rgb);
+			}
 		}
-		else
-		{
-			((unsigned short*)(m_frame_layers[z_order].fb))[x + y * m_width] = GL_RGB_32_to_16(rgb);
-		}
-
+		
 		if (z_order == m_top_zorder)
 		{
 			return draw_pixel_on_fb(x, y, rgb);
 		}
 
-		bool is_covered = false;
+		bool be_overlapped = false;
 		for (unsigned int tmp_z_order = Z_ORDER_LEVEL_MAX - 1; tmp_z_order > z_order; tmp_z_order--)
 		{
-			if (true == m_frame_layers[tmp_z_order].visible_rect.PtInRect(x, y))
+			if (m_overlap_zones[tmp_z_order].rect.PtInRect(x, y))
 			{
-				is_covered = true;
+				be_overlapped = true;
 				break;
 			}
 		}
 
-		if (!is_covered)
+		if (!be_overlapped)
 		{
 			draw_pixel_on_fb(x, y, rgb);
 		}
@@ -212,29 +209,22 @@ public:
 		if (z_order == m_top_zorder)
 		{
 			int x, y;
-			unsigned short* mem_fb_16 = 0;
-			unsigned int* mem_fb_32 = 0;
+			c_rect overlap_rect = m_overlap_zones[z_order].rect;
 			unsigned int rgb_16 = GL_RGB_32_to_16(rgb);
 			for (y = y0; y <= y1; y++)
 			{
-				x = x0;
-				if (m_color_bytes == 4)
+				for (x = x0; x <= x1; x++)
 				{
-					mem_fb_32 = &((unsigned int*)m_frame_layers[z_order].fb)[y * m_width + x];
-				}
-				else
-				{
-					mem_fb_16 = &((unsigned short*)m_frame_layers[z_order].fb)[y * m_width + x];
-				}
-				for (; x <= x1; x++)
-				{
-					if (m_color_bytes == 4)
+					if (overlap_rect.PtInRect(x, y))
 					{
-						*mem_fb_32++ = rgb;
-					}
-					else
-					{
-						*mem_fb_16++ = rgb_16;
+						if (m_color_bytes == 4)
+						{
+							((unsigned int*)m_overlap_zones[z_order].fb)[(y - overlap_rect.m_top) * overlap_rect.Width() + (x - overlap_rect.m_left)] = rgb;
+						}
+						else
+						{
+							((unsigned short*)m_overlap_zones[z_order].fb)[(y - overlap_rect.m_top) * overlap_rect.Width() + (x - overlap_rect.m_left)] = rgb_16;
+						}
 					}
 				}
 			}
@@ -353,51 +343,23 @@ public:
 	bool is_active() { return m_is_active; }
 	c_display* get_display() { return m_display; }
 
-	int set_frame_layer_visible_rect(c_rect& rect, unsigned int z_order)
+	int show_overlapped_rect(c_rect& rect, unsigned int z_order)
 	{
-		if (rect == m_frame_layers[z_order].visible_rect)
-		{
-			return 0;
-		}
-		if (rect.m_left < 0 || rect.m_left >= m_width ||
-			rect.m_right < 0 || rect.m_right >= m_width ||
-			rect.m_top < 0 || rect.m_top >= m_height ||
-			rect.m_bottom < 0 || rect.m_bottom >= m_height)
-		{
-			ASSERT(false);
-			return -1;
-		}
-		if (!(z_order > Z_ORDER_LEVEL_0&& z_order < Z_ORDER_LEVEL_MAX))
-		{
-			ASSERT(false);
-			return -2;
-		}
-		if (z_order < (unsigned int)m_top_zorder)
-		{
-			ASSERT(false);
-			return -3;
-		}
-		m_top_zorder = (Z_ORDER_LEVEL)z_order;
+		ASSERT(z_order >= Z_ORDER_LEVEL_0 && z_order < Z_ORDER_LEVEL_MAX);
 
-		c_rect old_rect = m_frame_layers[z_order].visible_rect;
-		//Recover the lower layer
-		int src_zorder = (Z_ORDER_LEVEL)(z_order - 1);
-		for (int y = old_rect.m_top; y <= old_rect.m_bottom; y++)
+		c_rect overlap_rect = m_overlap_zones[z_order].rect;
+		ASSERT(rect.m_left >= overlap_rect.m_left && rect.m_right <= overlap_rect.m_right &&
+			rect.m_top >= overlap_rect.m_top && rect.m_bottom <= overlap_rect.m_bottom);
+
+		void* fb = m_overlap_zones[z_order].fb;
+		int width = overlap_rect.Width();
+		for (int y = rect.m_top; y <= rect.m_bottom; y++)
 		{
-			for (int x = old_rect.m_left; x <= old_rect.m_right; x++)
+			for (int x = rect.m_left; x <= rect.m_right; x++)
 			{
-				if (!rect.PtInRect(x, y))
-				{
-					unsigned int rgb = (m_color_bytes == 4) ? ((unsigned int*)(m_frame_layers[src_zorder].fb))[x + y * m_width] : GL_RGB_16_to_32(((unsigned short*)(m_frame_layers[src_zorder].fb))[x + y * m_width]);
-					draw_pixel_on_fb(x, y, rgb);
-				}
+				unsigned int rgb = (m_color_bytes == 4) ? ((unsigned int*)fb)[(x - overlap_rect.m_left) + (y - overlap_rect.m_top) * width] : GL_RGB_16_to_32(((unsigned short*)fb)[(x - overlap_rect.m_left) + (y - overlap_rect.m_top) * width]);
+				draw_pixel_on_fb(x, y, rgb);
 			}
-		}
-
-		m_frame_layers[z_order].visible_rect = rect;
-		if (rect.IsEmpty())
-		{
-			m_top_zorder = (Z_ORDER_LEVEL)(z_order - 1);
 		}
 		return 0;
 	}
@@ -486,7 +448,7 @@ protected:
 		m_phy_write_index = &display->m_phy_write_index;
 	}
 
-	void set_surface(Z_ORDER_LEVEL max_z_order)
+	void set_surface(Z_ORDER_LEVEL max_z_order, c_rect overlap_rect)
 	{
 		m_max_zorder = max_z_order;
 		if (m_display && (m_display->m_surface_cnt > 1))
@@ -496,9 +458,8 @@ protected:
 
 		for (int i = Z_ORDER_LEVEL_0; i < m_max_zorder; i++)
 		{//Top layber fb always be 0
-			ASSERT(!m_frame_layers[i].fb);
-			m_frame_layers[i].fb = calloc(m_width * m_height, m_color_bytes);
-			ASSERT(m_frame_layers[i].fb);
+			ASSERT(m_overlap_zones[i].fb = calloc(overlap_rect.Width() * overlap_rect.Height(), m_color_bytes));
+			m_overlap_zones[i].rect = overlap_rect;
 		}
 	}
 
@@ -506,7 +467,7 @@ protected:
 	int				m_height;		//in pixels
 	int				m_color_bytes;	//16 bits, 32 bits only
 	void*			m_fb;			//frame buffer you could see
-	c_frame_layer 	m_frame_layers[Z_ORDER_LEVEL_MAX];//Top layber fb always be 0
+	c_overlap_zone 	m_overlap_zones[Z_ORDER_LEVEL_MAX];//Top layber fb always be 0
 	bool			m_is_active;
 	Z_ORDER_LEVEL	m_max_zorder;
 	Z_ORDER_LEVEL	m_top_zorder;
@@ -518,7 +479,7 @@ protected:
 class c_surface_no_fb : public c_surface {//No physical framebuffer
 	friend class c_display;
 public:
-	c_surface_no_fb(unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0) : c_surface(width, height, color_bytes, max_zorder), m_gfx_op(gfx_op) {}
+	c_surface_no_fb(unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect(0, 0, -1, -1)) : c_surface(width, height, color_bytes, max_zorder, overlpa_rect), m_gfx_op(gfx_op) {}
 protected:
 	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb)
 	{
@@ -610,10 +571,10 @@ inline c_display::c_display(void* phy_fb, int display_width, int display_height,
 	(m_surface_group[0] = surface)->attach_display(this);
 }
 
-inline c_surface* c_display::alloc_surface(Z_ORDER_LEVEL max_zorder)
+inline c_surface* c_display::alloc_surface(Z_ORDER_LEVEL max_zorder, c_rect overlap_rect)
 {
 	ASSERT(max_zorder < Z_ORDER_LEVEL_MAX && m_surface_index < m_surface_cnt);
-	m_surface_group[m_surface_index]->set_surface(max_zorder);
+	(overlap_rect == c_rect(0, 0, -1, -1)) ? m_surface_group[m_surface_index]->set_surface(max_zorder, c_rect(0, 0, m_width - 1, m_height - 1)) : m_surface_group[m_surface_index]->set_surface(max_zorder, overlap_rect);
 	return m_surface_group[m_surface_index++];
 }
 
