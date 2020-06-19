@@ -343,51 +343,23 @@ public:
 	bool is_active() { return m_is_active; }
 	c_display* get_display() { return m_display; }
 
-	int set_overlap_zone(c_rect& rect, unsigned int z_order)
+	int show_overlapped_rect(c_rect& rect, unsigned int z_order)
 	{
-		if (rect == m_overlap_zones[z_order].rect)
-		{
-			return 0;
-		}
-		if (rect.m_left < 0 || rect.m_left >= m_width ||
-			rect.m_right < 0 || rect.m_right >= m_width ||
-			rect.m_top < 0 || rect.m_top >= m_height ||
-			rect.m_bottom < 0 || rect.m_bottom >= m_height)
-		{
-			ASSERT(false);
-			return -1;
-		}
-		if (!(z_order > Z_ORDER_LEVEL_0&& z_order < Z_ORDER_LEVEL_MAX))
-		{
-			ASSERT(false);
-			return -2;
-		}
-		if (z_order < (unsigned int)m_top_zorder)
-		{
-			ASSERT(false);
-			return -3;
-		}
-		m_top_zorder = (Z_ORDER_LEVEL)z_order;
+		ASSERT(z_order >= Z_ORDER_LEVEL_0 && z_order < Z_ORDER_LEVEL_MAX);
 
-		c_rect old_rect = m_overlap_zones[z_order].rect;
-		//Recover the lower layer
-		int src_zorder = (Z_ORDER_LEVEL)(z_order - 1);
-		for (int y = old_rect.m_top; y <= old_rect.m_bottom; y++)
+		c_rect overlap_rect = m_overlap_zones[z_order].rect;
+		ASSERT(rect.m_left >= overlap_rect.m_left && rect.m_right <= overlap_rect.m_right &&
+			rect.m_top >= overlap_rect.m_top && rect.m_bottom <= overlap_rect.m_bottom);
+
+		void* fb = m_overlap_zones[z_order].fb;
+		int width = overlap_rect.Width();
+		for (int y = rect.m_top; y <= rect.m_bottom; y++)
 		{
-			for (int x = old_rect.m_left; x <= old_rect.m_right; x++)
+			for (int x = rect.m_left; x <= rect.m_right; x++)
 			{
-				if (!rect.PtInRect(x, y))
-				{
-					unsigned int rgb = (m_color_bytes == 4) ? ((unsigned int*)(m_overlap_zones[src_zorder].fb))[x + y * m_width] : GL_RGB_16_to_32(((unsigned short*)(m_overlap_zones[src_zorder].fb))[x + y * m_width]);
-					draw_pixel_on_fb(x, y, rgb);
-				}
+				unsigned int rgb = (m_color_bytes == 4) ? ((unsigned int*)fb)[(x - overlap_rect.m_left) + (y - overlap_rect.m_top) * width] : GL_RGB_16_to_32(((unsigned short*)fb)[(x - overlap_rect.m_left) + (y - overlap_rect.m_top) * width]);
+				draw_pixel_on_fb(x, y, rgb);
 			}
-		}
-
-		m_overlap_zones[z_order].rect = rect;
-		if (rect.IsEmpty())
-		{
-			m_top_zorder = (Z_ORDER_LEVEL)(z_order - 1);
 		}
 		return 0;
 	}
@@ -486,7 +458,7 @@ protected:
 
 		for (int i = Z_ORDER_LEVEL_0; i < m_max_zorder; i++)
 		{//Top layber fb always be 0
-			ASSERT(m_overlap_zones[i].fb = calloc(m_width * m_height, m_color_bytes));
+			ASSERT(m_overlap_zones[i].fb = calloc(overlap_rect.Width() * overlap_rect.Height(), m_color_bytes));
 			m_overlap_zones[i].rect = overlap_rect;
 		}
 	}
@@ -507,7 +479,7 @@ protected:
 class c_surface_no_fb : public c_surface {//No physical framebuffer
 	friend class c_display;
 public:
-	c_surface_no_fb(unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0) : c_surface(width, height, color_bytes, max_zorder), m_gfx_op(gfx_op) {}
+	c_surface_no_fb(unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect(0, 0, -1, -1)) : c_surface(width, height, color_bytes, max_zorder, overlpa_rect), m_gfx_op(gfx_op) {}
 protected:
 	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb)
 	{
