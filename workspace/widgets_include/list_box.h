@@ -71,7 +71,7 @@ protected:
 			if (m_z_order > m_parent->get_z_order())
 			{
 				m_z_order = m_parent->get_z_order();
-				m_surface->show_overlapped_rect(m_list_screen_rect, m_z_order);
+				m_surface->show_layer(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
@@ -81,7 +81,7 @@ protected:
 			if (m_z_order > m_parent->get_z_order())
 			{
 				m_z_order = m_parent->get_z_order();
-				m_surface->show_overlapped_rect(m_list_screen_rect, m_z_order);
+				m_surface->show_layer(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);

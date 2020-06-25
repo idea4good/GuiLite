@@ -57,7 +57,7 @@ public:
 		c_rect rc;
 		dlg->get_screen_rect(rc);
 		dlg->set_attr(WND_ATTRIBUTION(0));
-		surface->show_overlapped_rect(rc, dlg->m_z_order -  1);
+		surface->show_layer(rc, dlg->m_z_order -  1);
 
 		//clear the dialog
 		for (int i = 0; i < SURFACE_CNT_MAX; i++)

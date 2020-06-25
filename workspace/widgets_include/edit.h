@@ -54,7 +54,7 @@ protected:
 			{
 				s_keyboard.disconnect();
 				m_z_order = m_parent->get_z_order();
-				m_surface->show_overlapped_rect(kb_rect, m_z_order);
+				m_surface->show_layer(kb_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
@@ -65,7 +65,7 @@ protected:
 			{
 				s_keyboard.disconnect();
 				m_z_order = m_parent->get_z_order();
-				m_surface->show_overlapped_rect(kb_rect, m_z_order);
+				m_surface->show_layer(kb_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);

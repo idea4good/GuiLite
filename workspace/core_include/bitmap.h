@@ -20,9 +20,9 @@ public:
 		c_rect lower_fb_rect;
 		if (z_order >= Z_ORDER_LEVEL_1)
 		{
-			lower_fb_16 = (unsigned short*)surface->m_overlap_zones[z_order - 1].fb;
-			lower_fb_32 = (unsigned int*)surface->m_overlap_zones[z_order - 1].fb;
-			lower_fb_rect = surface->m_overlap_zones[z_order - 1].rect;
+			lower_fb_16 = (unsigned short*)surface->m_layers[z_order - 1].fb;
+			lower_fb_32 = (unsigned int*)surface->m_layers[z_order - 1].fb;
+			lower_fb_rect = surface->m_layers[z_order - 1].rect;
 			lower_fb_width = lower_fb_rect.Width();
 		}
 		unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
@@ -63,9 +63,9 @@ public:
 		c_rect lower_fb_rect;
 		if (z_order >= Z_ORDER_LEVEL_1)
 		{
-			lower_fb_16 = (unsigned short*)surface->m_overlap_zones[z_order - 1].fb;
-			lower_fb_32 = (unsigned int*)surface->m_overlap_zones[z_order - 1].fb;
-			lower_fb_rect = surface->m_overlap_zones[z_order - 1].rect;
+			lower_fb_16 = (unsigned short*)surface->m_layers[z_order - 1].fb;
+			lower_fb_32 = (unsigned int*)surface->m_layers[z_order - 1].fb;
+			lower_fb_rect = surface->m_layers[z_order - 1].rect;
 			lower_fb_width = lower_fb_rect.Width();
 		}
 		unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
