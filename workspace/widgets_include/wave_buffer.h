@@ -9,8 +9,6 @@
 #define WAVE_READ_CACHE_LEN	8
 #define BUFFER_EMPTY	-1111
 #define BUFFER_FULL		-2222;
-#define MAX(a,b) (((a)>(b))?(a):(b))
-#define MIN(a,b) (((a)<(b))?(a):(b))
 
 class c_wave_buffer
 {

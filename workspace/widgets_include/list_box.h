@@ -2,7 +2,6 @@
 #define GUILITE_WIDGETS_INCLUDE_LIST_BOX_H
 
 #include "../core_include/api.h"
-#include "../core_include/rect.h"
 #include "../core_include/cmd_target.h"
 #include "../core_include/resource.h"
 #include "../core_include/wnd.h"
@@ -181,14 +180,14 @@ private:
 	}
 	void on_touch_down(int x, int y)
 	{
-		if (m_wnd_rect.PtInRect(x, y))
+		if (m_wnd_rect.pt_in_rect(x, y))
 		{//click base
 			if (STATUS_NORMAL == m_status)
 			{
 				m_parent->set_child_focus(this);
 			}
 		}
-		else if (m_list_wnd_rect.PtInRect(x, y))
+		else if (m_list_wnd_rect.pt_in_rect(x, y))
 		{//click extend list
 			c_wnd::on_touch(x, y, TOUCH_DOWN);
 		}
@@ -211,12 +210,12 @@ private:
 		}
 		else if (STATUS_PUSHED == m_status)
 		{
-			if (m_wnd_rect.PtInRect(x, y))
+			if (m_wnd_rect.pt_in_rect(x, y))
 			{//click base
 				m_status = STATUS_FOCUSED;
 				on_paint();
 			}
-			else if (m_list_wnd_rect.PtInRect(x, y))
+			else if (m_list_wnd_rect.pt_in_rect(x, y))
 			{//click extend list
 				m_status = STATUS_FOCUSED;
 				select_item((y - m_list_wnd_rect.m_top) / ITEM_HEIGHT);

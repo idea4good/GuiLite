@@ -2,7 +2,6 @@
 #define GUILITE_WIDGETS_INCLUDE_EDIT_H
 
 #include "../core_include/api.h"
-#include "../core_include/rect.h"
 #include "../core_include/cmd_target.h"
 #include "../core_include/wnd.h"
 #include "../core_include/resource.h"
@@ -155,14 +154,14 @@ private:
 		kb_rect_relate_2_edit_parent.m_top += m_wnd_rect.m_top;
 		kb_rect_relate_2_edit_parent.m_bottom += m_wnd_rect.m_top;
 
-		if (m_wnd_rect.PtInRect(x, y))
+		if (m_wnd_rect.pt_in_rect(x, y))
 		{//click edit box
 			if (STATUS_NORMAL == m_status)
 			{
 				m_parent->set_child_focus(this);
 			}
 		}
-		else if (kb_rect_relate_2_edit_parent.PtInRect(x, y))
+		else if (kb_rect_relate_2_edit_parent.pt_in_rect(x, y))
 		{//click key board
 			c_wnd::on_touch(x, y, TOUCH_DOWN);
 		}
@@ -184,7 +183,7 @@ private:
 		}
 		else if (STATUS_PUSHED == m_status)
 		{
-			if (m_wnd_rect.PtInRect(x, y))
+			if (m_wnd_rect.pt_in_rect(x, y))
 			{//click edit box
 				m_status = STATUS_FOCUSED;
 				on_paint();

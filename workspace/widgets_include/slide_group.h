@@ -2,7 +2,6 @@
 #define GUILITE_WIDGETS_INCLUDE_SLIDE_GROUP_H
 
 #include "../core_include/api.h"
-#include "../core_include/rect.h"
 #include "../core_include/display.h"
 #include "../core_include/cmd_target.h"
 #include "../core_include/wnd.h"
@@ -248,14 +247,14 @@ private:
 		int step = m_down_x - m_move_x;
 		c_rect rc;
 		m_slide_group->get_screen_rect(rc);
-		while (step < rc.Width())
+		while (step < rc.width())
 		{
 			s1->get_display()->swipe_surface(s2, s1, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, step);
 			step += SWIPE_STEP;
 		}
-		if (step != rc.Width())
+		if (step != rc.width())
 		{
-			s1->get_display()->swipe_surface(s2, s1, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, rc.Width());
+			s1->get_display()->swipe_surface(s2, s1, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, rc.width());
 		}
 		return (index + 1);
 	}
@@ -282,7 +281,7 @@ private:
 
 		c_rect rc;
 		m_slide_group->get_screen_rect(rc);
-		int step = rc.Width() - (m_move_x - m_down_x);
+		int step = rc.width() - (m_move_x - m_down_x);
 		while (step > 0)
 		{
 			s1->get_display()->swipe_surface(s1, s2, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, step);
@@ -327,7 +326,7 @@ private:
 		m_slide_group->get_screen_rect(rc);
 		if (s1->get_display() == s2->get_display())
 		{
-			s1->get_display()->swipe_surface(s1, s2, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, (rc.Width() - (m_move_x - m_down_x)));
+			s1->get_display()->swipe_surface(s1, s2, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, (rc.width() - (m_move_x - m_down_x)));
 		}
 	}
 

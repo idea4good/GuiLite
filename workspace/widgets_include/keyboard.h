@@ -2,7 +2,6 @@
 #define GUILITE_WIDGETS_INCLUDE_KEYBOARD_H
 
 #include "../core_include/api.h"
-#include "../core_include/rect.h"
 #include "../core_include/resource.h"
 #include "../core_include/word.h"
 #include "../core_include/cmd_target.h"
@@ -68,11 +67,11 @@ public:
 		{//Place keyboard at the bottom of user's parent window.
 			c_rect user_parent_rect;
 			user->get_parent()->get_wnd_rect(user_parent_rect);
-			return c_wnd::connect(user, resource_id, 0, (0 - user_rect.m_left), (user_parent_rect.Height() - user_rect.m_top - KEYBOARD_HEIGHT), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
+			return c_wnd::connect(user, resource_id, 0, (0 - user_rect.m_left), (user_parent_rect.height() - user_rect.m_top - KEYBOARD_HEIGHT - 1), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
 		}
 		else if (style == STYLE_NUM_BOARD)
 		{//Place keyboard below the user window.
-			return c_wnd::connect(user, resource_id, 0, 0, user_rect.Height(), NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
+			return c_wnd::connect(user, resource_id, 0, 0, user_rect.height(), NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
 		}
 		else
 		{

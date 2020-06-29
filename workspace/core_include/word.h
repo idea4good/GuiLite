@@ -2,7 +2,6 @@
 #define GUILITE_CORE_INCLUDE_WORD_H
 
 #include "../core_include/api.h"
-#include "../core_include/rect.h"
 #include "../core_include/resource.h"
 #include "../core_include/display.h"
 #include <string.h>

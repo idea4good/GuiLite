@@ -2,7 +2,6 @@
 #define GUILITE_WIDGETS_INCLUDE_WAVE_CTRL_H
 
 #include "../core_include/api.h"
-#include "../core_include/rect.h"
 #include "../core_include/cmd_target.h"
 #include "../core_include/wnd.h"
 #include "../core_include/display.h"
@@ -58,14 +57,13 @@ public:
 		m_wave_bottom = rect.m_bottom - WAVE_MARGIN;
 		m_wave_cursor = m_wave_left;
 
-		m_bg_fb = (unsigned int*)calloc(rect.Width() * rect.Height(), 4);
+		m_bg_fb = (unsigned int*)calloc(rect.width() * rect.height(), 4);
 	}
 	virtual void on_paint()
 	{
 		c_rect rect;
 		get_screen_rect(rect);
-
-		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_back_color, m_z_order);
+		m_surface->fill_rect(rect, m_back_color, m_z_order);
 
 		//show name
 		c_word::draw_string(m_surface, m_z_order, m_wave_name, m_wave_left + 10, rect.m_top, m_wave_name_font, m_wave_name_color, GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
@@ -222,7 +220,7 @@ protected:
 
 		c_rect rect;
 		get_screen_rect(rect);
-		register int width = rect.Width();
+		register int width = rect.width();
 		register int top = rect.m_top;
 		register int left = rect.m_left;
 		for (int y_pos = (m_wave_top - 1); y_pos <= (m_wave_bottom + 1); y_pos++)

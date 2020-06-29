@@ -2,6 +2,8 @@
 #define GUILITE_CORE_INCLUDE_API_H
 
 #define REAL_TIME_TASK_CYCLE_MS		50
+#define MAX(a,b) (((a)>(b))?(a):(b))
+#define MIN(a,b) (((a)<(b))?(a):(b))
 
 #define GL_ARGB(a, r, g, b) ((((unsigned int)(a)) << 24) | (((unsigned int)(r)) << 16) | (((unsigned int)(g)) << 8) | ((unsigned int)(b)))
 #define GL_ARGB_A(rgb) ((((unsigned int)(rgb)) >> 24) & 0xFF)
@@ -19,7 +21,7 @@
 #define ALIGN_HMASK			0x03000000L
 
 #define ALIGN_VCENTER		0x00000000L
-#define ALIGN_TOP				0x00100000L
+#define ALIGN_TOP			0x00100000L
 #define ALIGN_BOTTOM		0x00200000L
 #define ALIGN_VMASK			0x00300000L
 
@@ -67,6 +69,39 @@ private:
 	int		m_tail;
 	void* m_read_sem;
 	void* m_write_mutex;
+};
+
+class c_rect
+{
+public:
+	c_rect(){ m_left = m_top = m_right = m_bottom = -1; }
+	c_rect(int left, int top, int width, int height)
+	{
+		set_rect(left, top, width, height);
+	}
+	void set_rect(int left, int top, int width, int height)
+	{
+		ASSERT(width > 0 && height > 0);
+		m_left = left;
+		m_top = top;
+		m_right = left + width - 1;
+		m_bottom = top + height -1;
+	}
+	bool pt_in_rect(int x, int y) const
+	{
+		return x >= m_left && x <= m_right && y >= m_top && y <= m_bottom;
+	}
+	int operator==(const c_rect& rect) const
+	{
+		return (m_left == rect.m_left) && (m_top == rect.m_top) && (m_right == rect.m_right) && (m_bottom == rect.m_bottom);
+	}
+	int width() const { return m_right - m_left + 1; }
+	int height() const { return m_bottom - m_top + 1 ; }
+
+	int	    m_left;
+	int     m_top;
+	int     m_right;
+	int     m_bottom;
 };
 #endif
 #ifndef GUILITE_CORE_INCLUDE_CMD_TARGET_H
@@ -187,51 +222,6 @@ private:
 	static GL_MSG_ENTRY ms_usr_map_entries[USR_MSG_MAX];
 	static unsigned short ms_user_map_size;
 	GL_DECLARE_MESSAGE_MAP()
-};
-#endif
-#ifndef GUILITE_CORE_INCLUDE_RECT_H
-#define GUILITE_CORE_INCLUDE_RECT_H
-#define MAX(a,b) (((a)>(b))?(a):(b))
-#define MIN(a,b) (((a)<(b))?(a):(b))
-class c_rect
-{
-public:
-	c_rect(){Empty();}
-	c_rect(int left, int top, int right, int bottom){m_left = left;m_top = top;m_right = right;m_bottom = bottom;};
-	void SetRect(int Left, int Top, int Right, int Bottom)
-	{
-		m_left = MIN(Left, Right);
-		m_top = MIN(Top, Bottom);
-		m_right = MAX(Left, Right);
-		m_bottom = MAX(Top, Bottom);
-	}
-	c_rect(const c_rect& rect)
-	{
-		SetRect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom);
-	}
-	void Empty()
-	{
-		m_left = m_top = m_right = m_bottom = -1;
-	}
-	int IsEmpty() const
-	{
-		return m_top == m_bottom || m_left == m_right;
-	}
-	bool PtInRect(int x, int y) const
-	{
-		return x >= m_left && x <= m_right && y >= m_top && y <= m_bottom;
-	}
-	int operator==(const c_rect& rect) const
-	{
-		return (m_left == rect.m_left) && (m_top == rect.m_top) &&
-			(m_right == rect.m_right) && (m_bottom == rect.m_bottom);
-	}
-	int Width() const   {return m_right - m_left + 1;}
-	int Height() const {return m_bottom - m_top + 1;}
-	int	    m_left;
-	int     m_top;
-	int     m_right;
-	int     m_bottom;
 };
 #endif
 #ifndef  GUILITE_CORE_INCLUDE_RESOURCE_H
@@ -391,7 +381,7 @@ class c_display {
 public:
 	inline c_display(void* phy_fb, int display_width, int display_height, int surface_width, int surface_height, unsigned int color_bytes, int surface_cnt, EXTERNAL_GFX_OP* gfx_op = 0);//multiple surface or surface_no_fb
 	inline c_display(void* phy_fb, int display_width, int display_height, c_surface* surface);//single custom surface
-	inline c_surface* alloc_surface(Z_ORDER_LEVEL max_zorder, c_rect layer_rect = c_rect(0, 0, -1, -1));//for multiple surfaces
+	inline c_surface* alloc_surface(Z_ORDER_LEVEL max_zorder, c_rect layer_rect = c_rect());//for multiple surfaces
 	inline int swipe_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset);
 	int get_width() { return m_width; }
 	int get_height() { return m_height; }
@@ -459,9 +449,9 @@ public:
 class c_surface {
 	friend class c_display; friend class c_bitmap;
 public:
-	c_surface(unsigned int width, unsigned int height, unsigned int color_bytes, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect(0, 0, -1, -1)) : m_width(width), m_height(height), m_color_bytes(color_bytes), m_fb(0), m_is_active(false), m_top_zorder(Z_ORDER_LEVEL_0), m_phy_fb(0), m_phy_write_index(0), m_display(0)
+	c_surface(unsigned int width, unsigned int height, unsigned int color_bytes, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect()) : m_width(width), m_height(height), m_color_bytes(color_bytes), m_fb(0), m_is_active(false), m_top_zorder(Z_ORDER_LEVEL_0), m_phy_fb(0), m_phy_write_index(0), m_display(0)
 	{
-		(overlpa_rect == c_rect(0, 0, -1, -1)) ? set_surface(max_zorder, c_rect(0, 0, width - 1, height - 1)) : set_surface(max_zorder, overlpa_rect);
+		(overlpa_rect == c_rect()) ? set_surface(max_zorder, c_rect(0, 0, width - 1, height - 1)) : set_surface(max_zorder, overlpa_rect);
 	}
 	int get_width() { return m_width; }
 	int get_height() { return m_height; }
@@ -506,16 +496,16 @@ public:
 		{
 			m_top_zorder = (Z_ORDER_LEVEL)z_order;
 		}
-		if (m_layers[z_order].rect.PtInRect(x, y))
+		if (m_layers[z_order].rect.pt_in_rect(x, y))
 		{
 			c_rect layer_rect = m_layers[z_order].rect;
 			if (m_color_bytes == 4)
 			{
-				((unsigned int*)(m_layers[z_order].fb))[(x - layer_rect.m_left) + (y - layer_rect.m_top) * layer_rect.Width()] = rgb;
+				((unsigned int*)(m_layers[z_order].fb))[(x - layer_rect.m_left) + (y - layer_rect.m_top) * layer_rect.width()] = rgb;
 			}
 			else
 			{
-				((unsigned short*)(m_layers[z_order].fb))[(x - layer_rect.m_left) + (y - layer_rect.m_top) * layer_rect.Width()] = GL_RGB_32_to_16(rgb);
+				((unsigned short*)(m_layers[z_order].fb))[(x - layer_rect.m_left) + (y - layer_rect.m_top) * layer_rect.width()] = GL_RGB_32_to_16(rgb);
 			}
 		}
 		
@@ -526,7 +516,7 @@ public:
 		bool be_overlapped = false;
 		for (unsigned int tmp_z_order = Z_ORDER_LEVEL_MAX - 1; tmp_z_order > z_order; tmp_z_order--)
 		{
-			if (m_layers[tmp_z_order].rect.PtInRect(x, y))
+			if (m_layers[tmp_z_order].rect.pt_in_rect(x, y))
 			{
 				be_overlapped = true;
 				break;
@@ -556,15 +546,15 @@ public:
 			{
 				for (x = x0; x <= x1; x++)
 				{
-					if (layer_rect.PtInRect(x, y))
+					if (layer_rect.pt_in_rect(x, y))
 					{
 						if (m_color_bytes == 4)
 						{
-							((unsigned int*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.Width() + (x - layer_rect.m_left)] = rgb;
+							((unsigned int*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.width() + (x - layer_rect.m_left)] = rgb;
 						}
 						else
 						{
-							((unsigned short*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.Width() + (x - layer_rect.m_left)] = rgb_16;
+							((unsigned short*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.width() + (x - layer_rect.m_left)] = rgb_16;
 						}
 					}
 				}
@@ -674,7 +664,7 @@ public:
 		ASSERT(rect.m_left >= layer_rect.m_left && rect.m_right <= layer_rect.m_right &&
 			rect.m_top >= layer_rect.m_top && rect.m_bottom <= layer_rect.m_bottom);
 		void* fb = m_layers[z_order].fb;
-		int width = layer_rect.Width();
+		int width = layer_rect.width();
 		for (int y = rect.m_top; y <= rect.m_bottom; y++)
 		{
 			for (int x = rect.m_left; x <= rect.m_right; x++)
@@ -774,7 +764,7 @@ protected:
 		}
 		for (int i = Z_ORDER_LEVEL_0; i < m_max_zorder; i++)
 		{//Top layber fb always be 0
-			ASSERT(m_layers[i].fb = calloc(layer_rect.Width() * layer_rect.Height(), m_color_bytes));
+			ASSERT(m_layers[i].fb = calloc(layer_rect.width() * layer_rect.height(), m_color_bytes));
 			m_layers[i].rect = layer_rect;
 		}
 	}
@@ -793,7 +783,7 @@ protected:
 class c_surface_no_fb : public c_surface {//No physical framebuffer
 	friend class c_display;
 public:
-	c_surface_no_fb(unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect(0, 0, -1, -1)) : c_surface(width, height, color_bytes, max_zorder, overlpa_rect), m_gfx_op(gfx_op) {}
+	c_surface_no_fb(unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect()) : c_surface(width, height, color_bytes, max_zorder, overlpa_rect), m_gfx_op(gfx_op) {}
 protected:
 	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb)
 	{
@@ -881,7 +871,7 @@ inline c_display::c_display(void* phy_fb, int display_width, int display_height,
 inline c_surface* c_display::alloc_surface(Z_ORDER_LEVEL max_zorder, c_rect layer_rect)
 {
 	ASSERT(max_zorder < Z_ORDER_LEVEL_MAX && m_surface_index < m_surface_cnt);
-	(layer_rect == c_rect(0, 0, -1, -1)) ? m_surface_group[m_surface_index]->set_surface(max_zorder, c_rect(0, 0, m_width - 1, m_height - 1)) : m_surface_group[m_surface_index]->set_surface(max_zorder, layer_rect);
+	(layer_rect == c_rect()) ? m_surface_group[m_surface_index]->set_surface(max_zorder, c_rect(0, 0, m_width - 1, m_height - 1)) : m_surface_group[m_surface_index]->set_surface(max_zorder, layer_rect);
 	return m_surface_group[m_surface_index++];
 }
 inline int c_display::swipe_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset)
@@ -1252,7 +1242,7 @@ public:
 			lower_fb_16 = (unsigned short*)surface->m_layers[z_order - 1].fb;
 			lower_fb_32 = (unsigned int*)surface->m_layers[z_order - 1].fb;
 			lower_fb_rect = surface->m_layers[z_order - 1].rect;
-			lower_fb_width = lower_fb_rect.Width();
+			lower_fb_width = lower_fb_rect.width();
 		}
 		unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
 		int xsize = pBitmap->width;
@@ -1266,7 +1256,7 @@ public:
 				unsigned int rgb = *pData++;
 				if (mask_rgb_16 == rgb)
 				{
-					if (lower_fb_rect.PtInRect(x_, y_))
+					if (lower_fb_rect.pt_in_rect(x_, y_))
 					{//show lower layer
 						surface->draw_pixel(x_, y_, (color_bytes == 4) ? lower_fb_32[(y_ - lower_fb_rect.m_top) * lower_fb_width + (x_ - lower_fb_rect.m_left)] : GL_RGB_16_to_32(lower_fb_16[(y_ - lower_fb_rect.m_top) * lower_fb_width + (x_ - lower_fb_rect.m_left)]), z_order);
 					}
@@ -1293,7 +1283,7 @@ public:
 			lower_fb_16 = (unsigned short*)surface->m_layers[z_order - 1].fb;
 			lower_fb_32 = (unsigned int*)surface->m_layers[z_order - 1].fb;
 			lower_fb_rect = surface->m_layers[z_order - 1].rect;
-			lower_fb_width = lower_fb_rect.Width();
+			lower_fb_width = lower_fb_rect.width();
 		}
 		unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
 		const unsigned short* pData = (const unsigned short*)pBitmap->pixel_color_array;
@@ -1306,7 +1296,7 @@ public:
 				unsigned int rgb = *p++;
 				if (mask_rgb_16 == rgb)
 				{
-					if (lower_fb_rect.PtInRect(x + x_, y + y_))
+					if (lower_fb_rect.pt_in_rect(x + x_, y + y_))
 					{//show lower layer
 						surface->draw_pixel(x + x_, y + y_, (color_bytes == 4) ? lower_fb_32[(y + y_ - lower_fb_rect.m_top) * lower_fb_width + x + x_ - lower_fb_rect.m_left] : GL_RGB_16_to_32(lower_fb_16[(y + y_ - lower_fb_rect.m_top) * lower_fb_width + x + x_ - lower_fb_rect.m_left]), z_order);
 					}
@@ -1487,8 +1477,10 @@ public:
 	void get_wnd_rect(c_rect &rect) const {	rect = m_wnd_rect; }
 	void get_screen_rect(c_rect &rect) const
 	{
-		rect.SetRect(0, 0, (m_wnd_rect.Width() - 1), (m_wnd_rect.Height() - 1));
-		wnd2screen(rect);
+		int l = 0;
+		int t = 0;
+		wnd2screen(l, t);
+		rect.set_rect(l, t, m_wnd_rect.width(), m_wnd_rect.height());
 	}
 	c_wnd* set_child_focus(c_wnd *focus_child)
 	{
@@ -1618,7 +1610,7 @@ public:
 			{
 				c_rect rect;
 				child->get_wnd_rect(rect);
-				if (true == rect.PtInRect(x, y))
+				if (true == rect.pt_in_rect(x, y))
 				{
 					return child->on_touch(x, y, action);
 				}
@@ -1733,15 +1725,6 @@ protected:
 			y += rect.m_top;
 			parent = parent->m_parent;
 		}
-	}
-	void wnd2screen(c_rect &rect) const
-	{
-		int l = rect.m_left;
-		int t = rect.m_top;
-		wnd2screen(l, t);
-		int r = (l + rect.Width() - 1);
-		int b = (t + rect.Height() - 1);
-		rect.SetRect(l, t, r, b);
 	}
 	int load_child_wnd(WND_TREE *p_child_tree)
 	{
@@ -2059,11 +2042,11 @@ public:
 		{//Place keyboard at the bottom of user's parent window.
 			c_rect user_parent_rect;
 			user->get_parent()->get_wnd_rect(user_parent_rect);
-			return c_wnd::connect(user, resource_id, 0, (0 - user_rect.m_left), (user_parent_rect.Height() - user_rect.m_top - KEYBOARD_HEIGHT), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
+			return c_wnd::connect(user, resource_id, 0, (0 - user_rect.m_left), (user_parent_rect.height() - user_rect.m_top - KEYBOARD_HEIGHT - 1), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
 		}
 		else if (style == STYLE_NUM_BOARD)
 		{//Place keyboard below the user window.
-			return c_wnd::connect(user, resource_id, 0, 0, user_rect.Height(), NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
+			return c_wnd::connect(user, resource_id, 0, 0, user_rect.height(), NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
 		}
 		else
 		{
@@ -2367,14 +2350,14 @@ private:
 		kb_rect_relate_2_edit_parent.m_right += m_wnd_rect.m_left;
 		kb_rect_relate_2_edit_parent.m_top += m_wnd_rect.m_top;
 		kb_rect_relate_2_edit_parent.m_bottom += m_wnd_rect.m_top;
-		if (m_wnd_rect.PtInRect(x, y))
+		if (m_wnd_rect.pt_in_rect(x, y))
 		{//click edit box
 			if (STATUS_NORMAL == m_status)
 			{
 				m_parent->set_child_focus(this);
 			}
 		}
-		else if (kb_rect_relate_2_edit_parent.PtInRect(x, y))
+		else if (kb_rect_relate_2_edit_parent.pt_in_rect(x, y))
 		{//click key board
 			c_wnd::on_touch(x, y, TOUCH_DOWN);
 		}
@@ -2396,7 +2379,7 @@ private:
 		}
 		else if (STATUS_PUSHED == m_status)
 		{
-			if (m_wnd_rect.PtInRect(x, y))
+			if (m_wnd_rect.pt_in_rect(x, y))
 			{//click edit box
 				m_status = STATUS_FOCUSED;
 				on_paint();
@@ -2603,14 +2586,14 @@ private:
 	}
 	void on_touch_down(int x, int y)
 	{
-		if (m_wnd_rect.PtInRect(x, y))
+		if (m_wnd_rect.pt_in_rect(x, y))
 		{//click base
 			if (STATUS_NORMAL == m_status)
 			{
 				m_parent->set_child_focus(this);
 			}
 		}
-		else if (m_list_wnd_rect.PtInRect(x, y))
+		else if (m_list_wnd_rect.pt_in_rect(x, y))
 		{//click extend list
 			c_wnd::on_touch(x, y, TOUCH_DOWN);
 		}
@@ -2633,12 +2616,12 @@ private:
 		}
 		else if (STATUS_PUSHED == m_status)
 		{
-			if (m_wnd_rect.PtInRect(x, y))
+			if (m_wnd_rect.pt_in_rect(x, y))
 			{//click base
 				m_status = STATUS_FOCUSED;
 				on_paint();
 			}
-			else if (m_list_wnd_rect.PtInRect(x, y))
+			else if (m_list_wnd_rect.pt_in_rect(x, y))
 			{//click extend list
 				m_status = STATUS_FOCUSED;
 				select_item((y - m_list_wnd_rect.m_top) / ITEM_HEIGHT);
@@ -2887,14 +2870,14 @@ private:
 		int step = m_down_x - m_move_x;
 		c_rect rc;
 		m_slide_group->get_screen_rect(rc);
-		while (step < rc.Width())
+		while (step < rc.width())
 		{
 			s1->get_display()->swipe_surface(s2, s1, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, step);
 			step += SWIPE_STEP;
 		}
-		if (step != rc.Width())
+		if (step != rc.width())
 		{
-			s1->get_display()->swipe_surface(s2, s1, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, rc.Width());
+			s1->get_display()->swipe_surface(s2, s1, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, rc.width());
 		}
 		return (index + 1);
 	}
@@ -2919,7 +2902,7 @@ private:
 		}
 		c_rect rc;
 		m_slide_group->get_screen_rect(rc);
-		int step = rc.Width() - (m_move_x - m_down_x);
+		int step = rc.width() - (m_move_x - m_down_x);
 		while (step > 0)
 		{
 			s1->get_display()->swipe_surface(s1, s2, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, step);
@@ -2964,7 +2947,7 @@ private:
 		m_slide_group->get_screen_rect(rc);
 		if (s1->get_display() == s2->get_display())
 		{
-			s1->get_display()->swipe_surface(s1, s2, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, (rc.Width() - (m_move_x - m_down_x)));
+			s1->get_display()->swipe_surface(s1, s2, rc.m_left, rc.m_right, rc.m_top, rc.m_bottom, (rc.width() - (m_move_x - m_down_x)));
 		}
 	}
 	int m_down_x;
@@ -3028,7 +3011,7 @@ protected:
 	{
 		c_rect rect;
 		get_screen_rect(rect);
-		rect.m_right = rect.m_left + (rect.Width() * 2 / 3);
+		rect.m_right = rect.m_left + (rect.width() * 2 / 3);
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 		c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
 	}
@@ -3045,8 +3028,8 @@ protected:
 		c_rect rect;
 		get_wnd_rect(rect);
 		m_bt_down.m_spin_box = m_bt_up.m_spin_box = this;
-		m_bt_up.connect(m_parent, ID_BT_ARROW_UP, "+", (rect.m_left + rect.Width() * 2 / 3), rect.m_top, (rect.Width() / 3), (rect.Height() / 2));
-		m_bt_down.connect(m_parent, ID_BT_ARROW_DOWN, "-", (rect.m_left + rect.Width() * 2 / 3), (rect.m_top + rect.Height() / 2), (rect.Width() / 3), (rect.Height() / 2));
+		m_bt_up.connect(m_parent, ID_BT_ARROW_UP, "+", (rect.m_left + rect.width() * 2 / 3), rect.m_top, (rect.width() / 3), (rect.height() / 2));
+		m_bt_down.connect(m_parent, ID_BT_ARROW_DOWN, "-", (rect.m_left + rect.width() * 2 / 3), (rect.m_top + rect.height() / 2), (rect.width() / 3), (rect.height() / 2));
 	}
 	void on_arrow_up_bt_click()
 	{
@@ -3195,8 +3178,6 @@ protected:
 #define WAVE_READ_CACHE_LEN	8
 #define BUFFER_EMPTY	-1111
 #define BUFFER_FULL		-2222;
-#define MAX(a,b) (((a)>(b))?(a):(b))
-#define MIN(a,b) (((a)<(b))?(a):(b))
 class c_wave_buffer
 {
 public:
@@ -3343,13 +3324,13 @@ public:
 		m_wave_top = rect.m_top + WAVE_MARGIN;
 		m_wave_bottom = rect.m_bottom - WAVE_MARGIN;
 		m_wave_cursor = m_wave_left;
-		m_bg_fb = (unsigned int*)calloc(rect.Width() * rect.Height(), 4);
+		m_bg_fb = (unsigned int*)calloc(rect.width() * rect.height(), 4);
 	}
 	virtual void on_paint()
 	{
 		c_rect rect;
 		get_screen_rect(rect);
-		m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_back_color, m_z_order);
+		m_surface->fill_rect(rect, m_back_color, m_z_order);
 		//show name
 		c_word::draw_string(m_surface, m_z_order, m_wave_name, m_wave_left + 10, rect.m_top, m_wave_name_font, m_wave_name_color, GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
 		//show unit
@@ -3493,7 +3474,7 @@ protected:
 		}
 		c_rect rect;
 		get_screen_rect(rect);
-		register int width = rect.Width();
+		register int width = rect.width();
 		register int top = rect.m_top;
 		register int left = rect.m_left;
 		for (int y_pos = (m_wave_top - 1); y_pos <= (m_wave_bottom + 1); y_pos++)
