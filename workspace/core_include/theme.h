@@ -2,7 +2,6 @@
 #define GUILITE_CORE_INCLUDE_THEME_H
 
 #include "../core_include/api.h"
-#include "../core_include/rect.h"
 #include "../core_include/resource.h"
 
 typedef struct struct_font_info		FONT_INFO;

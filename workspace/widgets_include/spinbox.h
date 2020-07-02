@@ -2,7 +2,6 @@
 #define GUILITE_WIDGETS_INCLUDE_SPINBOX_H
 
 #include "../core_include/api.h"
-#include "../core_include/rect.h"
 #include "../core_include/cmd_target.h"
 #include "../core_include/wnd.h"
 #include "../core_include/resource.h"
@@ -45,7 +44,7 @@ protected:
 	{
 		c_rect rect;
 		get_screen_rect(rect);
-		rect.m_right = rect.m_left + (rect.Width() * 2 / 3);
+		rect.m_right = rect.m_left + (rect.width() * 2 / 3);
 
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 		c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
@@ -64,8 +63,8 @@ protected:
 		c_rect rect;
 		get_wnd_rect(rect);
 		m_bt_down.m_spin_box = m_bt_up.m_spin_box = this;
-		m_bt_up.connect(m_parent, ID_BT_ARROW_UP, "+", (rect.m_left + rect.Width() * 2 / 3), rect.m_top, (rect.Width() / 3), (rect.Height() / 2));
-		m_bt_down.connect(m_parent, ID_BT_ARROW_DOWN, "-", (rect.m_left + rect.Width() * 2 / 3), (rect.m_top + rect.Height() / 2), (rect.Width() / 3), (rect.Height() / 2));
+		m_bt_up.connect(m_parent, ID_BT_ARROW_UP, "+", (rect.m_left + rect.width() * 2 / 3), rect.m_top, (rect.width() / 3), (rect.height() / 2));
+		m_bt_down.connect(m_parent, ID_BT_ARROW_DOWN, "-", (rect.m_left + rect.width() * 2 / 3), (rect.m_top + rect.height() / 2), (rect.width() / 3), (rect.height() / 2));
 	}
 	void on_arrow_up_bt_click()
 	{

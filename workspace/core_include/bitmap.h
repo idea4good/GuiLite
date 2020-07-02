@@ -3,7 +3,6 @@
 
 #include "../core_include/api.h"
 #include "../core_include/resource.h"
-#include "../core_include/rect.h"
 #include "../core_include/display.h"
 
 #define	DEFAULT_MASK_COLOR 0xFF080408
@@ -23,7 +22,7 @@ public:
 			lower_fb_16 = (unsigned short*)surface->m_layers[z_order - 1].fb;
 			lower_fb_32 = (unsigned int*)surface->m_layers[z_order - 1].fb;
 			lower_fb_rect = surface->m_layers[z_order - 1].rect;
-			lower_fb_width = lower_fb_rect.Width();
+			lower_fb_width = lower_fb_rect.width();
 		}
 		unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
 		int xsize = pBitmap->width;
@@ -37,7 +36,7 @@ public:
 				unsigned int rgb = *pData++;
 				if (mask_rgb_16 == rgb)
 				{
-					if (lower_fb_rect.PtInRect(x_, y_))
+					if (lower_fb_rect.pt_in_rect(x_, y_))
 					{//show lower layer
 						surface->draw_pixel(x_, y_, (color_bytes == 4) ? lower_fb_32[(y_ - lower_fb_rect.m_top) * lower_fb_width + (x_ - lower_fb_rect.m_left)] : GL_RGB_16_to_32(lower_fb_16[(y_ - lower_fb_rect.m_top) * lower_fb_width + (x_ - lower_fb_rect.m_left)]), z_order);
 					}
@@ -66,7 +65,7 @@ public:
 			lower_fb_16 = (unsigned short*)surface->m_layers[z_order - 1].fb;
 			lower_fb_32 = (unsigned int*)surface->m_layers[z_order - 1].fb;
 			lower_fb_rect = surface->m_layers[z_order - 1].rect;
-			lower_fb_width = lower_fb_rect.Width();
+			lower_fb_width = lower_fb_rect.width();
 		}
 		unsigned int mask_rgb_16 = GL_RGB_32_to_16(mask_rgb);
 		const unsigned short* pData = (const unsigned short*)pBitmap->pixel_color_array;
@@ -79,7 +78,7 @@ public:
 				unsigned int rgb = *p++;
 				if (mask_rgb_16 == rgb)
 				{
-					if (lower_fb_rect.PtInRect(x + x_, y + y_))
+					if (lower_fb_rect.pt_in_rect(x + x_, y + y_))
 					{//show lower layer
 						surface->draw_pixel(x + x_, y + y_, (color_bytes == 4) ? lower_fb_32[(y + y_ - lower_fb_rect.m_top) * lower_fb_width + x + x_ - lower_fb_rect.m_left] : GL_RGB_16_to_32(lower_fb_16[(y + y_ - lower_fb_rect.m_top) * lower_fb_width + x + x_ - lower_fb_rect.m_left]), z_order);
 					}

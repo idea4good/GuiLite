@@ -2,7 +2,6 @@
 #define GUILITE_CORE_INCLUDE_DISPLAY_H
 
 #include "../core_include/api.h"
-#include "../core_include/rect.h"
 #include "../core_include/cmd_target.h"
 #include <string.h>
 #include <stdio.h>
@@ -30,7 +29,7 @@ class c_display {
 public:
 	inline c_display(void* phy_fb, int display_width, int display_height, int surface_width, int surface_height, unsigned int color_bytes, int surface_cnt, EXTERNAL_GFX_OP* gfx_op = 0);//multiple surface or surface_no_fb
 	inline c_display(void* phy_fb, int display_width, int display_height, c_surface* surface);//single custom surface
-	inline c_surface* alloc_surface(Z_ORDER_LEVEL max_zorder, c_rect layer_rect = c_rect(0, 0, -1, -1));//for multiple surfaces
+	inline c_surface* alloc_surface(Z_ORDER_LEVEL max_zorder, c_rect layer_rect = c_rect());//for multiple surfaces
 	inline int swipe_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset);
 	int get_width() { return m_width; }
 	int get_height() { return m_height; }
@@ -108,9 +107,9 @@ public:
 class c_surface {
 	friend class c_display; friend class c_bitmap;
 public:
-	c_surface(unsigned int width, unsigned int height, unsigned int color_bytes, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect(0, 0, -1, -1)) : m_width(width), m_height(height), m_color_bytes(color_bytes), m_fb(0), m_is_active(false), m_top_zorder(Z_ORDER_LEVEL_0), m_phy_fb(0), m_phy_write_index(0), m_display(0)
+	c_surface(unsigned int width, unsigned int height, unsigned int color_bytes, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect()) : m_width(width), m_height(height), m_color_bytes(color_bytes), m_fb(0), m_is_active(false), m_top_zorder(Z_ORDER_LEVEL_0), m_phy_fb(0), m_phy_write_index(0), m_display(0)
 	{
-		(overlpa_rect == c_rect(0, 0, -1, -1)) ? set_surface(max_zorder, c_rect(0, 0, width - 1, height - 1)) : set_surface(max_zorder, overlpa_rect);
+		(overlpa_rect == c_rect()) ? set_surface(max_zorder, c_rect(0, 0, width - 1, height - 1)) : set_surface(max_zorder, overlpa_rect);
 	}
 
 	int get_width() { return m_width; }
@@ -160,16 +159,16 @@ public:
 			m_top_zorder = (Z_ORDER_LEVEL)z_order;
 		}
 
-		if (m_layers[z_order].rect.PtInRect(x, y))
+		if (m_layers[z_order].rect.pt_in_rect(x, y))
 		{
 			c_rect layer_rect = m_layers[z_order].rect;
 			if (m_color_bytes == 4)
 			{
-				((unsigned int*)(m_layers[z_order].fb))[(x - layer_rect.m_left) + (y - layer_rect.m_top) * layer_rect.Width()] = rgb;
+				((unsigned int*)(m_layers[z_order].fb))[(x - layer_rect.m_left) + (y - layer_rect.m_top) * layer_rect.width()] = rgb;
 			}
 			else
 			{
-				((unsigned short*)(m_layers[z_order].fb))[(x - layer_rect.m_left) + (y - layer_rect.m_top) * layer_rect.Width()] = GL_RGB_32_to_16(rgb);
+				((unsigned short*)(m_layers[z_order].fb))[(x - layer_rect.m_left) + (y - layer_rect.m_top) * layer_rect.width()] = GL_RGB_32_to_16(rgb);
 			}
 		}
 		
@@ -181,7 +180,7 @@ public:
 		bool be_overlapped = false;
 		for (unsigned int tmp_z_order = Z_ORDER_LEVEL_MAX - 1; tmp_z_order > z_order; tmp_z_order--)
 		{
-			if (m_layers[tmp_z_order].rect.PtInRect(x, y))
+			if (m_layers[tmp_z_order].rect.pt_in_rect(x, y))
 			{
 				be_overlapped = true;
 				break;
@@ -215,15 +214,15 @@ public:
 			{
 				for (x = x0; x <= x1; x++)
 				{
-					if (layer_rect.PtInRect(x, y))
+					if (layer_rect.pt_in_rect(x, y))
 					{
 						if (m_color_bytes == 4)
 						{
-							((unsigned int*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.Width() + (x - layer_rect.m_left)] = rgb;
+							((unsigned int*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.width() + (x - layer_rect.m_left)] = rgb;
 						}
 						else
 						{
-							((unsigned short*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.Width() + (x - layer_rect.m_left)] = rgb_16;
+							((unsigned short*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.width() + (x - layer_rect.m_left)] = rgb_16;
 						}
 					}
 				}
@@ -352,7 +351,7 @@ public:
 			rect.m_top >= layer_rect.m_top && rect.m_bottom <= layer_rect.m_bottom);
 
 		void* fb = m_layers[z_order].fb;
-		int width = layer_rect.Width();
+		int width = layer_rect.width();
 		for (int y = rect.m_top; y <= rect.m_bottom; y++)
 		{
 			for (int x = rect.m_left; x <= rect.m_right; x++)
@@ -458,7 +457,7 @@ protected:
 
 		for (int i = Z_ORDER_LEVEL_0; i < m_max_zorder; i++)
 		{//Top layber fb always be 0
-			ASSERT(m_layers[i].fb = calloc(layer_rect.Width() * layer_rect.Height(), m_color_bytes));
+			ASSERT(m_layers[i].fb = calloc(layer_rect.width() * layer_rect.height(), m_color_bytes));
 			m_layers[i].rect = layer_rect;
 		}
 	}
@@ -479,7 +478,7 @@ protected:
 class c_surface_no_fb : public c_surface {//No physical framebuffer
 	friend class c_display;
 public:
-	c_surface_no_fb(unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect(0, 0, -1, -1)) : c_surface(width, height, color_bytes, max_zorder, overlpa_rect), m_gfx_op(gfx_op) {}
+	c_surface_no_fb(unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect()) : c_surface(width, height, color_bytes, max_zorder, overlpa_rect), m_gfx_op(gfx_op) {}
 protected:
 	virtual void fill_rect_on_fb(int x0, int y0, int x1, int y1, unsigned int rgb)
 	{
@@ -574,7 +573,7 @@ inline c_display::c_display(void* phy_fb, int display_width, int display_height,
 inline c_surface* c_display::alloc_surface(Z_ORDER_LEVEL max_zorder, c_rect layer_rect)
 {
 	ASSERT(max_zorder < Z_ORDER_LEVEL_MAX && m_surface_index < m_surface_cnt);
-	(layer_rect == c_rect(0, 0, -1, -1)) ? m_surface_group[m_surface_index]->set_surface(max_zorder, c_rect(0, 0, m_width - 1, m_height - 1)) : m_surface_group[m_surface_index]->set_surface(max_zorder, layer_rect);
+	(layer_rect == c_rect()) ? m_surface_group[m_surface_index]->set_surface(max_zorder, c_rect(0, 0, m_width - 1, m_height - 1)) : m_surface_group[m_surface_index]->set_surface(max_zorder, layer_rect);
 	return m_surface_group[m_surface_index++];
 }
 

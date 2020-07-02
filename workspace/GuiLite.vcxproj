@@ -393,7 +393,6 @@
     <ClCompile Include="core\bitmap.cpp" />
     <ClCompile Include="core\cmd_target.cpp" />
     <ClCompile Include="core\display.cpp" />
-    <ClCompile Include="core\rect.cpp" />
     <ClCompile Include="core\theme.cpp" />
     <ClCompile Include="core\wnd.cpp" />
     <ClCompile Include="core\word.cpp" />

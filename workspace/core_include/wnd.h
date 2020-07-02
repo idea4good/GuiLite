@@ -2,7 +2,6 @@
 #define GUILITE_CORE_INCLUDE_WND_H
 
 #include "../core_include/api.h"
-#include "../core_include/rect.h"
 #include "../core_include/cmd_target.h"
 #include "../core_include/resource.h"
 #include "../core_include/bitmap.h"
@@ -196,8 +195,10 @@ public:
 	void get_wnd_rect(c_rect &rect) const {	rect = m_wnd_rect; }
 	void get_screen_rect(c_rect &rect) const
 	{
-		rect.SetRect(0, 0, (m_wnd_rect.Width() - 1), (m_wnd_rect.Height() - 1));
-		wnd2screen(rect);
+		int l = 0;
+		int t = 0;
+		wnd2screen(l, t);
+		rect.set_rect(l, t, m_wnd_rect.width(), m_wnd_rect.height());
 	}
 
 	c_wnd* set_child_focus(c_wnd *focus_child)
@@ -345,7 +346,7 @@ public:
 			{
 				c_rect rect;
 				child->get_wnd_rect(rect);
-				if (true == rect.PtInRect(x, y))
+				if (true == rect.pt_in_rect(x, y))
 				{
 					return child->on_touch(x, y, action);
 				}
@@ -468,17 +469,6 @@ protected:
 
 			parent = parent->m_parent;
 		}
-	}
-
-	void wnd2screen(c_rect &rect) const
-	{
-		int l = rect.m_left;
-		int t = rect.m_top;
-		wnd2screen(l, t);
-
-		int r = (l + rect.Width() - 1);
-		int b = (t + rect.Height() - 1);
-		rect.SetRect(l, t, r, b);
 	}
 
 	int load_child_wnd(WND_TREE *p_child_tree)
