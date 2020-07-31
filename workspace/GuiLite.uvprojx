@@ -398,11 +398,6 @@
               <FilePath>.\core\display.cpp</FilePath>
             </File>
             <File>
-              <FileName>rect.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\rect.cpp</FilePath>
-            </File>
-            <File>
               <FileName>theme.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\core\theme.cpp</FilePath>
