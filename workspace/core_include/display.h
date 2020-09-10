@@ -11,9 +11,9 @@
 
 typedef enum
 {
-	Z_ORDER_LEVEL_0,//view/wave/page
-	Z_ORDER_LEVEL_1,//dialog
-	Z_ORDER_LEVEL_2,//editbox/spinbox/listbox/keyboard
+	Z_ORDER_LEVEL_0,//lowest graphic level
+	Z_ORDER_LEVEL_1,//middle graphic level
+	Z_ORDER_LEVEL_2,//highest graphic level
 	Z_ORDER_LEVEL_MAX
 }Z_ORDER_LEVEL;
 
@@ -88,11 +88,11 @@ private:
 	int				m_width;		//in pixels
 	int				m_height;		//in pixels
 	int				m_color_bytes;	//16 bits, 32 bits only
-	void*			m_phy_fb;
+	void*			m_phy_fb;		//physical framebuffer
 	int				m_phy_read_index;
 	int				m_phy_write_index;
 	c_surface*		m_surface_group[SURFACE_CNT_MAX];
-	int				m_surface_cnt;
+	int				m_surface_cnt;	//surface count
 	int				m_surface_index;
 };
 
@@ -100,8 +100,8 @@ class c_layer
 {
 public:
 	c_layer() { fb = 0; }
-	void* fb;
-	c_rect 	rect;
+	void* fb;		//framebuffer
+	c_rect 	rect;	//framebuffer area
 };
 
 class c_surface {
@@ -466,16 +466,16 @@ protected:
 	int				m_height;		//in pixels
 	int				m_color_bytes;	//16 bits, 32 bits only
 	void*			m_fb;			//frame buffer you could see
-	c_layer 	m_layers[Z_ORDER_LEVEL_MAX];//Top layber fb always be 0
-	bool			m_is_active;
-	Z_ORDER_LEVEL	m_max_zorder;
-	Z_ORDER_LEVEL	m_top_zorder;
-	void*			m_phy_fb;
+	c_layer 		m_layers[Z_ORDER_LEVEL_MAX];//all graphic layers
+	bool			m_is_active;	//active flag
+	Z_ORDER_LEVEL	m_max_zorder;	//the highest graphic layer the surface will have
+	Z_ORDER_LEVEL	m_top_zorder;	//the current highest graphic layer the surface have
+	void*			m_phy_fb;		//physical framebufer
 	int*			m_phy_write_index;
 	c_display*		m_display;
 };
 
-class c_surface_no_fb : public c_surface {//No physical framebuffer
+class c_surface_no_fb : public c_surface {//No physical framebuffer, render with external graphic interface
 	friend class c_display;
 public:
 	c_surface_no_fb(unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect()) : c_surface(width, height, color_bytes, max_zorder, overlpa_rect), m_gfx_op(gfx_op) {}

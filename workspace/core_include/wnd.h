@@ -43,14 +43,14 @@ typedef enum
 
 typedef struct struct_wnd_tree
 {
-	c_wnd*					p_wnd;
-	unsigned int			resource_id;
-	const char*				str;
-	short   				x;
-	short   				y;
+	c_wnd*					p_wnd;//window instance
+	unsigned int			resource_id;//ID
+	const char*				str;//caption
+	short   				x;//position x
+	short   				y;//position y
 	short   				width;
 	short        			height;
-	struct struct_wnd_tree*	p_child_tree;
+	struct struct_wnd_tree*	p_child_tree;//sub tree
 }WND_TREE;
 
 class c_wnd : public c_cmd_target
@@ -504,12 +504,12 @@ protected:
 protected:
 	WND_STATUS		m_status;
 	WND_ATTRIBUTION	m_attr;
-	c_rect			m_wnd_rect;// position relative to parent wnd.
-	c_wnd*			m_parent;
-	c_wnd*			m_top_child;
-	c_wnd*			m_prev_sibling;
-	c_wnd*			m_next_sibling;
-	const char*		m_str;
+	c_rect			m_wnd_rect;		//position relative to parent window.
+	c_wnd*			m_parent;		//parent window
+	c_wnd*			m_top_child;	//the first sub window would be navigated
+	c_wnd*			m_prev_sibling;	//previous brother
+	c_wnd*			m_next_sibling;	//next brother
+	const char*		m_str;			//caption
 
 	const FONT_INFO*	m_font_type;
 	unsigned int		m_font_color;
@@ -517,8 +517,8 @@ protected:
 
 	unsigned short		m_id;
 
-	int					m_z_order;
-	c_wnd*				m_focus_child;//current focused wnd
+	int					m_z_order;		//the graphic level for rendering
+	c_wnd*				m_focus_child;	//current focused window
 	c_surface*			m_surface;
 private:
 	c_wnd(const c_wnd &win);

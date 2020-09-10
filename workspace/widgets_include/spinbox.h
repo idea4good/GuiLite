@@ -10,12 +10,10 @@
 #include "../core_include/theme.h"
 #include "../widgets_include/button.h"
 
-#define ID_BT_ARROW_UP      0x1111
-#define ID_BT_ARROW_DOWN    0x2222
-#define	GL_SPIN_CHANGE		0x3333
-
-#define ON_SPIN_CHANGE(func) \
-{MSG_TYPE_WND, GL_SPIN_CHANGE, 0, msgCallback(&func)},
+#define ID_BT_ARROW_UP      	0x1111
+#define ID_BT_ARROW_DOWN    	0x2222
+#define	GL_SPIN_CHANGE			0x3333
+#define ON_SPIN_CHANGE(func)	{MSG_TYPE_WND, GL_SPIN_CHANGE, 0, msgCallback(&func)},
 
 class c_spin_box;
 class c_spin_button : public c_button

@@ -15,8 +15,7 @@
 #define MAX_ITEM_NUM			4
 #define GL_LIST_CONFIRM			0x1
 #define ITEM_HEIGHT				45
-#define ON_LIST_CONFIRM(func) \
-{MSG_TYPE_WND, GL_LIST_CONFIRM, 0, msgCallback(&func)},
+#define ON_LIST_CONFIRM(func)	{MSG_TYPE_WND, GL_LIST_CONFIRM, 0, msgCallback(&func)},
 
 class c_list_box : public c_wnd
 {

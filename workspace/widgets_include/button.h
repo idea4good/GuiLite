@@ -10,9 +10,8 @@
 #include "../core_include/display.h"
 #include "../core_include/theme.h"
 
-#define GL_BN_CLICKED							0x1111
-#define ON_GL_BN_CLICKED(func)                                       \
-{MSG_TYPE_WND, GL_BN_CLICKED, 0, msgCallback(&func)},
+#define GL_BN_CLICKED			0x1111
+#define ON_GL_BN_CLICKED(func) 	{MSG_TYPE_WND, GL_BN_CLICKED, 0, msgCallback(&func)},
 
 typedef struct struct_bitmap_info BITMAP_INFO;
 class c_button : public c_wnd

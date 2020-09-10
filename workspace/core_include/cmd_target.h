@@ -19,7 +19,7 @@ struct GL_MSG_ENTRY
 	msgCallback			callBack;
 };
 
-#define ON_GL_USER_MSG(msgId, func)                    \
+#define ON_GL_USER_MSG(msgId, func)                    	\
 {MSG_TYPE_USR, msgId, 0, msgCallback(&func)},
 
 #define GL_DECLARE_MESSAGE_MAP()						\
@@ -36,7 +36,7 @@ const GL_MSG_ENTRY* theClass::get_msg_entries() const	\
 const GL_MSG_ENTRY theClass::m_msg_entries[] =     		\
 {
 
-#define GL_END_MESSAGE_MAP()                           \
+#define GL_END_MESSAGE_MAP()                           	\
 {MSG_TYPE_INVALID, 0, 0, 0}};
 
 class c_cmd_target
