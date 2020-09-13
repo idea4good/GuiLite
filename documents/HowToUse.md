@@ -17,7 +17,7 @@ UIcode.cpp:
 Prerequisite: Windows & Visul Studio 2013/2015/2017/2019
 - Open "GuiLite.sln" by Visual Studio
 - Click `Build Solution`
-- Output here: \GuiLite\workspace\Debug(Release)\GuiLite.lib
+- Output here: GuiLite\workspace\Debug(Release)\GuiLite.lib
 
 FAQ: Error when open GuiLite project with Visual Studio, reconfigure the project to match your computer like this:
 
@@ -29,7 +29,7 @@ cd GuiLite/workspace
 cmake .
 make
 
-# Output here: /GuiLite/workspace/libGuiLite.a
+# Output here: GuiLite/workspace/libGuiLite.a
 ```
 
 ## Build GuiLite libary for ARM Linux?
@@ -49,7 +49,7 @@ cmake -D CMAKE_C_COMPILER="/usr/bin/arm-linux-gnueabi-gcc" -D CMAKE_CXX_COMPILER
 cmake -D CMAKE_C_COMPILER="/usr/bin/aarch64-linux-gnu-gcc" -D CMAKE_CXX_COMPILER="/usr/bin/aarch64-linux-gnu-g++" .
 make
 ```
-Output here: /GuiLite/workspace/libGuiLite.a
+Output here: GuiLite/workspace/libGuiLite.a
 
 ## How to build GuiLite libary for any MCU?
 ### Prerequisite: Install Keil uvsion 5.6 or above.
@@ -58,7 +58,7 @@ Output here: /GuiLite/workspace/libGuiLite.a
 - Implement function(e.g, thread_sleep) in `core\src\adapter\api_unknow.cpp` to meet your need.
 - Choose your Device type(Default: STM32F103ZE) from option for target.
 - Build GuiLite.
-- Output here: /GuiLite/workspace/Objects/GuiLite.lib
+- Output here: GuiLite/workspace/Objects/GuiLite.lib
 
 ## Build header-only GuiLite.h?
 ```bash
