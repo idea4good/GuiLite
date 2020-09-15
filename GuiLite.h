@@ -119,7 +119,7 @@ struct GL_MSG_ENTRY
 	c_cmd_target*		object;
 	msgCallback			callBack;
 };
-#define ON_GL_USER_MSG(msgId, func)                    \
+#define ON_GL_USER_MSG(msgId, func)                    	\
 {MSG_TYPE_USR, msgId, 0, msgCallback(&func)},
 #define GL_DECLARE_MESSAGE_MAP()						\
 protected:												\
@@ -133,7 +133,7 @@ const GL_MSG_ENTRY* theClass::get_msg_entries() const	\
 }														\
 const GL_MSG_ENTRY theClass::m_msg_entries[] =     		\
 {
-#define GL_END_MESSAGE_MAP()                           \
+#define GL_END_MESSAGE_MAP()                           	\
 {MSG_TYPE_INVALID, 0, 0, 0}};
 class c_cmd_target
 {
@@ -365,9 +365,9 @@ private:
 #define SURFACE_CNT_MAX	6//root + pages
 typedef enum
 {
-	Z_ORDER_LEVEL_0,//view/wave/page
-	Z_ORDER_LEVEL_1,//dialog
-	Z_ORDER_LEVEL_2,//editbox/spinbox/listbox/keyboard
+	Z_ORDER_LEVEL_0,//lowest graphic level
+	Z_ORDER_LEVEL_1,//middle graphic level
+	Z_ORDER_LEVEL_2,//highest graphic level
 	Z_ORDER_LEVEL_MAX
 }Z_ORDER_LEVEL;
 struct EXTERNAL_GFX_OP
@@ -432,19 +432,19 @@ private:
 	int				m_width;		//in pixels
 	int				m_height;		//in pixels
 	int				m_color_bytes;	//16 bits, 32 bits only
-	void*			m_phy_fb;
+	void*			m_phy_fb;		//physical framebuffer
 	int				m_phy_read_index;
 	int				m_phy_write_index;
 	c_surface*		m_surface_group[SURFACE_CNT_MAX];
-	int				m_surface_cnt;
+	int				m_surface_cnt;	//surface count
 	int				m_surface_index;
 };
 class c_layer
 {
 public:
 	c_layer() { fb = 0; }
-	void* fb;
-	c_rect 	rect;
+	void* fb;		//framebuffer
+	c_rect 	rect;	//framebuffer area
 };
 class c_surface {
 	friend class c_display; friend class c_bitmap;
@@ -772,15 +772,15 @@ protected:
 	int				m_height;		//in pixels
 	int				m_color_bytes;	//16 bits, 32 bits only
 	void*			m_fb;			//frame buffer you could see
-	c_layer 	m_layers[Z_ORDER_LEVEL_MAX];//Top layber fb always be 0
-	bool			m_is_active;
-	Z_ORDER_LEVEL	m_max_zorder;
-	Z_ORDER_LEVEL	m_top_zorder;
-	void*			m_phy_fb;
+	c_layer 		m_layers[Z_ORDER_LEVEL_MAX];//all graphic layers
+	bool			m_is_active;	//active flag
+	Z_ORDER_LEVEL	m_max_zorder;	//the highest graphic layer the surface will have
+	Z_ORDER_LEVEL	m_top_zorder;	//the current highest graphic layer the surface have
+	void*			m_phy_fb;		//physical framebufer
 	int*			m_phy_write_index;
 	c_display*		m_display;
 };
-class c_surface_no_fb : public c_surface {//No physical framebuffer
+class c_surface_no_fb : public c_surface {//No physical framebuffer, render with external graphic interface
 	friend class c_display;
 public:
 	c_surface_no_fb(unsigned int width, unsigned int height, unsigned int color_bytes, struct EXTERNAL_GFX_OP* gfx_op, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect()) : c_surface(width, height, color_bytes, max_zorder, overlpa_rect), m_gfx_op(gfx_op) {}
@@ -1342,14 +1342,14 @@ typedef enum
 }TOUCH_ACTION;
 typedef struct struct_wnd_tree
 {
-	c_wnd*					p_wnd;
-	unsigned int			resource_id;
-	const char*				str;
-	short   				x;
-	short   				y;
+	c_wnd*					p_wnd;//window instance
+	unsigned int			resource_id;//ID
+	const char*				str;//caption
+	short   				x;//position x
+	short   				y;//position y
 	short   				width;
 	short        			height;
-	struct struct_wnd_tree*	p_child_tree;
+	struct struct_wnd_tree*	p_child_tree;//sub tree
 }WND_TREE;
 class c_wnd : public c_cmd_target
 {
@@ -1757,18 +1757,18 @@ protected:
 protected:
 	WND_STATUS		m_status;
 	WND_ATTRIBUTION	m_attr;
-	c_rect			m_wnd_rect;// position relative to parent wnd.
-	c_wnd*			m_parent;
-	c_wnd*			m_top_child;
-	c_wnd*			m_prev_sibling;
-	c_wnd*			m_next_sibling;
-	const char*		m_str;
+	c_rect			m_wnd_rect;		//position relative to parent window.
+	c_wnd*			m_parent;		//parent window
+	c_wnd*			m_top_child;	//the first sub window would be navigated
+	c_wnd*			m_prev_sibling;	//previous brother
+	c_wnd*			m_next_sibling;	//next brother
+	const char*		m_str;			//caption
 	const FONT_INFO*	m_font_type;
 	unsigned int		m_font_color;
 	unsigned int		m_bg_color;
 	unsigned short		m_id;
-	int					m_z_order;
-	c_wnd*				m_focus_child;//current focused wnd
+	int					m_z_order;		//the graphic level for rendering
+	c_wnd*				m_focus_child;	//current focused window
 	c_surface*			m_surface;
 private:
 	c_wnd(const c_wnd &win);
@@ -1793,9 +1793,8 @@ private:
 #endif
 #ifndef GUILITE_WIDGETS_INCLUDE_BUTTON_H
 #define GUILITE_WIDGETS_INCLUDE_BUTTON_H
-#define GL_BN_CLICKED							0x1111
-#define ON_GL_BN_CLICKED(func)                                       \
-{MSG_TYPE_WND, GL_BN_CLICKED, 0, msgCallback(&func)},
+#define GL_BN_CLICKED			0x1111
+#define ON_GL_BN_CLICKED(func) 	{MSG_TYPE_WND, GL_BN_CLICKED, 0, msgCallback(&func)},
 typedef struct struct_bitmap_info BITMAP_INFO;
 class c_button : public c_wnd
 {
@@ -2426,8 +2425,7 @@ protected:
 #define MAX_ITEM_NUM			4
 #define GL_LIST_CONFIRM			0x1
 #define ITEM_HEIGHT				45
-#define ON_LIST_CONFIRM(func) \
-{MSG_TYPE_WND, GL_LIST_CONFIRM, 0, msgCallback(&func)},
+#define ON_LIST_CONFIRM(func)	{MSG_TYPE_WND, GL_LIST_CONFIRM, 0, msgCallback(&func)},
 class c_list_box : public c_wnd
 {
 public:
@@ -2981,11 +2979,10 @@ inline void c_slide_group::on_touch(int x, int y, TOUCH_ACTION action)
 #endif
 #ifndef GUILITE_WIDGETS_INCLUDE_SPINBOX_H
 #define GUILITE_WIDGETS_INCLUDE_SPINBOX_H
-#define ID_BT_ARROW_UP      0x1111
-#define ID_BT_ARROW_DOWN    0x2222
-#define	GL_SPIN_CHANGE		0x3333
-#define ON_SPIN_CHANGE(func) \
-{MSG_TYPE_WND, GL_SPIN_CHANGE, 0, msgCallback(&func)},
+#define ID_BT_ARROW_UP      	0x1111
+#define ID_BT_ARROW_DOWN    	0x2222
+#define	GL_SPIN_CHANGE			0x3333
+#define ON_SPIN_CHANGE(func)	{MSG_TYPE_WND, GL_SPIN_CHANGE, 0, msgCallback(&func)},
 class c_spin_box;
 class c_spin_button : public c_button
 {
