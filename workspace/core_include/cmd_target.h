@@ -93,13 +93,13 @@ protected:
 
 			if (MSG_TYPE_USR == p_entry->msgType)
 			{
-				ms_usr_map_entries[ms_user_map_size] = *p_entry;
-				ms_usr_map_entries[ms_user_map_size].object = this;
-				ms_user_map_size++;
 				if (USR_MSG_MAX == ms_user_map_size)
 				{
 					ASSERT(false);
 				}
+				ms_usr_map_entries[ms_user_map_size] = *p_entry;
+				ms_usr_map_entries[ms_user_map_size].object = this;
+				ms_user_map_size++;
 			}
 			else
 			{
