@@ -122,6 +122,9 @@
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor"><img src="documents/Mac.gif" width="300px;"/><br /><sub><b>HostMonitor on Mac</b></sub></a>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor"><img src="documents/Linux.gif" width="300px;"/><br /><sub><b>HostMonitor on Linux</b></sub></a>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloFFmpeg"><img src="documents/HelloFFmpeg.jpg" width="300px;"/><br /><sub><b>Video: GuiLite + FFmpeg</b></sub></a>
+  </tr>
 </table>
 
 大部分demo的UI代码只有100行左右，更多信息点[这里。](https://github.com/idea4good/GuiLiteSamples)

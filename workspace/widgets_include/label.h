@@ -16,8 +16,7 @@ public:
 	virtual void on_paint()
 	{
 		c_rect rect;
-		unsigned int bg_color = m_bg_color ? m_bg_color \
-			: m_parent->get_bg_color();
+		unsigned int bg_color = m_bg_color ? m_bg_color : m_parent->get_bg_color();
 		get_screen_rect(rect);
 		if (m_str)
 		{
