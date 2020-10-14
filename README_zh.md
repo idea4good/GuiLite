@@ -73,10 +73,10 @@
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloCircle"><img src="documents/HelloCircle.gif" width="200px;"/><br /><sub><b>3D circle on STM32</b></sub></a>
   </tr>
   <tr>
+  <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/Hello3Ddonut"><img src="documents/Hello3Ddonut.gif" width="200px;"/><br /><sub><b>3D donut on STM32</b></sub></a>
   <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloTimer"><img src="documents/HelloTimer.gif" width="200px;"/><br /><sub><b>Timer</b></sub></a>
   <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloMolecule"><img src="documents/HelloMolecule.gif" width="200px;"/><br /><sub><b>Molecule move</b></sub></a>
   <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloPendulum"><img src="documents/HelloPendulum.gif" width="200px;"/><br /><sub><b>Pendulum effect</b></sub></a>
-  <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloSlide"><img src="documents/HelloSlide.gif" width="200px;"/><br /><sub><b>Swipe view</b></sub></a>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/Hello3D"><img src="documents/iWatch.hello3D.gif" width="200px;"/><br /><sub><b>3D on Apple Watch</b></sub></a>
@@ -97,7 +97,11 @@
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloScroll"><img src="documents/HelloScroll.gif" width="600px;"/><br /><sub><b>Scroll widget</b></sub></a>
+    <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloFFmpeg"><img src="documents/HelloFFmpeg.jpg" width="600px;"/><br /><sub><b>Video: GuiLite + FFmpeg</b></sub></a>
+  </tr>
+  <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloTransparent"><img src="documents/HelloTransparent.gif" width="600px;"/><br /><sub><b>Transparent dialog</b></sub></a>
+    <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloSlide"><img src="documents/HelloSlide.gif" width="600px;"/><br /><sub><b>Swipe view</b></sub></a>
   </tr>
 </table>
 
@@ -121,9 +125,6 @@
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor"><img src="documents/WinMR.gif" width="300px;"/><br /><sub><b>HostMonitor on Windows Mixed Reality</b></sub></a>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor"><img src="documents/Mac.gif" width="300px;"/><br /><sub><b>HostMonitor on Mac</b></sub></a>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor"><img src="documents/Linux.gif" width="300px;"/><br /><sub><b>HostMonitor on Linux</b></sub></a>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloFFmpeg"><img src="documents/HelloFFmpeg.jpg" width="300px;"/><br /><sub><b>Video: GuiLite + FFmpeg</b></sub></a>
   </tr>
 </table>
 

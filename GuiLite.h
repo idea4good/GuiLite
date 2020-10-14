@@ -186,13 +186,13 @@ protected:
 			}
 			if (MSG_TYPE_USR == p_entry->msgType)
 			{
-				ms_usr_map_entries[ms_user_map_size] = *p_entry;
-				ms_usr_map_entries[ms_user_map_size].object = this;
-				ms_user_map_size++;
 				if (USR_MSG_MAX == ms_user_map_size)
 				{
 					ASSERT(false);
 				}
+				ms_usr_map_entries[ms_user_map_size] = *p_entry;
+				ms_usr_map_entries[ms_user_map_size].object = this;
+				ms_user_map_size++;
 			}
 			else
 			{
@@ -2403,11 +2403,12 @@ public:
 	virtual void on_paint()
 	{
 		c_rect rect;
+		unsigned int bg_color = m_bg_color ? m_bg_color : m_parent->get_bg_color();
 		get_screen_rect(rect);
 		if (m_str)
 		{
-			m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, m_parent->get_bg_color(), m_z_order);
-			c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, m_parent->get_bg_color(), ALIGN_LEFT | ALIGN_VCENTER);
+			m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, bg_color, m_z_order);
+			c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, bg_color, ALIGN_LEFT | ALIGN_VCENTER);
 		}
 	}
 protected:
