@@ -1,5 +1,4 @@
-#ifndef GUILITE_CORE_INCLUDE_DISPLAY_H
-#define GUILITE_CORE_INCLUDE_DISPLAY_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/cmd_target.h"
@@ -653,5 +652,3 @@ inline int c_display::swipe_surface(c_surface* s0, c_surface* s1, int x0, int x1
 	m_phy_write_index++;
 	return 0;
 }
-
-#endif

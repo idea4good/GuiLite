@@ -1,5 +1,4 @@
-#ifndef GUILITE_WIDGETS_INCLUDE_DIALOG_H
-#define GUILITE_WIDGETS_INCLUDE_DIALOG_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/cmd_target.h"
@@ -127,5 +126,3 @@ private:
 	}
 	static DIALOG_ARRAY ms_the_dialogs[SURFACE_CNT_MAX];
 };
-
-#endif

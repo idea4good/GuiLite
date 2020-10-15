@@ -1,5 +1,4 @@
-#ifndef GUILITE_WIDGETS_INCLUDE_WAVE_CTRL_H
-#define GUILITE_WIDGETS_INCLUDE_WAVE_CTRL_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/cmd_target.h"
@@ -278,4 +277,3 @@ private:
 	unsigned char 	m_frame_len_map[64];
 	unsigned char 	m_frame_len_map_index;
 };
-#endif

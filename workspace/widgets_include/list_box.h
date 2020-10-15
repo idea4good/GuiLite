@@ -1,5 +1,4 @@
-#ifndef GUILITE_WIDGETS_INCLUDE_LIST_BOX_H
-#define GUILITE_WIDGETS_INCLUDE_LIST_BOX_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/cmd_target.h"
@@ -234,5 +233,3 @@ private:
 	c_rect			m_list_wnd_rect;	//rect relative to parent wnd.
 	c_rect			m_list_screen_rect;	//rect relative to physical screen(frame buffer)
 };
-
-#endif

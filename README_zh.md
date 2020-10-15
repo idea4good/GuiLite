@@ -14,8 +14,8 @@
 </p>
 
 ## 轻-快-灵
-- ✂️轻量: 5千行C++代码，单一头文件库：GuiLite.h
-- ⚡超快: 一次调用就可以完成图形渲染，与操作系统及第三方库无关
+- ✂️轻量: 4千行C++代码，0依赖，单一头文件库（GuiLite.h）
+- ⚡超快: 高效渲染，单片机上也能流畅运行
 - 💉灵活: 可注入在Qt/MFC/Winform/Cocoa/Web程序中运行 - 重用现有Qt/MFC代码
 - ⚙️️最低硬件要求:
 
@@ -29,7 +29,7 @@
 - 支持的第3方库：Qt, MFC, Winforms, CoCoa...
 
 ## 实用的功能
-- 🔣支持多语言,采用 UTF-8 编码
+- 🔣支持多语言,采用 UTF-8 编码；📀支持视频播放
 - 🔨[资源制作工具](https://github.com/idea4good/GuiLiteToolkit)为你定制自己的字体/图片资源
 - 📐[所见即所得的GUI布局工具](https://github.com/idea4good/GuiLitePreviewer)
 - ☁️完美的“云” + “物联网”解决方案
@@ -58,7 +58,8 @@
 - 🌐[码云Gitee快速链接](https://gitee.com/idea4good/GuiLite)
 
 ## Demo展示墙
-点击你喜欢的实例，并运行在你的硬件上面
+- 0依赖，100%编译通过，可直接运行
+- 点击你喜欢的实例，并运行在你的硬件上面
 <table>
   <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/Hello3D"><img src="documents/Hello3D.gif" width="200px;"/><br /><sub><b>3D on STM32</b></sub></a>

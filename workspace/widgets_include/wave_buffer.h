@@ -1,5 +1,4 @@
-#ifndef GUILITE_WIDGETS_INCLUDE_WAVE_BUFFER_H
-#define GUILITE_WIDGETS_INCLUDE_WAVE_BUFFER_H
+#pragma once
 
 #include "../core_include/api.h"
 #include <string.h>
@@ -119,5 +118,3 @@ private:
 	short	m_read_cache_sum;
 	unsigned int m_refresh_sequence;
 };
-
-#endif

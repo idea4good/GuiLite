@@ -1,5 +1,4 @@
-#ifndef GUILITE_CORE_INCLUDE_WORD_H
-#define GUILITE_CORE_INCLUDE_WORD_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/resource.h"
@@ -298,5 +297,3 @@ private:
 		return utf8_bytes;
 	}
 };
-
-#endif

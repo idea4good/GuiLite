@@ -1,5 +1,4 @@
-#ifndef GUILITE_CORE_INCLUDE_API_H
-#define GUILITE_CORE_INCLUDE_API_H
+#pragma once
 
 #define REAL_TIME_TASK_CYCLE_MS		50
 #define MAX(a,b) (((a)>(b))?(a):(b))
@@ -103,4 +102,3 @@ public:
 	int     m_right;
 	int     m_bottom;
 };
-#endif

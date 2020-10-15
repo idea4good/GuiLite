@@ -1,5 +1,4 @@
-#ifndef GUILITE_WIDGETS_INCLUDE_KEYBOARD_H
-#define GUILITE_WIDGETS_INCLUDE_KEYBOARD_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/resource.h"
@@ -238,5 +237,3 @@ protected:
 		c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 };
-
-#endif /* KEYBOARD_H_ */

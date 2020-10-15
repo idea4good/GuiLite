@@ -1,5 +1,4 @@
-#ifndef  GUILITE_CORE_INCLUDE_RESOURCE_H
-#define  GUILITE_CORE_INCLUDE_RESOURCE_H
+#pragma once
 
 //BITMAP
 typedef struct struct_bitmap_info
@@ -24,5 +23,3 @@ typedef struct struct_font_info
 	unsigned int	count;
 	LATTICE*		lattice_array;
 } FONT_INFO;
-
-#endif

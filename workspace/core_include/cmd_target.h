@@ -1,5 +1,4 @@
-#ifndef GUILITE_CORE_INCLUDE_CMD_TARGET_H
-#define GUILITE_CORE_INCLUDE_CMD_TARGET_H
+#pragma once
 
 #include "../core_include/api.h"
 
@@ -133,5 +132,3 @@ private:
 	static unsigned short ms_user_map_size;
 	GL_DECLARE_MESSAGE_MAP()
 };
-
-#endif

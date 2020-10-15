@@ -1,5 +1,4 @@
-#ifndef GUILITE_CORE_INCLUDE_THEME_H
-#define GUILITE_CORE_INCLUDE_THEME_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/resource.h"
@@ -118,5 +117,3 @@ private:
 	static const BITMAP_INFO* s_bmp_map[BITMAP_MAX];
 	static unsigned int s_color_map[COLOR_MAX];
 };
-
-#endif

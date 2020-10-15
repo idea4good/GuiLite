@@ -1,5 +1,4 @@
-#ifndef GUILITE_WIDGETS_INCLUDE_EDIT_H
-#define GUILITE_WIDGETS_INCLUDE_EDIT_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/cmd_target.h"
@@ -199,5 +198,3 @@ private:
 	char m_str_input[MAX_EDIT_STRLEN];
 	char m_str[MAX_EDIT_STRLEN];
 };
-
-#endif

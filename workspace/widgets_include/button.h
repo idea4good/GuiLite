@@ -1,5 +1,4 @@
-#ifndef GUILITE_WIDGETS_INCLUDE_BUTTON_H
-#define GUILITE_WIDGETS_INCLUDE_BUTTON_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/cmd_target.h"
@@ -98,5 +97,3 @@ protected:
 		return c_wnd::on_navigate(key);
 	}
 };
-
-#endif

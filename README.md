@@ -16,8 +16,8 @@
 - [中文](README_zh.md)
 
 ## Lightweight
-- ✂️Small: Just under 5,000 lines of C++ and header-only: GuiLite.h
-- ⚡Fast: Render a GUI within one invocation, independent of any OS or 3rd party library
+- ✂️Small: 4,000+ lines of C++ code, zero dependency, header-only(GuiLite.h)
+- ⚡Fast: High Rendering performance, even work on MCU
 - 💉Embeddable: Runs inside Qt/MFC/Winform/Cocoa/Web - Keep legacy Qt/MFC code reusable
 - ⚙️️Hardware Minimum Requirements:
 
@@ -31,7 +31,7 @@
 - Supported 3rd party libraries: Qt, MFC, Winforms, CoCoa...
 
 ## Useful features
-- 🔣Multi-language, supports UTF-8
+- 🔣Multi-language, supports UTF-8;📀Playback Video
 - 🔨[Toolkit](https://github.com/idea4good/GuiLiteToolkit) for building font/image resources
 - 📐[Layout GUI WYSIWYG](https://github.com/idea4good/GuiLitePreviewer)
 - ☁️Cloud + IoT Solution
@@ -60,7 +60,8 @@ Even a C beginner could master GuiLite quickly. The source code only uses basic 
 - 🀄️[Mirror repository in China](https://gitee.com/idea4good/GuiLite)
 
 ## Demo wall
-Click the image you like, and run it on your hardware
+- Zero dependency, 100% build pass & runnable
+- Click the demo you like, and run it on your hardware
 <table>
   <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/Hello3D"><img src="documents/Hello3D.gif" width="200px;"/><br /><sub><b>3D on STM32</b></sub></a>
@@ -95,7 +96,7 @@ Click the image you like, and run it on your hardware
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloFont"><img src="documents/HelloFont.gif" width="600px;"/><br /><sub><b>Multi-language</b></sub></a>
-    <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor"><img src="documents/BuildInfo.png" width="600px;"/><br /><sub><b>Code Telemetry and Analysis in real time</b></sub></a>
+    <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HostMonitor"><img src="documents/BuildInfo.png" width="600px;"/><br /><sub><b>Code Telemetry & Analysis in real time</b></sub></a>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloScroll"><img src="documents/HelloScroll.gif" width="600px;"/><br /><sub><b>Scroll widget</b></sub></a>

@@ -1,5 +1,4 @@
-#ifndef GUILITE_WIDGETS_INCLUDE_LABEL_H
-#define GUILITE_WIDGETS_INCLUDE_LABEL_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/cmd_target.h"
@@ -32,5 +31,3 @@ protected:
 		m_font_type = c_theme::get_font(FONT_DEFAULT);
 	}
 };
-
-#endif

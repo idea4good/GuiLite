@@ -1,5 +1,4 @@
-#ifndef GUILITE_WIDGETS_INCLUDE_SPINBOX_H
-#define GUILITE_WIDGETS_INCLUDE_SPINBOX_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/cmd_target.h"
@@ -103,4 +102,3 @@ inline void c_spin_button::on_touch(int x, int y, TOUCH_ACTION action)
 	}
 	c_button::on_touch(x, y, action);
 }
-#endif

@@ -1,5 +1,4 @@
-#ifndef GUILITE_CORE_INCLUDE_WND_H
-#define GUILITE_CORE_INCLUDE_WND_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/cmd_target.h"
@@ -524,4 +523,3 @@ private:
 	c_wnd(const c_wnd &win);
 	c_wnd& operator=(const c_wnd &win);
 };
-#endif

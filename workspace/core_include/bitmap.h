@@ -1,5 +1,4 @@
-#ifndef GUILITE_CORE_INCLUDE_BITMAP_H
-#define GUILITE_CORE_INCLUDE_BITMAP_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/resource.h"
@@ -92,5 +91,3 @@ public:
 	}
 
 };
-
-#endif

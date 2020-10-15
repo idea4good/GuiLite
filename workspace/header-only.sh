@@ -2,7 +2,7 @@ echo "Build header-only library: GuiLite.h"
 
 # build GuiLiteRaw.h
 cd core_include
-cat api.h cmd_target.h resource.h theme.h display.h word.h bitmap.h wnd.h audio.h > core.h
+cat api.h cmd_target.h resource.h theme.h display.h word.h bitmap.h wnd.h > core.h
 mv core.h ../
 
 cd ../widgets_include
@@ -11,7 +11,6 @@ mv widgets.h ../
 
 cd ..
 cat core.h widgets.h > GuiLiteRaw.h
-rm core.h widgets.h
 
 # build GuiLiteRaw.cpp
 cd core
@@ -28,17 +27,20 @@ mv widgets.cpp ../
 
 cd ..
 cat core.cpp adapter.cpp widgets.cpp > GuiLiteRaw.cpp
-rm core.cpp adapter.cpp widgets.cpp
 
 # remove include core_include widgets_include from GuiLiteRaw.h
-sed '/^#include.*core_include\|widgets_include.*/d' GuiLiteRaw.h > GuiLiteNoInclude.h
+sed -i '/^#include.*core_include\|widgets_include.*/d' GuiLiteRaw.h
+# remove all #pragma once
+sed -i '/^#pragma once/d' GuiLiteRaw.h
+# add #pragma once for 1st line
+sed -i '1 s/^/#pragma once\n/' GuiLiteRaw.h
 
 # remove include core_include widgets_include from GuiLiteRaw.cpp
-sed '/^#include.*core_include\|widgets_include.*/d' GuiLiteRaw.cpp > GuiLiteNoInclude.cpp
+sed -i '/^#include.*core_include\|widgets_include.*/d' GuiLiteRaw.cpp
 
 # Delete empty lines or blank lines
-sed '/^$/d' GuiLiteNoInclude.h > GuiLite.h
-sed '/^$/d' GuiLiteNoInclude.cpp > GuiLite.cpp
+sed '/^$/d' GuiLiteRaw.h > GuiLite.h
+sed '/^$/d' GuiLiteRaw.cpp > GuiLite.cpp
 
 # Append GuiLite.cpp to GuiLite.h
 cat GuiLite.cpp >> GuiLite.h
@@ -47,10 +49,10 @@ cat GuiLite.cpp >> GuiLite.h
 echo '#include "GuiLite.h"' > test.cpp
 gcc -c -D GUILITE_ON test.cpp
 
-# clean
-rm GuiLiteRaw.h GuiLiteNoInclude.h GuiLiteRaw.cpp GuiLiteNoInclude.cpp GuiLite.cpp test.cpp
 mv GuiLite.h ../
-
 echo "Done!"
 echo "You could find GuiLite.h in root folder"
 ./.sync.sh GuiLite-header
+
+# clean
+rm *.h *.cpp *.o

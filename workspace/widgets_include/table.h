@@ -1,5 +1,4 @@
-#ifndef GUILITE_WIDGETS_INCLUDE_TABLE_H
-#define GUILITE_WIDGETS_INCLUDE_TABLE_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/resource.h"
@@ -113,4 +112,3 @@ protected:
 	unsigned int m_row_height[MAX_ROW_NUM];
 	unsigned int m_col_width[MAX_COL_NUM];
 };
-#endif

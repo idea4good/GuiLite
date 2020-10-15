@@ -1,5 +1,4 @@
-#ifndef GUILITE_WIDGETS_INCLUDE_SLIDE_GROUP_H
-#define GUILITE_WIDGETS_INCLUDE_SLIDE_GROUP_H
+#pragma once
 
 #include "../core_include/api.h"
 #include "../core_include/display.h"
@@ -361,4 +360,3 @@ inline void c_slide_group::on_touch(int x, int y, TOUCH_ACTION action)
 		}
 	}
 }
-#endif
