@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/architecture-amd64%20%7C%20arm%20%7C%20arm64-blue.svg">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg">
 </p>
-<p align="center">The smallest header-only GUI library (5 KLOC) for all platforms.</p>
+<p align="center">The smallest header-only GUI library (4 KLOC) for all platforms.</p>
 <p align="center">
     <img src="documents/WhyGuiLite.png" alt="Why GuiLite"/>
 </p>
@@ -139,8 +139,8 @@ Thanks for the help from the community, you all make GuiLite better! And welcome
 - QQ group code:
 <table>
   <tr>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>大群（免审）：527251257</b></sub></a>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=yKnUJj1B"><img src="documents/qq.group-2.jpg" width="240px;"/><br /><sub><b>中群（免审）：841031761</b></sub></a>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>免费群：717471210</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>综合服务群：527251257</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=yKnUJj1B"><img src="documents/qq.group-2.jpg" width="240px;"/><br /><sub><b>有问必答群：841031761</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>免费入场群：717471210</b></sub></a>
   </tr>
 </table>
