@@ -12,13 +12,14 @@
 #include <string.h>
 
 #define MAX_ITEM_NUM			4
-#define GL_LIST_CONFIRM			0x1
 #define ITEM_HEIGHT				45
-#define ON_LIST_CONFIRM(func)	{MSG_TYPE_WND, GL_LIST_CONFIRM, 0, msgCallback(&func)},
 
 class c_list_box : public c_wnd
 {
 public:
+	void set_on_change(WND_CALLBACK on_change) { this->on_change = on_change; }
+	short get_item_count() { return m_item_total; }
+
 	int add_item(char* str)
 	{
 		if (m_item_total >= MAX_ITEM_NUM)
@@ -36,7 +37,6 @@ public:
 		memset(m_item_array, 0, sizeof(m_item_array));
 		update_list_size();
 	}
-	short get_item_count() { return m_item_total; }
 	void  select_item(short index)
 	{
 		if (index < 0 || index >= m_item_total)
@@ -195,7 +195,10 @@ private:
 			{
 				m_status = STATUS_FOCUSED;
 				on_paint();
-				notify_parent(GL_LIST_CONFIRM, m_selected_item);
+				if(on_change)
+				{
+					(m_parent->*(on_change))(m_id, m_selected_item);
+				}
 			}
 		}
 	}
@@ -218,7 +221,10 @@ private:
 				m_status = STATUS_FOCUSED;
 				select_item((y - m_list_wnd_rect.m_top) / ITEM_HEIGHT);
 				on_paint();
-				notify_parent(GL_LIST_CONFIRM, m_selected_item);
+				if(on_change)
+				{
+					(m_parent->*(on_change))(m_id, m_selected_item);
+				}
 			}
 			else
 			{
@@ -232,4 +238,5 @@ private:
 	char*			m_item_array[MAX_ITEM_NUM];
 	c_rect			m_list_wnd_rect;	//rect relative to parent wnd.
 	c_rect			m_list_screen_rect;	//rect relative to physical screen(frame buffer)
+	WND_CALLBACK 	on_change;
 };

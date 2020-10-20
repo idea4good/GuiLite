@@ -52,9 +52,10 @@ typedef struct struct_wnd_tree
 	struct struct_wnd_tree*	p_child_tree;//sub tree
 }WND_TREE;
 
-class c_wnd : public c_cmd_target
+typedef void (c_wnd::*WND_CALLBACK)(int, int);
+
+class c_wnd
 {
-	friend class c_dialog;
 public:
 	c_wnd() : m_status(STATUS_NORMAL), m_attr((WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS)), m_parent(0), m_top_child(0), m_prev_sibling(0), m_next_sibling(0),
 		m_str(0), m_font_color(0), m_bg_color(0), m_id(0), m_z_order(Z_ORDER_LEVEL_0), m_focus_child(0), m_surface(0) {};
@@ -99,7 +100,6 @@ public:
 
 		if (load_child_wnd(p_child_tree) >= 0)
 		{
-			load_cmd_msg();
 			on_init_children();
 		}
 		return 0;
@@ -303,20 +303,6 @@ public:
 	c_wnd* get_prev_sibling() const { return m_prev_sibling; }
 	c_wnd* get_next_sibling() const { return m_next_sibling; }
 
-	void notify_parent(int msg_id, int param)
-	{
-		if (!m_parent)
-		{
-			return;
-		}
-		const GL_MSG_ENTRY* entry = m_parent->find_msg_entry(m_parent->get_msg_entries(), MSG_TYPE_WND, msg_id);
-		if (0 == entry)
-		{
-			return;
-		}
-		(m_parent->*(entry->callBack))(m_id, param);
-	}
-
 	virtual void on_touch(int x, int y, TOUCH_ACTION action)
 	{
 		x -= m_wnd_rect.m_left;
@@ -501,6 +487,7 @@ protected:
 	virtual void on_focus() {};
 	virtual void on_kill_focus() {};
 protected:
+	unsigned short	m_id;
 	WND_STATUS		m_status;
 	WND_ATTRIBUTION	m_attr;
 	c_rect			m_wnd_rect;		//position relative to parent window.
@@ -508,18 +495,13 @@ protected:
 	c_wnd*			m_top_child;	//the first sub window would be navigated
 	c_wnd*			m_prev_sibling;	//previous brother
 	c_wnd*			m_next_sibling;	//next brother
+	c_wnd*			m_focus_child;	//current focused window
 	const char*		m_str;			//caption
 
 	const FONT_INFO*	m_font_type;
 	unsigned int		m_font_color;
 	unsigned int		m_bg_color;
 
-	unsigned short		m_id;
-
 	int					m_z_order;		//the graphic level for rendering
-	c_wnd*				m_focus_child;	//current focused window
 	c_surface*			m_surface;
-private:
-	c_wnd(const c_wnd &win);
-	c_wnd& operator=(const c_wnd &win);
 };

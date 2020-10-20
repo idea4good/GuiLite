@@ -48,7 +48,7 @@ T_TIME second_to_day(long second);
 T_TIME get_time();
 
 void start_real_timer(void (*func)(void* arg));
-void register_timer(int milli_second, void func(void* ptmr, void* parg));
+void register_timer(int milli_second, void func(void* param), void* param);
 
 unsigned int get_cur_thread_id();
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg);
@@ -101,123 +101,6 @@ public:
 	int     m_top;
 	int     m_right;
 	int     m_bottom;
-};
-#define MSG_TYPE_INVALID	0xFFFF
-#define MSG_TYPE_WND		0x0001
-#define MSG_TYPE_USR		0x0002
-#define USR_MSG_MAX			32
-class c_cmd_target;
-typedef void (c_cmd_target::*msgCallback)(int, int);
-struct GL_MSG_ENTRY
-{
-	unsigned int		msgType;
-	unsigned int		msgId;
-	c_cmd_target*		object;
-	msgCallback			callBack;
-};
-#define ON_GL_USER_MSG(msgId, func)                    	\
-{MSG_TYPE_USR, msgId, 0, msgCallback(&func)},
-#define GL_DECLARE_MESSAGE_MAP()						\
-protected:												\
-	virtual const GL_MSG_ENTRY* get_msg_entries() const;\
-private:                                                \
-	static const GL_MSG_ENTRY m_msg_entries[];
-#define GL_BEGIN_MESSAGE_MAP(theClass)					\
-const GL_MSG_ENTRY* theClass::get_msg_entries() const	\
-{														\
-	return theClass::m_msg_entries;						\
-}														\
-const GL_MSG_ENTRY theClass::m_msg_entries[] =     		\
-{
-#define GL_END_MESSAGE_MAP()                           	\
-{MSG_TYPE_INVALID, 0, 0, 0}};
-class c_cmd_target
-{
-public:
-	static int handle_usr_msg(int msg_id, int resource_id, int param)
-	{
-		int i;
-		c_cmd_target* p_wnd = 0;
-		for (i = 0; i < ms_user_map_size; i++)
-		{
-			if (msg_id == ms_usr_map_entries[i].msgId)
-			{
-				p_wnd = (c_cmd_target*)ms_usr_map_entries[i].object;
-				(p_wnd->*ms_usr_map_entries[i].callBack)(resource_id, param);
-			}
-		}
-		return 1;
-	}
-protected:
-	void load_cmd_msg()
-	{
-		const GL_MSG_ENTRY* p_entry = get_msg_entries();
-		if (0 == p_entry)
-		{
-			return;
-		}
-		bool bExist = false;
-		while (MSG_TYPE_INVALID != p_entry->msgType)
-		{
-			if (MSG_TYPE_WND == p_entry->msgType)
-			{
-				p_entry++;
-				continue;
-			}
-			bExist = false;
-			for (int i = 0; i < ms_user_map_size; i++)
-			{
-				//repeat register, return.
-				if (p_entry->msgId == ms_usr_map_entries[i].msgId
-					&& ms_usr_map_entries[i].object == this)
-				{
-					bExist = true;
-					break;
-				}
-			}
-			if (true == bExist)
-			{
-				p_entry++;
-				continue;
-			}
-			if (MSG_TYPE_USR == p_entry->msgType)
-			{
-				if (USR_MSG_MAX == ms_user_map_size)
-				{
-					ASSERT(false);
-				}
-				ms_usr_map_entries[ms_user_map_size] = *p_entry;
-				ms_usr_map_entries[ms_user_map_size].object = this;
-				ms_user_map_size++;
-			}
-			else
-			{
-				ASSERT(false);
-				break;
-			}
-			p_entry++;
-		}
-	}
-	const GL_MSG_ENTRY* find_msg_entry(const GL_MSG_ENTRY *pEntry, int msgType, int msgId)
-	{
-		if (MSG_TYPE_INVALID == msgType)
-		{
-			return 0;
-		}
-		while (MSG_TYPE_INVALID != pEntry->msgType)
-		{
-			if ((msgType == pEntry->msgType) && (msgId == pEntry->msgId))
-			{
-				return pEntry;
-			}
-			pEntry++;
-		}
-		return 0;
-	}
-private:
-	static GL_MSG_ENTRY ms_usr_map_entries[USR_MSG_MAX];
-	static unsigned short ms_user_map_size;
-	GL_DECLARE_MESSAGE_MAP()
 };
 //BITMAP
 typedef struct struct_bitmap_info
@@ -1329,9 +1212,9 @@ typedef struct struct_wnd_tree
 	short        			height;
 	struct struct_wnd_tree*	p_child_tree;//sub tree
 }WND_TREE;
-class c_wnd : public c_cmd_target
+typedef void (c_wnd::*WND_CALLBACK)(int, int);
+class c_wnd
 {
-	friend class c_dialog;
 public:
 	c_wnd() : m_status(STATUS_NORMAL), m_attr((WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS)), m_parent(0), m_top_child(0), m_prev_sibling(0), m_next_sibling(0),
 		m_str(0), m_font_color(0), m_bg_color(0), m_id(0), m_z_order(Z_ORDER_LEVEL_0), m_focus_child(0), m_surface(0) {};
@@ -1370,7 +1253,6 @@ public:
 		}
 		if (load_child_wnd(p_child_tree) >= 0)
 		{
-			load_cmd_msg();
 			on_init_children();
 		}
 		return 0;
@@ -1549,19 +1431,6 @@ public:
 	}
 	c_wnd* get_prev_sibling() const { return m_prev_sibling; }
 	c_wnd* get_next_sibling() const { return m_next_sibling; }
-	void notify_parent(int msg_id, int param)
-	{
-		if (!m_parent)
-		{
-			return;
-		}
-		const GL_MSG_ENTRY* entry = m_parent->find_msg_entry(m_parent->get_msg_entries(), MSG_TYPE_WND, msg_id);
-		if (0 == entry)
-		{
-			return;
-		}
-		(m_parent->*(entry->callBack))(m_id, param);
-	}
 	virtual void on_touch(int x, int y, TOUCH_ACTION action)
 	{
 		x -= m_wnd_rect.m_left;
@@ -1733,6 +1602,7 @@ protected:
 	virtual void on_focus() {};
 	virtual void on_kill_focus() {};
 protected:
+	unsigned short	m_id;
 	WND_STATUS		m_status;
 	WND_ATTRIBUTION	m_attr;
 	c_rect			m_wnd_rect;		//position relative to parent window.
@@ -1740,23 +1610,18 @@ protected:
 	c_wnd*			m_top_child;	//the first sub window would be navigated
 	c_wnd*			m_prev_sibling;	//previous brother
 	c_wnd*			m_next_sibling;	//next brother
+	c_wnd*			m_focus_child;	//current focused window
 	const char*		m_str;			//caption
 	const FONT_INFO*	m_font_type;
 	unsigned int		m_font_color;
 	unsigned int		m_bg_color;
-	unsigned short		m_id;
 	int					m_z_order;		//the graphic level for rendering
-	c_wnd*				m_focus_child;	//current focused window
 	c_surface*			m_surface;
-private:
-	c_wnd(const c_wnd &win);
-	c_wnd& operator=(const c_wnd &win);
 };
-#define GL_BN_CLICKED			0x1111
-#define ON_GL_BN_CLICKED(func) 	{MSG_TYPE_WND, GL_BN_CLICKED, 0, msgCallback(&func)},
-typedef struct struct_bitmap_info BITMAP_INFO;
 class c_button : public c_wnd
 {
+public:
+	void set_on_click(WND_CALLBACK on_click) { this->on_click = on_click; }
 protected:
 	virtual void on_paint()
 	{
@@ -1803,6 +1668,7 @@ protected:
 	}
 	virtual void pre_create_wnd()
 	{
+		on_click = 0;
 		m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 		m_font_type = c_theme::get_font(FONT_DEFAULT);
 		m_font_color = c_theme::get_color(COLOR_WND_FONT);
@@ -1819,7 +1685,10 @@ protected:
 		{
 			m_status = STATUS_FOCUSED;
 			on_paint();
-			notify_parent(GL_BN_CLICKED, 0);
+			if(on_click)
+			{
+				(m_parent->*(on_click))(m_id, 0);
+			}
 		}
 	}
 	virtual void on_navigate(NAVIGATION_KEY key)
@@ -1836,6 +1705,7 @@ protected:
 		}
 		return c_wnd::on_navigate(key);
 	}
+	WND_CALLBACK on_click;
 };
 class c_surface;
 class c_dialog;
@@ -2006,8 +1876,21 @@ public:
 		}
 		return -1;
 	}
+	virtual void on_init_children()
+	{
+		c_wnd* child = m_top_child;
+		if (0 != child)
+		{
+			while (child)
+			{
+				((c_button*)child)->set_on_click(WND_CALLBACK(&c_keyboard::on_key_clicked));
+				child = child->get_next_sibling();
+			}
+		}
+	}
 	KEYBOARD_STATUS get_cap_status(){return m_cap_status;}
 	char* get_str() { return m_str; }
+	void set_on_click(WND_CALLBACK on_click) { this->on_click = on_click; }
 protected:
 	virtual void pre_create_wnd()
 	{
@@ -2064,7 +1947,7 @@ protected:
 		ASSERT(false);
 	InputChar:
 		m_str[m_str_len++] = id;
-		notify_parent(KEYBORAD_CLICK, CLICK_CHAR);
+		(m_parent->*(on_click))(m_id, CLICK_CHAR);
 	}
 	void on_del_clicked(int id, int param)
 	{
@@ -2073,7 +1956,7 @@ protected:
 			return;
 		}
 		m_str[--m_str_len] = 0;
-		notify_parent(KEYBORAD_CLICK, CLICK_CHAR);
+		(m_parent->*(on_click))(m_id, CLICK_CHAR);
 	}
 	void on_caps_clicked(int id, int param)
 	{
@@ -2083,18 +1966,18 @@ protected:
 	void on_enter_clicked(int id, int param)
 	{
 		memset(m_str, 0, sizeof(m_str));
-		return notify_parent(KEYBORAD_CLICK, CLICK_ENTER);
+		(m_parent->*(on_click))(m_id, CLICK_ENTER);
 	}
 	void on_esc_clicked(int id, int param)
 	{
 		memset(m_str, 0, sizeof(m_str));
-		notify_parent(KEYBORAD_CLICK, CLICK_ESC);
+		(m_parent->*(on_click))(m_id, CLICK_ESC);
 	}
-	GL_DECLARE_MESSAGE_MAP()
 private:
 	char m_str[32];
 	int	 m_str_len;
 	KEYBOARD_STATUS m_cap_status;
+	WND_CALLBACK on_click;
 };
 class c_keyboard_button : public c_button
 {
@@ -2284,11 +2167,11 @@ protected:
 			break;
 		}
 	}
-	GL_DECLARE_MESSAGE_MAP()
 private:
 	void show_keyboard()
 	{
 		s_keyboard.connect(this, IDD_KEY_BOARD, m_kb_style);
+		s_keyboard.set_on_click(WND_CALLBACK(&c_edit::on_key_board_click));
 		s_keyboard.show_window();
 	}
 	void on_touch_down(int x, int y)
@@ -2368,12 +2251,12 @@ protected:
 };
 #include <string.h>
 #define MAX_ITEM_NUM			4
-#define GL_LIST_CONFIRM			0x1
 #define ITEM_HEIGHT				45
-#define ON_LIST_CONFIRM(func)	{MSG_TYPE_WND, GL_LIST_CONFIRM, 0, msgCallback(&func)},
 class c_list_box : public c_wnd
 {
 public:
+	void set_on_change(WND_CALLBACK on_change) { this->on_change = on_change; }
+	short get_item_count() { return m_item_total; }
 	int add_item(char* str)
 	{
 		if (m_item_total >= MAX_ITEM_NUM)
@@ -2391,7 +2274,6 @@ public:
 		memset(m_item_array, 0, sizeof(m_item_array));
 		update_list_size();
 	}
-	short get_item_count() { return m_item_total; }
 	void  select_item(short index)
 	{
 		if (index < 0 || index >= m_item_total)
@@ -2546,7 +2428,10 @@ private:
 			{
 				m_status = STATUS_FOCUSED;
 				on_paint();
-				notify_parent(GL_LIST_CONFIRM, m_selected_item);
+				if(on_change)
+				{
+					(m_parent->*(on_change))(m_id, m_selected_item);
+				}
 			}
 		}
 	}
@@ -2569,7 +2454,10 @@ private:
 				m_status = STATUS_FOCUSED;
 				select_item((y - m_list_wnd_rect.m_top) / ITEM_HEIGHT);
 				on_paint();
-				notify_parent(GL_LIST_CONFIRM, m_selected_item);
+				if(on_change)
+				{
+					(m_parent->*(on_change))(m_id, m_selected_item);
+				}
 			}
 			else
 			{
@@ -2582,6 +2470,7 @@ private:
 	char*			m_item_array[MAX_ITEM_NUM];
 	c_rect			m_list_wnd_rect;	//rect relative to parent wnd.
 	c_rect			m_list_screen_rect;	//rect relative to physical screen(frame buffer)
+	WND_CALLBACK 	on_change;
 };
 #include <stdlib.h>
 #define MAX_PAGES	5
@@ -2920,8 +2809,6 @@ inline void c_slide_group::on_touch(int x, int y, TOUCH_ACTION action)
 }
 #define ID_BT_ARROW_UP      	0x1111
 #define ID_BT_ARROW_DOWN    	0x2222
-#define	GL_SPIN_CHANGE			0x3333
-#define ON_SPIN_CHANGE(func)	{MSG_TYPE_WND, GL_SPIN_CHANGE, 0, msgCallback(&func)},
 class c_spin_box;
 class c_spin_button : public c_button
 {
@@ -2942,6 +2829,7 @@ public:
 	short get_step() { return m_step; }
 	void set_value_digit(short digit) { m_digit = digit; }
 	short get_value_digit() { return m_digit; }
+	void set_on_change(WND_CALLBACK on_change) { this->on_change = on_change; }
 protected:
 	virtual void on_paint()
 	{
@@ -2974,7 +2862,10 @@ protected:
 			return;
 		}
 		m_cur_value += m_step;
-		notify_parent(GL_SPIN_CHANGE, m_cur_value);
+		if(on_change)
+		{
+			(m_parent->*(on_change))(m_id, m_cur_value);
+		}
 		on_paint();
 	}
 	void on_arrow_down_bt_click()
@@ -2984,7 +2875,10 @@ protected:
 			return;
 		}
 		m_cur_value -= m_step;
-		notify_parent(GL_SPIN_CHANGE, m_cur_value);
+		if(on_change)
+		{
+			(m_parent->*(on_change))(m_id, m_cur_value);
+		}
 		on_paint();
 	}
 	short			m_cur_value;
@@ -2995,6 +2889,7 @@ protected:
 	short			m_digit;
 	c_spin_button  	m_bt_up;
 	c_spin_button  	m_bt_down;
+	WND_CALLBACK 	on_change;
 };
 inline void c_spin_button::on_touch(int x, int y, TOUCH_ACTION action)
 {
@@ -3451,12 +3346,6 @@ private:
 	unsigned char 	m_frame_len_map[64];
 	unsigned char 	m_frame_len_map_index;
 };
-#ifdef GUILITE_ON
-GL_MSG_ENTRY c_cmd_target::ms_usr_map_entries[USR_MSG_MAX];
-unsigned short c_cmd_target::ms_user_map_size;
-GL_BEGIN_MESSAGE_MAP(c_cmd_target)
-GL_END_MESSAGE_MAP()
-#endif
 
 #ifdef GUILITE_ON
 
@@ -3521,7 +3410,8 @@ typedef struct _timer_manage
         int state; /* on or off */
         int interval;
         int elapse; /* 0~interval */
-        void (* timer_proc) (void* ptmr, void* parg);
+        void (* timer_proc) (void* param);
+		void* param;
     }timer_info[MAX_TIMER_CNT];
     void (* old_sigfunc)(int);
     void (* new_sigfunc)(int);
@@ -3542,7 +3432,7 @@ static void* timer_routine(void*)
 			if(timer_manage.timer_info[i].elapse == timer_manage.timer_info[i].interval)
 			{
 				timer_manage.timer_info[i].elapse = 0;
-				timer_manage.timer_info[i].timer_proc(0, 0);
+				timer_manage.timer_info[i].timer_proc(timer_manage.timer_info[i].param);
 			}
 		}
     	usleep(1000 * TIMER_UNIT);
@@ -3562,7 +3452,7 @@ static int init_mul_timer()
     s_is_init = true;
     return 1;
 }
-static int set_a_timer(int interval, void (* timer_proc) (void* ptmr, void* parg))
+static int set_a_timer(int interval, void (* timer_proc)(void* param), void* param)
 {
 	init_mul_timer();
 	int i;
@@ -3578,6 +3468,7 @@ static int set_a_timer(int interval, void (* timer_proc) (void* ptmr, void* parg
         }
         memset(&timer_manage.timer_info[i], 0, sizeof(timer_manage.timer_info[i]));
         timer_manage.timer_info[i].timer_proc = timer_proc;
+		timer_manage.timer_info[i].param = param;
         timer_manage.timer_info[i].interval = interval;
         timer_manage.timer_info[i].elapse = 0;
         timer_manage.timer_info[i].state = 1;
@@ -3641,9 +3532,9 @@ unsigned int get_cur_thread_id()
 {
 	return (unsigned long)pthread_self();
 }
-void register_timer(int milli_second,void func(void* ptmr, void* parg))
+void register_timer(int milli_second,void func(void* param), void* param)
 {
-	set_a_timer(milli_second/TIMER_UNIT,func);
+	set_a_timer(milli_second/TIMER_UNIT,func, param);
 }
 long get_time_in_second()
 {
@@ -4002,7 +3893,8 @@ typedef struct _timer_manage
         int state; /* on or off */
         int interval;
         int elapse; /* 0~interval */
-        void (* timer_proc) (void* ptmr, void* parg);
+        void (* timer_proc) (void* param);
+		void* param;
     }timer_info[MAX_TIMER_CNT];
     void (* old_sigfunc)(int);
     void (* new_sigfunc)(int);
@@ -4023,7 +3915,7 @@ DWORD WINAPI timer_routine(LPVOID lpParam)
 			if(timer_manage.timer_info[i].elapse == timer_manage.timer_info[i].interval)
 			{
 				timer_manage.timer_info[i].elapse = 0;
-				timer_manage.timer_info[i].timer_proc(0, 0);
+				timer_manage.timer_info[i].timer_proc(timer_manage.timer_info[i].param);
 			}
 		}
 		Sleep(TIMER_UNIT);
@@ -4043,7 +3935,7 @@ static int init_mul_timer()
     s_is_init = true;
     return 1;
 }
-static int set_a_timer(int interval, void (* timer_proc) (void* ptmr, void* parg))
+static int set_a_timer(int interval, void (* timer_proc) (void* param), void* param)
 {
 	init_mul_timer();
 	int i;
@@ -4059,6 +3951,7 @@ static int set_a_timer(int interval, void (* timer_proc) (void* ptmr, void* parg
         }
         memset(&timer_manage.timer_info[i], 0, sizeof(timer_manage.timer_info[i]));
         timer_manage.timer_info[i].timer_proc = timer_proc;
+		timer_manage.timer_info[i].param = param;
         timer_manage.timer_info[i].interval = interval;
         timer_manage.timer_info[i].elapse = 0;
         timer_manage.timer_info[i].state = 1;
@@ -4126,9 +4019,9 @@ unsigned int get_cur_thread_id()
 {
 	return GetCurrentThreadId();
 }
-void register_timer(int milli_second,void func(void* ptmr, void* parg))
+void register_timer(int milli_second,void func(void* param), void* param)
 {
-	set_a_timer(milli_second/TIMER_UNIT,func);
+	set_a_timer(milli_second/TIMER_UNIT,func, param);
 }
 long get_time_in_second()
 {
@@ -4305,9 +4198,6 @@ DIALOG_ARRAY c_dialog::ms_the_dialogs[SURFACE_CNT_MAX];
 #endif
 #ifdef GUILITE_ON
 c_keyboard  c_edit::s_keyboard;
-GL_BEGIN_MESSAGE_MAP(c_edit)
-ON_KEYBORAD_UPDATE(c_edit::on_key_board_click)
-GL_END_MESSAGE_MAP()
 #endif
 #ifdef GUILITE_ON
 static c_keyboard_button s_key_0, s_key_1, s_key_2, s_key_3, s_key_4, s_key_5, s_key_6, s_key_7, s_key_8, s_key_9;
@@ -4375,7 +4265,4 @@ WND_TREE g_number_board_children[] =
 	{&s_key_enter,'\n',	0, POS_X(3), POS_Y(2), KEY_WIDTH, KEY_HEIGHT * 2 + 2},
 	{0,0,0,0,0,0,0}
 };
-GL_BEGIN_MESSAGE_MAP(c_keyboard)
-ON_GL_BN_CLICKED(c_keyboard::on_key_clicked)
-GL_END_MESSAGE_MAP()
 #endif

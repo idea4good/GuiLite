@@ -48,7 +48,7 @@ T_TIME second_to_day(long second);
 T_TIME get_time();
 
 void start_real_timer(void (*func)(void* arg));
-void register_timer(int milli_second, void func(void* ptmr, void* parg));
+void register_timer(int milli_second, void func(void* param), void* param);
 
 unsigned int get_cur_thread_id();
 void create_thread(unsigned long* thread_id, void* attr, void *(*start_routine) (void *), void* arg);

@@ -137,11 +137,11 @@ protected:
 			break;
 		}
 	}
-	GL_DECLARE_MESSAGE_MAP()
 private:
 	void show_keyboard()
 	{
 		s_keyboard.connect(this, IDD_KEY_BOARD, m_kb_style);
+		s_keyboard.set_on_click(WND_CALLBACK(&c_edit::on_key_board_click));
 		s_keyboard.show_window();
 	}
 	void on_touch_down(int x, int y)

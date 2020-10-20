@@ -11,8 +11,6 @@
 
 #define ID_BT_ARROW_UP      	0x1111
 #define ID_BT_ARROW_DOWN    	0x2222
-#define	GL_SPIN_CHANGE			0x3333
-#define ON_SPIN_CHANGE(func)	{MSG_TYPE_WND, GL_SPIN_CHANGE, 0, msgCallback(&func)},
 
 class c_spin_box;
 class c_spin_button : public c_button
@@ -35,7 +33,7 @@ public:
 	short get_step() { return m_step; }
 	void set_value_digit(short digit) { m_digit = digit; }
 	short get_value_digit() { return m_digit; }
-
+	void set_on_change(WND_CALLBACK on_change) { this->on_change = on_change; }
 protected:
 	virtual void on_paint()
 	{
@@ -70,7 +68,10 @@ protected:
 			return;
 		}
 		m_cur_value += m_step;
-		notify_parent(GL_SPIN_CHANGE, m_cur_value);
+		if(on_change)
+		{
+			(m_parent->*(on_change))(m_id, m_cur_value);
+		}
 		on_paint();
 	}
 	void on_arrow_down_bt_click()
@@ -80,7 +81,10 @@ protected:
 			return;
 		}
 		m_cur_value -= m_step;
-		notify_parent(GL_SPIN_CHANGE, m_cur_value);
+		if(on_change)
+		{
+			(m_parent->*(on_change))(m_id, m_cur_value);
+		}
 		on_paint();
 	}
 
@@ -92,6 +96,7 @@ protected:
 	short			m_digit;
 	c_spin_button  	m_bt_up;
 	c_spin_button  	m_bt_down;
+	WND_CALLBACK 	on_change;
 };
 
 inline void c_spin_button::on_touch(int x, int y, TOUCH_ACTION action)

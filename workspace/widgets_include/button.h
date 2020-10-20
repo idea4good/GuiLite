@@ -9,12 +9,10 @@
 #include "../core_include/display.h"
 #include "../core_include/theme.h"
 
-#define GL_BN_CLICKED			0x1111
-#define ON_GL_BN_CLICKED(func) 	{MSG_TYPE_WND, GL_BN_CLICKED, 0, msgCallback(&func)},
-
-typedef struct struct_bitmap_info BITMAP_INFO;
 class c_button : public c_wnd
 {
+public:
+	void set_on_click(WND_CALLBACK on_click) { this->on_click = on_click; }
 protected:
 	virtual void on_paint()
 	{
@@ -62,6 +60,7 @@ protected:
 	}
 	virtual void pre_create_wnd()
 	{
+		on_click = 0;
 		m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 		m_font_type = c_theme::get_font(FONT_DEFAULT);
 		m_font_color = c_theme::get_color(COLOR_WND_FONT);
@@ -79,7 +78,10 @@ protected:
 		{
 			m_status = STATUS_FOCUSED;
 			on_paint();
-			notify_parent(GL_BN_CLICKED, 0);
+			if(on_click)
+			{
+				(m_parent->*(on_click))(m_id, 0);
+			}
 		}
 	}
 	virtual void on_navigate(NAVIGATION_KEY key)
@@ -96,4 +98,5 @@ protected:
 		}
 		return c_wnd::on_navigate(key);
 	}
+	WND_CALLBACK on_click;
 };

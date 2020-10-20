@@ -2,7 +2,7 @@ echo "Build header-only library: GuiLite.h"
 
 # build GuiLiteRaw.h
 cd core_include
-cat api.h cmd_target.h resource.h theme.h display.h word.h bitmap.h wnd.h > core.h
+cat api.h resource.h theme.h display.h word.h bitmap.h wnd.h > core.h
 mv core.h ../
 
 cd ../widgets_include

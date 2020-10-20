@@ -72,9 +72,4 @@ WND_TREE g_number_board_children[] =
 	{&s_key_enter,'\n',	0, POS_X(3), POS_Y(2), KEY_WIDTH, KEY_HEIGHT * 2 + 2},
 	{0,0,0,0,0,0,0}
 };
-
-GL_BEGIN_MESSAGE_MAP(c_keyboard)
-ON_GL_BN_CLICKED(c_keyboard::on_key_clicked)
-GL_END_MESSAGE_MAP()
-
 #endif

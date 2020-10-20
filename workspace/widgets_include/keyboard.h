@@ -78,8 +78,22 @@ public:
 		}
 		return -1;
 	}
+	virtual void on_init_children()
+	{
+		c_wnd* child = m_top_child;
+		if (0 != child)
+		{
+			while (child)
+			{
+				((c_button*)child)->set_on_click(WND_CALLBACK(&c_keyboard::on_key_clicked));
+				child = child->get_next_sibling();
+			}
+		}
+	}
+
 	KEYBOARD_STATUS get_cap_status(){return m_cap_status;}
 	char* get_str() { return m_str; }
+	void set_on_click(WND_CALLBACK on_click) { this->on_click = on_click; }
 protected:
 	virtual void pre_create_wnd()
 	{
@@ -138,7 +152,7 @@ protected:
 		ASSERT(false);
 	InputChar:
 		m_str[m_str_len++] = id;
-		notify_parent(KEYBORAD_CLICK, CLICK_CHAR);
+		(m_parent->*(on_click))(m_id, CLICK_CHAR);
 	}
 	void on_del_clicked(int id, int param)
 	{
@@ -147,7 +161,7 @@ protected:
 			return;
 		}
 		m_str[--m_str_len] = 0;
-		notify_parent(KEYBORAD_CLICK, CLICK_CHAR);
+		(m_parent->*(on_click))(m_id, CLICK_CHAR);
 	}
 	void on_caps_clicked(int id, int param)
 	{
@@ -157,19 +171,18 @@ protected:
 	void on_enter_clicked(int id, int param)
 	{
 		memset(m_str, 0, sizeof(m_str));
-		return notify_parent(KEYBORAD_CLICK, CLICK_ENTER);
+		(m_parent->*(on_click))(m_id, CLICK_ENTER);
 	}
 	void on_esc_clicked(int id, int param)
 	{
 		memset(m_str, 0, sizeof(m_str));
-		notify_parent(KEYBORAD_CLICK, CLICK_ESC);
+		(m_parent->*(on_click))(m_id, CLICK_ESC);
 	}
-
-	GL_DECLARE_MESSAGE_MAP()
 private:
 	char m_str[32];
 	int	 m_str_len;
 	KEYBOARD_STATUS m_cap_status;
+	WND_CALLBACK on_click;
 };
 
 class c_keyboard_button : public c_button
