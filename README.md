@@ -18,7 +18,7 @@
 ## Lightweight
 - ✂️Small: 4,000+ lines of C++ code, zero dependency, header-only(GuiLite.h)
 - ⚡Fast: High Rendering performance, even work on MCU
-- 💉Embeddable: Runs inside Qt/MFC/Winform/Cocoa/Web - Keep legacy Qt/MFC code reusable
+- 👫🏻Compatible: Work smoothly with 3rd party frameworks(Qt/MFC/Winform/Cocoa/Web)
 - ⚙️️Hardware Minimum Requirements:
 
     | Processor | Disk/ROM space | Memory |
@@ -139,8 +139,8 @@ Thanks for the help from the community, you all make GuiLite better! And welcome
 - QQ group code:
 <table>
   <tr>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>超級群：527251257</b></sub></a>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=yKnUJj1B"><img src="documents/qq.group-2.jpg" width="240px;"/><br /><sub><b>超級群：841031761</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>超级群：527251257</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=yKnUJj1B"><img src="documents/qq.group-2.jpg" width="240px;"/><br /><sub><b>超级群：841031761</b></sub></a>
     <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>免费群：717471210</b></sub></a>
   </tr>
 </table>

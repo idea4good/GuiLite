@@ -13,10 +13,10 @@
     <img src="documents/WhyGuiLite-cn.png" alt="Why GuiLite"/>
 </p>
 
-## 轻-快-灵
+## 轻-快-容
 - ✂️轻量: 4千行C++代码，0依赖，单一头文件库（GuiLite.h）
 - ⚡超快: 高效渲染，单片机上也能流畅运行
-- 💉灵活: 可注入在Qt/MFC/Winform/Cocoa/Web程序中运行 - 重用现有Qt/MFC代码
+- 👫🏻兼容: 完美兼容第3方GUI框架(Qt/MFC/Winform/Cocoa/Web)，现有Qt/MFC代码可以继续使用
 - ⚙️️最低硬件要求:
 
   | Processor | Disk/ROM space | Memory |
@@ -136,8 +136,8 @@
 - GuiLite开发者QQ群：
 <table>
   <tr>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>超級群：527251257</b></sub></a>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=yKnUJj1B"><img src="documents/qq.group-2.jpg" width="240px;"/><br /><sub><b>超級群：841031761</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>超级群：527251257</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=yKnUJj1B"><img src="documents/qq.group-2.jpg" width="240px;"/><br /><sub><b>超级群：841031761</b></sub></a>
     <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>免费群：717471210</b></sub></a>
   </tr>
 </table>

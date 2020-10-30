@@ -37,9 +37,6 @@
     <ClCompile Include="core\bitmap.cpp">
       <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="core\cmd_target.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
     <ClCompile Include="core\display.cpp">
       <Filter>core</Filter>
     </ClCompile>
@@ -53,9 +50,6 @@
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="core\adapter\api_win.cpp">
-      <Filter>core\adapter</Filter>
-    </ClCompile>
-    <ClCompile Include="core\adapter\audio_win.cpp">
       <Filter>core\adapter</Filter>
     </ClCompile>
   </ItemGroup>

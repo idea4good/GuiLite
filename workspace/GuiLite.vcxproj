@@ -389,9 +389,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\adapter\api_win.cpp" />
-    <ClCompile Include="core\adapter\audio_win.cpp" />
     <ClCompile Include="core\bitmap.cpp" />
-    <ClCompile Include="core\cmd_target.cpp" />
     <ClCompile Include="core\display.cpp" />
     <ClCompile Include="core\theme.cpp" />
     <ClCompile Include="core\wnd.cpp" />
