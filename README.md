@@ -144,3 +144,14 @@ Thanks for the help from the community, you all make GuiLite better! And welcome
     <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>免费群：717471210</b></sub></a>
   </tr>
 </table>
+
+***
+**如果GuiLite对您有用，请随手投票支持一下：**
+
+👉[投票链接](https://www.oschina.net/p/guilite)（建议微信打开，可免注册）
+
+👉点击“投票让它出道”
+
+![vote](documents/vote.png)
+
+🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏
