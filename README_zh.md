@@ -145,10 +145,10 @@
 ***
 **如果GuiLite对您有用，请随手投票支持一下：**
 
-👉[投票链接](https://www.oschina.net/p/guilite)（建议微信打开，可免注册）
+👉[投票链接](https://www.oschina.net/p/guilite)（非注册用户，可微信打开链接，投票）
 
 👉点击“投票让它出道”
 
 ![vote](documents/vote.png)
 
-🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏
+🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏
