@@ -148,9 +148,9 @@ Thanks for the help from the community, you all make GuiLite better! And welcome
 ***
 **如果GuiLite对您有用，请随手投票支持一下：**
 
-1. 👉[投票链接](https://www.oschina.net/project/top_cn_2020)（非注册用户，可微信打开链接，投票）
-2. 🔍搜索“GuiLite”
-3. 👉点击“投票”
+👉[投票链接](https://www.oschina.net/p/guilite)（非注册用户，可微信打开链接，投票）
+
+👉点击“投票让它出道”
 
 ![vote](documents/vote.png)
 
