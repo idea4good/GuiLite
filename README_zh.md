@@ -141,3 +141,4 @@
     <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>免费群：717471210</b></sub></a>
   </tr>
 </table>
+欢迎有条件的同学加入“超级群”，共同注力GuiLite🚀
