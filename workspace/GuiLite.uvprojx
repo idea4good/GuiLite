@@ -388,11 +388,6 @@
               <FilePath>.\core\bitmap.cpp</FilePath>
             </File>
             <File>
-              <FileName>cmd_target.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\cmd_target.cpp</FilePath>
-            </File>
-            <File>
               <FileName>display.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\core\display.cpp</FilePath>

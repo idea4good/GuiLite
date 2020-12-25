@@ -25,4 +25,36 @@ set raw_data=[{^
 curl.exe --include --request POST --header "Content-Type: application/json" --data-binary^
  "%raw_data%" "%url%"
 
+rem ----------------- for GEO info -----------------
+curl.exe ipinfo.io > ip_info.txt
+findstr.exe country ip_info.txt > ip_country.txt
+findstr.exe city ip_info.txt > ip_city.txt
+findstr.exe org ip_info.txt > ip_org.txt
+
+powershell -Command "(gc ip_country.txt) -replace '\"country\":', '' | Out-File -encoding ASCII ip_country.txt"
+powershell -Command "(gc ip_country.txt) -replace '""' , '' | Out-File -encoding ASCII ip_country.txt"
+powershell -Command "(gc ip_country.txt) -replace ',' , '' | Out-File -encoding ASCII ip_country.txt"
+
+powershell -Command "(gc ip_city.txt) -replace '\"city\":', '' | Out-File -encoding ASCII ip_city.txt"
+powershell -Command "(gc ip_city.txt) -replace '""' , '' | Out-File -encoding ASCII ip_city.txt"
+powershell -Command "(gc ip_city.txt) -replace ',' , '' | Out-File -encoding ASCII ip_city.txt"
+
+powershell -Command "(gc ip_org.txt) -replace '\"org\":', '' | Out-File -encoding ASCII ip_org.txt"
+powershell -Command "(gc ip_org.txt) -replace '""' , '' | Out-File -encoding ASCII ip_org.txt"
+powershell -Command "(gc ip_org.txt) -replace ',' , '' | Out-File -encoding ASCII ip_org.txt"
+
+set url="https://api.powerbi.com/beta/72f988bf-86f1-41af-91ab-2d7cd011db47/datasets/d6c4145f-2fdc-4071-94f7-fbdb090914d4/rows?key=pQ7GFsXkAqJij4v%%2BadZDoth6HB%%2BmjZbAn0d%%2B%%2BtlWnE3jpm1s0lGKoFeFV7aF1QQ7PKOYGpQYYCkS0tjzxTgbLQ%%3D%%3D"
+set /p country=<ip_country.txt
+set /p city=<ip_city.txt
+set /p org=<ip_org.txt
+set raw_data=[{^
+\"county\" :\"%country%\",^
+\"city\" :\"%city%\",^
+\"organization\" :\"%org%\",^
+\"weight\" : 1^
+}]
+
+curl.exe --include --request POST --header "Content-Type: application/json" --data-binary "%raw_data%" "%url%"
+
+del ip_*
 exit /B 0
