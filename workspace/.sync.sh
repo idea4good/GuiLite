@@ -35,13 +35,4 @@ curl --include --request POST --header "Content-Type: application/json" --data-b
 \"org\" :\"$org\"
 }]" $url > /dev/null
 
-url="https://api.powerbi.com/beta/72f988bf-86f1-41af-91ab-2d7cd011db47/datasets/d6c4145f-2fdc-4071-94f7-fbdb090914d4/rows?key=pQ7GFsXkAqJij4v%2BadZDoth6HB%2BmjZbAn0d%2B%2BtlWnE3jpm1s0lGKoFeFV7aF1QQ7PKOYGpQYYCkS0tjzxTgbLQ%3D%3D"
-
-curl --include --request POST --header "Content-Type: application/json" --data-binary "[{
-\"county\" :\"$country\",
-\"city\" :\"$city\",
-\"organization\" :\"$org\",
-\"weight\" :1
-}]" $url > /dev/null
-
 rm ip_*

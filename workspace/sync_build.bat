@@ -52,16 +52,5 @@ set raw_data=[{^
 curl.exe --include --request POST --header "Content-Type: application/json" --data-binary^
  "%raw_data%" "%url%"
 
-set url="https://api.powerbi.com/beta/72f988bf-86f1-41af-91ab-2d7cd011db47/datasets/d6c4145f-2fdc-4071-94f7-fbdb090914d4/rows?key=pQ7GFsXkAqJij4v%%2BadZDoth6HB%%2BmjZbAn0d%%2B%%2BtlWnE3jpm1s0lGKoFeFV7aF1QQ7PKOYGpQYYCkS0tjzxTgbLQ%%3D%%3D"
-
-set raw_data=[{^
-\"county\" :\"%country%\",^
-\"city\" :\"%city%\",^
-\"organization\" :\"%org%\",^
-\"weight\" : 1^
-}]
-
-curl.exe --include --request POST --header "Content-Type: application/json" --data-binary "%raw_data%" "%url%"
-
 del ip_*
 exit /B 0
