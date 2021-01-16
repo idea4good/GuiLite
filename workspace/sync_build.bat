@@ -16,7 +16,7 @@ if not "%YY%" == "20" (rem For Chinese date format
     for /f "tokens=1-3 delims=/ "  %%a in ("%date%") do (set YYYY=%%a& set MM=%%b& set DD=%%c))
 
 set datetime=%YYYY%-%MM%-%DD%T%time: =0%0+0800
-set devie_info=Win-%USERNAME%
+set devie_info=Win-unknown
 
 rem ----------------- for GEO info -----------------
 curl.exe ipinfo.io > ip_info.txt
