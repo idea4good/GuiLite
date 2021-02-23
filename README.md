@@ -30,11 +30,11 @@
 - Supported languages: C/C++, Swift, Java, Javascript, C#, Golang...
 - Supported 3rd party libraries: Qt, MFC, Winforms, CoCoa...
 
-## Useful features
+## Hero features
+- ☁️Cloud + IoT Solution: master your IoT business all over the world
 - 🔣Multi-language, supports UTF-8;📀Playback Video
 - 🔨[Toolkit](https://github.com/idea4good/GuiLiteToolkit) for building font/image resources
 - 📐[Layout GUI WYSIWYG](https://github.com/idea4good/GuiLitePreviewer)
-- ☁️Cloud + IoT Solution
 - 📊Code Telemetry and Analysis in real time(*remove .sh/.bat files if dislike to share*)
 - 📦Supports 3D and [Web](https://github.com/idea4good/GuiLiteWeb)
 - 🐋Run in docker with a single command: `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
@@ -142,9 +142,8 @@ Thanks for the help from the community, you all make GuiLite better! And welcome
 - QQ group code:
 <table>
   <tr>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>超级群🥇：527251257</b></sub></a>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=yKnUJj1B"><img src="documents/qq.group-2.jpg" width="240px;"/><br /><sub><b>超级群🥈：841031761</b></sub></a>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>免费群🥉：717471210</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>专家群💎：527251257</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=yKnUJj1B"><img src="documents/qq.group-2.jpg" width="240px;"/><br /><sub><b>专家群💎：841031761</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>免费群🔑：717471210</b></sub></a>
   </tr>
 </table>
-欢迎有条件的同学加入“超级群”🚄⏪⏪⏪，一同打造全球最强Lite GUI👑

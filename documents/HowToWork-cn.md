@@ -71,9 +71,7 @@ widgets:
 | core 重要程度/文件名称 | 代码简介 | 推荐学习时间 |
 | --- | --- | --- |
 | ★★★ wnd.cpp | UI元素的基本类，定义所有的UI元素信息、绘制及管理办法 | 1.5小时 |
-| ★★ cmd_target.cpp | 映射UI消息及用户自定义的消息 | 0.5小时 |
 | ★★ display.cpp | 生成显示设备，设定surface的数目，一个surface对应一个滑动页面 | 0.5小时 |
-| ★★ surface.cpp| 实现像素点的绘制，并对各个图层（layer）进行管理 | 0.5小时 |
 | word.cpp | 显示文字 | < 1小时 |
 | bitmap.cpp | 绘制位图，支持16 bits和32 bits | < 0.5小时 |
 | rect.cpp | UI元素的位置信息 | < 0.5小时 |

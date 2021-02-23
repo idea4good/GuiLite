@@ -72,9 +72,7 @@ Rendering include rendering method and graphic management.
 | core Importance/File name | Introduction | Time cost |
 | --- | --- | --- |
 | ★★★ wnd.cpp | Basic class for widgets; connect/disconnect widgets; response user on_touch, on_key action | 1.5 hour |
-| ★★ cmd_target.cpp | map/dispatch GUI/user custom message | 0.5 hour |
 | ★★ display.cpp | Initialize display device, create surface,  | 0.5 hour |
-| ★★ surface.cpp| Draw piexel/line/rect, and multi-layer management | 0.5 hour |
 | word.cpp | Draw text | < 1 hour |
 | bitmap.cpp | Draw bitmap | < 0.5 hour |
 | rect.cpp | Rect for basic use(e.g, widgets location) | < 0.5 hour |

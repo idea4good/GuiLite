@@ -29,10 +29,10 @@
 - 支持的第3方库：Qt, MFC, Winforms, CoCoa...
 
 ## 实用的功能
+- ☁️完美的“云” + “物联网”解决方案：让你轻松驾驭全球IoT业务
 - 🔣支持多语言,采用 UTF-8 编码；📀支持视频播放
 - 🔨[资源制作工具](https://github.com/idea4good/GuiLiteToolkit)为你定制自己的字体/图片资源
 - 📐[所见即所得的GUI布局工具](https://github.com/idea4good/GuiLitePreviewer)
-- ☁️完美的“云” + “物联网”解决方案
 - 📊编译活跃度统计，及实时分析
 - 📦支持3D & [Web](https://github.com/idea4good/GuiLiteWeb)
 - 🐋支持Docker，一条命令启动Docker: `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
@@ -139,9 +139,8 @@
 - GuiLite开发者QQ群：
 <table>
   <tr>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>超级群🥇：527251257</b></sub></a>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=yKnUJj1B"><img src="documents/qq.group-2.jpg" width="240px;"/><br /><sub><b>超级群🥈：841031761</b></sub></a>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>免费群🥉：717471210</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>专家群💎：527251257</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=yKnUJj1B"><img src="documents/qq.group-2.jpg" width="240px;"/><br /><sub><b>专家群💎：841031761</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>免费群🔑：717471210</b></sub></a>
   </tr>
 </table>
-欢迎有条件的同学加入“超级群”🚄⏪⏪⏪，一同打造全球最强Lite GUI👑
