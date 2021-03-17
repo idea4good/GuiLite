@@ -10,19 +10,30 @@ if NOT "1" == "%argC%" (
 
 set url="https://api.powerbi.com/beta/72f988bf-86f1-41af-91ab-2d7cd011db47/datasets/2ff1e8a8-2f6f-4d73-a75d-86829e3f4574/rows?key=8f5xLp1gP8%%2FzSee4vCUBcyjR65I9zZ6nb%%2B%%2F7bbzex%%2FSctLX3ntIlAR0sxWpDdguuYyDtLdHK%%2Fxbxj%%2FrSBkX7eQ%%3D%%3D"
 
+rem For "monday mm/dd/yyyy"
 for /f "tokens=2-4 delims=-/., "  %%a in ("%date%") do (
         set MM=%%a
         set DD=%%b
         set YYYY=%%c
     )
 
-rem For yyyy/mm/dd
+rem For yyyy/mm/dd monday
 set YY=%YYYY:~0,2%
 if not "%YY%" == "20" (
     for /f "tokens=1-3 delims=-/., "  %%a in ("%date%") do (
             set YYYY=%%a
             set MM=%%b
             set DD=%%c
+        )
+    )
+
+rem For "dd/mm/yyyy monday"
+set YY=%YYYY:~0,2%
+if not "%YY%" == "20" (
+    for /f "tokens=1-3 delims=-/., "  %%a in ("%date%") do (
+            set YYYY=%%c
+            set MM=%%b
+            set DD=%%a
         )
     )
 
