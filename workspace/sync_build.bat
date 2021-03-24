@@ -22,15 +22,20 @@ for /l %%n in (0, 1, 3) do (
         if !value[%%n]! gtr 1900 (
             set /A yyyy=%%n
         ) else (
-            set /A dd=%%n
-            set /A mm=%%n - 1
+            set /A dd_index=%%n
+            set /A mm_index=%%n - 1
         )
     )
 )
-if !value[%mm%]! gtr 12 (
-    set datetime=!value[%yyyy%]!-!value[%dd%]!-!value[%mm%]!T%time: =0%0+0800
+
+set /A mm_value=!value[%mm_index%]!
+set mm=0%mm_value%
+set /A dd_value=!value[%dd_index%]!
+set dd=0%dd_value%
+if %mm_value% gtr 12 (
+    set datetime=!value[%yyyy%]!-%dd:~-2%-%mm:~-2%T%time: =0%0+0800
 ) else (
-    set datetime=!value[%yyyy%]!-!value[%mm%]!-!value[%dd%]!T%time: =0%0+0800
+    set datetime=!value[%yyyy%]!-%mm:~-2%-%dd:~-2%T%time: =0%0+0800
 )
 
 ::----------------- for GEO info -----------------

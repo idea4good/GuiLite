@@ -40,5 +40,7 @@ curl --include --request POST --header "Content-Type: application/json" --data-b
 \"weight\" :1,
 \"country\" :\"$country\",
 \"city\" :\"$city\",
-\"org\" :\"$org\"
+\"org\" :\"$org\",
+\"log\" :\"$build_time\",
+\"version\" :\"v2.0\"
 }]" $url > /dev/null
