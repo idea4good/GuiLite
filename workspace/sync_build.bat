@@ -10,33 +10,22 @@ if NOT "1" == "%argC%" (
 
 set url="https://api.powerbi.com/beta/72f988bf-86f1-41af-91ab-2d7cd011db47/datasets/2ff1e8a8-2f6f-4d73-a75d-86829e3f4574/rows?key=8f5xLp1gP8%%2FzSee4vCUBcyjR65I9zZ6nb%%2B%%2F7bbzex%%2FSctLX3ntIlAR0sxWpDdguuYyDtLdHK%%2Fxbxj%%2FrSBkX7eQ%%3D%%3D"
 
-::analyze date
-for /f "tokens=1-4 delims=-/., "  %%a in ("%date%") do (
-        set /A value[0]=%%a
-        set /A value[1]=%%b
-        set /A value[2]=%%c
-        set /A value[3]=%%d
-)
-for /l %%n in (0, 1, 3) do ( 
-    if !value[%%n]! gtr 0 (
-        if !value[%%n]! gtr 1900 (
-            set /A yyyy=%%n
-        ) else (
-            set /A dd_index=%%n
-            set /A mm_index=%%n - 1
-        )
-    )
+::analyze date time
+for /f %%x in ('wmic path win32_utctime get /format:list ^| findstr "="') do (
+    set %%x
 )
 
-set /A mm_value=!value[%mm_index%]!
-set mm=0%mm_value%
-set /A dd_value=!value[%dd_index%]!
-set dd=0%dd_value%
-if %mm_value% gtr 12 (
-    set datetime=!value[%yyyy%]!-%dd:~-2%-%mm:~-2%T%time: =0%0+0800
-) else (
-    set datetime=!value[%yyyy%]!-%mm:~-2%-%dd:~-2%T%time: =0%0+0800
-)
+Set Second=0%Second%
+Set Second=%Second:~-2%
+Set Minute=0%Minute%
+Set Minute=%Minute:~-2%
+Set Hour=0%Hour%
+Set Hour=%Hour:~-2%
+Set Day=0%Day%
+Set Day=%Day:~-2%
+Set Month=0%Month%
+Set Month=%Month:~-2%
+set datetime=%Year%-%Month%-%Day%T%Hour%:%Minute%:%Second%.000+0000
 
 ::----------------- for GEO info -----------------
 set tmpPath=%userprofile%\AppData\Local\Temp\
@@ -76,7 +65,7 @@ set raw_data=[{^
 \"country\" :\"%country%\",^
 \"city\" :\"%city%\",^
 \"org\" :\"%org%\",^
-\"log\" :\"%date%\",^
+\"log\" :\"%datetime%\",^
 \"version\" :\"v2.0\"^
 }]
 
