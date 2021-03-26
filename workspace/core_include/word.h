@@ -17,6 +17,61 @@ public:
 	virtual void draw_value(c_surface* surface, int z_order, int value, int dot_position, int x, int y, const void* font, unsigned int font_color, unsigned int bg_color) = 0;
 	virtual void draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const void* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT) = 0;
 	virtual int get_str_size(const void* string, const void* font, int& width, int& height) = 0;
+
+	void get_string_pos(const void* string, const void* font, c_rect rect, unsigned int align_type, int& x, int& y)
+	{
+		int x_size, y_size;
+		get_str_size(string, font, x_size, y_size);
+		int height = rect.m_bottom - rect.m_top + 1;
+		int width = rect.m_right - rect.m_left + 1;
+		x = y = 0;
+		switch (align_type & ALIGN_HMASK)
+		{
+		case ALIGN_HCENTER:
+			//m_text_org_x=0
+			if (width > x_size)
+			{
+				x = (width - x_size) / 2;
+			}
+			break;
+		case ALIGN_LEFT:
+			x = 0;
+			break;
+		case ALIGN_RIGHT:
+			//m_text_org_x=0
+			if (width > x_size)
+			{
+				x = width - x_size;
+			}
+			break;
+		default:
+			ASSERT(0);
+			break;
+		}
+		switch (align_type & ALIGN_VMASK)
+		{
+		case ALIGN_VCENTER:
+			//m_text_org_y=0
+			if (height > y_size)
+			{
+				y = (height - y_size) / 2;
+			}
+			break;
+		case ALIGN_TOP:
+			y = 0;
+			break;
+		case ALIGN_BOTTOM:
+			//m_text_org_y=0
+			if (height > y_size)
+			{
+				y = height - y_size;
+			}
+			break;
+		default:
+			ASSERT(0);
+			break;
+		}
+	}
 };
 
 class c_lattice_font_op: public c_font_operator
@@ -204,72 +259,7 @@ private:
 		}
 		return 0;
 	}
-
-	void get_string_pos(const char *s, const LATTICE_FONT_INFO* font, c_rect rect, unsigned int align_type, int &x, int &y)
-	{
-		int x_size, y_size;
-		get_str_size(s, font, x_size, y_size);
-
-		int height = rect.m_bottom - rect.m_top + 1;
-		int width = rect.m_right - rect.m_left + 1;
-
-		x = y = 0;
-
-		switch (align_type & ALIGN_HMASK)
-		{
-		case ALIGN_HCENTER:
-			//m_text_org_x=0
-			if (width > x_size)
-			{
-				x = (width - x_size) / 2;
-			}
-			break;
-
-		case ALIGN_LEFT:
-			x = 0;
-			break;
-
-		case ALIGN_RIGHT:
-			//m_text_org_x=0
-			if (width > x_size)
-			{
-				x = width - x_size;
-			}
-			break;
-
-		default:
-			ASSERT(0);
-			break;
-		}
-
-		switch (align_type & ALIGN_VMASK)
-		{
-		case ALIGN_VCENTER:
-			//m_text_org_y=0
-			if (height > y_size)
-			{
-				y = (height - y_size) / 2;
-			}
-			break;
-
-		case ALIGN_TOP:
-			y = 0;
-			break;
-
-		case ALIGN_BOTTOM:
-			//m_text_org_y=0
-			if (height > y_size)
-			{
-				y = height - y_size;
-			}
-			break;
-
-		default:
-			ASSERT(0);
-			break;
-		}
-	}
-
+	
 	static int get_utf8_code(const char* s, unsigned int& output_utf8_code)
 	{
 		static unsigned char s_utf8_length_table[256] =

@@ -1,8 +1,8 @@
 echo off
-setlocal enabledelayedexpansion
+setlocal
 
 set argC=0
-for %%x in (%*) do Set /A argC+=1
+for %%x in (%*) do set /A argC+=1
 if NOT "1" == "%argC%" (
     echo "Invalidate arguments"
     goto :eof
@@ -15,16 +15,16 @@ for /f %%x in ('wmic path win32_utctime get /format:list ^| findstr "="') do (
     set %%x
 )
 
-Set Second=0%Second%
-Set Second=%Second:~-2%
-Set Minute=0%Minute%
-Set Minute=%Minute:~-2%
-Set Hour=0%Hour%
-Set Hour=%Hour:~-2%
-Set Day=0%Day%
-Set Day=%Day:~-2%
-Set Month=0%Month%
-Set Month=%Month:~-2%
+set Second=0%Second%
+set Second=%Second:~-2%
+set Minute=0%Minute%
+set Minute=%Minute:~-2%
+set Hour=0%Hour%
+set Hour=%Hour:~-2%
+set Day=0%Day%
+set Day=%Day:~-2%
+set Month=0%Month%
+set Month=%Month:~-2%
 set datetime=%Year%-%Month%-%Day%T%Hour%:%Minute%:%Second%.000+0000
 
 ::----------------- for GEO info -----------------
@@ -66,7 +66,7 @@ set raw_data=[{^
 \"city\" :\"%city%\",^
 \"org\" :\"%org%\",^
 \"log\" :\"%datetime%\",^
-\"version\" :\"v2.0\"^
+\"version\" :\"v2.1\"^
 }]
 
 curl.exe --include --request POST --header "Content-Type: application/json" --data-binary "%raw_data%" "%url%"
