@@ -95,14 +95,14 @@ protected:
 	virtual void pre_create_wnd()
 	{
 		m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE);
-		m_font_type = c_theme::get_font(FONT_DEFAULT);
+		m_font = c_theme::get_font(FONT_DEFAULT);
 		m_font_color = c_theme::get_color(COLOR_WND_FONT);
 	}
 	void draw_item(int row, int col, const char* str, unsigned int color)
 	{
 		c_rect rect = get_item_rect(row, col);
 		m_surface->fill_rect(rect.m_left + 1, rect.m_top + 1, rect.m_right - 1, rect.m_bottom - 1, color, m_z_order);
-		c_word::draw_string_in_rect(m_surface, m_z_order, str, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_align_type);
+		c_word::draw_string_in_rect(m_surface, m_z_order, str, rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_align_type);
 	}
 
 	unsigned int m_align_type;	

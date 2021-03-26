@@ -115,19 +115,20 @@ typedef struct struct_lattice
 {
 	unsigned int			utf8_code;
 	unsigned char			width;
-	const unsigned char*	pixel_gray_array;
+	const unsigned char*	pixel_buffer;
 } LATTICE;
-typedef struct struct_font_info
+typedef struct struct_lattice_font_info
 {
 	unsigned char	height;
 	unsigned int	count;
 	LATTICE*		lattice_array;
+} LATTICE_FONT_INFO;
+typedef struct struct_font_info
+{
+	const void*		font; //could be LATTICE_FONT_INFO or TTF
 } FONT_INFO;
-typedef struct struct_font_info		FONT_INFO;
-typedef struct struct_color_rect	COLOR_RECT;
-typedef struct struct_bitmap_info	BITMAP_INFO;
 //Rebuild gui library once you change this file
-enum FONT_TYPE
+enum FONT_LIST
 {
 	FONT_NULL,
 	FONT_DEFAULT,
@@ -139,7 +140,7 @@ enum FONT_TYPE
 	FONT_CUSTOM6,
 	FONT_MAX
 };
-enum BITMAP_TYPE
+enum BITMAP_LIST
 {
 	BITMAP_CUSTOM1,
 	BITMAP_CUSTOM2,
@@ -149,7 +150,7 @@ enum BITMAP_TYPE
 	BITMAP_CUSTOM6,
 	BITMAP_MAX
 };
-enum COLOR_TYPE
+enum COLOR_LIST
 {
 	COLOR_WND_FONT,
 	COLOR_WND_NORMAL,
@@ -167,26 +168,26 @@ enum COLOR_TYPE
 class c_theme
 {
 public:
-	static int add_font(FONT_TYPE index, const FONT_INFO* font)
+	static int add_font(FONT_LIST index, const void* font)
 	{
 		if (index >= FONT_MAX)
 		{
 			ASSERT(false);
 			return -1;
 		}
-		s_font_map[index] = font;
+		s_font_map[index].font = font;
 		return 0;
 	}
-	static const FONT_INFO* get_font(FONT_TYPE index)
+	static const void* get_font(FONT_LIST index)
 	{
 		if (index >= FONT_MAX)
 		{
 			ASSERT(false);
 			return 0;
 		}
-		return s_font_map[index];
+		return s_font_map[index].font;
 	}
-	static int add_bitmap(BITMAP_TYPE index, const BITMAP_INFO* bmp)
+	static int add_bitmap(BITMAP_LIST index, const BITMAP_INFO* bmp)
 	{
 		if (index >= BITMAP_MAX)
 		{
@@ -196,7 +197,7 @@ public:
 		s_bmp_map[index] = bmp;
 		return 0;
 	}
-	static const BITMAP_INFO* get_bmp(BITMAP_TYPE index)
+	static const BITMAP_INFO* get_bmp(BITMAP_LIST index)
 	{
 		if (index >= BITMAP_MAX)
 		{
@@ -205,7 +206,7 @@ public:
 		}
 		return s_bmp_map[index];
 	}
-	static int add_color(COLOR_TYPE index, const unsigned int color)
+	static int add_color(COLOR_LIST index, const unsigned int color)
 	{
 		if (index >= COLOR_MAX)
 		{
@@ -215,7 +216,7 @@ public:
 		s_color_map[index] = color;
 		return 0;
 	}
-	static const unsigned int get_color(COLOR_TYPE index)
+	static const unsigned int get_color(COLOR_LIST index)
 	{
 		if (index >= COLOR_MAX)
 		{
@@ -225,7 +226,7 @@ public:
 		return s_color_map[index];
 	}
 private:
-	static const FONT_INFO* s_font_map[FONT_MAX];
+	static FONT_INFO s_font_map[FONT_MAX];
 	static const BITMAP_INFO* s_bmp_map[BITMAP_MAX];
 	static unsigned int s_color_map[COLOR_MAX];
 };
@@ -817,13 +818,23 @@ inline int c_display::swipe_surface(c_surface* s0, c_surface* s1, int x0, int x1
 }
 #include <string.h>
 #include <stdio.h>
-#define BUFFER_LEN	16
+#define VALUE_STR_LEN	16
 class c_surface;
-class c_word
+class c_font_operator
 {
 public:
-	static void draw_string(c_surface* surface, int z_order, const char *s, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT)
+	virtual void draw_string(c_surface* surface, int z_order, const void* string, int x, int y, const void* font, unsigned int font_color, unsigned int bg_color) = 0;
+	virtual void draw_string_in_rect(c_surface* surface, int z_order, const void* string, c_rect rect, const void* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT) = 0;
+	virtual void draw_value(c_surface* surface, int z_order, int value, int dot_position, int x, int y, const void* font, unsigned int font_color, unsigned int bg_color) = 0;
+	virtual void draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const void* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT) = 0;
+	virtual int get_str_size(const void* string, const void* font, int& width, int& height) = 0;
+};
+class c_lattice_font_op: public c_font_operator
+{
+public:
+	void draw_string(c_surface* surface, int z_order, const void* string, int x, int y, const void* font, unsigned int font_color, unsigned int bg_color)
 	{
+		const char* s = (const char*)string;
 		if (0 == s)
 		{
 			return;
@@ -833,32 +844,56 @@ public:
 		while (*s)
 		{
 			s += get_utf8_code(s, utf8_code);
-			offset += draw_single_char(surface, z_order, utf8_code, (x + offset), y, font, font_color, bg_color);
+			offset += draw_single_char(surface, z_order, utf8_code, (x + offset), y, (const LATTICE_FONT_INFO*)font, font_color, bg_color);
 		}
 	}
-	static void draw_string_in_rect(c_surface* surface, int z_order, const char *s, c_rect rect, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT)
+	void draw_string_in_rect(c_surface* surface, int z_order, const void* string, c_rect rect, const void* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT)
 	{
+		const char* s = (const char*)string;
 		if (0 == s)
 		{
 			return;
 		}
 		int x, y;
-		get_string_pos(s, font, rect, align_type, x, y);
-		draw_string(surface, z_order, s, rect.m_left + x, rect.m_top + y, font, font_color, bg_color, ALIGN_LEFT);
+		get_string_pos(s, (const LATTICE_FONT_INFO*)font, rect, align_type, x, y);
+		draw_string(surface, z_order, string, rect.m_left + x, rect.m_top + y, font, font_color, bg_color);
 	}
-	static void draw_value(c_surface* surface, int z_order, int value, int dot_position, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT)
+	void draw_value(c_surface* surface, int z_order, int value, int dot_position, int x, int y, const void* font, unsigned int font_color, unsigned int bg_color)
 	{
-		char buf[BUFFER_LEN];
-		value_2_string(value, dot_position, buf, BUFFER_LEN);
-		draw_string(surface, z_order, buf, x, y, font, font_color, bg_color, align_type);
+		char buf[VALUE_STR_LEN];
+		value_2_string(value, dot_position, buf, VALUE_STR_LEN);
+		draw_string(surface, z_order, buf, x, y, (const LATTICE_FONT_INFO*)font, font_color, bg_color);
 	}
-	static void draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT)
+	void draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const void* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT)
 	{
-		char buf[BUFFER_LEN];
-		value_2_string(value, dot_position, buf, BUFFER_LEN);
-		draw_string_in_rect(surface, z_order, buf, rect, font, font_color, bg_color, align_type);
+		char buf[VALUE_STR_LEN];
+		value_2_string(value, dot_position, buf, VALUE_STR_LEN);
+		draw_string_in_rect(surface, z_order, buf, rect, (const LATTICE_FONT_INFO*)font, font_color, bg_color, align_type);
 	}
-	static void value_2_string(int value, int dot_position, char* buf, int len)
+	int get_str_size(const void *string, const void* font, int& width, int& height)
+	{
+		const char* s = (const char*)string;
+		if (0 == s || 0 == font)
+		{
+			width = height = 0;
+			return -1;
+		}
+		int lattice_width = 0;
+		unsigned int utf8_code;
+		int utf8_bytes;
+		while (*s)
+		{
+			utf8_bytes = get_utf8_code(s, utf8_code);
+			const LATTICE* p_lattice = get_lattice((const LATTICE_FONT_INFO*)font, utf8_code);
+			lattice_width += p_lattice ? p_lattice->width : ((const LATTICE_FONT_INFO*)font)->height;
+			s += utf8_bytes;
+		}
+		width = lattice_width;
+		height = ((const LATTICE_FONT_INFO*)font)->height;
+		return 0;
+	}
+private:
+	void value_2_string(int value, int dot_position, char* buf, int len)
 	{
 		memset(buf, 0, len);
 		switch (dot_position)
@@ -880,29 +915,7 @@ public:
 			break;
 		}
 	}
-	static int get_str_size(const char *s, const FONT_INFO* font, int& width, int& height)
-	{
-		if (0 == s || 0 == font)
-		{
-			width = height = 0;
-			return -1;
-		}
-		int lattice_width = 0;
-		unsigned int utf8_code;
-		int utf8_bytes;
-		while (*s)
-		{
-			utf8_bytes = get_utf8_code(s, utf8_code);
-			const LATTICE* p_lattice = get_lattice(font, utf8_code);
-			lattice_width += p_lattice ? p_lattice->width : font->height;
-			s += utf8_bytes;
-		}
-		width = lattice_width;
-		height = font->height;
-		return 0;
-	}
-private:
-	static int draw_single_char(c_surface* surface, int z_order, unsigned int utf8_code, int x, int y, const FONT_INFO* font, unsigned int font_color, unsigned int bg_color)
+	int draw_single_char(c_surface* surface, int z_order, unsigned int utf8_code, int x, int y, const LATTICE_FONT_INFO* font, unsigned int font_color, unsigned int bg_color)
 	{
 		unsigned int error_color = 0xFFFFFFFF;
 		if (font)
@@ -910,7 +923,7 @@ private:
 			const LATTICE* p_lattice = get_lattice(font, utf8_code);
 			if (p_lattice)
 			{
-				draw_lattice(surface, z_order, x, y, p_lattice->width, font->height, p_lattice->pixel_gray_array, font_color, bg_color);
+				draw_lattice(surface, z_order, x, y, p_lattice->width, font->height, p_lattice->pixel_buffer, font_color, bg_color);
 				return p_lattice->width;
 			}
 		}
@@ -932,7 +945,7 @@ private:
 		}
 		return len;
 	}
-	static void draw_lattice(c_surface* surface, int z_order, int x, int y, int width, int height, const unsigned char* p_data, unsigned int font_color, unsigned int bg_color)
+	void draw_lattice(c_surface* surface, int z_order, int x, int y, int width, int height, const unsigned char* p_data, unsigned int font_color, unsigned int bg_color)
 	{
 		unsigned int r, g, b, rgb;
 		unsigned char blk_value = *p_data++;
@@ -970,7 +983,7 @@ private:
 		}
 	}
 	
-	static const LATTICE* get_lattice(const FONT_INFO* font, unsigned int utf8_code)
+	const LATTICE* get_lattice(const LATTICE_FONT_INFO* font, unsigned int utf8_code)
 	{
 		int first = 0;
 		int last = font->count - 1;
@@ -991,7 +1004,7 @@ private:
 		}
 		return 0;
 	}
-	static void get_string_pos(const char *s, const FONT_INFO* font, c_rect rect, unsigned int align_type, int &x, int &y)
+	void get_string_pos(const char *s, const LATTICE_FONT_INFO* font, c_rect rect, unsigned int align_type, int &x, int &y)
 	{
 		int x_size, y_size;
 		get_str_size(s, font, x_size, y_size);
@@ -1089,6 +1102,32 @@ private:
 		return utf8_bytes;
 	}
 };
+class c_word
+{
+public:
+	static void draw_string(c_surface* surface, int z_order, const void* string, int x, int y, const void* font, unsigned int font_color, unsigned int bg_color)//string: char or wchar_t
+	{
+		fontOperator->draw_string(surface, z_order, string, x, y, font, font_color, bg_color);
+	}
+	static void draw_string_in_rect(c_surface* surface, int z_order, const void* string, c_rect rect, const void* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT)//string: char or wchar_t
+	{
+		fontOperator->draw_string_in_rect(surface, z_order, string, rect, font, font_color, bg_color, align_type);
+	}
+	static void draw_value_in_rect(c_surface* surface, int z_order, int value, int dot_position, c_rect rect, const void* font, unsigned int font_color, unsigned int bg_color, unsigned int align_type = ALIGN_LEFT)
+	{
+		fontOperator->draw_value_in_rect(surface, z_order, value, dot_position, rect, font, font_color, bg_color, align_type);
+	}
+	static void draw_value(c_surface* surface, int z_order, int value, int dot_position, int x, int y, const void* font, unsigned int font_color, unsigned int bg_color)
+	{
+		fontOperator->draw_value(surface, z_order, value, dot_position, x, y, font, font_color, bg_color);
+	}
+	
+	static int get_str_size(const void* string, const void* font, int& width, int& height)
+	{
+		return fontOperator->get_str_size(string, font, width, height);
+	}
+	static c_font_operator* fontOperator;
+};
 #define	DEFAULT_MASK_COLOR 0xFF080408
 class c_surface;
 class c_bitmap
@@ -1173,8 +1212,6 @@ public:
 		}
 	}
 };
-typedef struct struct_font_info		FONT_INFO;
-typedef struct struct_color_rect	COLOR_RECT;
 class c_wnd;
 class c_surface;
 typedef enum
@@ -1325,8 +1362,8 @@ public:
 	unsigned int get_font_color() { return m_font_color; }
 	void set_bg_color(unsigned int color) { m_bg_color = color; }
 	unsigned int get_bg_color() { return m_bg_color; }
-	void set_font_type(const FONT_INFO *font_type) { m_font_type = font_type; }
-	const FONT_INFO* get_font_type() { return m_font_type; }
+	void set_font_type(const LATTICE_FONT_INFO *font_type) { m_font = font_type; }
+	const void* get_font_type() { return m_font; }
 	void set_wnd_pos(short x, short y, short width, short height)
 	{
 		m_wnd_rect.m_left = x;
@@ -1612,11 +1649,11 @@ protected:
 	c_wnd*			m_next_sibling;	//next brother
 	c_wnd*			m_focus_child;	//current focused window
 	const char*		m_str;			//caption
-	const FONT_INFO*	m_font_type;
-	unsigned int		m_font_color;
-	unsigned int		m_bg_color;
-	int					m_z_order;		//the graphic level for rendering
-	c_surface*			m_surface;
+	const void*		m_font;			//font face
+	unsigned int	m_font_color;
+	unsigned int	m_bg_color;
+	int				m_z_order;		//the graphic level for rendering
+	c_surface*		m_surface;
 };
 class c_button : public c_wnd
 {
@@ -1633,14 +1670,14 @@ protected:
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 			if (m_str)
 			{
-				c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
+				c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
 			}
 			break;
 		case STATUS_FOCUSED:
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
 			if (m_str)
 			{
-				c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
+				c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
 			}
 			break;
 		case STATUS_PUSHED:
@@ -1648,7 +1685,7 @@ protected:
 			m_surface->draw_rect(rect, c_theme::get_color(COLOR_WND_BORDER), 2, m_z_order);
 			if (m_str)
 			{
-				c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_PUSHED), ALIGN_HCENTER | ALIGN_VCENTER);
+				c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_PUSHED), ALIGN_HCENTER | ALIGN_VCENTER);
 			}
 			break;
 		default:
@@ -1670,7 +1707,7 @@ protected:
 	{
 		on_click = 0;
 		m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
-		m_font_type = c_theme::get_font(FONT_DEFAULT);
+		m_font = c_theme::get_font(FONT_DEFAULT);
 		m_font_color = c_theme::get_color(COLOR_WND_FONT);
 	}
 	virtual void on_touch(int x, int y, TOUCH_ACTION action)
@@ -1786,7 +1823,7 @@ protected:
 		m_surface->fill_rect(rect, m_bg_color, m_z_order);
 		if (m_str)
 		{
-			c_word::draw_string(m_surface, m_z_order, m_str, rect.m_left + 35, rect.m_top, c_theme::get_font(FONT_DEFAULT), GL_RGB(255, 255, 255), GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
+			c_word::draw_string(m_surface, m_z_order, m_str, rect.m_left + 35, rect.m_top, c_theme::get_font(FONT_DEFAULT), GL_RGB(255, 255, 255), GL_ARGB(0, 0, 0, 0));
 		}
 	}
 private:
@@ -2004,31 +2041,31 @@ protected:
 		}
 		if (m_id == 0x14)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == 0x1B)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == ' ')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == '\n')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == '.')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == 0x7F)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == 0x90)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		char letter[] = { 0, 0 };
 		if (m_id >= 'A' && m_id <= 'Z')
@@ -2039,7 +2076,7 @@ protected:
 		{
 			letter[0] = (char)m_id;
 		}
-		c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+		c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 };
 #include <string.h>
@@ -2064,7 +2101,7 @@ protected:
 	{
 		m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 		m_kb_style = STYLE_ALL_BOARD;
-		m_font_type = c_theme::get_font(FONT_DEFAULT);
+		m_font = c_theme::get_font(FONT_DEFAULT);
 		m_font_color = c_theme::get_color(COLOR_WND_FONT);
 		memset(m_str_input, 0, sizeof(m_str_input));
 		memset(m_str, 0, sizeof(m_str));
@@ -2086,7 +2123,7 @@ protected:
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
-			c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
+			c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
 			break;
 		case STATUS_FOCUSED:
 			if (m_z_order > m_parent->get_z_order())
@@ -2097,7 +2134,7 @@ protected:
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
-			c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
+			c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
 			break;
 		case STATUS_PUSHED:
 			if (m_z_order == m_parent->get_z_order())
@@ -2108,8 +2145,8 @@ protected:
 			}
 			m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());
 			m_surface->draw_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_BORDER), m_parent->get_z_order(), 2);
-			strlen(m_str_input) ? c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str_input, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_PUSHED), ALIGN_HCENTER | ALIGN_VCENTER) :
-				c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_PUSHED), ALIGN_HCENTER | ALIGN_VCENTER);
+			strlen(m_str_input) ? c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str_input, rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_PUSHED), ALIGN_HCENTER | ALIGN_VCENTER) :
+				c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_PUSHED), ALIGN_HCENTER | ALIGN_VCENTER);
 			break;
 		default:
 			ASSERT(false);
@@ -2238,7 +2275,7 @@ public:
 		if (m_str)
 		{
 			m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, bg_color, m_z_order);
-			c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, bg_color, ALIGN_LEFT | ALIGN_VCENTER);
+			c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font, m_font_color, bg_color, ALIGN_LEFT | ALIGN_VCENTER);
 		}
 	}
 protected:
@@ -2246,7 +2283,7 @@ protected:
 	{
 		m_attr = ATTR_VISIBLE;
 		m_font_color = c_theme::get_color(COLOR_WND_FONT);
-		m_font_type = c_theme::get_font(FONT_DEFAULT);
+		m_font = c_theme::get_font(FONT_DEFAULT);
 	}
 };
 #include <string.h>
@@ -2290,7 +2327,7 @@ protected:
 		memset(m_item_array, 0, sizeof(m_item_array));
 		m_item_total = 0;
 		m_selected_item = 0;
-		m_font_type = c_theme::get_font(FONT_DEFAULT);
+		m_font = c_theme::get_font(FONT_DEFAULT);
 		m_font_color = c_theme::get_color(COLOR_WND_FONT);
 	}
 	virtual void on_paint()
@@ -2307,7 +2344,7 @@ protected:
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
-			c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
+			c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
 			break;
 		case STATUS_FOCUSED:
 			if (m_z_order > m_parent->get_z_order())
@@ -2317,12 +2354,12 @@ protected:
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
-			c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
+			c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
 			break;
 		case STATUS_PUSHED:
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_PUSHED), m_z_order);
 			m_surface->draw_rect(rect, c_theme::get_color(COLOR_WND_BORDER), 2, m_z_order);
-			c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font_type, GL_RGB(2, 124, 165), GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
+			c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[m_selected_item], rect, m_font, GL_RGB(2, 124, 165), GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER | ALIGN_VCENTER);
 			//draw list
 			if (m_item_total > 0)
 			{
@@ -2400,12 +2437,12 @@ private:
 			if (m_selected_item == i)
 			{
 				m_surface->fill_rect(tmp_rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
-				c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
+				c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
 			}
 			else
 			{
 				m_surface->fill_rect(tmp_rect, GL_RGB(17, 17, 17), m_z_order);
-				c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font_type, m_font_color, GL_RGB(17, 17, 17), ALIGN_HCENTER | ALIGN_VCENTER);
+				c_word::draw_string_in_rect(m_surface, m_z_order, m_item_array[i], tmp_rect, m_font, m_font_color, GL_RGB(17, 17, 17), ALIGN_HCENTER | ALIGN_VCENTER);
 			}
 		}
 	}
@@ -2837,12 +2874,12 @@ protected:
 		get_screen_rect(rect);
 		rect.m_right = rect.m_left + (rect.width() * 2 / 3);
 		m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
-		c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font_type, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
+		c_word::draw_value_in_rect(m_surface, m_parent->get_z_order(), m_cur_value, m_digit, rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
 	}
 	virtual void pre_create_wnd()
 	{
 		m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE);
-		m_font_type = c_theme::get_font(FONT_DEFAULT);
+		m_font = c_theme::get_font(FONT_DEFAULT);
 		m_font_color = c_theme::get_color(COLOR_WND_FONT);
 		m_max = 6;
 		m_min = 1;
@@ -2982,14 +3019,14 @@ protected:
 	virtual void pre_create_wnd()
 	{
 		m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE);
-		m_font_type = c_theme::get_font(FONT_DEFAULT);
+		m_font = c_theme::get_font(FONT_DEFAULT);
 		m_font_color = c_theme::get_color(COLOR_WND_FONT);
 	}
 	void draw_item(int row, int col, const char* str, unsigned int color)
 	{
 		c_rect rect = get_item_rect(row, col);
 		m_surface->fill_rect(rect.m_left + 1, rect.m_top + 1, rect.m_right - 1, rect.m_bottom - 1, color, m_z_order);
-		c_word::draw_string_in_rect(m_surface, m_z_order, str, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_align_type);
+		c_word::draw_string_in_rect(m_surface, m_z_order, str, rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_align_type);
 	}
 	unsigned int m_align_type;	
 	unsigned int m_row_num;
@@ -3154,15 +3191,15 @@ public:
 		get_screen_rect(rect);
 		m_surface->fill_rect(rect, m_back_color, m_z_order);
 		//show name
-		c_word::draw_string(m_surface, m_z_order, m_wave_name, m_wave_left + 10, rect.m_top, m_wave_name_font, m_wave_name_color, GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
+		c_word::draw_string(m_surface, m_z_order, m_wave_name, m_wave_left + 10, rect.m_top, m_wave_name_font, m_wave_name_color, GL_ARGB(0, 0, 0, 0));
 		//show unit
-		c_word::draw_string(m_surface, m_z_order, m_wave_unit, m_wave_left + 60, rect.m_top, m_wave_unit_font, m_wave_unit_color, GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
+		c_word::draw_string(m_surface, m_z_order, m_wave_unit, m_wave_left + 60, rect.m_top, m_wave_unit_font, m_wave_unit_color, GL_ARGB(0, 0, 0, 0));
 		save_background();
 	}
 	void set_wave_name(char* wave_name){ m_wave_name = wave_name;}
 	void set_wave_unit(char* wave_unit){ m_wave_unit = wave_unit;}
-	void set_wave_name_font(const FONT_INFO* wave_name_font_type){ m_wave_name_font = wave_name_font_type;}
-	void set_wave_unit_font(const FONT_INFO* wave_unit_font_type){ m_wave_unit_font = wave_unit_font_type;}
+	void set_wave_name_font(const LATTICE_FONT_INFO* wave_name_font_type){ m_wave_name_font = wave_name_font_type;}
+	void set_wave_unit_font(const LATTICE_FONT_INFO* wave_unit_font_type){ m_wave_unit_font = wave_unit_font_type;}
 	void set_wave_name_color(unsigned int wave_name_color){ m_wave_name_color = wave_name_color;}
 	void set_wave_unit_color(unsigned int wave_unit_color){ m_wave_unit_color = wave_unit_color;}
 	void set_wave_color(unsigned int color){ m_wave_color = color;}
@@ -3323,8 +3360,8 @@ protected:
 	}
 	char* m_wave_name;
 	char* m_wave_unit;
-	const FONT_INFO* m_wave_name_font;
-	const FONT_INFO* m_wave_unit_font;
+	const LATTICE_FONT_INFO* m_wave_name_font;
+	const LATTICE_FONT_INFO* m_wave_unit_font;
 	unsigned int m_wave_name_color;
 	unsigned int m_wave_unit_color;
 	unsigned int m_wave_color;
@@ -3349,9 +3386,16 @@ private:
 
 #ifdef GUILITE_ON
 
-const FONT_INFO* c_theme::s_font_map[FONT_MAX];
+FONT_INFO c_theme::s_font_map[FONT_MAX];
 const BITMAP_INFO* c_theme::s_bmp_map[BITMAP_MAX];
 unsigned int c_theme::s_color_map[COLOR_MAX];
+
+#endif
+
+#ifdef GUILITE_ON
+
+c_lattice_font_op the_lattice_font_op = c_lattice_font_op();
+c_font_operator* c_word::fontOperator = &the_lattice_font_op;
 
 #endif
 #ifdef GUILITE_ON

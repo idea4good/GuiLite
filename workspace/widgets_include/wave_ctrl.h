@@ -64,17 +64,17 @@ public:
 		m_surface->fill_rect(rect, m_back_color, m_z_order);
 
 		//show name
-		c_word::draw_string(m_surface, m_z_order, m_wave_name, m_wave_left + 10, rect.m_top, m_wave_name_font, m_wave_name_color, GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
+		c_word::draw_string(m_surface, m_z_order, m_wave_name, m_wave_left + 10, rect.m_top, m_wave_name_font, m_wave_name_color, GL_ARGB(0, 0, 0, 0));
 		//show unit
-		c_word::draw_string(m_surface, m_z_order, m_wave_unit, m_wave_left + 60, rect.m_top, m_wave_unit_font, m_wave_unit_color, GL_ARGB(0, 0, 0, 0), ALIGN_LEFT);
+		c_word::draw_string(m_surface, m_z_order, m_wave_unit, m_wave_left + 60, rect.m_top, m_wave_unit_font, m_wave_unit_color, GL_ARGB(0, 0, 0, 0));
 
 		save_background();
 	}
 	void set_wave_name(char* wave_name){ m_wave_name = wave_name;}
 	void set_wave_unit(char* wave_unit){ m_wave_unit = wave_unit;}
 
-	void set_wave_name_font(const FONT_INFO* wave_name_font_type){ m_wave_name_font = wave_name_font_type;}
-	void set_wave_unit_font(const FONT_INFO* wave_unit_font_type){ m_wave_unit_font = wave_unit_font_type;}
+	void set_wave_name_font(const LATTICE_FONT_INFO* wave_name_font_type){ m_wave_name_font = wave_name_font_type;}
+	void set_wave_unit_font(const LATTICE_FONT_INFO* wave_unit_font_type){ m_wave_unit_font = wave_unit_font_type;}
 
 	void set_wave_name_color(unsigned int wave_name_color){ m_wave_name_color = wave_name_color;}
 	void set_wave_unit_color(unsigned int wave_unit_color){ m_wave_unit_color = wave_unit_color;}
@@ -249,8 +249,8 @@ protected:
 	char* m_wave_name;
 	char* m_wave_unit;
 
-	const FONT_INFO* m_wave_name_font;
-	const FONT_INFO* m_wave_unit_font;
+	const LATTICE_FONT_INFO* m_wave_name_font;
+	const LATTICE_FONT_INFO* m_wave_unit_font;
 
 	unsigned int m_wave_name_color;
 	unsigned int m_wave_unit_color;

@@ -5,9 +5,6 @@
 #include "../core_include/bitmap.h"
 #include "../core_include/display.h"
 
-typedef struct struct_font_info		FONT_INFO;
-typedef struct struct_color_rect	COLOR_RECT;
-
 class c_wnd;
 class c_surface;
 
@@ -180,8 +177,8 @@ public:
 	unsigned int get_font_color() { return m_font_color; }
 	void set_bg_color(unsigned int color) { m_bg_color = color; }
 	unsigned int get_bg_color() { return m_bg_color; }
-	void set_font_type(const FONT_INFO *font_type) { m_font_type = font_type; }
-	const FONT_INFO* get_font_type() { return m_font_type; }
+	void set_font_type(const LATTICE_FONT_INFO *font_type) { m_font = font_type; }
+	const void* get_font_type() { return m_font; }
 
 	void set_wnd_pos(short x, short y, short width, short height)
 	{
@@ -497,10 +494,10 @@ protected:
 	c_wnd*			m_focus_child;	//current focused window
 	const char*		m_str;			//caption
 
-	const FONT_INFO*	m_font_type;
-	unsigned int		m_font_color;
-	unsigned int		m_bg_color;
+	const void*		m_font;			//font face
+	unsigned int	m_font_color;
+	unsigned int	m_bg_color;
 
-	int					m_z_order;		//the graphic level for rendering
-	c_surface*			m_surface;
+	int				m_z_order;		//the graphic level for rendering
+	c_surface*		m_surface;
 };

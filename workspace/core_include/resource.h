@@ -14,12 +14,17 @@ typedef struct struct_lattice
 {
 	unsigned int			utf8_code;
 	unsigned char			width;
-	const unsigned char*	pixel_gray_array;
+	const unsigned char*	pixel_buffer;
 } LATTICE;
 
-typedef struct struct_font_info
+typedef struct struct_lattice_font_info
 {
 	unsigned char	height;
 	unsigned int	count;
 	LATTICE*		lattice_array;
+} LATTICE_FONT_INFO;
+
+typedef struct struct_font_info
+{
+	const void*		font; //could be LATTICE_FONT_INFO or TTF
 } FONT_INFO;

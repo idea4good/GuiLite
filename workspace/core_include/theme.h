@@ -3,12 +3,8 @@
 #include "../core_include/api.h"
 #include "../core_include/resource.h"
 
-typedef struct struct_font_info		FONT_INFO;
-typedef struct struct_color_rect	COLOR_RECT;
-typedef struct struct_bitmap_info	BITMAP_INFO;
-
 //Rebuild gui library once you change this file
-enum FONT_TYPE
+enum FONT_LIST
 {
 	FONT_NULL,
 	FONT_DEFAULT,
@@ -22,7 +18,7 @@ enum FONT_TYPE
 	FONT_MAX
 };
 
-enum BITMAP_TYPE
+enum BITMAP_LIST
 {
 	BITMAP_CUSTOM1,
 	BITMAP_CUSTOM2,
@@ -34,7 +30,7 @@ enum BITMAP_TYPE
 	BITMAP_MAX
 };
 
-enum COLOR_TYPE
+enum COLOR_LIST
 {
 	COLOR_WND_FONT,
 	COLOR_WND_NORMAL,
@@ -55,26 +51,26 @@ enum COLOR_TYPE
 class c_theme
 {
 public:
-	static int add_font(FONT_TYPE index, const FONT_INFO* font)
+	static int add_font(FONT_LIST index, const void* font)
 	{
 		if (index >= FONT_MAX)
 		{
 			ASSERT(false);
 			return -1;
 		}
-		s_font_map[index] = font;
+		s_font_map[index].font = font;
 		return 0;
 	}
-	static const FONT_INFO* get_font(FONT_TYPE index)
+	static const void* get_font(FONT_LIST index)
 	{
 		if (index >= FONT_MAX)
 		{
 			ASSERT(false);
 			return 0;
 		}
-		return s_font_map[index];
+		return s_font_map[index].font;
 	}
-	static int add_bitmap(BITMAP_TYPE index, const BITMAP_INFO* bmp)
+	static int add_bitmap(BITMAP_LIST index, const BITMAP_INFO* bmp)
 	{
 		if (index >= BITMAP_MAX)
 		{
@@ -84,7 +80,7 @@ public:
 		s_bmp_map[index] = bmp;
 		return 0;
 	}
-	static const BITMAP_INFO* get_bmp(BITMAP_TYPE index)
+	static const BITMAP_INFO* get_bmp(BITMAP_LIST index)
 	{
 		if (index >= BITMAP_MAX)
 		{
@@ -93,7 +89,7 @@ public:
 		}
 		return s_bmp_map[index];
 	}
-	static int add_color(COLOR_TYPE index, const unsigned int color)
+	static int add_color(COLOR_LIST index, const unsigned int color)
 	{
 		if (index >= COLOR_MAX)
 		{
@@ -103,7 +99,7 @@ public:
 		s_color_map[index] = color;
 		return 0;
 	}
-	static const unsigned int get_color(COLOR_TYPE index)
+	static const unsigned int get_color(COLOR_LIST index)
 	{
 		if (index >= COLOR_MAX)
 		{
@@ -113,7 +109,7 @@ public:
 		return s_color_map[index];
 	}
 private:
-	static const FONT_INFO* s_font_map[FONT_MAX];
+	static FONT_INFO s_font_map[FONT_MAX];
 	static const BITMAP_INFO* s_bmp_map[BITMAP_MAX];
 	static unsigned int s_color_map[COLOR_MAX];
 };

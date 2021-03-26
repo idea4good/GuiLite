@@ -210,31 +210,31 @@ protected:
 
 		if (m_id == 0x14)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == 0x1B)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == ' ')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == '\n')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == '.')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == 0x7F)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 		else if (m_id == 0x90)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 		}
 
 		char letter[] = { 0, 0 };
@@ -246,6 +246,6 @@ protected:
 		{
 			letter[0] = (char)m_id;
 		}
-		c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font_type, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+		c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
 	}
 };
