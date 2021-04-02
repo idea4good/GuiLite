@@ -23,8 +23,3 @@ typedef struct struct_lattice_font_info
 	unsigned int	count;
 	LATTICE*		lattice_array;
 } LATTICE_FONT_INFO;
-
-typedef struct struct_font_info
-{
-	const void*		font; //could be LATTICE_FONT_INFO or TTF
-} FONT_INFO;

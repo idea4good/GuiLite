@@ -110,7 +110,10 @@ Even a C beginner could master GuiLite quickly. The source code only uses basic 
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/idea4good/GuiLitePreviewer"><img src="documents/Previewer.gif" width="600px;"/><br /><sub><b>Layout GUI</b></sub></a>
-    <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloFFmpeg"><img src="documents/HelloFFmpeg.jpg" width="600px;"/><br /><sub><b>Video: GuiLite + FFmpeg</b></sub></a>
+    <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloJPG"><img src="documents/HelloJPG.gif" width="600px;"/><br /><sub><b>Render JPG file quickly</b></sub></a>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/idea4good/GuiLiteSamples/tree/master/HelloFFmpeg"><img src="documents/HelloFFmpeg.jpg" width="600px;"/><br /><sub><b>Play video with FFmpeg</b></sub></a>
   </tr>
 </table>
 

@@ -74,7 +74,7 @@ public:
 	}
 };
 
-class c_lattice_font_op: public c_font_operator
+class c_lattice_font_op : public c_font_operator
 {
 public:
 	void draw_string(c_surface* surface, int z_order, const void* string, int x, int y, const void* font, unsigned int font_color, unsigned int bg_color)

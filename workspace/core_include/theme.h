@@ -18,16 +18,16 @@ enum FONT_LIST
 	FONT_MAX
 };
 
-enum BITMAP_LIST
+enum IMAGE_LIST
 {
-	BITMAP_CUSTOM1,
-	BITMAP_CUSTOM2,
-	BITMAP_CUSTOM3,
-	BITMAP_CUSTOM4,
-	BITMAP_CUSTOM5,
-	BITMAP_CUSTOM6,
+	IMAGE_CUSTOM1,
+	IMAGE_CUSTOM2,
+	IMAGE_CUSTOM3,
+	IMAGE_CUSTOM4,
+	IMAGE_CUSTOM5,
+	IMAGE_CUSTOM6,
 
-	BITMAP_MAX
+	IMAGE_MAX
 };
 
 enum COLOR_LIST
@@ -58,9 +58,10 @@ public:
 			ASSERT(false);
 			return -1;
 		}
-		s_font_map[index].font = font;
+		s_font_map[index] = font;
 		return 0;
 	}
+
 	static const void* get_font(FONT_LIST index)
 	{
 		if (index >= FONT_MAX)
@@ -68,27 +69,30 @@ public:
 			ASSERT(false);
 			return 0;
 		}
-		return s_font_map[index].font;
+		return s_font_map[index];
 	}
-	static int add_bitmap(BITMAP_LIST index, const BITMAP_INFO* bmp)
+
+	static int add_image(IMAGE_LIST index, const void* image_info)
 	{
-		if (index >= BITMAP_MAX)
+		if (index >= IMAGE_MAX)
 		{
 			ASSERT(false);
 			return -1;
 		}
-		s_bmp_map[index] = bmp;
+		s_image_map[index] = image_info;
 		return 0;
 	}
-	static const BITMAP_INFO* get_bmp(BITMAP_LIST index)
+
+	static const void* get_image(IMAGE_LIST index)
 	{
-		if (index >= BITMAP_MAX)
+		if (index >= IMAGE_MAX)
 		{
 			ASSERT(false);
 			return 0;
 		}
-		return s_bmp_map[index];
+		return s_image_map[index];
 	}
+	
 	static int add_color(COLOR_LIST index, const unsigned int color)
 	{
 		if (index >= COLOR_MAX)
@@ -99,6 +103,7 @@ public:
 		s_color_map[index] = color;
 		return 0;
 	}
+
 	static const unsigned int get_color(COLOR_LIST index)
 	{
 		if (index >= COLOR_MAX)
@@ -108,8 +113,9 @@ public:
 		}
 		return s_color_map[index];
 	}
+
 private:
-	static FONT_INFO s_font_map[FONT_MAX];
-	static const BITMAP_INFO* s_bmp_map[BITMAP_MAX];
+	static const void* s_font_map[FONT_MAX];
+	static const void* s_image_map[IMAGE_MAX];
 	static unsigned int s_color_map[COLOR_MAX];
 };

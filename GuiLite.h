@@ -123,10 +123,6 @@ typedef struct struct_lattice_font_info
 	unsigned int	count;
 	LATTICE*		lattice_array;
 } LATTICE_FONT_INFO;
-typedef struct struct_font_info
-{
-	const void*		font; //could be LATTICE_FONT_INFO or TTF
-} FONT_INFO;
 //Rebuild gui library once you change this file
 enum FONT_LIST
 {
@@ -140,15 +136,15 @@ enum FONT_LIST
 	FONT_CUSTOM6,
 	FONT_MAX
 };
-enum BITMAP_LIST
+enum IMAGE_LIST
 {
-	BITMAP_CUSTOM1,
-	BITMAP_CUSTOM2,
-	BITMAP_CUSTOM3,
-	BITMAP_CUSTOM4,
-	BITMAP_CUSTOM5,
-	BITMAP_CUSTOM6,
-	BITMAP_MAX
+	IMAGE_CUSTOM1,
+	IMAGE_CUSTOM2,
+	IMAGE_CUSTOM3,
+	IMAGE_CUSTOM4,
+	IMAGE_CUSTOM5,
+	IMAGE_CUSTOM6,
+	IMAGE_MAX
 };
 enum COLOR_LIST
 {
@@ -175,7 +171,7 @@ public:
 			ASSERT(false);
 			return -1;
 		}
-		s_font_map[index].font = font;
+		s_font_map[index] = font;
 		return 0;
 	}
 	static const void* get_font(FONT_LIST index)
@@ -185,27 +181,28 @@ public:
 			ASSERT(false);
 			return 0;
 		}
-		return s_font_map[index].font;
+		return s_font_map[index];
 	}
-	static int add_bitmap(BITMAP_LIST index, const BITMAP_INFO* bmp)
+	static int add_image(IMAGE_LIST index, const void* image_info)
 	{
-		if (index >= BITMAP_MAX)
+		if (index >= IMAGE_MAX)
 		{
 			ASSERT(false);
 			return -1;
 		}
-		s_bmp_map[index] = bmp;
+		s_image_map[index] = image_info;
 		return 0;
 	}
-	static const BITMAP_INFO* get_bmp(BITMAP_LIST index)
+	static const void* get_image(IMAGE_LIST index)
 	{
-		if (index >= BITMAP_MAX)
+		if (index >= IMAGE_MAX)
 		{
 			ASSERT(false);
 			return 0;
 		}
-		return s_bmp_map[index];
+		return s_image_map[index];
 	}
+	
 	static int add_color(COLOR_LIST index, const unsigned int color)
 	{
 		if (index >= COLOR_MAX)
@@ -226,8 +223,8 @@ public:
 		return s_color_map[index];
 	}
 private:
-	static FONT_INFO s_font_map[FONT_MAX];
-	static const BITMAP_INFO* s_bmp_map[BITMAP_MAX];
+	static const void* s_font_map[FONT_MAX];
+	static const void* s_image_map[IMAGE_MAX];
 	static unsigned int s_color_map[COLOR_MAX];
 };
 #include <string.h>
@@ -318,7 +315,7 @@ public:
 	c_rect 	rect;	//framebuffer area
 };
 class c_surface {
-	friend class c_display; friend class c_bitmap;
+	friend class c_display; friend class c_bitmap_operator;
 public:
 	c_surface(unsigned int width, unsigned int height, unsigned int color_bytes, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect()) : m_width(width), m_height(height), m_color_bytes(color_bytes), m_fb(0), m_is_active(false), m_top_zorder(Z_ORDER_LEVEL_0), m_phy_fb(0), m_phy_write_index(0), m_display(0)
 	{
@@ -883,7 +880,7 @@ public:
 		}
 	}
 };
-class c_lattice_font_op: public c_font_operator
+class c_lattice_font_op : public c_font_operator
 {
 public:
 	void draw_string(c_surface* surface, int z_order, const void* string, int x, int y, const void* font, unsigned int font_color, unsigned int bg_color)
@@ -1131,12 +1128,19 @@ public:
 };
 #define	DEFAULT_MASK_COLOR 0xFF080408
 class c_surface;
-class c_bitmap
+class c_image_operator
 {
 public:
-	static void draw_bitmap(c_surface* surface, int z_order, const BITMAP_INFO *pBitmap, int x, int y, unsigned int mask_rgb = DEFAULT_MASK_COLOR)
+	virtual void draw_image(c_surface* surface, int z_order, const void* image_info, int x, int y, unsigned int mask_rgb = DEFAULT_MASK_COLOR) = 0;
+	virtual void draw_image(c_surface* surface, int z_order, const void* image_info, int x, int y, int src_x, int src_y, int width, int height, unsigned int mask_rgb = DEFAULT_MASK_COLOR) = 0;
+};
+class c_bitmap_operator : public c_image_operator
+{
+public:
+	virtual void draw_image(c_surface* surface, int z_order, const void* image_info, int x, int y, unsigned int mask_rgb = DEFAULT_MASK_COLOR)
 	{
-		ASSERT(pBitmap);
+		ASSERT(image_info);
+		BITMAP_INFO* pBitmap = (BITMAP_INFO*)image_info;
 		unsigned short* lower_fb_16 = 0;
 		unsigned int* lower_fb_32 = 0;
 		int lower_fb_width = 0;
@@ -1172,8 +1176,10 @@ public:
 			}
 		}
 	}
-	static void draw_bitmap(c_surface* surface, int z_order, const BITMAP_INFO* pBitmap, int x, int y, int src_x, int src_y, int width, int height, unsigned int mask_rgb = DEFAULT_MASK_COLOR)
+	virtual void draw_image(c_surface* surface, int z_order, const void* image_info, int x, int y, int src_x, int src_y, int width, int height, unsigned int mask_rgb = DEFAULT_MASK_COLOR)
 	{
+		ASSERT(image_info);
+		BITMAP_INFO* pBitmap = (BITMAP_INFO*)image_info;
 		if (0 == pBitmap || (src_x + width > pBitmap->width) || (src_y + height > pBitmap->height))
 		{
 			return;
@@ -1212,6 +1218,20 @@ public:
 			}
 		}
 	}
+};
+class c_image
+{
+public:
+	static void draw_image(c_surface* surface, int z_order, const void* image_info, int x, int y, unsigned int mask_rgb = DEFAULT_MASK_COLOR)
+	{
+		image_operator->draw_image(surface, z_order, image_info, x, y, mask_rgb);
+	}
+	static void draw_image(c_surface* surface, int z_order, const void* image_info, int x, int y, int src_x, int src_y, int width, int height, unsigned int mask_rgb = DEFAULT_MASK_COLOR)
+	{
+		image_operator->draw_image(surface, z_order, image_info, x, y, src_x, src_y, width, height, mask_rgb);
+	}
+	
+	static c_image_operator* image_operator;
 };
 class c_wnd;
 class c_surface;
@@ -3384,11 +3404,15 @@ private:
 	unsigned char 	m_frame_len_map[64];
 	unsigned char 	m_frame_len_map_index;
 };
+#ifdef GUILITE_ON
+c_bitmap_operator the_bitmap_op = c_bitmap_operator();
+c_image_operator* c_image::image_operator = &the_bitmap_op;
+#endif
 
 #ifdef GUILITE_ON
 
-FONT_INFO c_theme::s_font_map[FONT_MAX];
-const BITMAP_INFO* c_theme::s_bmp_map[BITMAP_MAX];
+const void* c_theme::s_font_map[FONT_MAX];
+const void* c_theme::s_image_map[IMAGE_MAX];
 unsigned int c_theme::s_color_map[COLOR_MAX];
 
 #endif

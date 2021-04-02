@@ -103,7 +103,7 @@ public:
 };
 
 class c_surface {
-	friend class c_display; friend class c_bitmap;
+	friend class c_display; friend class c_bitmap_operator;
 public:
 	c_surface(unsigned int width, unsigned int height, unsigned int color_bytes, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect()) : m_width(width), m_height(height), m_color_bytes(color_bytes), m_fb(0), m_is_active(false), m_top_zorder(Z_ORDER_LEVEL_0), m_phy_fb(0), m_phy_write_index(0), m_display(0)
 	{

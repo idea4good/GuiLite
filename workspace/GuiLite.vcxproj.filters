@@ -34,9 +34,6 @@
     <ClCompile Include="widgets\wave_ctrl.cpp">
       <Filter>widgets</Filter>
     </ClCompile>
-    <ClCompile Include="core\bitmap.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
     <ClCompile Include="core\display.cpp">
       <Filter>core</Filter>
     </ClCompile>
@@ -51,6 +48,9 @@
     </ClCompile>
     <ClCompile Include="core\adapter\api_win.cpp">
       <Filter>core\adapter</Filter>
+    </ClCompile>
+    <ClCompile Include="core\image.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

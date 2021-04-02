@@ -2,7 +2,6 @@
 
 #include "../core_include/api.h"
 #include "../core_include/resource.h"
-#include "../core_include/bitmap.h"
 #include "../core_include/display.h"
 
 class c_wnd;

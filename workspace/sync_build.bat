@@ -66,7 +66,7 @@ set raw_data=[{^
 \"city\" :\"%city%\",^
 \"org\" :\"%org%\",^
 \"log\" :\"%datetime%\",^
-\"version\" :\"v2.1\"^
+\"version\" :\"v2.2\"^
 }]
 
 curl.exe --include --request POST --header "Content-Type: application/json" --data-binary "%raw_data%" "%url%"
