@@ -1,4 +1,4 @@
-# 歡迎蒞臨 GuiLite
+# 歡迎蒞臨 GUI-lite
 <p align="center">
     <img src="documents/logo.png" alt="Logo"/>
 </p>
@@ -38,9 +38,9 @@
 - 🐋支持Docker，一条命令启动Docker: `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 
 ## 易學習和全面的技術支持
-即使是C语言的初学者，也可以很快掌握GuiLite；代码只使用C++的基本特性（类和虚函数），选择C++语言，能让代码体积更小，更易阅读。
+即使是C语言的初学者，也可以很快掌握GUI-lite；代码只使用C++的基本特性（类和虚函数），选择C++语言，能让代码体积更小，更易阅读。
 - 📚开发文档
-    - [如何使用GuiLite?](documents/HowToUse.md)
+    - [如何使用GUI-lite?](documents/HowToUse.md)
     - [软件设计说明](documents/HowToWork-cn.md)
     - [如何布局UI?](documents/HowLayoutWork.md)
     - [如何制作多种文字/位图资源?](https://github.com/idea4good/GuiLiteToolkit)
@@ -48,7 +48,7 @@
     - [如何传递消息?](documents/HowMessageWork.md)
     - [核心UML示意图](documents/UML.md)
 - 📈学习方法
-    1. 编译GuiLite库
+    1. 编译GUI-lite库
     2. 编译、调试：HelloXXX实例程序
     3. 研读、修改100+行的`HelloXXX/UIcode/UIcode.cpp`源代码
     4. 研读`widgets`目录下的代码
@@ -166,8 +166,8 @@
 </table>
 
 ## 📞社區交流
-- 感谢开发者群的所有同学，是你们塑造了今天的GuiLite！也欢迎新的大神/小白加入我们。
-- GuiLite开发者QQ群：
+- 感谢开发者群的所有同学，是你们塑造了今天的GUI-lite！也欢迎新的大神/小白加入我们。
+- 开发者QQ群：
 <table>
   <tr>
     <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=qfvGGAa7"><img src="documents/qq.group-1.jpg" width="240px;"/><br /><sub><b>专家群💎：527251257</b></sub></a>

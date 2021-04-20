@@ -1,4 +1,4 @@
-# Welcome to GuiLite
+# Welcome to GUI-lite
 <p align="center">
     <img src="documents/logo.png" alt="Logo"/>
 </p>
@@ -40,17 +40,17 @@
 - 🐋Run in docker with a single command: `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 
 ## Easy to learn and support
-Even a C beginner could master GuiLite quickly. The source code only uses basic C++ features (class, virtual function). We chose C++ as it could make the code size significantly smaller and easier to read.
+Even a C beginner could master GUI-lite quickly. The source code only uses basic C++ features (class, virtual function). We chose C++ as it could make the code size significantly smaller and easier to read.
 - 📚Documentation
-    - [How to use GuiLite?](documents/HowToUse.md)
+    - [How to use GUI-lite?](documents/HowToUse.md)
     - [Design specification](documents/HowToWork.md)
     - [How to Layout widgets?](documents/HowLayoutWork.md)
     - [How to build unicode font/bitmap resource?](https://github.com/idea4good/GuiLiteToolkit)
     - [How to switch theme?](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/UIcode/source/resource/resource.cpp)
     - [How to dispatch messages?](documents/HowMessageWork.md)
-    - [UML chart of GuiLite core](documents/UML.md)
+    - [UML chart of GUI-lite core](documents/UML.md)
 - 📈Learning steps
-    1. Build GuiLite library
+    1. Build GUI-lite library
     2. Build/Debug HelloXXX demos
     3. Read/Modify `HelloXXX/UIcode/UIcode.cpp` code
     4. Read/Modify `widgets` code
@@ -168,7 +168,7 @@ Even a C beginner could master GuiLite quickly. The source code only uses basic 
 </table>
 
 ## 📞Community Channel
-Thanks for the help from the community, you all make GuiLite better! And welcome to any new friend to join us.
+Thanks for the help from the community, you all make GUI-lite better! And welcome to any new friend to join us.
 - [**@Twitter**](https://twitter.com/idea4good)
 - QQ group code:
 <table>
