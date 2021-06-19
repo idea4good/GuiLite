@@ -24,7 +24,7 @@
   | 24 MHZ | 29 KB | 9 KB |
 
 ## 跨平臺
-- 支持的操作系统：iOS/macOS/WathOS，Android，Linux（ARM/x86-64），Windows（包含VR），RTOS... 甚至**无操作系统的单片机**
+- 支持的操作系统：iOS/macOS/WatchOS，Android，Linux（ARM/x86-64），Windows（包含VR），RTOS... 甚至**无操作系统的单片机**
 - 支持的开发语言： C/C++, Swift, Java, Javascript, C#, Golang...
 - 支持的第3方库：Qt, MFC, Winforms, CoCoa...
 
