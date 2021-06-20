@@ -26,7 +26,7 @@
     | 24 MHZ | 29 KB | 9 KB |
 
 ## Cross platform
-- Supported OSes: iOS/macOS/WathOS, Android, Linux, Windows, RTOS... or **MCU without OS**
+- Supported OSes: iOS/macOS/WatchOS, Android, Linux, Windows, RTOS... or **MCU without OS**
 - Supported languages: C/C++, Swift, Java, Javascript, C#, Golang...
 - Supported 3rd party libraries: Qt, MFC, Winforms, CoCoa...
 
