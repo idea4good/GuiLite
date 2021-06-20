@@ -13,7 +13,7 @@ UIcode.cpp:
 // your code here:
 ```
 # For GuiLite developer
-## Build GuiLite libary for Windows?
+## Build GuiLite library for Windows?
 Prerequisite: Windows & Visul Studio 2013/2015/2017/2019
 - Open "GuiLite.sln" by Visual Studio
 - Click `Build Solution`
@@ -23,7 +23,7 @@ FAQ: Error when open GuiLite project with Visual Studio, reconfigure the project
 
 ![vs-configure](vs-configure.jpg)
 
-## Build GuiLite libary for iOS/Mac and Linux(amd64) & raspberry pi?
+## Build GuiLite library for iOS/Mac and Linux(amd64) & raspberry pi?
 ```bash
 cd GuiLite/workspace
 cmake .
@@ -32,7 +32,7 @@ make
 # Output here: GuiLite/workspace/libGuiLite.a
 ```
 
-## Build GuiLite libary for ARM Linux?
+## Build GuiLite library for ARM Linux?
 ### Prerequisite: Install cross compiler:
 ```bash
 # For ARM32:
@@ -51,7 +51,7 @@ make
 ```
 Output here: GuiLite/workspace/libGuiLite.a
 
-## How to build GuiLite libary for any MCU?
+## How to build GuiLite library for any MCU?
 ### Prerequisite: Install Keil uvsion 5.6 or above.
 ### Build
 - Open `GuiLite/workspace/GuiLite.uvprojx` with Keil uvsion.
