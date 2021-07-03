@@ -383,11 +383,6 @@
           <GroupName>core</GroupName>
           <Files>
             <File>
-              <FileName>bitmap.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\bitmap.cpp</FilePath>
-            </File>
-            <File>
               <FileName>display.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\core\display.cpp</FilePath>
@@ -411,6 +406,11 @@
               <FileName>api_unknow.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\core\adapter\api_unknow.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>image.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\core\image.cpp</FilePath>
             </File>
           </Files>
         </Group>
