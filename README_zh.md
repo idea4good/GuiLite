@@ -170,6 +170,6 @@
 - 开发者QQ群：
 <table>
   <tr>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=5hc3qwj"><img src="documents/qq.group-3.jpg" width="240px;"/><br /><sub><b>開發群🔑：717471210</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=tFsZvoeQ"><img src="documents/qq.group-4.jpg" width="240px;"/><br /><sub><b>開發群🔑：938682319</b></sub></a>
   </tr>
 </table>
