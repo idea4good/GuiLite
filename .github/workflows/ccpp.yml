@@ -10,6 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: cmake
-      run: cd workspace && cmake .
+      run: cd src && cmake .
     - name: make
-      run: cd workspace && make
+      run: cd src && make
