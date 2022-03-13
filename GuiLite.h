@@ -1688,10 +1688,10 @@ protected:
 		switch (m_status)
 		{
 		case STATUS_NORMAL:
-			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
+			m_surface->fill_rect(rect, m_bg_color ? m_bg_color : c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 			if (m_str)
 			{
-				c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
+				c_word::draw_string_in_rect(m_surface, m_z_order, m_str, rect, m_font_type, m_font_color, m_bg_color ? m_bg_color : c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
 			}
 			break;
 		case STATUS_FOCUSED:
