@@ -1860,7 +1860,8 @@ private:
 typedef enum
 {
 	STATUS_UPPERCASE,
-	STATUS_LOWERCASE
+	STATUS_LOWERCASE,
+	STATUS_NUMBER,
 }KEYBOARD_STATUS;
 typedef enum
 {
@@ -1878,6 +1879,46 @@ extern WND_TREE g_number_board_children[];
 class c_keyboard: public c_wnd
 {
 public:
+	virtual char convert_char2num(char id)
+	{
+		char num = id;
+		switch (id)
+		{
+			case 'Q':
+				num = '1';
+				break;
+			case 'W':
+				num = '2';
+				break;
+			case 'E':
+				num = '3';
+				break;
+			case 'R':
+				num = '4';
+				break;
+			case 'T':
+				num = '5';
+				break;
+			case 'Y':
+				num = '6';
+				break;
+			case 'U':
+				num = '7';
+				break;
+			case 'I':
+				num = '8';
+				break;
+			case 'O':
+				num = '9';
+				break;
+			case 'P':
+				num = '0';
+				break;
+			default:
+				break;
+		}
+		return num;
+	}
 	virtual int connect(c_wnd *user, unsigned short resource_id, KEYBOARD_STYLE style)
 	{
 		c_rect user_rect;
@@ -1943,6 +1984,9 @@ protected:
 		case 0x7F:
 			on_del_clicked(id, param);
 			break;
+		case 0x90:
+			on_num_switch_clicked(id, param);
+			break;
 		default:
 			on_char_clicked(id, param);
 			break;
@@ -1963,6 +2007,10 @@ protected:
 			if (STATUS_LOWERCASE == m_cap_status)
 			{
 				id += 0x20;
+			}
+			else if (STATUS_NUMBER == m_cap_status)
+			{
+				id = convert_char2num(id);
 			}
 			goto InputChar;
 		}
@@ -1985,6 +2033,11 @@ protected:
 		m_cap_status = (m_cap_status == STATUS_LOWERCASE) ? STATUS_UPPERCASE : STATUS_LOWERCASE;
 		show_window();
 	}
+	void on_num_switch_clicked(int id, int param)
+	{
+		m_cap_status = (m_cap_status == STATUS_NUMBER) ? STATUS_UPPERCASE : STATUS_NUMBER;
+		show_window();
+	}
 	void on_enter_clicked(int id, int param)
 	{
 		memset(m_str, 0, sizeof(m_str));
@@ -2004,6 +2057,46 @@ private:
 class c_keyboard_button : public c_button
 {
 protected:
+	virtual char convert_char2num(unsigned short id)
+	{
+		char num = 0;
+		switch(id)
+		{
+			case 'Q':
+				num = '1';
+				break;
+			case 'W':
+				num = '2';
+				break;
+			case 'E':
+				num = '3';
+				break;
+			case 'R':
+				num = '4';
+				break;
+			case 'T':
+				num = '5';
+				break;
+			case 'Y':
+				num = '6';
+				break;
+			case 'U':
+				num = '7';
+				break;
+			case 'I':
+				num = '8';
+				break;
+			case 'O':
+				num = '9';
+				break;
+			case 'P':
+				num = '0';
+				break;
+			default:
+				break;
+		}
+		return num;
+	}
 	virtual void on_paint()
 	{
 		c_rect rect;
@@ -2055,7 +2148,14 @@ protected:
 		char letter[] = { 0, 0 };
 		if (m_id >= 'A' && m_id <= 'Z')
 		{
-			letter[0] = (((c_keyboard*)m_parent)->get_cap_status() == STATUS_UPPERCASE) ? m_id : (m_id + 0x20);
+			if (((c_keyboard*)m_parent)->get_cap_status() == STATUS_NUMBER)
+			{
+				letter[0] = convert_char2num(m_id);
+			}
+			else
+			{
+				letter[0] = (((c_keyboard*)m_parent)->get_cap_status() == STATUS_UPPERCASE) ? m_id : (m_id + 0x20);
+			}
 		}
 		else if (m_id >= '0' && m_id <= '9')
 		{
