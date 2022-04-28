@@ -173,6 +173,6 @@ Thanks for the help from the community, you all make GUI-lite better! And welcom
 - QQ group code:
 <table>
   <tr>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=tFsZvoeQ"><img src="documents/qq.group-4.jpg" width="240px;"/><br /><sub><b>開發群🔑：938682319</b></sub></a>
+    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=O714kulz"><img src="documents/qq.group-5.png" width="240px;"/><br /><sub><b>開發群🔑：616696441</b></sub></a>
   </tr>
 </table>
