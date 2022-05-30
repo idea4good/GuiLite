@@ -13,7 +13,7 @@ Widgets management include:
 - Dispatch/Response intput message: By analysis the location information from the message, GuiLite would find the widget which should be reponse, and call response function(e.g, on_mouse_click, on_keyboard_click)
 - Dispatch/Response customer message: By analysis the ID of message, GuiLite would find response funciotn, and calll it(: on_timer, on_custmer_refresh)
 
-Rendring include:
+Rendering include:
 - Draw pixel, line, rect
 - Set frame layer; While your drawing, you should input frame layer index to make your drawing at a specific layer
 - Update frame layer; While frame layer changed(e.g, open/close dialog), GuiLite would determine which pixel of frame layer should be display on screen
