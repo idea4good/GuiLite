@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../core_include/api.h"
-#include "../core_include/resource.h"
+#include "../core/api.h"
+#include "../core/resource.h"
 
 //Rebuild gui library once you change this file
 enum FONT_LIST

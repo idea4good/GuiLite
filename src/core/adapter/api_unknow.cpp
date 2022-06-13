@@ -1,7 +1,7 @@
 #ifdef GUILITE_ON
 #if (!defined _WIN32) && (!defined WIN32) && (!defined _WIN64) && (!defined WIN64) && (!defined __linux__) && (!defined __APPLE__)
 
-#include "../../core_include/api.h"
+#include "../../core/api.h"
 #include <stdio.h>
 
 static void(*do_assert)(const char* file, int line);

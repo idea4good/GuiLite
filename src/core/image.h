@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../core_include/api.h"
-#include "../core_include/resource.h"
-#include "../core_include/display.h"
+#include "../core/api.h"
+#include "../core/resource.h"
+#include "../core/display.h"
 
 #define	DEFAULT_MASK_COLOR 0xFF080408
 class c_surface;

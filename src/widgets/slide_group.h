@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../core_include/api.h"
-#include "../core_include/display.h"
-#include "../core_include/wnd.h"
-#include "../widgets_include/dialog.h"
+#include "../core/api.h"
+#include "../core/display.h"
+#include "../core/wnd.h"
+#include "../widgets/dialog.h"
 #include <stdlib.h>
 
 #define MAX_PAGES	5

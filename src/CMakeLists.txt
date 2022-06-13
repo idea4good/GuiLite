@@ -12,8 +12,8 @@ ADD_DEFINITIONS(-DGUILITE_ON)
 FILE(GLOB CORE_SRC      core/*.cpp)
 FILE(GLOB CORE_ADAPTER  core/adapter/api_linux.cpp
                         core/adapter/audio_linux.cpp)
-# gui
-FILE(GLOB WIDGETS_SRC       widgets/*.cpp)
+# widgets
+FILE(GLOB WIDGETS_SRC   widgets/*.cpp)
 
 # build static library
 ADD_LIBRARY(GuiLite STATIC ${CORE_SRC} ${CORE_ADAPTER} ${WIDGETS_SRC})

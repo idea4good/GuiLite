@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../core_include/api.h"
-#include "../core_include/resource.h"
-#include "../core_include/word.h"
-#include "../core_include/display.h"
-#include "../core_include/theme.h"
-#include "../core_include/wnd.h"
+#include "../core/api.h"
+#include "../core/resource.h"
+#include "../core/word.h"
+#include "../core/display.h"
+#include "../core/theme.h"
+#include "../core/wnd.h"
 
 #define  MAX_COL_NUM  30
 #define  MAX_ROW_NUM  30

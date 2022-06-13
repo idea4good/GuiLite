@@ -383,34 +383,14 @@
           <GroupName>core</GroupName>
           <Files>
             <File>
-              <FileName>display.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\display.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>theme.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\theme.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>wnd.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\wnd.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>word.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\core\word.cpp</FilePath>
-            </File>
-            <File>
               <FileName>api_unknow.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\core\adapter\api_unknow.cpp</FilePath>
             </File>
             <File>
-              <FileName>image.cpp</FileName>
+              <FileName>core.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\core\image.cpp</FilePath>
+              <FilePath>.\core\core.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -418,24 +398,9 @@
           <GroupName>widgets</GroupName>
           <Files>
             <File>
-              <FileName>button.cpp</FileName>
+              <FileName>widgets.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\widgets\button.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>label.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\widgets\label.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>wave_buffer.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\widgets\wave_buffer.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>wave_ctrl.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\widgets\wave_ctrl.cpp</FilePath>
+              <FilePath>.\widgets\widgets.cpp</FilePath>
             </File>
           </Files>
         </Group>

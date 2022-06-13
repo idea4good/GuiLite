@@ -1,7 +1,7 @@
 #ifdef GUILITE_ON
 #if (defined __linux__) || (defined __APPLE__)
 
-#include "../../core_include/api.h"
+#include "../../core/api.h"
 #include <unistd.h>
 #include <pthread.h>
 #include <string.h>

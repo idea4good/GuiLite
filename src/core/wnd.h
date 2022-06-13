@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../core_include/api.h"
-#include "../core_include/resource.h"
-#include "../core_include/display.h"
+#include "../core/api.h"
+#include "../core/resource.h"
+#include "../core/display.h"
 
 class c_wnd;
 class c_surface;

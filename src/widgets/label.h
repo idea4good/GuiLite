@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../core_include/api.h"
-#include "../core_include/wnd.h"
-#include "../core_include/display.h"
-#include "../core_include/resource.h"
-#include "../core_include/theme.h"
-#include "../core_include/word.h"
+#include "../core/api.h"
+#include "../core/wnd.h"
+#include "../core/display.h"
+#include "../core/resource.h"
+#include "../core/theme.h"
+#include "../core/word.h"
 
 class c_label : public c_wnd
 {

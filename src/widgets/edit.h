@@ -1,14 +1,14 @@
 #pragma once
 
-#include "../core_include/api.h"
-#include "../core_include/wnd.h"
-#include "../core_include/resource.h"
-#include "../core_include/word.h"
-#include "../core_include/display.h"
-#include "../core_include/theme.h"
-#include "../widgets_include/button.h"
-#include "../widgets_include/label.h"
-#include "../widgets_include/keyboard.h"
+#include "../core/api.h"
+#include "../core/wnd.h"
+#include "../core/resource.h"
+#include "../core/word.h"
+#include "../core/display.h"
+#include "../core/theme.h"
+#include "../widgets/button.h"
+#include "../widgets/label.h"
+#include "../widgets/keyboard.h"
 #include <string.h>
 
 #define MAX_EDIT_STRLEN		32

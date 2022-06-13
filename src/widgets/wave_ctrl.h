@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../core_include/api.h"
-#include "../core_include/wnd.h"
-#include "../core_include/display.h"
-#include "../core_include/resource.h"
-#include "../core_include/word.h"
-#include "../widgets_include/wave_buffer.h"
+#include "../core/api.h"
+#include "../core/wnd.h"
+#include "../core/display.h"
+#include "../core/resource.h"
+#include "../core/word.h"
+#include "../widgets/wave_buffer.h"
 #include <stdlib.h>
 #include <string.h>
 

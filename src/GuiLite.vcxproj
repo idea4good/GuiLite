@@ -389,22 +389,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\adapter\api_win.cpp" />
-    <ClCompile Include="core\display.cpp" />
-    <ClCompile Include="core\image.cpp" />
-    <ClCompile Include="core\theme.cpp" />
-    <ClCompile Include="core\wnd.cpp" />
-    <ClCompile Include="core\word.cpp" />
-    <ClCompile Include="widgets\button.cpp" />
-    <ClCompile Include="widgets\dialog.cpp" />
-    <ClCompile Include="widgets\edit.cpp" />
-    <ClCompile Include="widgets\keyboard.cpp" />
-    <ClCompile Include="widgets\label.cpp" />
-    <ClCompile Include="widgets\list_box.cpp" />
-    <ClCompile Include="widgets\slide_group.cpp" />
-    <ClCompile Include="widgets\spinbox.cpp" />
-    <ClCompile Include="widgets\table.cpp" />
-    <ClCompile Include="widgets\wave_buffer.cpp" />
-    <ClCompile Include="widgets\wave_ctrl.cpp" />
+    <ClCompile Include="core\core.cpp" />
+    <ClCompile Include="widgets\widgets.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="core\api.h" />
+    <ClInclude Include="core\display.h" />
+    <ClInclude Include="core\image.h" />
+    <ClInclude Include="core\resource.h" />
+    <ClInclude Include="core\theme.h" />
+    <ClInclude Include="core\wnd.h" />
+    <ClInclude Include="core\word.h" />
+    <ClInclude Include="widgets\button.h" />
+    <ClInclude Include="widgets\dialog.h" />
+    <ClInclude Include="widgets\edit.h" />
+    <ClInclude Include="widgets\keyboard.h" />
+    <ClInclude Include="widgets\label.h" />
+    <ClInclude Include="widgets\list_box.h" />
+    <ClInclude Include="widgets\slide_group.h" />
+    <ClInclude Include="widgets\spinbox.h" />
+    <ClInclude Include="widgets\table.h" />
+    <ClInclude Include="widgets\wave_buffer.h" />
+    <ClInclude Include="widgets\wave_ctrl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,55 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="widgets\button.cpp">
+    <ClCompile Include="widgets\widgets.cpp">
       <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\dialog.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\edit.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\keyboard.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\label.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\list_box.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\slide_group.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\spinbox.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\table.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\wave_buffer.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\wave_ctrl.cpp">
-      <Filter>widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="core\display.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\theme.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\wnd.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\word.cpp">
-      <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="core\adapter\api_win.cpp">
       <Filter>core\adapter</Filter>
     </ClCompile>
-    <ClCompile Include="core\image.cpp">
+    <ClCompile Include="core\core.cpp">
       <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
@@ -63,5 +21,61 @@
     <Filter Include="core\adapter">
       <UniqueIdentifier>{691801eb-7076-4af6-aa0c-5ce5b0fcb21c}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="core\api.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\display.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\image.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\resource.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\theme.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\wnd.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\word.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\button.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\dialog.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\edit.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\keyboard.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\label.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\list_box.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\slide_group.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\spinbox.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\table.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\wave_buffer.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\wave_ctrl.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
