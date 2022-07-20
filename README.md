@@ -35,7 +35,7 @@
 - 🔣Multi-language, supports UTF-8;📀Playback Video
 - 🔨[Toolkit](https://github.com/idea4good/GuiLiteToolkit) for building font/image resources
 - 📐[Layout GUI WYSIWYG](https://github.com/idea4good/GuiLitePreviewer)
-- 📊Code Telemetry and Analysis in real time(*remove .sh/.bat files if dislike to share*)
+- 📊Code Telemetry and Analysis in real time(**remove .sh/.bat files if dislike to share**)
 - 📦Supports 3D and [Web](https://github.com/idea4good/GuiLiteWeb)
 - 🐋Run in docker with a single command: `sudo docker run -it --privileged -v /dev:/dev-share idea4good/gui-lite:latest bash /run.sh`
 
