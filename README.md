@@ -62,7 +62,7 @@ Even a C beginner could master GUI-lite quickly. The source code only uses basic
 ## Demo wall
 - Zero dependency, 100% build pass & runnable
 - Click the demo you like, and run it on your hardware
-- Most of the demos have about 100 lines of UI code, code repository is [here.](https://gitee.com/idea4good/GuiLiteSamples)
+- Most of the demos have about 100 lines of UI code, code repository is [here.](https://github.com/idea4good/GuiLiteSamples)
 ---
 ### MCU platform
 ---
