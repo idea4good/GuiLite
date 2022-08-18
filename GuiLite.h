@@ -316,8 +316,8 @@ protected:
 			}
 			return;
 		}
-		register int _width = m_width;
-		register int _height = m_height;
+		int _width = m_width;
+		int _height = m_height;
 		int x, y;
 		if (m_color_bytes == 2)
 		{
@@ -357,8 +357,8 @@ protected:
 		{
 			return -1;
 		}
-		register int _width = m_width;
-		register int _height = m_height;
+		int _width = m_width;
+		int _height = m_height;
 		left = (left >= _width) ? (_width - 1) : left;
 		right = (right >= _width) ? (_width - 1) : right;
 		top = (top >= _height) ? (_height - 1) : top;
@@ -708,8 +708,8 @@ inline c_surface* c_display::alloc_surface(Z_ORDER_LEVEL max_zorder, c_rect laye
 }
 inline int c_display::swipe_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset)
 {
-	register int surface_width = s0->m_width;
-	register int surface_height = s0->m_height;
+	int surface_width = s0->m_width;
+	int surface_height = s0->m_height;
 	if (offset < 0 || offset > surface_width || y0 < 0 || y0 >= surface_height ||
 		y1 < 0 || y1 >= surface_height || x0 < 0 || x0 >= surface_width || x1 < 0 || x1 >= surface_width)
 	{
@@ -3318,9 +3318,9 @@ protected:
 		}
 		c_rect rect;
 		get_screen_rect(rect);
-		register int width = rect.width();
-		register int top = rect.m_top;
-		register int left = rect.m_left;
+		int width = rect.width();
+		int top = rect.m_top;
+		int left = rect.m_left;
 		for (int y_pos = (m_wave_top - 1); y_pos <= (m_wave_bottom + 1); y_pos++)
 		{
 			(m_bg_fb) ? m_surface->draw_pixel(x, y_pos, m_bg_fb[(y_pos - top) * width + (x - left)], m_z_order) : m_surface->draw_pixel(x, y_pos, 0, m_z_order);
@@ -3334,7 +3334,7 @@ protected:
 		}
 		c_rect rect;
 		get_screen_rect(rect);
-		register unsigned int* p_des = m_bg_fb;
+		unsigned int* p_des = m_bg_fb;
 		for (int y = rect.m_top; y <= rect.m_bottom; y++)
 		{
 			for (int x = rect.m_left; x <= rect.m_right; x++)
@@ -3378,7 +3378,7 @@ c_lattice_font_op the_lattice_font_op = c_lattice_font_op();
 c_font_operator* c_word::fontOperator = &the_lattice_font_op;
 #endif
 #ifdef GUILITE_ON
-#if (defined __linux__) || (defined __APPLE__)
+#if ((defined __linux__) && (!defined __none_os__)) || (defined __APPLE__)
 #include <unistd.h>
 #include <pthread.h>
 #include <string.h>
@@ -3728,7 +3728,7 @@ int c_fifo::write(void* buf, int len)
 #endif
 #endif
 #ifdef GUILITE_ON
-#if (!defined _WIN32) && (!defined WIN32) && (!defined _WIN64) && (!defined WIN64) && (!defined __linux__) && (!defined __APPLE__)
+#if (defined __none_os__) || ((!defined _WIN32) && (!defined WIN32) && (!defined _WIN64) && (!defined WIN64) && (!defined __linux__) && (!defined __APPLE__))
 
 #include <stdio.h>
 

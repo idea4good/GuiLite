@@ -1,5 +1,5 @@
 #ifdef GUILITE_ON
-#if (defined __linux__) || (defined __APPLE__)
+#if ((defined __linux__) && (!defined __none_os__)) || (defined __APPLE__)
 
 #include "../../core/api.h"
 #include <unistd.h>

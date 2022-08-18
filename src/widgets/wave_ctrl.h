@@ -218,9 +218,9 @@ protected:
 
 		c_rect rect;
 		get_screen_rect(rect);
-		register int width = rect.width();
-		register int top = rect.m_top;
-		register int left = rect.m_left;
+		int width = rect.width();
+		int top = rect.m_top;
+		int left = rect.m_left;
 		for (int y_pos = (m_wave_top - 1); y_pos <= (m_wave_bottom + 1); y_pos++)
 		{
 			(m_bg_fb) ? m_surface->draw_pixel(x, y_pos, m_bg_fb[(y_pos - top) * width + (x - left)], m_z_order) : m_surface->draw_pixel(x, y_pos, 0, m_z_order);
@@ -235,7 +235,7 @@ protected:
 		c_rect rect;
 		get_screen_rect(rect);
 
-		register unsigned int* p_des = m_bg_fb;
+		unsigned int* p_des = m_bg_fb;
 		for (int y = rect.m_top; y <= rect.m_bottom; y++)
 		{
 			for (int x = rect.m_left; x <= rect.m_right; x++)

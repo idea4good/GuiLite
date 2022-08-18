@@ -119,8 +119,8 @@ protected:
 			return;
 		}
 
-		register int _width = m_width;
-		register int _height = m_height;
+		int _width = m_width;
+		int _height = m_height;
 		int x, y;
 		if (m_color_bytes == 2)
 		{
@@ -162,8 +162,8 @@ protected:
 			return -1;
 		}
 
-		register int _width = m_width;
-		register int _height = m_height;
+		int _width = m_width;
+		int _height = m_height;
 
 		left = (left >= _width) ? (_width - 1) : left;
 		right = (right >= _width) ? (_width - 1) : right;
@@ -555,8 +555,8 @@ inline c_surface* c_display::alloc_surface(Z_ORDER_LEVEL max_zorder, c_rect laye
 
 inline int c_display::swipe_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset)
 {
-	register int surface_width = s0->m_width;
-	register int surface_height = s0->m_height;
+	int surface_width = s0->m_width;
+	int surface_height = s0->m_height;
 
 	if (offset < 0 || offset > surface_width || y0 < 0 || y0 >= surface_height ||
 		y1 < 0 || y1 >= surface_height || x0 < 0 || x0 >= surface_width || x1 < 0 || x1 >= surface_width)

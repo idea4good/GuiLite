@@ -1,5 +1,5 @@
 #ifdef GUILITE_ON
-#if (!defined _WIN32) && (!defined WIN32) && (!defined _WIN64) && (!defined WIN64) && (!defined __linux__) && (!defined __APPLE__)
+#if (defined __none_os__) || ((!defined _WIN32) && (!defined WIN32) && (!defined _WIN64) && (!defined WIN64) && (!defined __linux__) && (!defined __APPLE__))
 
 #include "../../core/api.h"
 #include <stdio.h>
