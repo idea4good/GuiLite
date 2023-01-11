@@ -395,7 +395,7 @@ class c_surface {
 public:
 	c_surface(unsigned int width, unsigned int height, unsigned int color_bytes, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect()) : m_width(width), m_height(height), m_color_bytes(color_bytes), m_fb(0), m_is_active(false), m_top_zorder(Z_ORDER_LEVEL_0), m_phy_write_index(0), m_display(0)
 	{
-		(overlpa_rect == c_rect()) ? set_surface(max_zorder, c_rect(0, 0, width - 1, height - 1)) : set_surface(max_zorder, overlpa_rect);
+		(overlpa_rect == c_rect()) ? set_surface(max_zorder, c_rect(0, 0, width, height)) : set_surface(max_zorder, overlpa_rect);
 	}
 	unsigned int get_pixel(int x, int y, unsigned int z_order)
 	{
@@ -703,7 +703,7 @@ inline c_display::c_display(void* phy_fb, int display_width, int display_height,
 inline c_surface* c_display::alloc_surface(Z_ORDER_LEVEL max_zorder, c_rect layer_rect)
 {
 	ASSERT(max_zorder < Z_ORDER_LEVEL_MAX && m_surface_index < m_surface_cnt);
-	(layer_rect == c_rect()) ? m_surface_group[m_surface_index]->set_surface(max_zorder, c_rect(0, 0, m_width - 1, m_height - 1)) : m_surface_group[m_surface_index]->set_surface(max_zorder, layer_rect);
+	(layer_rect == c_rect()) ? m_surface_group[m_surface_index]->set_surface(max_zorder, c_rect(0, 0, m_width, m_height)) : m_surface_group[m_surface_index]->set_surface(max_zorder, layer_rect);
 	return m_surface_group[m_surface_index++];
 }
 inline int c_display::swipe_surface(c_surface* s0, c_surface* s1, int x0, int x1, int y0, int y1, int offset)
