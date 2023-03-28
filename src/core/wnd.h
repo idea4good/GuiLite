@@ -99,13 +99,9 @@ public:
 		}
 		return 0;
 	}
+
 	void disconnect()
 	{
-		if (0 == m_id)
-		{
-			return;
-		}
-
 		if (0 != m_top_child)
 		{
 			c_wnd* child = m_top_child;
@@ -124,8 +120,9 @@ public:
 			m_parent->unlink_child(this);
 		}
 		m_focus_child = 0;
-		m_id = 0;
+		m_attr = WND_ATTRIBUTION(0);
 	}
+
 	virtual void on_init_children() {}
 	virtual void on_paint() {}
 	virtual void show_window()
@@ -178,15 +175,8 @@ public:
 	unsigned int get_bg_color() { return m_bg_color; }
 	void set_font_type(const LATTICE_FONT_INFO *font_type) { m_font = font_type; }
 	const void* get_font_type() { return m_font; }
-
-	void set_wnd_pos(short x, short y, short width, short height)
-	{
-		m_wnd_rect.m_left = x;
-		m_wnd_rect.m_top = y;
-		m_wnd_rect.m_right = x + width - 1;
-		m_wnd_rect.m_bottom = y + height - 1;
-	}
 	void get_wnd_rect(c_rect &rect) const {	rect = m_wnd_rect; }
+
 	void get_screen_rect(c_rect &rect) const
 	{
 		int l = 0;
@@ -298,22 +288,28 @@ public:
 	c_wnd* get_prev_sibling() const { return m_prev_sibling; }
 	c_wnd* get_next_sibling() const { return m_next_sibling; }
 
+	c_wnd* search_priority_sibling(c_wnd* root)
+	{
+		c_wnd* priority_wnd = 0;
+		while (root)
+		{
+			if ((root->m_attr & ATTR_PRIORITY) && (root->m_attr & ATTR_VISIBLE))
+			{
+				priority_wnd = root;
+				break;
+			}
+			root = root->m_next_sibling;
+		}
+
+		return priority_wnd;
+	}
+
 	virtual void on_touch(int x, int y, TOUCH_ACTION action)
 	{
 		x -= m_wnd_rect.m_left;
 		y -= m_wnd_rect.m_top;
 
-		c_wnd* priority_wnd = 0;
-		c_wnd* tmp_child = m_top_child;
-		while (tmp_child)
-		{
-			if ((tmp_child->m_attr & ATTR_PRIORITY) && (tmp_child->m_attr & ATTR_VISIBLE))
-			{
-				priority_wnd = tmp_child;
-				break;
-			}
-			tmp_child = tmp_child->m_next_sibling;
-		}
+		c_wnd* priority_wnd = search_priority_sibling(m_top_child);
 		if (priority_wnd)
 		{
 			return priority_wnd->on_touch(x, y, action);
@@ -336,17 +332,7 @@ public:
 	}
 	virtual void on_navigate(NAVIGATION_KEY key)
 	{
-		c_wnd* priority_wnd = 0;
-		c_wnd* tmp_child = m_top_child;
-		while (tmp_child)
-		{
-			if ((tmp_child->m_attr & ATTR_PRIORITY) && (tmp_child->m_attr & ATTR_VISIBLE))
-			{
-				priority_wnd = tmp_child;
-				break;
-			}
-			tmp_child = tmp_child->m_next_sibling;
-		}
+		c_wnd* priority_wnd = search_priority_sibling(m_top_child);
 		if (priority_wnd)
 		{
 			return priority_wnd->on_navigate(key);
@@ -462,16 +448,7 @@ protected:
 		WND_TREE* p_cur = p_child_tree;
 		while (p_cur->p_wnd)
 		{
-			if (0 != p_cur->p_wnd->m_id)
-			{//This wnd has been used! Do not share!
-				ASSERT(false);
-				return -1;
-			}
-			else
-			{
-				p_cur->p_wnd->connect(this, p_cur->resource_id, p_cur->str,
-					p_cur->x, p_cur->y, p_cur->width, p_cur->height, p_cur->p_child_tree);
-			}
+			p_cur->p_wnd->connect(this, p_cur->resource_id, p_cur->str,p_cur->x, p_cur->y, p_cur->width, p_cur->height, p_cur->p_child_tree);
 			p_cur++;
 			sum++;
 		}

@@ -34,5 +34,5 @@ timeout 30s curl --include --request POST --header "Content-Type: application/js
 \"city\" :\"$city\",
 \"org\" :\"$org\",
 \"log\" :\"$build_time\",
-\"version\" :\"v2.3\"
+\"version\" :\"v3.0\"
 }]" $url

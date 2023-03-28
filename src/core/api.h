@@ -73,7 +73,7 @@ private:
 class c_rect
 {
 public:
-	c_rect(){ m_left = m_top = m_right = m_bottom = -1; }
+	c_rect(){ m_left = m_top = m_right = m_bottom = -1; }//empty rect
 	c_rect(int left, int top, int width, int height)
 	{
 		set_rect(left, top, width, height);

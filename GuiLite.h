@@ -61,7 +61,7 @@ private:
 class c_rect
 {
 public:
-	c_rect(){ m_left = m_top = m_right = m_bottom = -1; }
+	c_rect(){ m_left = m_top = m_right = m_bottom = -1; }//empty rect
 	c_rect(int left, int top, int width, int height)
 	{
 		set_rect(left, top, width, height);
@@ -221,8 +221,8 @@ private:
 typedef enum
 {
 	Z_ORDER_LEVEL_0,//lowest graphic level
-	Z_ORDER_LEVEL_1,//middle graphic level
-	Z_ORDER_LEVEL_2,//highest graphic level
+	Z_ORDER_LEVEL_1,//middle graphic level, call activate_layer before use it, draw everything inside the active rect.
+	Z_ORDER_LEVEL_2,//highest graphic level, call activate_layer before use it, draw everything inside the active rect.
 	Z_ORDER_LEVEL_MAX
 }Z_ORDER_LEVEL;
 struct DISPLAY_DRIVER
@@ -388,11 +388,13 @@ class c_layer
 public:
 	c_layer() { fb = 0; }
 	void* fb;		//framebuffer
-	c_rect 	rect;	//framebuffer area
+	c_rect rect;	//framebuffer area
+	c_rect active_rect;
 };
 class c_surface {
 	friend class c_display; friend class c_bitmap_operator;
 public:
+	Z_ORDER_LEVEL get_max_z_order() { return m_max_zorder; }
 	c_surface(unsigned int width, unsigned int height, unsigned int color_bytes, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect()) : m_width(width), m_height(height), m_color_bytes(color_bytes), m_fb(0), m_is_active(false), m_top_zorder(Z_ORDER_LEVEL_0), m_phy_write_index(0), m_display(0)
 	{
 		(overlpa_rect == c_rect()) ? set_surface(max_zorder, c_rect(0, 0, width, height)) : set_surface(max_zorder, overlpa_rect);
@@ -424,19 +426,19 @@ public:
 		{
 			return;
 		}
+		
 		if (z_order > (unsigned int)m_max_zorder)
 		{
 			ASSERT(false);
 			return;
 		}
-		if (z_order == m_max_zorder)
-		{
-			return draw_pixel_low_level(x, y, rgb);
-		}
-		
 		if (z_order > (unsigned int)m_top_zorder)
 		{
 			m_top_zorder = (Z_ORDER_LEVEL)z_order;
+		}
+		if (z_order == m_max_zorder)
+		{
+			return draw_pixel_low_level(x, y, rgb);
 		}
 		if (m_layers[z_order].rect.pt_in_rect(x, y))
 		{
@@ -458,7 +460,7 @@ public:
 		bool be_overlapped = false;
 		for (unsigned int tmp_z_order = Z_ORDER_LEVEL_MAX - 1; tmp_z_order > z_order; tmp_z_order--)
 		{
-			if (m_layers[tmp_z_order].rect.pt_in_rect(x, y))
+			if (m_layers[tmp_z_order].active_rect.pt_in_rect(x, y))
 			{
 				be_overlapped = true;
 				break;
@@ -481,22 +483,22 @@ public:
 		}
 		if (z_order == m_top_zorder)
 		{
-			int x, y;
+			int width = m_layers[z_order].rect.width();
 			c_rect layer_rect = m_layers[z_order].rect;
 			unsigned int rgb_16 = GL_RGB_32_to_16(rgb);
-			for (y = y0; y <= y1; y++)
+			for (int y = y0; y <= y1; y++)
 			{
-				for (x = x0; x <= x1; x++)
+				for (int x = x0; x <= x1; x++)
 				{
 					if (layer_rect.pt_in_rect(x, y))
 					{
 						if (m_color_bytes == 2)
 						{
-							((unsigned short*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.width() + (x - layer_rect.m_left)] = rgb_16;
+							((unsigned short*)m_layers[z_order].fb)[(y - layer_rect.m_top) * width + (x - layer_rect.m_left)] = rgb_16;
 						}
 						else
 						{
-							((unsigned int*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.width() + (x - layer_rect.m_left)] = rgb;	
+							((unsigned int*)m_layers[z_order].fb)[(y - layer_rect.m_top) * width + (x - layer_rect.m_left)] = rgb;	
 						}
 					}
 				}
@@ -588,23 +590,29 @@ public:
 	}
 	bool is_active() { return m_is_active; }
 	c_display* get_display() { return m_display; }
-	int show_layer(c_rect& rect, unsigned int z_order)
+	void activate_layer(c_rect active_rect, unsigned int active_z_order)//empty active rect means inactivating the layer
 	{
-		ASSERT(z_order >= Z_ORDER_LEVEL_0 && z_order < Z_ORDER_LEVEL_MAX);
-		c_rect layer_rect = m_layers[z_order].rect;
-		ASSERT(rect.m_left >= layer_rect.m_left && rect.m_right <= layer_rect.m_right &&
-			rect.m_top >= layer_rect.m_top && rect.m_bottom <= layer_rect.m_bottom);
-		void* fb = m_layers[z_order].fb;
-		int width = layer_rect.width();
-		for (int y = rect.m_top; y <= rect.m_bottom; y++)
+		ASSERT(active_z_order > Z_ORDER_LEVEL_0 && active_z_order <= Z_ORDER_LEVEL_MAX);
+		
+		//Show the layers below the current active rect.
+		c_rect current_active_rect = m_layers[active_z_order].active_rect;
+		for(int low_z_order = Z_ORDER_LEVEL_0; low_z_order < active_z_order; low_z_order++)
 		{
-			for (int x = rect.m_left; x <= rect.m_right; x++)
+			c_rect low_layer_rect = m_layers[low_z_order].rect;
+			c_rect low_active_rect = m_layers[low_z_order].active_rect;
+			void* fb = m_layers[low_z_order].fb;
+			int width = low_layer_rect.width();
+			for (int y = current_active_rect.m_top; (y <= current_active_rect.m_bottom && y <= low_active_rect.m_bottom); y++)
 			{
-				unsigned int rgb = (m_color_bytes == 2) ? GL_RGB_16_to_32(((unsigned short*)fb)[(x - layer_rect.m_left) + (y - layer_rect.m_top) * width]) : ((unsigned int*)fb)[(x - layer_rect.m_left) + (y - layer_rect.m_top) * width];
-				draw_pixel_low_level(x, y, rgb);
+				for (int x = current_active_rect.m_left; (x <= current_active_rect.m_right && x <= low_active_rect.m_right); x++)
+				{
+					if (!low_layer_rect.pt_in_rect(x, y)) continue;
+					unsigned int rgb = (m_color_bytes == 2) ? GL_RGB_16_to_32(((unsigned short*)fb)[(x - low_layer_rect.m_left) + (y - low_layer_rect.m_top) * width]) : ((unsigned int*)fb)[(x - low_layer_rect.m_left) + (y - low_layer_rect.m_top) * width];
+					draw_pixel_low_level(x, y, rgb);
+				}
 			}
 		}
-		return 0;
+		m_layers[active_z_order].active_rect = active_rect;//set the new acitve rect.
 	}
 	void set_active(bool flag) { m_is_active = flag; }
 protected:
@@ -669,6 +677,10 @@ protected:
 		{//Top layber fb always be 0
 			ASSERT(m_layers[i].fb = calloc(layer_rect.width() * layer_rect.height(), m_color_bytes));
 			m_layers[i].rect = layer_rect;
+			if(i == Z_ORDER_LEVEL_0)
+			{
+				m_layers[i].active_rect = layer_rect;
+			}
 		}
 	}
 	int				m_width;		//in pixels
@@ -1281,10 +1293,6 @@ public:
 	}
 	void disconnect()
 	{
-		if (0 == m_id)
-		{
-			return;
-		}
 		if (0 != m_top_child)
 		{
 			c_wnd* child = m_top_child;
@@ -1301,7 +1309,7 @@ public:
 			m_parent->unlink_child(this);
 		}
 		m_focus_child = 0;
-		m_id = 0;
+		m_attr = WND_ATTRIBUTION(0);
 	}
 	virtual void on_init_children() {}
 	virtual void on_paint() {}
@@ -1349,13 +1357,6 @@ public:
 	unsigned int get_bg_color() { return m_bg_color; }
 	void set_font_type(const LATTICE_FONT_INFO *font_type) { m_font = font_type; }
 	const void* get_font_type() { return m_font; }
-	void set_wnd_pos(short x, short y, short width, short height)
-	{
-		m_wnd_rect.m_left = x;
-		m_wnd_rect.m_top = y;
-		m_wnd_rect.m_right = x + width - 1;
-		m_wnd_rect.m_bottom = y + height - 1;
-	}
 	void get_wnd_rect(c_rect &rect) const {	rect = m_wnd_rect; }
 	void get_screen_rect(c_rect &rect) const
 	{
@@ -1453,21 +1454,25 @@ public:
 	}
 	c_wnd* get_prev_sibling() const { return m_prev_sibling; }
 	c_wnd* get_next_sibling() const { return m_next_sibling; }
+	c_wnd* search_priority_sibling(c_wnd* root)
+	{
+		c_wnd* priority_wnd = 0;
+		while (root)
+		{
+			if ((root->m_attr & ATTR_PRIORITY) && (root->m_attr & ATTR_VISIBLE))
+			{
+				priority_wnd = root;
+				break;
+			}
+			root = root->m_next_sibling;
+		}
+		return priority_wnd;
+	}
 	virtual void on_touch(int x, int y, TOUCH_ACTION action)
 	{
 		x -= m_wnd_rect.m_left;
 		y -= m_wnd_rect.m_top;
-		c_wnd* priority_wnd = 0;
-		c_wnd* tmp_child = m_top_child;
-		while (tmp_child)
-		{
-			if ((tmp_child->m_attr & ATTR_PRIORITY) && (tmp_child->m_attr & ATTR_VISIBLE))
-			{
-				priority_wnd = tmp_child;
-				break;
-			}
-			tmp_child = tmp_child->m_next_sibling;
-		}
+		c_wnd* priority_wnd = search_priority_sibling(m_top_child);
 		if (priority_wnd)
 		{
 			return priority_wnd->on_touch(x, y, action);
@@ -1489,17 +1494,7 @@ public:
 	}
 	virtual void on_navigate(NAVIGATION_KEY key)
 	{
-		c_wnd* priority_wnd = 0;
-		c_wnd* tmp_child = m_top_child;
-		while (tmp_child)
-		{
-			if ((tmp_child->m_attr & ATTR_PRIORITY) && (tmp_child->m_attr & ATTR_VISIBLE))
-			{
-				priority_wnd = tmp_child;
-				break;
-			}
-			tmp_child = tmp_child->m_next_sibling;
-		}
+		c_wnd* priority_wnd = search_priority_sibling(m_top_child);
 		if (priority_wnd)
 		{
 			return priority_wnd->on_navigate(key);
@@ -1605,16 +1600,7 @@ protected:
 		WND_TREE* p_cur = p_child_tree;
 		while (p_cur->p_wnd)
 		{
-			if (0 != p_cur->p_wnd->m_id)
-			{//This wnd has been used! Do not share!
-				ASSERT(false);
-				return -1;
-			}
-			else
-			{
-				p_cur->p_wnd->connect(this, p_cur->resource_id, p_cur->str,
-					p_cur->x, p_cur->y, p_cur->width, p_cur->height, p_cur->p_child_tree);
-			}
+			p_cur->p_wnd->connect(this, p_cur->resource_id, p_cur->str,p_cur->x, p_cur->y, p_cur->width, p_cur->height, p_cur->p_child_tree);
 			p_cur++;
 			sum++;
 		}
@@ -1755,6 +1741,9 @@ public:
 		{
 			cur_dlg->set_attr(WND_ATTRIBUTION(0));
 		}
+		c_rect rc;
+		p_dlg->get_screen_rect(rc);
+		p_dlg->get_surface()->activate_layer(rc, p_dlg->m_z_order);
 		p_dlg->set_attr(modal_mode ? (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY) : (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS));
 		p_dlg->show_window();
 		p_dlg->set_me_the_dialog();
@@ -1767,10 +1756,8 @@ public:
 		{
 			return 0;
 		}
-		c_rect rc;
-		dlg->get_screen_rect(rc);
 		dlg->set_attr(WND_ATTRIBUTION(0));
-		surface->show_layer(rc, dlg->m_z_order -  1);
+		surface->activate_layer(c_rect(), dlg->m_z_order);//inactivate the layer of dialog by empty rect.
 		//clear the dialog
 		for (int i = 0; i < SURFACE_CNT_MAX; i++)
 		{
@@ -1878,26 +1865,39 @@ extern WND_TREE g_number_board_children[];
 class c_keyboard: public c_wnd
 {
 public:
-	virtual int connect(c_wnd *user, unsigned short resource_id, KEYBOARD_STYLE style)
+	c_keyboard() { m_attr = WND_ATTRIBUTION(0); }
+	int open_keyboard(c_wnd *user, unsigned short resource_id, KEYBOARD_STYLE style, WND_CALLBACK on_click)
 	{
 		c_rect user_rect;
 		user->get_wnd_rect(user_rect);
+		if ((style != STYLE_ALL_BOARD) && (style != STYLE_NUM_BOARD))
+		{
+			ASSERT(false);
+			return -1;
+		}
 		if (style == STYLE_ALL_BOARD)
 		{//Place keyboard at the bottom of user's parent window.
 			c_rect user_parent_rect;
 			user->get_parent()->get_wnd_rect(user_parent_rect);
-			return c_wnd::connect(user, resource_id, 0, (0 - user_rect.m_left), (user_parent_rect.height() - user_rect.m_top - KEYBOARD_HEIGHT - 1), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
+			c_wnd::connect(user, resource_id, 0, (0 - user_rect.m_left), (user_parent_rect.height() - user_rect.m_top - KEYBOARD_HEIGHT - 1), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
 		}
 		else if (style == STYLE_NUM_BOARD)
 		{//Place keyboard below the user window.
-			return c_wnd::connect(user, resource_id, 0, 0, user_rect.height(), NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
+			c_wnd::connect(user, resource_id, 0, 0, user_rect.height(), NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
 		}
-		else
-		{
-			ASSERT(false);
-		}
-		return -1;
+		m_on_click = on_click;
+		c_rect rc;
+		get_screen_rect(rc);
+		m_surface->activate_layer(rc, m_z_order);
+		show_window();
+		return 0;
 	}
+	void close_keyboard()
+	{
+		c_wnd::disconnect();
+		m_surface->activate_layer(c_rect(), m_z_order);//inactivate the layer of keyboard by empty rect.
+	}
+	
 	virtual void on_init_children()
 	{
 		c_wnd* child = m_top_child;
@@ -1912,12 +1912,12 @@ public:
 	}
 	KEYBOARD_STATUS get_cap_status(){return m_cap_status;}
 	char* get_str() { return m_str; }
-	void set_on_click(WND_CALLBACK on_click) { this->on_click = on_click; }
 protected:
 	virtual void pre_create_wnd()
 	{
-		m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
+		m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 		m_cap_status = STATUS_UPPERCASE;
+		m_z_order = m_surface->get_max_z_order();
 		memset(m_str, 0, sizeof(m_str));
 		m_str_len = 0;
 	}
@@ -1966,10 +1966,11 @@ protected:
 			}
 			goto InputChar;
 		}
+		if (id == 0x90) return;//TBD
 		ASSERT(false);
 	InputChar:
 		m_str[m_str_len++] = id;
-		(m_parent->*(on_click))(m_id, CLICK_CHAR);
+		(m_parent->*(m_on_click))(m_id, CLICK_CHAR);
 	}
 	void on_del_clicked(int id, int param)
 	{
@@ -1978,7 +1979,7 @@ protected:
 			return;
 		}
 		m_str[--m_str_len] = 0;
-		(m_parent->*(on_click))(m_id, CLICK_CHAR);
+		(m_parent->*(m_on_click))(m_id, CLICK_CHAR);
 	}
 	void on_caps_clicked(int id, int param)
 	{
@@ -1988,18 +1989,18 @@ protected:
 	void on_enter_clicked(int id, int param)
 	{
 		memset(m_str, 0, sizeof(m_str));
-		(m_parent->*(on_click))(m_id, CLICK_ENTER);
+		(m_parent->*(m_on_click))(m_id, CLICK_ENTER);
 	}
 	void on_esc_clicked(int id, int param)
 	{
 		memset(m_str, 0, sizeof(m_str));
-		(m_parent->*(on_click))(m_id, CLICK_ESC);
+		(m_parent->*(m_on_click))(m_id, CLICK_ESC);
 	}
 private:
 	char m_str[32];
 	int	 m_str_len;
 	KEYBOARD_STATUS m_cap_status;
-	WND_CALLBACK on_click;
+	WND_CALLBACK m_on_click;
 };
 class c_keyboard_button : public c_button
 {
@@ -2026,31 +2027,31 @@ protected:
 		}
 		if (m_id == 0x14)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == 0x1B)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == ' ')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == '\n')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == '.')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == 0x7F)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == 0x90)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		char letter[] = { 0, 0 };
 		if (m_id >= 'A' && m_id <= 'Z')
@@ -2061,7 +2062,7 @@ protected:
 		{
 			letter[0] = (char)m_id;
 		}
-		c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+		c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 	}
 };
 #include <string.h>
@@ -2100,33 +2101,28 @@ protected:
 		switch (m_status)
 		{
 		case STATUS_NORMAL:
-			if (m_z_order > m_parent->get_z_order())
+			if ((s_keyboard.get_attr()&ATTR_VISIBLE) == ATTR_VISIBLE)
 			{
-				s_keyboard.disconnect();
-				m_z_order = m_parent->get_z_order();
-				m_surface->show_layer(kb_rect, m_z_order);
+				s_keyboard.close_keyboard();
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
 			c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_NORMAL), ALIGN_HCENTER | ALIGN_VCENTER);
 			break;
 		case STATUS_FOCUSED:
-			if (m_z_order > m_parent->get_z_order())
+			if ((s_keyboard.get_attr()&ATTR_VISIBLE) == ATTR_VISIBLE)
 			{
-				s_keyboard.disconnect();
-				m_z_order = m_parent->get_z_order();
-				m_surface->show_layer(kb_rect, m_z_order);
+				s_keyboard.close_keyboard();
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
 			c_word::draw_string_in_rect(m_surface, m_parent->get_z_order(), m_str, rect, m_font, m_font_color, c_theme::get_color(COLOR_WND_FOCUS), ALIGN_HCENTER | ALIGN_VCENTER);
 			break;
 		case STATUS_PUSHED:
-			if (m_z_order == m_parent->get_z_order())
+			if ((s_keyboard.get_attr()&ATTR_VISIBLE) != ATTR_VISIBLE)
 			{
-				m_z_order++;
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
-				show_keyboard();
+				s_keyboard.open_keyboard(this, IDD_KEY_BOARD, m_kb_style, WND_CALLBACK(&c_edit::on_key_board_click));
 			}
 			m_surface->fill_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_PUSHED), m_parent->get_z_order());
 			m_surface->draw_rect(rect.m_left, rect.m_top, rect.m_right, rect.m_bottom, c_theme::get_color(COLOR_WND_BORDER), m_parent->get_z_order(), 2);
@@ -2190,12 +2186,6 @@ protected:
 		}
 	}
 private:
-	void show_keyboard()
-	{
-		s_keyboard.connect(this, IDD_KEY_BOARD, m_kb_style);
-		s_keyboard.set_on_click(WND_CALLBACK(&c_edit::on_key_board_click));
-		s_keyboard.show_window();
-	}
 	void on_touch_down(int x, int y)
 	{
 		c_rect kb_rect_relate_2_edit_parent;
@@ -2324,8 +2314,8 @@ protected:
 		case STATUS_NORMAL:
 			if (m_z_order > m_parent->get_z_order())
 			{
+				m_surface->activate_layer(c_rect(), m_z_order);//inactivate the layer of list by empty rect.
 				m_z_order = m_parent->get_z_order();
-				m_surface->show_layer(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
@@ -2334,8 +2324,8 @@ protected:
 		case STATUS_FOCUSED:
 			if (m_z_order > m_parent->get_z_order())
 			{
+				m_surface->activate_layer(c_rect(), m_z_order);//inactivate the layer of list by empty rect.
 				m_z_order = m_parent->get_z_order();
-				m_surface->show_layer(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
@@ -2351,8 +2341,9 @@ protected:
 				if (m_z_order == m_parent->get_z_order())
 				{
 					m_z_order++;
+					m_surface->activate_layer(m_list_screen_rect, m_z_order);
+					m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 				}
-				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 				show_list();
 			}
 			break;
@@ -2375,6 +2366,13 @@ protected:
 		switch (key)
 		{
 		case NAV_ENTER:
+			if (STATUS_PUSHED == m_status)
+			{
+				if(on_change)
+				{
+					(m_parent->*(on_change))(m_id, m_selected_item);
+				}
+			}
 			on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN);
 			on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP);
 			return;

@@ -10,8 +10,8 @@
 typedef enum
 {
 	Z_ORDER_LEVEL_0,//lowest graphic level
-	Z_ORDER_LEVEL_1,//middle graphic level
-	Z_ORDER_LEVEL_2,//highest graphic level
+	Z_ORDER_LEVEL_1,//middle graphic level, call activate_layer before use it, draw everything inside the active rect.
+	Z_ORDER_LEVEL_2,//highest graphic level, call activate_layer before use it, draw everything inside the active rect.
 	Z_ORDER_LEVEL_MAX
 }Z_ORDER_LEVEL;
 
@@ -198,12 +198,15 @@ class c_layer
 public:
 	c_layer() { fb = 0; }
 	void* fb;		//framebuffer
-	c_rect 	rect;	//framebuffer area
+	c_rect rect;	//framebuffer area
+	c_rect active_rect;
 };
 
 class c_surface {
 	friend class c_display; friend class c_bitmap_operator;
 public:
+	Z_ORDER_LEVEL get_max_z_order() { return m_max_zorder; }
+
 	c_surface(unsigned int width, unsigned int height, unsigned int color_bytes, Z_ORDER_LEVEL max_zorder = Z_ORDER_LEVEL_0, c_rect overlpa_rect = c_rect()) : m_width(width), m_height(height), m_color_bytes(color_bytes), m_fb(0), m_is_active(false), m_top_zorder(Z_ORDER_LEVEL_0), m_phy_write_index(0), m_display(0)
 	{
 		(overlpa_rect == c_rect()) ? set_surface(max_zorder, c_rect(0, 0, width, height)) : set_surface(max_zorder, overlpa_rect);
@@ -237,20 +240,21 @@ public:
 		{
 			return;
 		}
+		
 		if (z_order > (unsigned int)m_max_zorder)
 		{
 			ASSERT(false);
 			return;
 		}
 
-		if (z_order == m_max_zorder)
-		{
-			return draw_pixel_low_level(x, y, rgb);
-		}
-		
 		if (z_order > (unsigned int)m_top_zorder)
 		{
 			m_top_zorder = (Z_ORDER_LEVEL)z_order;
+		}
+
+		if (z_order == m_max_zorder)
+		{
+			return draw_pixel_low_level(x, y, rgb);
 		}
 
 		if (m_layers[z_order].rect.pt_in_rect(x, y))
@@ -274,7 +278,7 @@ public:
 		bool be_overlapped = false;
 		for (unsigned int tmp_z_order = Z_ORDER_LEVEL_MAX - 1; tmp_z_order > z_order; tmp_z_order--)
 		{
-			if (m_layers[tmp_z_order].rect.pt_in_rect(x, y))
+			if (m_layers[tmp_z_order].active_rect.pt_in_rect(x, y))
 			{
 				be_overlapped = true;
 				break;
@@ -301,22 +305,22 @@ public:
 
 		if (z_order == m_top_zorder)
 		{
-			int x, y;
+			int width = m_layers[z_order].rect.width();
 			c_rect layer_rect = m_layers[z_order].rect;
 			unsigned int rgb_16 = GL_RGB_32_to_16(rgb);
-			for (y = y0; y <= y1; y++)
+			for (int y = y0; y <= y1; y++)
 			{
-				for (x = x0; x <= x1; x++)
+				for (int x = x0; x <= x1; x++)
 				{
 					if (layer_rect.pt_in_rect(x, y))
 					{
 						if (m_color_bytes == 2)
 						{
-							((unsigned short*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.width() + (x - layer_rect.m_left)] = rgb_16;
+							((unsigned short*)m_layers[z_order].fb)[(y - layer_rect.m_top) * width + (x - layer_rect.m_left)] = rgb_16;
 						}
 						else
 						{
-							((unsigned int*)m_layers[z_order].fb)[(y - layer_rect.m_top) * layer_rect.width() + (x - layer_rect.m_left)] = rgb;	
+							((unsigned int*)m_layers[z_order].fb)[(y - layer_rect.m_top) * width + (x - layer_rect.m_left)] = rgb;	
 						}
 					}
 				}
@@ -423,26 +427,32 @@ public:
 	bool is_active() { return m_is_active; }
 	c_display* get_display() { return m_display; }
 
-	int show_layer(c_rect& rect, unsigned int z_order)
+	void activate_layer(c_rect active_rect, unsigned int active_z_order)//empty active rect means inactivating the layer
 	{
-		ASSERT(z_order >= Z_ORDER_LEVEL_0 && z_order < Z_ORDER_LEVEL_MAX);
-
-		c_rect layer_rect = m_layers[z_order].rect;
-		ASSERT(rect.m_left >= layer_rect.m_left && rect.m_right <= layer_rect.m_right &&
-			rect.m_top >= layer_rect.m_top && rect.m_bottom <= layer_rect.m_bottom);
-
-		void* fb = m_layers[z_order].fb;
-		int width = layer_rect.width();
-		for (int y = rect.m_top; y <= rect.m_bottom; y++)
+		ASSERT(active_z_order > Z_ORDER_LEVEL_0 && active_z_order <= Z_ORDER_LEVEL_MAX);
+		
+		//Show the layers below the current active rect.
+		c_rect current_active_rect = m_layers[active_z_order].active_rect;
+		for(int low_z_order = Z_ORDER_LEVEL_0; low_z_order < active_z_order; low_z_order++)
 		{
-			for (int x = rect.m_left; x <= rect.m_right; x++)
+			c_rect low_layer_rect = m_layers[low_z_order].rect;
+			c_rect low_active_rect = m_layers[low_z_order].active_rect;
+
+			void* fb = m_layers[low_z_order].fb;
+			int width = low_layer_rect.width();
+			for (int y = current_active_rect.m_top; (y <= current_active_rect.m_bottom && y <= low_active_rect.m_bottom); y++)
 			{
-				unsigned int rgb = (m_color_bytes == 2) ? GL_RGB_16_to_32(((unsigned short*)fb)[(x - layer_rect.m_left) + (y - layer_rect.m_top) * width]) : ((unsigned int*)fb)[(x - layer_rect.m_left) + (y - layer_rect.m_top) * width];
-				draw_pixel_low_level(x, y, rgb);
+				for (int x = current_active_rect.m_left; (x <= current_active_rect.m_right && x <= low_active_rect.m_right); x++)
+				{
+					if (!low_layer_rect.pt_in_rect(x, y)) continue;
+					unsigned int rgb = (m_color_bytes == 2) ? GL_RGB_16_to_32(((unsigned short*)fb)[(x - low_layer_rect.m_left) + (y - low_layer_rect.m_top) * width]) : ((unsigned int*)fb)[(x - low_layer_rect.m_left) + (y - low_layer_rect.m_top) * width];
+					draw_pixel_low_level(x, y, rgb);
+				}
 			}
 		}
-		return 0;
+		m_layers[active_z_order].active_rect = active_rect;//set the new acitve rect.
 	}
+
 	void set_active(bool flag) { m_is_active = flag; }
 protected:
 	virtual void fill_rect_low_level(int x0, int y0, int x1, int y1, unsigned int rgb)
@@ -511,6 +521,10 @@ protected:
 		{//Top layber fb always be 0
 			ASSERT(m_layers[i].fb = calloc(layer_rect.width() * layer_rect.height(), m_color_bytes));
 			m_layers[i].rect = layer_rect;
+			if(i == Z_ORDER_LEVEL_0)
+			{
+				m_layers[i].active_rect = layer_rect;
+			}
 		}
 	}
 

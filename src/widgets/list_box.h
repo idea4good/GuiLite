@@ -65,8 +65,8 @@ protected:
 		case STATUS_NORMAL:
 			if (m_z_order > m_parent->get_z_order())
 			{
+				m_surface->activate_layer(c_rect(), m_z_order);//inactivate the layer of list by empty rect.
 				m_z_order = m_parent->get_z_order();
-				m_surface->show_layer(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_NORMAL), m_z_order);
@@ -75,8 +75,8 @@ protected:
 		case STATUS_FOCUSED:
 			if (m_z_order > m_parent->get_z_order())
 			{
+				m_surface->activate_layer(c_rect(), m_z_order);//inactivate the layer of list by empty rect.
 				m_z_order = m_parent->get_z_order();
-				m_surface->show_layer(m_list_screen_rect, m_z_order);
 				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
 			}
 			m_surface->fill_rect(rect, c_theme::get_color(COLOR_WND_FOCUS), m_z_order);
@@ -92,8 +92,9 @@ protected:
 				if (m_z_order == m_parent->get_z_order())
 				{
 					m_z_order++;
+					m_surface->activate_layer(m_list_screen_rect, m_z_order);
+					m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 				}
-				m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 				show_list();
 			}
 			break;
@@ -116,6 +117,13 @@ protected:
 		switch (key)
 		{
 		case NAV_ENTER:
+			if (STATUS_PUSHED == m_status)
+			{
+				if(on_change)
+				{
+					(m_parent->*(on_change))(m_id, m_selected_item);
+				}
+			}
 			on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_DOWN);
 			on_touch(m_wnd_rect.m_left, m_wnd_rect.m_top, TOUCH_UP);
 			return;

@@ -57,26 +57,41 @@ extern WND_TREE g_number_board_children[];
 class c_keyboard: public c_wnd
 {
 public:
-	virtual int connect(c_wnd *user, unsigned short resource_id, KEYBOARD_STYLE style)
+	c_keyboard() { m_attr = WND_ATTRIBUTION(0); }
+	int open_keyboard(c_wnd *user, unsigned short resource_id, KEYBOARD_STYLE style, WND_CALLBACK on_click)
 	{
 		c_rect user_rect;
 		user->get_wnd_rect(user_rect);
+		if ((style != STYLE_ALL_BOARD) && (style != STYLE_NUM_BOARD))
+		{
+			ASSERT(false);
+			return -1;
+		}
 		if (style == STYLE_ALL_BOARD)
 		{//Place keyboard at the bottom of user's parent window.
 			c_rect user_parent_rect;
 			user->get_parent()->get_wnd_rect(user_parent_rect);
-			return c_wnd::connect(user, resource_id, 0, (0 - user_rect.m_left), (user_parent_rect.height() - user_rect.m_top - KEYBOARD_HEIGHT - 1), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
+			c_wnd::connect(user, resource_id, 0, (0 - user_rect.m_left), (user_parent_rect.height() - user_rect.m_top - KEYBOARD_HEIGHT - 1), KEYBOARD_WIDTH, KEYBOARD_HEIGHT, g_key_board_children);
 		}
 		else if (style == STYLE_NUM_BOARD)
 		{//Place keyboard below the user window.
-			return c_wnd::connect(user, resource_id, 0, 0, user_rect.height(), NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
+			c_wnd::connect(user, resource_id, 0, 0, user_rect.height(), NUM_BOARD_WIDTH, NUM_BOARD_HEIGHT, g_number_board_children);
 		}
-		else
-		{
-			ASSERT(false);
-		}
-		return -1;
+
+		m_on_click = on_click;
+		c_rect rc;
+		get_screen_rect(rc);
+		m_surface->activate_layer(rc, m_z_order);
+		show_window();
+		return 0;
 	}
+
+	void close_keyboard()
+	{
+		c_wnd::disconnect();
+		m_surface->activate_layer(c_rect(), m_z_order);//inactivate the layer of keyboard by empty rect.
+	}
+	
 	virtual void on_init_children()
 	{
 		c_wnd* child = m_top_child;
@@ -92,12 +107,12 @@ public:
 
 	KEYBOARD_STATUS get_cap_status(){return m_cap_status;}
 	char* get_str() { return m_str; }
-	void set_on_click(WND_CALLBACK on_click) { this->on_click = on_click; }
 protected:
 	virtual void pre_create_wnd()
 	{
-		m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS);
+		m_attr = (WND_ATTRIBUTION)(ATTR_VISIBLE | ATTR_FOCUS | ATTR_PRIORITY);
 		m_cap_status = STATUS_UPPERCASE;
+		m_z_order = m_surface->get_max_z_order();
 		memset(m_str, 0, sizeof(m_str));
 		m_str_len = 0;
 	}
@@ -148,10 +163,11 @@ protected:
 			}
 			goto InputChar;
 		}
+		if (id == 0x90) return;//TBD
 		ASSERT(false);
 	InputChar:
 		m_str[m_str_len++] = id;
-		(m_parent->*(on_click))(m_id, CLICK_CHAR);
+		(m_parent->*(m_on_click))(m_id, CLICK_CHAR);
 	}
 	void on_del_clicked(int id, int param)
 	{
@@ -160,7 +176,7 @@ protected:
 			return;
 		}
 		m_str[--m_str_len] = 0;
-		(m_parent->*(on_click))(m_id, CLICK_CHAR);
+		(m_parent->*(m_on_click))(m_id, CLICK_CHAR);
 	}
 	void on_caps_clicked(int id, int param)
 	{
@@ -170,18 +186,18 @@ protected:
 	void on_enter_clicked(int id, int param)
 	{
 		memset(m_str, 0, sizeof(m_str));
-		(m_parent->*(on_click))(m_id, CLICK_ENTER);
+		(m_parent->*(m_on_click))(m_id, CLICK_ENTER);
 	}
 	void on_esc_clicked(int id, int param)
 	{
 		memset(m_str, 0, sizeof(m_str));
-		(m_parent->*(on_click))(m_id, CLICK_ESC);
+		(m_parent->*(m_on_click))(m_id, CLICK_ESC);
 	}
 private:
 	char m_str[32];
 	int	 m_str_len;
 	KEYBOARD_STATUS m_cap_status;
-	WND_CALLBACK on_click;
+	WND_CALLBACK m_on_click;
 };
 
 class c_keyboard_button : public c_button
@@ -210,31 +226,31 @@ protected:
 
 		if (m_id == 0x14)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Caps", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == 0x1B)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Esc", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == ' ')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Space", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == '\n')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Enter", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == '.')
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, ".", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == 0x7F)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "Back", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 		else if (m_id == 0x90)
 		{
-			return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+			return c_word::draw_string_in_rect(m_surface, m_z_order, "?123", rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 		}
 
 		char letter[] = { 0, 0 };
@@ -246,6 +262,6 @@ protected:
 		{
 			letter[0] = (char)m_id;
 		}
-		c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), m_attr);
+		c_word::draw_string_in_rect(m_surface, m_z_order, letter, rect, m_font, m_font_color, GL_ARGB(0, 0, 0, 0), ALIGN_HCENTER);
 	}
 };
