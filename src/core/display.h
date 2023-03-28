@@ -437,16 +437,17 @@ public:
 		{
 			c_rect low_layer_rect = m_layers[low_z_order].rect;
 			c_rect low_active_rect = m_layers[low_z_order].active_rect;
-
 			void* fb = m_layers[low_z_order].fb;
 			int width = low_layer_rect.width();
-			for (int y = current_active_rect.m_top; (y <= current_active_rect.m_bottom && y <= low_active_rect.m_bottom); y++)
+			for (int y = current_active_rect.m_top; y <= current_active_rect.m_bottom; y++)
 			{
-				for (int x = current_active_rect.m_left; (x <= current_active_rect.m_right && x <= low_active_rect.m_right); x++)
+				for (int x = current_active_rect.m_left; x <= current_active_rect.m_right; x++)
 				{
-					if (!low_layer_rect.pt_in_rect(x, y)) continue;
-					unsigned int rgb = (m_color_bytes == 2) ? GL_RGB_16_to_32(((unsigned short*)fb)[(x - low_layer_rect.m_left) + (y - low_layer_rect.m_top) * width]) : ((unsigned int*)fb)[(x - low_layer_rect.m_left) + (y - low_layer_rect.m_top) * width];
-					draw_pixel_low_level(x, y, rgb);
+					if (low_active_rect.pt_in_rect(x, y) && low_layer_rect.pt_in_rect(x, y))//active rect maybe is bigger than layer rect
+					{
+						unsigned int rgb = (m_color_bytes == 2) ? GL_RGB_16_to_32(((unsigned short*)fb)[(x - low_layer_rect.m_left) + (y - low_layer_rect.m_top) * width]) : ((unsigned int*)fb)[(x - low_layer_rect.m_left) + (y - low_layer_rect.m_top) * width];
+						draw_pixel_low_level(x, y, rgb);
+					}
 				}
 			}
 		}
@@ -521,11 +522,9 @@ protected:
 		{//Top layber fb always be 0
 			ASSERT(m_layers[i].fb = calloc(layer_rect.width() * layer_rect.height(), m_color_bytes));
 			m_layers[i].rect = layer_rect;
-			if(i == Z_ORDER_LEVEL_0)
-			{
-				m_layers[i].active_rect = layer_rect;
-			}
 		}
+
+		m_layers[Z_ORDER_LEVEL_0].active_rect = layer_rect;
 	}
 
 	int				m_width;		//in pixels
