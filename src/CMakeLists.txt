@@ -20,5 +20,3 @@ ADD_LIBRARY(GuiLite STATIC ${CORE_SRC} ${CORE_ADAPTER} ${WIDGETS_SRC})
 
 # build shared library
 # ADD_LIBRARY(GuiLite SHARED ${CORE_SRC} ${CORE_ADAPTER} ${WIDGETS_SRC})
-
-execute_process(COMMAND ${CMAKE_SOURCE_DIR}/.sync.sh GuiLite)

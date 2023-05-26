@@ -62,6 +62,6 @@ Output here: GuiLite/workspace/libGuiLite.a
 
 ## Build header-only GuiLite.h?
 ```bash
-cd GuiLite/workspace
-./header-only.sh
+cd GuiLite/src
+./GenerateGuiLite.h.sh
 ```

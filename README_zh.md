@@ -60,7 +60,7 @@
 ## Demo展示墻
 - 0依赖，100%编译通过，可直接运行
 - 点击你喜欢的实例，并运行在你的硬件上面
-- 大部分demo的UI代码只有100行左右，代碼庫在[这里。](https://github.com/idea4good/GuiLiteSamples)
+- 大部分demo的UI代码只有100行左右，代碼庫在[GuiLiteSamples](https://github.com/idea4good/GuiLiteSamples)
 ---
 ### 單片機平臺
 ---

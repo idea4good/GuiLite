@@ -71,30 +71,25 @@ Rendering include rendering method and graphic management.
 ## Source file annotation
 | core Importance/File name | Introduction | Time cost |
 | --- | --- | --- |
-| ★★★ wnd.cpp | Basic class for widgets; connect/disconnect widgets; response user on_touch, on_key action | 1.5 hour |
-| ★★ display.cpp | Initialize display device, create surface,  | 0.5 hour |
-| word.cpp | Draw text | < 1 hour |
-| bitmap.cpp | Draw bitmap | < 0.5 hour |
-| rect.cpp | Rect for basic use(e.g, widgets location) | < 0.5 hour |
+| ★★★ wnd.h | Basic class for widgets; connect/disconnect widgets; response user on_touch, on_key action | 1.5 hour |
+| ★★ display.h | Initialize display device, create surface,  | 0.5 hour |
+| word.h | Draw text | < 1 hour |
+| image.h | Draw bitmap | < 0.5 hour |
+| rect.h | Rect for basic use(e.g, widgets location) | < 0.5 hour |
 | api_linux.cpp | Adapter for Linux | < 0.5 hour |
 | api_win.cpp | Adapter for Windows | < 0.5 hour |
 | api_unknow.cpp | Adapter for other OS or none OS | < 0.5 hour |
-| audio_linux.cpp | Adapter for Linux audio | < 0.5 hour |
-| audio_win.cpp | Adapter Windows audio | < 0.5 hour |
-| msg_linux.cpp | Implement message pipe on Linux | < 0.5 hour |
-| msg_win.cpp | Implement message pipe on Windows | < 0.5 hour |
-| msg_unknow.cpp | Implement message pipe on other OS or none OS | < 0.5 hour |
 ***
 | widgets Difficulty/File name | Introduction | Time cost |
 | --- | --- | --- |
-| label.cpp | Source code for label | < 0.5 hour |
-| button.cpp | Source code for button | < 0.5 hour |
-| table.cpp | Source code for table | < 0.5 hour |
-| dialog.cpp | Source code for dialog | < 0.5 hour |
-| ★ gesture.cpp | Recognize finger gesture(e.g, press/release/slip) | 0.5 hour |
-| ★ keyboard.cpp | Source code for keyboard | 0.5 hour |
-| ★★ list_box.cpp | Source code for list box | 1.5 hour |
-| ★★ spinbox.cpp | Source code for spin box | 1.5 hour |
-| ★★ edit.cpp | Source code for edit widget | 1.5 hour |
-| ★★★ wave_buffer.cpp | Source code for wave buffer | 1.5 hour |
-| ★★★ wave_ctrl.cpp | Source code for wave widget | 1.5 hour |
+| label.h | Draw label | < 0.5 hour |
+| button.h | Draw/Click button | < 0.5 hour |
+| table.h | Draw table | < 0.5 hour |
+| dialog.h | Draw/Open/Close dialog | < 0.5 hour |
+| ★ keyboard.h | Draw/Click keyboard | 0.5 hour |
+| ★★ list_box.h | Draw/Click list box | 1.5 hour |
+| ★★ spinbox.h | Draw/Click spin box | 1.5 hour |
+| ★★ edit.h | Draw/Click edit widget | 1.5 hour |
+| ★ slide_group.cpp | Draw multiple screens & Swip screen | 1.5 hour |
+| ★★★ wave_buffer.h | Manage wave buffer data | 1.5 hour |
+| ★★★ wave_ctrl.h | Draw wave widget with wave buffer data | 1.5 hour |

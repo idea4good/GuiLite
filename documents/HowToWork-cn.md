@@ -70,36 +70,31 @@ widgets:
 ## 文件注释
 | core 重要程度/文件名称 | 代码简介 | 推荐学习时间 |
 | --- | --- | --- |
-| ★★★ wnd.cpp | UI元素的基本类，定义所有的UI元素信息、绘制及管理办法 | 1.5小时 |
-| ★★ display.cpp | 生成显示设备，设定surface的数目，一个surface对应一个滑动页面 | 0.5小时 |
-| word.cpp | 显示文字 | < 1小时 |
-| bitmap.cpp | 绘制位图，支持16 bits和32 bits | < 0.5小时 |
-| rect.cpp | UI元素的位置信息 | < 0.5小时 |
+| ★★★ wnd.h | UI元素的基本类，定义所有的UI元素信息、绘制及管理办法 | 1.5小时 |
+| ★★ display.h | 生成显示设备，设定surface的数目，一个surface对应一个滑动页面 | 0.5小时 |
+| word.h | 显示文字 | < 1小时 |
+| image.h | 绘制位图，支持16 bits和32 bits | < 0.5小时 |
+| rect.h | UI元素的位置信息 | < 0.5小时 |
 | api_linux.cpp | Linux适配层 | < 0.5小时 |
 | api_win.cpp | Window适配层 | < 0.5小时 |
 | api_unknow.cpp | 无OS或其他OS适配层 | < 0.5小时 |
-| audio_linux.cpp | Linux audio适配层 | < 0.5小时 |
-| audio_win.cpp | Windows audio适配层 | < 0.5小时 |
-| msg_linux.cpp | 消息管道在Linux上的实现 | < 0.5小时 |
-| msg_win.cpp | 消息管道在Windows上的实现 | < 0.5小时 |
-| msg_unknow.cpp | 消息管道在其他OS（或无OS）上的实现 | < 0.5小时 |
 ***
 | widgets 难度/文件名称 | 代码简介 | 推荐学习时间 |
 | --- | --- | --- |
-| label.cpp | 标签控件的绘制 | < 0.5小时 |
-| button.cpp | 按钮控件的绘制及用户点击响应函数 | < 0.5小时 |
-| table.cpp | Table控件的绘制 | < 0.5小时 |
-| dialog.cpp | 对话框的绘制及管理方法 | < 0.5小时 |
-| ★ gesture.cpp | 手势识别方法，包括：鼠标按下，弹起及滑动 | 0.5小时 |
-| ★ keyboard.cpp | 键盘控件的绘制及用户点击响应函数 | 0.5小时 |
-| ★★ list_box.cpp | List控件的绘制及用户点击响应函数 | 1.5小时 |
-| ★★ spinbox.cpp | Spinbox控件的绘制及用户点击响应函数 | 1.5小时 |
-| ★★ edit.cpp | Edit控件的绘制及用户点击响应函数 | 1.5小时 |
-| ★★★ wave_buffer.cpp | 波形数据的缓冲管理 | 1.5小时 |
-| ★★★ wave_ctrl.cpp | 实现波形控件 | 1.5小时 |
+| label.h | 标签控件的绘制 | < 0.5小时 |
+| button.h | 按钮控件的绘制及用户点击响应函数 | < 0.5小时 |
+| table.h | Table控件的绘制 | < 0.5小时 |
+| dialog.h | 对话框的绘制及管理方法 | < 0.5小时 |
+| ★ keyboard.h | 键盘控件的绘制及用户点击响应函数 | 0.5小时 |
+| ★★ list_box.h | List控件的绘制及用户点击响应函数 | 1.5小时 |
+| ★★ spinbox.h | Spinbox控件的绘制及用户点击响应函数 | 1.5小时 |
+| ★★ edit.h | Edit控件的绘制及用户点击响应函数 | 1.5小时 |
+| ★ slide_group.h | 多屏GUI的实现，以及用来切换屏幕的划屏操作 | 1.5小时 |
+| ★★★ wave_buffer.h | 波形数据的缓冲管理 | 1.5小时 |
+| ★★★ wave_ctrl.h | 它通过波形数据，绘制实时的波形控件 | 1.5小时 |
 
 ## 函数注释
-| 函数名称 | display.cpp 函数接口注释 |
+| 函数名称 | display.h::c_display 函数接口注释 |
 | --- | --- |
 | c_display | c_display构造函数。phy_fb：物理framebuffer指针；display_width：物理显示器宽度；display_height：物理显示器高度；surface_width：surface宽度；surface_height：surface高度；color_bytes：颜色深度；surface_cnt：surface个数/滑动页面的个数；gfx_op：外部绘制接口，用以适配非framebuffer的渲染方式，如果该值不为空，surface在作底层渲染的时候，会调用该接口 |
 | alloc_surface | 分配surface/滑动页面。usr： 用户ID；max_zorder：该surface所拥有的图层数量|
@@ -107,7 +102,7 @@ widgets:
 | get_updated_fb | 获取该display的framebuffer指针，常用来将GUI显示在任意需要的地方。widght：用来获取framebuffer的宽度；height：用来获取framebuffer的高度；force_update：是否需要强制更新framebuffer的内容，如果不需要强制更新，且framebuffer没法发生变化，将返回NULL |
 | snap_shot | 生成当前显示的快照，并输出到bitmap文件。file_name：快照文件的名称 |
 ***
-| 函数名称 | surface.cpp 函数接口注释 |
+| 函数名称 | display.h::c_surface 函数接口注释 |
 | --- | --- |
 | c_surface | c_surface构造函数。 display：surface所属于的display；width：surface的宽度；height：surface的高度；color_bytes：颜色深度|
 | set_surface | 设置surface。wnd_root：使用者者ID，通常为root window，其子窗口自动获得该surface的使用权。 max_z_order：该surface拥有的图层数量 |

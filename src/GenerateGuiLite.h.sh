@@ -50,4 +50,3 @@ echo "You could find GuiLite.h in root folder"
 
 # clean
 rm *.h *.cpp *.o
-./.sync.sh GuiLite-header > .sync_log.txt 2>&1 &
