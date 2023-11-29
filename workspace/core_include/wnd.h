@@ -142,7 +142,7 @@ public:
 			c_wnd* child = m_top_child;
 			if (0 != child)
 			{
-				while (child)
+				while (child && child->m_parent == this)
 				{
 					child->show_window();
 					child = child->m_next_sibling;
