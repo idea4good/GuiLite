@@ -167,10 +167,9 @@
 
 ## 📞社區交流
 - 感谢开发者群的所有同学，是你们塑造了今天的GUI-lite！也欢迎新的大神/小白加入我们。
-- 开发者QQ/微信群：
+- 开发者QQ
 <table>
   <tr>
-    <td align="center"><a href="https://jq.qq.com/?_wv=1027&k=g8GT5FkL"><img src="documents/qq.group-6.jpg" width="240px;"/><br /><sub><b>開發群🔑：622309381</b></sub></a>
-    <td align="center"><img src="documents/VXGZH.jpg" width="240px;"/><br /><sub><b>公众号🔑：阿布编程</b></sub>
+    <td align="center"><img src="documents/qq.group-7.png" width="240px;"/><br /><sub><b>開發群🔑：875721211</b></sub></a>
   </tr>
-</table>
+  
