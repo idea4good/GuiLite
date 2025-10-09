@@ -1,0 +1,140 @@
+diff --git a/src/core/display.h b/src/core/display.h
+index 1234567..abcdefg 100644
+--- a/src/core/display.h
++++ b/src/core/display.h
+@@ -158,6 +158,15 @@ protected:
+ 
+ 	virtual int flush_screen(int left, int top, int right, int bottom, void* fb, int fb_width)
+ 	{
++		// Anti-flashing optimization: Skip flush during rapid updates
++		static long last_flush_time = 0;
++		static int flush_count = 0;
++		long current_time = get_time_in_second() * 1000;
++		
++		if (current_time - last_flush_time < 16) { // Less than 16ms (60fps)
++			flush_count++;
++			if (flush_count > 3) return 0; // Skip excessive flushes
++		} else {
++			flush_count = 0;
++		}
++		last_flush_time = current_time;
++
+ 		if ((0 == m_phy_fb) || (0 == fb))
+ 		{
+ 			return -1;
+@@ -409,6 +418,15 @@ public:
+ 
+ 	int flush_screen(int left, int top, int right, int bottom)
+ 	{
++		// Batch flush optimization for resize scenarios
++		static bool batch_mode = false;
++		static c_rect batch_rect;
++		
++		if (batch_mode) {
++			// Expand batch rectangle to include this flush
++			batch_rect.m_left = MIN(batch_rect.m_left, left);
++			batch_rect.m_top = MIN(batch_rect.m_top, top);
++			batch_rect.m_right = MAX(batch_rect.m_right, right);
++			batch_rect.m_bottom = MAX(batch_rect.m_bottom, bottom);
++			return 0;
++		}
++
+ 		if (!m_is_active)
+ 		{
+ 			return -1;
+@@ -425,6 +443,20 @@ public:
+ 		return 0;
+ 	}
+ 
++	// New methods for batch operations
++	void begin_batch_flush() {
++		static bool batch_mode = true;
++		static c_rect batch_rect = c_rect(m_width, m_height, 0, 0);
++	}
++	
++	void end_batch_flush() {
++		static bool batch_mode = false;
++		if (batch_rect.m_left < batch_rect.m_right && batch_rect.m_top < batch_rect.m_bottom) {
++			m_display->flush_screen(batch_rect.m_left, batch_rect.m_top, 
++								  batch_rect.m_right, batch_rect.m_bottom, m_fb, m_width);
++		}
++	}
++
+ 	bool is_active() { return m_is_active; }
+ 	c_display* get_display() { return m_display; }
+ 
+diff --git a/src/core/wnd.h b/src/core/wnd.h
+index 1234567..abcdefg 100644
+--- a/src/core/wnd.h
++++ b/src/core/wnd.h
+@@ -130,6 +130,25 @@ public:
+ 	virtual void on_init_children() {}
+ 	virtual void on_paint() {}
++	
++	// New resize handling method
++	virtual void on_resize(int new_width, int new_height) {
++		// Update window rectangle for root window
++		if (!m_parent) {
++			m_wnd_rect.m_right = m_wnd_rect.m_left + new_width - 1;
++			m_wnd_rect.m_bottom = m_wnd_rect.m_top + new_height - 1;
++		}
++		
++		// Propagate to children
++		c_wnd* child = m_top_child;
++		while (child) {
++			child->on_resize(new_width, new_height);
++			child = child->m_next_sibling;
++		}
++		
++		// Trigger repaint after resize
++		show_window(true);
++	}
++	
+ 	virtual void show_window(bool pre_paint = false)
+ 	{
+ 		if (ATTR_VISIBLE == (m_attr & ATTR_VISIBLE))
+@@ -137,6 +156,11 @@ public:
+ 			if (pre_paint)
+ 			{
+ 				on_paint();
++				
++				// Batch flush for better performance during resize
++				if (m_surface) {
++					m_surface->begin_batch_flush();
++				}
+ 			}
+ 			else if (m_parent == 0) //root wnd
+ 			{
+@@ -152,6 +176,11 @@ public:
+ 					child = child->m_next_sibling;
+ 				}
+ 			}
++			
++			// End batch flush
++			if (pre_paint && m_surface) {
++				m_surface->end_batch_flush();
++			}
+ 		}
+ 	}
+ 
+diff --git a/src/widgets/slide_group.h b/src/widgets/slide_group.h
+index 1234567..abcdefg 100644
+--- a/src/widgets/slide_group.h
++++ b/src/widgets/slide_group.h
+@@ -35,6 +35,9 @@ public:
+ 			{
+ 				m_slides[i]->get_surface()->set_active(true);
+ 				add_child_2_tail(m_slides[i]);
++				
++				// Use batch flush to prevent flashing
++				m_slides[i]->get_surface()->begin_batch_flush();
+ 				if (is_redraw)
+ 				{
+ 					c_rect rc;
+@@ -42,6 +45,7 @@ public:
+ 					m_slides[i]->get_surface()->flush_screen(rc.m_left, rc.m_top, rc.m_right, rc.m_bottom);
+ 				}
++				m_slides[i]->get_surface()->end_batch_flush();
+ 			}
+ 			else
+ 			{
