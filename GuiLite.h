@@ -1840,9 +1840,9 @@ private:
 #define ENTER_WIDTH			(KEY_WIDTH * 2 + 2)
 #define POS_X(c)			((KEY_WIDTH * c) + (c + 1) * 2)
 #define POS_Y(r)			((KEY_HEIGHT * r) + (r + 1) * 2)
-#define KEYBORAD_CLICK			0x5014
+#define KEYBOARD_CLICK			0x5014
 #define ON_KEYBORAD_UPDATE(func)  \
-{MSG_TYPE_WND, KEYBORAD_CLICK, 0,  msgCallback(&func)},
+{MSG_TYPE_WND, KEYBOARD_CLICK, 0,  msgCallback(&func)},
 typedef enum
 {
 	STATUS_UPPERCASE,
