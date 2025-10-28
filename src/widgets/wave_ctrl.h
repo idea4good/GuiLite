@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define CORRECT(x, high_limit, low_limit)	{\
+#define CORRECT(x, high_limit, low_limit) do {\
 	x = (x > high_limit) ? high_limit : x;\
 	x = (x < low_limit) ? low_limit : x;\
 }while(0)
