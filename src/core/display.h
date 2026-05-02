@@ -83,7 +83,7 @@ public:
 protected:
 	virtual void draw_pixel(int x, int y, unsigned int rgb)
 	{
-		if ((x >= m_width) || (y >= m_height)) { return; }
+		if ((x < 0) || (y < 0) || (x >= m_width) || (y >= m_height)) { return; }
 
 		if (m_driver && m_driver->draw_pixel)
 		{
@@ -121,6 +121,11 @@ protected:
 
 		int _width = m_width;
 		int _height = m_height;
+		if (x0 < 0) x0 = 0;
+		if (y0 < 0) y0 = 0;
+		if (x1 >= _width) x1 = _width - 1;
+		if (y1 >= _height) y1 = _height - 1;
+		if (x0 > x1 || y0 > y1) return;
 		int x, y;
 		if (m_color_bytes == 2)
 		{
@@ -190,7 +195,7 @@ protected:
 	c_surface*		m_surface_group[SURFACE_CNT_MAX];
 	int				m_surface_cnt;	//surface count
 	int				m_surface_index;
-	
+
 };
 
 class c_layer
@@ -240,7 +245,7 @@ public:
 		{
 			return;
 		}
-		
+
 		if (z_order > (unsigned int)m_max_zorder)
 		{
 			ASSERT(false);
@@ -269,7 +274,7 @@ public:
 				((unsigned int*)(m_layers[z_order].fb))[(x - layer_rect.m_left) + (y - layer_rect.m_top) * layer_rect.width()] = rgb;
 			}
 		}
-		
+
 		if (z_order == m_top_zorder)
 		{
 			return draw_pixel_low_level(x, y, rgb);
@@ -320,7 +325,7 @@ public:
 						}
 						else
 						{
-							((unsigned int*)m_layers[z_order].fb)[(y - layer_rect.m_top) * width + (x - layer_rect.m_left)] = rgb;	
+							((unsigned int*)m_layers[z_order].fb)[(y - layer_rect.m_top) * width + (x - layer_rect.m_left)] = rgb;
 						}
 					}
 				}
@@ -430,7 +435,7 @@ public:
 	void activate_layer(c_rect active_rect, unsigned int active_z_order)//empty active rect means inactivating the layer
 	{
 		ASSERT(active_z_order > Z_ORDER_LEVEL_0 && active_z_order <= Z_ORDER_LEVEL_MAX);
-		
+
 		//Show the layers below the current active rect.
 		c_rect current_active_rect = m_layers[active_z_order].active_rect;
 		for(int low_z_order = Z_ORDER_LEVEL_0; low_z_order < active_z_order; low_z_order++)
@@ -551,7 +556,7 @@ inline c_display::c_display(void* phy_fb, int display_width, int display_height,
 	ASSERT(color_bytes == 2 || color_bytes == 4);
 	ASSERT(m_surface_cnt <= SURFACE_CNT_MAX);
 	memset(m_surface_group, 0, sizeof(m_surface_group));
-	
+
 	for (int i = 0; i < m_surface_cnt; i++)
 	{
 		m_surface_group[i] = new c_surface(surface_width, surface_height, color_bytes);
